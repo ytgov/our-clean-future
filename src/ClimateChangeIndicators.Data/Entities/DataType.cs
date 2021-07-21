@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ClimateChangeIndicators.Data.Entities
+﻿namespace ClimateChangeIndicators.Data.Entities
 {
-    public class DataType
+    //Alternative name: TypeOfChange?
+    public enum DataType
     {
-        public DataType()
-        {
-            Name = Id.ToString();
-        }
-
-        public DataTypeEnum Id { get; set; }
-        public string Name { get; set; }
+        Cumulative = 0,
+        Incremental = 1
     }
 }

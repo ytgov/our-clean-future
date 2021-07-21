@@ -1,10 +1,14 @@
-﻿namespace ClimateChangeIndicators.Data.Entities
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClimateChangeIndicators.Data.Entities
 {
-    public enum CollectionInterval
+    public class CollectionInterval
     {
-        Annual,
-        Biannual,
-        Quarter,
-        Month
+        public CollectionIntervalEnum Id { get; set; }
+        public string Name { get; set; }
     }
 }

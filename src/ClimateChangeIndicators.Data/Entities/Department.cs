@@ -1,29 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ClimateChangeIndicators.Data.Entities
 {
-    public enum Department
+    public class Department
     {
-        [Display(Name = "Community Services")]
-        CommunityServices,
-        EconomicDevelopment,
-        Education,
-        EnergyMinesAndResources,
-        Environment,
-        ExecutiveCouncilOffice,
-        Finance,
-        FrenchLanguageServicesDirectorate,
-        HealthAndSocialServices,
-        HighwaysAndPublicWorks,
-        Justice,
-        PublicServiceCommission,
-        TourismandCulture,
-        WomensDirectorate,
-        YukonEnergyCorporation,
-        YukonDevelopmentCorporation,
-        YukonHousingCorporation,
-        YukonLiquorCorporation,
-        YukonLotteryCommissionAndLotteriesYukon,
-        YukonWorkersCompensationHealthAndSafetyBoard
+        public DepartmentEnum Id { get; set; }
+        public string Name { get; set; }
     }
 }

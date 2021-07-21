@@ -1,9 +1,13 @@
-﻿namespace ClimateChangeIndicators.Data.Entities
+﻿using System.Collections.Generic;
+
+namespace ClimateChangeIndicators.Data.Entities
 {
     public class Owner
     {
-        public string Organization { get; set; }
+        public int Id { get; set; }
+        public Organization Organization { get; set; }
         public Department Department { get; set; }
         public Branch Branch { get; set; }
+        public List<Indicator> Indicators { get; set; }
     }
 }

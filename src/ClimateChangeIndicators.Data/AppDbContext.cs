@@ -33,12 +33,16 @@ namespace ClimateChangeIndicators.Data
             modelBuilder.Entity<Indicator>().Property(i => i.CollectionInterval).HasConversion<string>();
 
             modelBuilder.Entity<Owner>().HasOne(o => o.Organization).WithMany().IsRequired().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Owner>().HasOne(o => o.Branch).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Indicator>().HasOne(i => i.Owner).WithMany(o => o.Indicators).IsRequired().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Indicator>().OwnsMany(i => i.Entries, ie => {
                 ie.ToTable("Entries").WithOwner(e => e.Indicator);
                 ie.HasOne(e => e.UnitOfMeasurement).WithMany().OnDelete(DeleteBehavior.Restrict);
             }
             );
+
+            //Generate bogus data for testing
+            new BogusDataGenerator(modelBuilder).Init();
         }
     }
 }

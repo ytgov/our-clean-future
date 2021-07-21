@@ -23,5 +23,6 @@ namespace ClimateChangeIndicators.Data.Entities
         public CollectionInterval CollectionInterval { get; set; }
         public List<Entry> Entries { get; set; }
         public string Notes { get; set; }
+        public bool IsActive { get; set; }
     }
 }

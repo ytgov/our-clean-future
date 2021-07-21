@@ -1,0 +1,16 @@
+﻿@page "/indicators"
+
+@if (_isLoaded == false)
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudText Typo="Typo.h6">Loading...</MudText>
+    </MudContainer>
+}
+else
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudTable Items="@_indicators" Dense="@_dense" Hover="@_hover" Bordered="@_bordered" Striped="@_striped" @bind-SelectedItem="_selectedItem">
+
+        </MudTable>
+    </MudContainer>
+}

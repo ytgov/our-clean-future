@@ -1,10 +1,5 @@
 ﻿using ClimateChangeIndicators.Data.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClimateChangeIndicators.Data
 {
@@ -12,6 +7,7 @@ namespace ClimateChangeIndicators.Data
     {
         public DbSet<Indicator> Indicators { get; set; }
         public DbSet<Owner> Owners { get; set; }
+
         public AppDbContext()
         {
         }
@@ -43,7 +39,6 @@ namespace ClimateChangeIndicators.Data
                 ie.HasOne(e => e.UnitOfMeasurement).WithMany().OnDelete(DeleteBehavior.Restrict);
             }
             );
-
         }
     }
 }

@@ -9,7 +9,7 @@ namespace ClimateChangeIndicators.Data.Entities
         [Required]
         public string Name { get; set; }
 
-        public int departmentId { get; set; }
+        public int DepartmentId { get; set; }
         public Department Department { get; set; }
     }
 }

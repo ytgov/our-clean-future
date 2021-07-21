@@ -21,7 +21,7 @@ namespace ClimateChangeIndicators.Data.Entities
         public int OurCleanFutureReferenceId { get; set; }
         public OurCleanFutureReference OurCleanFutureReference { get; set; }
         public CollectionInterval CollectionInterval { get; set; }
-        public List<Entry> Entries { get; set; }
+        public List<Entry> Entries { get; set; } = new List<Entry>();
         public string Notes { get; set; }
         public bool IsActive { get; set; }
     }

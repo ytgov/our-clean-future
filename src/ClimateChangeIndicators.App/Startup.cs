@@ -1,4 +1,4 @@
-using ClimateChangeIndicators.App.Data;
+using ClimateChangeIndicators.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using MudBlazor.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,8 +39,7 @@ namespace ClimateChangeIndicators.App
             services.AddControllersWithViews()
                 .AddMicrosoftIdentityUI();
 
-            services.AddAuthorization(options =>
-            {
+            services.AddAuthorization(options => {
                 // By default, all incoming requests will be authorized according to the default policy
                 options.FallbackPolicy = options.DefaultPolicy;
             });
@@ -46,18 +47,25 @@ namespace ClimateChangeIndicators.App
             services.AddRazorPages();
             services.AddServerSideBlazor()
                 .AddMicrosoftIdentityConsentHandler();
-            services.AddSingleton<WeatherForecastService>();
+
+            services.AddMudServices();
+#if DEBUG
+            services.AddDbContextFactory<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("AppContext"))
+                       .EnableSensitiveDataLogging());
+#else
+            services.AddDbContextFactory<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("AppContext")));
+#endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
+            if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
+            else {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
@@ -71,8 +79,7 @@ namespace ClimateChangeIndicators.App
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
+            app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");

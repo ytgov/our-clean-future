@@ -1,7 +1,7 @@
 ﻿@page "/"
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+    <MudText Typo="Typo.h3" GutterBottom="true">Home</MudText>
+    <MudText Typo="Typo.h5" Class="mb-4">Welcome to the Climate Change Indicators app!</MudText>
+    <MudAlert Severity="Severity.Normal">Please submit questions and/or feedback to: <MudLink Href="mailto:env.servicedesk@yukon.ca" Typo="Typo.body2" Color="Color.Inherit"><b>env.servicedesk@yukon.ca</b></MudLink></MudAlert>
+</MudContainer>

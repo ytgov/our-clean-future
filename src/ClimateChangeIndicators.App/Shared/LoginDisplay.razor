@@ -1,9 +1,14 @@
 ﻿<AuthorizeView>
     <Authorized>
-        Hello, @context.User.Identity.Name!
-        <a href="MicrosoftIdentity/Account/SignOut">Log out</a>
+        <MudText Class="mr-4">Hello, @context.User.FindFirst("name").Value!</MudText>
+        <MudTooltip Text="Sign out">
+            <MudIconButton Class="mr-3" Link="MicrosoftIdentity/Account/SignOut" Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" />
+        </MudTooltip>
     </Authorized>
     <NotAuthorized>
-        <a href="MicrosoftIdentity/Account/SignIn">Log in</a>
+        <MudText Class="mr-4">Not signed in</MudText>
+		<MudTooltip Text="Sign in">
+			<MudIconButton Class="mr-3" Link="MicrosoftIdentity/Account/SignIn" Icon="@Icons.Material.Filled.Login" Color="Color.Inherit" />
+		</MudTooltip>
     </NotAuthorized>
 </AuthorizeView>

@@ -20,6 +20,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         private bool _mayRender = true;
         private AppDbContext _context;
         private List<Indicator> _indicators;
+        private string _searchString = "";
         private Indicator _selectedItem;
 
         [Inject]
@@ -42,6 +43,19 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         }
 
         protected override bool ShouldRender() => _mayRender;
+
+        private bool FilterFunc(Indicator indicator)
+        {
+            if (string.IsNullOrWhiteSpace(_searchString))
+                return true;
+            if (indicator.Owner.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (indicator.Owner.Branch.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (indicator.Owner.Branch.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
+        }
 
         public void Dispose()
         {

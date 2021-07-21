@@ -17,6 +17,30 @@ else
                 <MudToolBarSpacer />
                 @*<MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Create())">New Indicator</MudButton>*@
             </ToolBarContent>
+            <HeaderContent>
+                <MudTh>Id</MudTh>
+                <MudTh>Organization</MudTh>
+                <MudTh>Department</MudTh>
+                <MudTh>Branch</MudTh>
+                <MudTh>Display Name</MudTh>
+                <MudTh>Description</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@context.Id</MudTd>
+                <MudTd>@context.Owner.Organization.Name</MudTd>
+                <MudTd>@context.Owner.Branch.Department.Name</MudTd>
+                <MudTd>@context.Owner.Branch.Name</MudTd>
+                <MudTd>@context.DisplayName</MudTd>
+                <MudTd>@context.Description</MudTd>
+            </RowTemplate>
         </MudTable>
+        <div class="d-flex flex-wrap mt-4">
+            <MudSwitch @bind-Checked="@_hover" Color="Color.Primary">Hover</MudSwitch>
+            <MudSwitch @bind-Checked="@_dense" Color="Color.Secondary">Dense</MudSwitch>
+            <MudSwitch @bind-Checked="@_striped" Color="Color.Tertiary">Striped</MudSwitch>
+            <MudSwitch @bind-Checked="@_bordered" Color="Color.Warning">Bordered</MudSwitch>
+            <MudToolBarSpacer />
+            <MudText Inline="true" Class="align-self-center" Style="min-width:200px;">Selected: @_selectedItem?.Id</MudText>
+        </div>
     </MudContainer>
 }

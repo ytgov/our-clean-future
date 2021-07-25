@@ -23,6 +23,8 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         private string _searchString = "";
         private Indicator _selectedItem;
 
+        private Random _rand = new();
+
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; }
 
@@ -55,15 +57,25 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
 
         protected override bool ShouldRender() => _mayRender;
 
+        private void Create()
+        {
+            Navigation.NavigateTo("/indicators/create/");
+        }
+
+        private void Details(int indicatorId)
+        {
+            Navigation.NavigateTo("/indicators/details/" + indicatorId);
+        }
+
         private bool FilterFunc(Indicator indicator)
         {
             if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
             if (indicator.Owner.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (indicator.Owner.Branch.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            if (indicator.Owner.Branch?.Department?.Name is not null && indicator.Owner.Branch.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (indicator.Owner.Branch.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            if (indicator.Owner.Branch?.Name is not null && indicator.Owner.Branch.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         }

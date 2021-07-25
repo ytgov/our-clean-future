@@ -15,23 +15,39 @@ else
                 <MudToolBarSpacer />
                 <MudTextField @bind-Value="_searchString" Placeholder="Search by organization, department, or branch" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                 <MudToolBarSpacer />
-                @*<MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Create())">New Indicator</MudButton>*@
+                <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Create())">New Indicator</MudButton>
             </ToolBarContent>
             <HeaderContent>
                 <MudTh>Id</MudTh>
                 <MudTh>Organization</MudTh>
                 <MudTh>Department</MudTh>
                 <MudTh>Branch</MudTh>
-                <MudTh>Display Name</MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, string>(i => i.DisplayName)">Display Name</MudTableSortLabel></MudTh>
                 <MudTh>Description</MudTh>
+                <MudTh>Next Collection</MudTh>
+                <MudTh></MudTh>
+                <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd>@context.Id</MudTd>
                 <MudTd>@context.Owner.Organization.Name</MudTd>
-                <MudTd>@context.Owner.Branch.Department.Name</MudTd>
-                <MudTd>@context.Owner.Branch.Name</MudTd>
+                <MudTd>@context.Owner.Branch?.Department.Name</MudTd>
+                <MudTd>@context.Owner.Branch?.Name</MudTd>
                 <MudTd>@context.DisplayName</MudTd>
                 <MudTd>@context.Description</MudTd>
+                <MudTd>@_rand.Next(-30,76) days </MudTd>
+                <MudTd><MudIcon Icon="@Icons.Material.Filled.ReportProblem" Color="Color.Warning"/></MudTd>
+                <MudTd>
+                    <MudTooltip Text="Details">
+                        <MudIconButton Icon="@Icons.Material.Filled.Info" OnClick="(() => Details(context.Id))"></MudIconButton>
+                    </MudTooltip>
+                    <MudTooltip Text="Edit">
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary"></MudIconButton>
+                    </MudTooltip>
+                    <MudTooltip Text="Delete">
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"></MudIconButton>
+                    </MudTooltip>
+                </MudTd>
             </RowTemplate>
         </MudTable>
         <div class="d-flex flex-wrap mt-4">

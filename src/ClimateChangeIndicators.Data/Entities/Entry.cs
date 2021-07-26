@@ -6,10 +6,10 @@ namespace ClimateChangeIndicators.Data.Entities
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public double Value { get; set; }
+        public double MeasuredValue { get; set; }
         public int UnitOfMeasurementId { get; set; }
-        public UnitOfMeasurement UnitOfMeasurement { get; set; }
+        public UnitOfMeasurement UnitOfMeasurement { get; set; } = null!;
 
-        public Indicator Indicator { get; set; }
+        public Indicator Indicator { get; set; } = null!;
     }
 }

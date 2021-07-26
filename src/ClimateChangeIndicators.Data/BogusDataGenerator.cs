@@ -45,8 +45,8 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 1, OrganizationId = 1, BranchId = 8 });
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 2, OrganizationId = 2 });
 
-            _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 1, Description = "Increase the number of zero emission vehicles on our roads." });
-            _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 2, Description = "Ensure Yukoners have access to reliable, affordable and renewable energy." });
+            _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 1, ReferenceText = "Increase the number of zero emission vehicles on our roads." });
+            _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 2, ReferenceText = "Ensure Yukoners have access to reliable, affordable and renewable energy." });
 
             _modelBuilder.Entity<Indicator>()
                 .HasData(new Indicator {

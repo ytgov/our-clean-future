@@ -5,12 +5,12 @@ namespace ClimateChangeIndicators.Data
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Indicator> Indicators { get; set; }
-        public DbSet<Owner> Owners { get; set; }
+        public DbSet<Indicator> Indicators { get; set; } = null!;
+        public DbSet<Owner> Owners { get; set; } = null!;
 
-        //public AppDbContext()
-        //{
-        //}
+        public AppDbContext()
+        {
+        }
 
         public AppDbContext(DbContextOptions options) : base(options)
         {

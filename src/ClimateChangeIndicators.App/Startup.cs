@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using MudBlazor.Services;
@@ -57,6 +58,8 @@ namespace ClimateChangeIndicators.App
             services.AddDbContextFactory<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AppContext")));
 #endif
+            services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"))
+                .AddSingleton(sp => sp.GetRequiredService<IOptions<ConnectionStrings>>().Value);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

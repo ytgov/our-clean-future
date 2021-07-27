@@ -7,18 +7,22 @@ namespace ClimateChangeIndicators.Data
     {
         public DbSet<Indicator> Indicators { get; set; } = null!;
         public DbSet<Owner> Owners { get; set; } = null!;
+        public DbSet<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = null!;
+
+        private readonly ConnectionStrings _connectionStrings;
 
         //public AppDbContext()
         //{
         //}
 
-        public AppDbContext(DbContextOptions options) : base(options)
+        public AppDbContext(DbContextOptions options, ConnectionStrings connectionStrings) : base(options)
         {
+            _connectionStrings = connectionStrings;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=EnvClimateChangeIndicators");
+            optionsBuilder.UseSqlServer(_connectionStrings.AppContext);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

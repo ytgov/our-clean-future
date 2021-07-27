@@ -18,18 +18,18 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         private bool _striped = true;
         private bool _isLoaded;
         private bool _mayRender = true;
-        private AppDbContext _context;
-        private List<Indicator> _indicators;
+        private AppDbContext _context = null!;
+        private List<Indicator> _indicators = null!;
         private string _searchString = "";
-        private Indicator _selectedItem;
+        private Indicator _selectedItem = null!;
 
         private Random _rand = new();
 
         [Inject]
-        public IDbContextFactory<AppDbContext> ContextFactory { get; set; }
+        public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
         [Inject]
-        public NavigationManager Navigation { get; set; }
+        public NavigationManager Navigation { get; set; } = null!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -41,7 +41,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                     .ThenInclude(o => o.Organization)
                     .Include(i => i.Owner)
                     .ThenInclude(o => o.Branch)
-                    .ThenInclude(b => b.Department)
+                    .ThenInclude(b => b!.Department)
                     .AsSingleQuery()
                     .ToListAsync();
             }

@@ -12,7 +12,7 @@ Write the Gherkin feature in the title: "Feature: Account Holder withdraws cash"
 -->
 
 <!--
-Acceptance criteria should be defined in a Gherkin syntax (Given, When, Then). Keep this simple.
+Acceptance criteria should be defined by providing examples in Gherkin syntax (Given, When, Then). Keep this simple.
 -->
 
 # Scenario(s)
@@ -29,18 +29,18 @@ Scenario: Account has sufficient funds
 ```
 
 ```gherkin
-Scenario: All done
-  Given I am out shopping
-    And I have eggs
-    And I have milk
-    And I have butter
-  When I check my list
-  Then I don't need anything
+Scenario: Account has insufficient funds
+  Given the account balance is $100
+    And the card is valid
+    And the machine contains enough money
+  When the Account Holder requests $200
+  Then the ATM should inform the Account Holder that they have insufficient funds
+    And display the current account balance
+    And prompt the Account Holder to request a different amount
 ```
 
-# Sprint Ready Checklist 
-1. - [ ] Scenarios defined 
-2. - [ ] Team understands scenarios
-3. - [ ] Team has defined solution / steps to satisfy scenarios
-4. - [ ] Scenarios are verifiable / testable 
-5. - [ ] External dependencies identified
+# Feature checklist
+1. - [ ] The scenarios are defined
+2. - [ ] The team understands the scenarios
+3. - [ ] All external dependencies are identified
+4. - [ ] The team has defined a solution that satisfies the scenarios

@@ -8,6 +8,10 @@ assignees:
 ---
 
 <!--
+See the following link if you are unfamiliar with Gherkin: https://github.com/cucumber/docs/blob/main/content/docs/gherkin/reference.md
+-->
+
+<!--
 Write the Gherkin feature in the title: "Feature: Account Holder withdraws cash"
 -->
 

@@ -8,7 +8,7 @@ assignees:
 ---
 
 <!--
-See the following link if you are unfamiliar with Gherkin: https://github.com/cucumber/docs/blob/main/content/docs/gherkin/reference.md
+Read this reference page if you are not yet familiar with Gherkin: https://github.com/cucumber/docs/blob/main/content/docs/gherkin/reference.md
 -->
 
 <!--

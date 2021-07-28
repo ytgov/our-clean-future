@@ -31,7 +31,7 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Department>().HasData(new Department { Id = 6, Name = "Yukon Energy" });
 
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, DepartmentId = 1, Name = "Climate Change Secretariat" });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 1, Name = "Conservation Officer Services" });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 1, Name = "Water Resources" });
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 3, DepartmentId = 1, Name = "Parks" });
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 4, DepartmentId = 1, Name = "Fish and Wildlife" });
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 5, DepartmentId = 1, Name = "Conservation Officer Services" });
@@ -44,9 +44,15 @@ namespace ClimateChangeIndicators.Data
 
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 1, OrganizationId = 1, BranchId = 8 });
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 2, OrganizationId = 2 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 3, OrganizationId = 1, BranchId = 10 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 4, OrganizationId = 1, BranchId = 7 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 5, OrganizationId = 1, BranchId = 1 });
 
             _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 1, ReferenceText = "Increase the number of zero emission vehicles on our roads." });
             _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 2, ReferenceText = "Ensure Yukoners have access to reliable, affordable and renewable energy." });
+            _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 3, ReferenceText = "Conduct energy assessments of Government of Yukon buildings to identify opportunities for energy efficiency and greenhouse gas reductions, with the first period of assessments completed by 2025 and the second period completed by 2030." });
+            _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 4, ReferenceText = "Supply more of what we eat through sustainable local food production." });
+            _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 5, ReferenceText = "LEADERSHIP" });
 
             _modelBuilder.Entity<Indicator>()
                 .HasData(new Indicator {
@@ -70,6 +76,42 @@ namespace ClimateChangeIndicators.Data
                     IsActive = true,
                     OurCleanFutureReferenceId = 2,
                     OwnerId = 2
+                });
+
+            _modelBuilder.Entity<Indicator>()
+                .HasData(new Indicator {
+                    Id = 3,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of energy assessments of Government of Yukon buildings completed during the reporting year.",
+                    Title = "YG buildings - energy assessments completed",
+                    IsActive = true,
+                    OurCleanFutureReferenceId = 3,
+                    OwnerId = 3
+                });
+
+            _modelBuilder.Entity<Indicator>()
+                .HasData(new Indicator {
+                    Id = 4,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Yukon Agricultural Self-Sufficiency Indicator",
+                    Title = "Food self-sufficiency",
+                    IsActive = true,
+                    OurCleanFutureReferenceId = 4,
+                    OwnerId = 4
+                });
+
+            _modelBuilder.Entity<Indicator>()
+                .HasData(new Indicator {
+                    Id = 5,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Total GHGs from the Government of Yukon's operations",
+                    Title = "YG GHGs - total",
+                    IsActive = true,
+                    OurCleanFutureReferenceId = 5,
+                    OwnerId = 5
                 });
 
             //var indicatorId = 1;

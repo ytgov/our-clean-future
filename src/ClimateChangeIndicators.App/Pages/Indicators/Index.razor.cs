@@ -1,4 +1,6 @@
-﻿using ClimateChangeIndicators.Data;
+﻿using AutoMapper;
+using ClimateChangeIndicators.App.ViewModels;
+using ClimateChangeIndicators.Data;
 using ClimateChangeIndicators.Data.Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +21,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         private bool _isLoaded;
         private bool _mayRender = true;
         private AppDbContext _context = null!;
-        private List<Indicator> _indicators = null!;
+        private List<IndicatorViewModel> _indicators = null!;
         private string _searchString = "";
         private Indicator _selectedItem = null!;
 
@@ -31,11 +33,14 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         [Inject]
         public NavigationManager Navigation { get; set; } = null!;
 
+        [Inject]
+        public IMapper Mapper { get; set; } = null!;
+
         protected override async Task OnInitializedAsync()
         {
             try {
                 _context = ContextFactory.CreateDbContext();
-                _indicators = await _context.Indicators
+                var result = await _context.Indicators
                     .Include(i => i.OurCleanFutureReference)
                     .Include(i => i.Owner)
                     .ThenInclude(o => o.Organization)
@@ -44,6 +49,9 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                     .ThenInclude(b => b!.Department)
                     .AsSingleQuery()
                     .ToListAsync();
+
+                _indicators = Mapper.Map<List<IndicatorViewModel>>(result);
+
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);

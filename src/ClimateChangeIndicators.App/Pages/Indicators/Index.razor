@@ -9,7 +9,7 @@
 else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <MudTable Items="@_indicators" Dense="@_dense" Hover="@_hover" Bordered="@_bordered" Striped="@_striped" @bind-SelectedItem="_selectedItem" Filter="new Func<Data.Entities.Indicator,bool>(FilterFunc)">
+        <MudTable Items="@_indicators" Dense="@_dense" Hover="@_hover" Bordered="@_bordered" Striped="@_striped">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Indicators</MudText>
                 <MudToolBarSpacer />
@@ -28,7 +28,7 @@ else
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Id">@context.Id</MudTd>
-                <MudTd DataLabel="Owner">@context.Owner.ToString()</MudTd>
+                <MudTd DataLabel="Owner">@context.OwnerToString()</MudTd>
                 <MudTd DataLabel="Title">@context.Title</MudTd>
                 <MudTd DataLabel="Description">@context.Description</MudTd>
                 <MudTd DataLabel="Next Collection">@_rand.Next(-30,76) days </MudTd>

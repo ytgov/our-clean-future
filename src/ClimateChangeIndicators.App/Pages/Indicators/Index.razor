@@ -9,49 +9,57 @@
 else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <MudTable Items="@_indicators" Dense="@_dense" Hover="@_hover" Bordered="@_bordered" Striped="@_striped" @bind-SelectedItem="_selectedItem" Filter="new Func<Data.Entities.Indicator,bool>(FilterFunc)">
+        <MudTable Items="@_indicators" Dense="@_dense" Hover="@_hover" Bordered="@_bordered" Striped="@_striped" @bind-SelectedItem="_selectedItem" Filter="new Func<ViewModels.IndicatorIndexViewModel,bool>(FilterFunc)">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Indicators</MudText>
-                <MudToolBarSpacer />
+                <MudSpacer />
                 <MudTextField @bind-Value="_searchString" Placeholder="Search by owner or title" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-                <MudToolBarSpacer />
+                <MudSpacer />
                 <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Create())">New Indicator</MudButton>
             </ToolBarContent>
             <HeaderContent>
                 <MudTh>Id</MudTh>
                 <MudTh>Owner</MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, string>(i => i.Title)">Title</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<ViewModels.IndicatorIndexViewModel, string>(i => i.Title)">Title</MudTableSortLabel></MudTh>
                 <MudTh>Description</MudTh>
+                <MudTh>Trend</MudTh>
                 <MudTh>Next Collection</MudTh>
                 <MudTh></MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Id">@context.Id</MudTd>
-                <MudTd DataLabel="Owner">@context.Owner.ToString()</MudTd>
+                <MudTd DataLabel="Owner">@context.OwnerToString()</MudTd>
                 <MudTd DataLabel="Title">@context.Title</MudTd>
                 <MudTd DataLabel="Description">@context.Description</MudTd>
+                <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingUp" /></MudTd>
                 <MudTd DataLabel="Next Collection">@_rand.Next(-30,76) days </MudTd>
-                <MudTd><MudIcon Icon="@Icons.Material.Filled.ReportProblem" Color="Color.Warning"/></MudTd>
+                <MudTd><MudIcon Icon="@Icons.Material.Filled.ReportProblem" Color="Color.Warning" /></MudTd>
                 <MudTd>
-                    <MudTooltip Text="Details">
+                    <MudMenu Icon="@Icons.Material.Filled.MoreVert">
+                        <MudMenuItem>View</MudMenuItem>
+                        <MudMenuItem>Edit</MudMenuItem>
+                        <MudMenuItem>Delete</MudMenuItem>
+                    </MudMenu>
+                    @* <MudTooltip Text="Details">
                         <MudIconButton Icon="@Icons.Material.Filled.Info" OnClick="(() => Details(context.Id))"></MudIconButton>
-                    </MudTooltip>
-                    <MudTooltip Text="Edit">
+                        </MudTooltip>
+                        <MudTooltip Text="Edit">
                         <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary"></MudIconButton>
-                    </MudTooltip>
-                    <MudTooltip Text="Delete">
+                        </MudTooltip>
+                        <MudTooltip Text="Delete">
                         <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"></MudIconButton>
-                    </MudTooltip>
+                        </MudTooltip>*@
                 </MudTd>
             </RowTemplate>
         </MudTable>
         <div class="d-flex flex-wrap mt-4">
-            <MudSwitch @bind-Checked="@_hover" Color="Color.Primary">Hover</MudSwitch>
+            @*<MudSwitch @bind-Checked="@_hover" Color="Color.Primary">Hover</MudSwitch>
             <MudSwitch @bind-Checked="@_dense" Color="Color.Secondary">Dense</MudSwitch>
             <MudSwitch @bind-Checked="@_striped" Color="Color.Tertiary">Striped</MudSwitch>
-            <MudSwitch @bind-Checked="@_bordered" Color="Color.Warning">Bordered</MudSwitch>
-            <MudToolBarSpacer />
+            <MudSwitch @bind-Checked="@_bordered" Color="Color.Warning">Bordered</MudSwitch>*@
+            <MudSwitch Checked="true" Color="Color.Tertiary">Show inactive indicators</MudSwitch>
+            <MudSpacer />
             <MudText Inline="true" Class="align-self-center" Style="min-width:200px;">Selected: @_selectedItem?.Id</MudText>
         </div>
     </MudContainer>

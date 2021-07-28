@@ -18,6 +18,7 @@ using MudBlazor.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ClimateChangeIndicators.App
@@ -44,6 +45,8 @@ namespace ClimateChangeIndicators.App
                 // By default, all incoming requests will be authorized according to the default policy
                 options.FallbackPolicy = options.DefaultPolicy;
             });
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddRazorPages();
             services.AddServerSideBlazor()

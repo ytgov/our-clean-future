@@ -58,7 +58,14 @@ namespace ClimateChangeIndicators.Data
                         .IsRequired()
                         .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Indicator>()
-                        .OwnsMany(i => i.Entries, ie => { ie.ToTable("Entries").WithOwner(e => e.Indicator); ie.HasOne(e => e.UnitOfMeasurement).WithMany().OnDelete(DeleteBehavior.Restrict); });
+                        .OwnsMany(i => i.Entries,
+                            ie => {
+                                ie.ToTable("Entries")
+                                  .WithOwner(e => e.Indicator);
+                                ie.HasOne(e => e.UnitOfMeasurement)
+                                  .WithMany()
+                                  .OnDelete(DeleteBehavior.Restrict);
+                            });
 
             //Generate bogus data for testing
             new BogusDataGenerator(modelBuilder).Init();

@@ -77,6 +77,8 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                 return true;
             if (indicator.Owner.Branch?.Name is not null && indicator.Owner.Branch.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
+            if (indicator.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
             return false;
         }
 

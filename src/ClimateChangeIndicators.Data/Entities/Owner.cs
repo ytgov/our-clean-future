@@ -10,5 +10,15 @@ namespace ClimateChangeIndicators.Data.Entities
         public int? BranchId { get; set; }
         public Branch? Branch { get; set; }
         public List<Indicator> Indicators { get; set; } = new();
+
+        public override string ToString()
+        {
+            if (Branch is null) {
+                return $"{Organization.Name}";
+            }
+            else {
+                return $"{Organization.Name} | {Branch.Department.Name} | {Branch.Name}";
+            }
+        }
     }
 }

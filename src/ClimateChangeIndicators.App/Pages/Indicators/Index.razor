@@ -13,29 +13,25 @@ else
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Indicators</MudText>
                 <MudToolBarSpacer />
-                <MudTextField @bind-Value="_searchString" Placeholder="Search by organization, department, or branch" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                <MudTextField @bind-Value="_searchString" Placeholder="Search by owner or title" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                 <MudToolBarSpacer />
                 <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Create())">New Indicator</MudButton>
             </ToolBarContent>
             <HeaderContent>
                 <MudTh>Id</MudTh>
-                <MudTh>Organization</MudTh>
-                <MudTh>Department</MudTh>
-                <MudTh>Branch</MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, string>(i => i.DisplayName)">Display Name</MudTableSortLabel></MudTh>
+                <MudTh>Owner</MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, string>(i => i.Title)">Title</MudTableSortLabel></MudTh>
                 <MudTh>Description</MudTh>
                 <MudTh>Next Collection</MudTh>
                 <MudTh></MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd>@context.Id</MudTd>
-                <MudTd>@context.Owner.Organization.Name</MudTd>
-                <MudTd>@context.Owner.Branch?.Department.Name</MudTd>
-                <MudTd>@context.Owner.Branch?.Name</MudTd>
-                <MudTd>@context.DisplayName</MudTd>
-                <MudTd>@context.Description</MudTd>
-                <MudTd>@_rand.Next(-30,76) days </MudTd>
+                <MudTd DataLabel="Id">@context.Id</MudTd>
+                <MudTd DataLabel="Owner">@context.Owner.ToString()</MudTd>
+                <MudTd DataLabel="Title">@context.Title</MudTd>
+                <MudTd DataLabel="Description">@context.Description</MudTd>
+                <MudTd DataLabel="Next Collection">@_rand.Next(-30,76) days </MudTd>
                 <MudTd><MudIcon Icon="@Icons.Material.Filled.ReportProblem" Color="Color.Warning"/></MudTd>
                 <MudTd>
                     <MudTooltip Text="Details">

@@ -54,7 +54,7 @@ namespace ClimateChangeIndicators.Data
                     CollectionInterval = CollectionInterval.Biannual,
                     DataType = DataType.Cumulative,
                     Description = "Total number of heavy-duty zero emission vehicles registered in Yukon.",
-                    DisplayName = "ZEVs - Total heavy duty",
+                    Title = "ZEVs - Total heavy duty",
                     IsActive = true,
                     OurCleanFutureReferenceId = 1,
                     OwnerId = 1
@@ -66,7 +66,7 @@ namespace ClimateChangeIndicators.Data
                     CollectionInterval = CollectionInterval.Annual,
                     DataType = DataType.Incremental,
                     Description = "Total electricity generated off-grid during the reporting year (thermal and renewable).",
-                    DisplayName = "Off-grid generation - total",
+                    Title = "Off-grid generation - total",
                     IsActive = true,
                     OurCleanFutureReferenceId = 2,
                     OwnerId = 2

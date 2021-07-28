@@ -6,7 +6,7 @@ namespace ClimateChangeIndicators.Data.Entities
     public class Indicator
     {
         public int Id { get; set; }
-        public string DisplayName { get; set; } = "";
+        public string Title { get; set; } = "";
 
         public int OwnerId { get; set; }
         public Owner Owner { get; set; } = null!;

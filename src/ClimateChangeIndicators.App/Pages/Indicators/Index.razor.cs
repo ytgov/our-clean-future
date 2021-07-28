@@ -21,9 +21,9 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         private bool _isLoaded;
         private bool _mayRender = true;
         private AppDbContext _context = null!;
-        private List<IndicatorViewModel> _indicators = null!;
+        private List<IndicatorIndexViewModel> _indicators = null!;
         private string _searchString = "";
-        private Indicator _selectedItem = null!;
+        private IndicatorIndexViewModel _selectedItem = null!;
 
         private Random _rand = new();
 
@@ -50,8 +50,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                     .AsSingleQuery()
                     .ToListAsync();
 
-                _indicators = Mapper.Map<List<IndicatorViewModel>>(result);
-
+                _indicators = Mapper.Map<List<IndicatorIndexViewModel>>(result);
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
@@ -75,15 +74,15 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
             Navigation.NavigateTo("/indicators/details/" + indicatorId);
         }
 
-        private bool FilterFunc(Indicator indicator)
+        private bool FilterFunc(IndicatorIndexViewModel indicator)
         {
             if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
-            if (indicator.Owner.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            if (indicator.Organization.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (indicator.Owner.Branch?.Department?.Name is not null && indicator.Owner.Branch.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            if (indicator.Department?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
                 return true;
-            if (indicator.Owner.Branch?.Name is not null && indicator.Owner.Branch.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            if (indicator.Branch?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
                 return true;
             if (indicator.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;

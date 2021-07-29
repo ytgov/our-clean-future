@@ -30,23 +30,30 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Department>().HasData(new Department { Id = 5, Name = "Energy, Mines and Resources" });
             _modelBuilder.Entity<Department>().HasData(new Department { Id = 6, Name = "Yukon Energy" });
 
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, DepartmentId = 1, Name = "Climate Change Secretariat" });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 1, Name = "Water Resources" });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 3, DepartmentId = 1, Name = "Parks" });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 4, DepartmentId = 1, Name = "Fish and Wildlife" });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 5, DepartmentId = 1, Name = "Conservation Officer Services" });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 6, DepartmentId = 5, Name = "Forest Resources" });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 7, DepartmentId = 5, Name = "Agriculture" });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 8, DepartmentId = 5, Name = "Energy" });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 9, DepartmentId = 2, Name = "Supply Services" });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 2, Name = "Strategic Initiatives" });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 3, Name = "Culture Services" });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 1, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 2, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 3, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 4, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 5, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 6, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 7, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 8, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 9, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 10, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 11, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 12, OrganizationId = 2 });
 
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 1, OrganizationId = 1, BranchId = 8 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 2, OrganizationId = 2 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 3, OrganizationId = 1, BranchId = 10 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 4, OrganizationId = 1, BranchId = 7 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 5, OrganizationId = 1, BranchId = 1 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, DepartmentId = 1, Name = "Climate Change Secretariat", OwnerId = 1 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 1, Name = "Water Resources", OwnerId = 2 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 3, DepartmentId = 1, Name = "Parks", OwnerId = 3 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 4, DepartmentId = 1, Name = "Fish and Wildlife", OwnerId = 4 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 5, DepartmentId = 1, Name = "Conservation Officer Services", OwnerId = 5 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 6, DepartmentId = 5, Name = "Forest Resources", OwnerId = 6 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 7, DepartmentId = 5, Name = "Agriculture", OwnerId = 7 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 8, DepartmentId = 5, Name = "Energy", OwnerId = 8 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 9, DepartmentId = 2, Name = "Supply Services", OwnerId = 9 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 2, Name = "Strategic Initiatives", OwnerId = 10 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 3, Name = "Culture Services", OwnerId = 11 });
 
             _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 1, ReferenceText = "Increase the number of zero emission vehicles on our roads." });
             _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 2, ReferenceText = "Ensure Yukoners have access to reliable, affordable and renewable energy." });
@@ -63,7 +70,7 @@ namespace ClimateChangeIndicators.Data
                     Title = "ZEVs - Total heavy duty",
                     IsActive = true,
                     OurCleanFutureReferenceId = 1,
-                    OwnerId = 1
+                    OwnerId = 8
                 });
 
             _modelBuilder.Entity<Indicator>()
@@ -75,7 +82,7 @@ namespace ClimateChangeIndicators.Data
                     Title = "Off-grid generation - total",
                     IsActive = true,
                     OurCleanFutureReferenceId = 2,
-                    OwnerId = 2
+                    OwnerId = 12
                 });
 
             _modelBuilder.Entity<Indicator>()
@@ -87,7 +94,7 @@ namespace ClimateChangeIndicators.Data
                     Title = "YG buildings - energy assessments completed",
                     IsActive = true,
                     OurCleanFutureReferenceId = 3,
-                    OwnerId = 3
+                    OwnerId = 10
                 });
 
             _modelBuilder.Entity<Indicator>()
@@ -99,7 +106,7 @@ namespace ClimateChangeIndicators.Data
                     Title = "Food self-sufficiency",
                     IsActive = true,
                     OurCleanFutureReferenceId = 4,
-                    OwnerId = 4
+                    OwnerId = 7
                 });
 
             _modelBuilder.Entity<Indicator>()
@@ -111,7 +118,7 @@ namespace ClimateChangeIndicators.Data
                     Title = "YG GHGs - total",
                     IsActive = true,
                     OurCleanFutureReferenceId = 5,
-                    OwnerId = 5
+                    OwnerId = 1
                 });
 
             //var indicatorId = 1;

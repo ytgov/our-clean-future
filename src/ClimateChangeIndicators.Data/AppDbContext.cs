@@ -50,12 +50,17 @@ namespace ClimateChangeIndicators.Data
                         .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Owner>()
                         .HasOne(o => o.Branch)
-                        .WithMany()
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .WithOne()
+                        .HasForeignKey<Branch>(b => b.OwnerId)
+                        .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Indicator>()
                         .HasOne(i => i.Owner)
                         .WithMany(o => o.Indicators)
                         .IsRequired()
+                        .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Indicator>()
+                        .HasOne(i => i.OurCleanFutureReference)
+                        .WithMany(o => o.Indicators)
                         .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Indicator>()
                         .OwnsMany(i => i.Entries,

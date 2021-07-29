@@ -31,24 +31,20 @@ namespace ClimateChangeIndicators.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Organization>()
+                        .ToTable("Organizations");
+            modelBuilder.Entity<Branch>()
+                        .ToTable("Branches")
+                        .Ignore(b => b.Owner);
+            modelBuilder.Entity<Department>()
+                        .ToTable("Departments");
+            modelBuilder.Entity<OurCleanFutureReference>()
+                        .ToTable("OurCleanFutureReferences");
             modelBuilder.Entity<UnitOfMeasurement>()
                         .ToTable("UnitsOfMeasurement")
                         .HasIndex(u => u.Symbol)
                         .IsUnique();
-            modelBuilder.Entity<Organization>()
-                        .ToTable("Organizations");
-            modelBuilder.Entity<Branch>()
-                        .ToTable("Branches");
-            modelBuilder.Entity<OurCleanFutureReference>()
-                        .ToTable("OurCleanFutureReferences");
-            modelBuilder.Entity<Department>()
-                        .ToTable("Departments");
-            modelBuilder.Entity<Indicator>()
-                        .Property(i => i.DataType)
-                        .HasConversion<string>();
-            modelBuilder.Entity<Indicator>()
-                        .Property(i => i.CollectionInterval)
-                        .HasConversion<string>();
+
             modelBuilder.Entity<Owner>()
                         .HasOne(o => o.Organization)
                         .WithMany()
@@ -59,6 +55,13 @@ namespace ClimateChangeIndicators.Data
                         .WithOne()
                         .HasForeignKey<Branch>(b => b.OwnerId)
                         .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Indicator>()
+                        .Property(i => i.DataType)
+                        .HasConversion<string>();
+            modelBuilder.Entity<Indicator>()
+                        .Property(i => i.CollectionInterval)
+                        .HasConversion<string>();
             modelBuilder.Entity<Indicator>()
                         .HasOne(i => i.Owner)
                         .WithMany(o => o.Indicators)

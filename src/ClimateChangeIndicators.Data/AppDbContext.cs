@@ -32,7 +32,9 @@ namespace ClimateChangeIndicators.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UnitOfMeasurement>()
-                        .ToTable("UnitsOfMeasurement");
+                        .ToTable("UnitsOfMeasurement")
+                        .HasIndex(u => u.Symbol)
+                        .IsUnique();
             modelBuilder.Entity<Organization>()
                         .ToTable("Organizations");
             modelBuilder.Entity<Branch>()

@@ -11,6 +11,7 @@ namespace ClimateChangeIndicators.Data
 
         private readonly ConnectionStrings _connectionStrings;
 
+        //Uncomment to allow EF Core Power Tools to generate a diagram
         //public AppDbContext()
         //{
         //}
@@ -23,6 +24,9 @@ namespace ClimateChangeIndicators.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_connectionStrings.AppContext);
+
+            //Uncomment to allow EF Core Power Tools to generate a diagram
+            //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=EnvClimateChangeIndicators; Integrated Security=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

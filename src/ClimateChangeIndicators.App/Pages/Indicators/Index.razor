@@ -32,9 +32,20 @@ else
                 <MudTd DataLabel="Owner">@context.OwnerToString()</MudTd>
                 <MudTd DataLabel="Title">@context.Title</MudTd>
                 <MudTd DataLabel="Description">@context.Description</MudTd>
-                <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingUp" /></MudTd>
-                <MudTd DataLabel="Next Collection">@_rand.Next(-30,76) days </MudTd>
-                <MudTd><MudIcon Icon="@Icons.Material.Filled.ReportProblem" Color="Color.Warning" /></MudTd>
+                @if (context.Id % 2 == 0)
+                    {
+                    <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingUp" /></MudTd>
+                    }
+                    else if (context.Id == 3)
+                    {
+                    <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingFlat" /></MudTd>
+                    }
+                    else
+                    {
+                    <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingDown" /></MudTd>
+                    }
+                <MudTd DataLabel="Next Collection">@_rand.Next(-30, 76) days </MudTd>
+                @*<MudTd><MudIcon Icon="@Icons.Material.Filled.ReportProblem" Color="Color.Warning" /></MudTd>*@
                 <MudTd>
                     <MudMenu Icon="@Icons.Material.Filled.MoreVert">
                         <MudMenuItem>View</MudMenuItem>
@@ -42,14 +53,14 @@ else
                         <MudMenuItem>Delete</MudMenuItem>
                     </MudMenu>
                     @* <MudTooltip Text="Details">
-                        <MudIconButton Icon="@Icons.Material.Filled.Info" OnClick="(() => Details(context.Id))"></MudIconButton>
-                        </MudTooltip>
-                        <MudTooltip Text="Edit">
-                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary"></MudIconButton>
-                        </MudTooltip>
-                        <MudTooltip Text="Delete">
-                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"></MudIconButton>
-                        </MudTooltip>*@
+            <MudIconButton Icon="@Icons.Material.Filled.Info" OnClick="(() => Details(context.Id))"></MudIconButton>
+            </MudTooltip>
+            <MudTooltip Text="Edit">
+            <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary"></MudIconButton>
+            </MudTooltip>
+            <MudTooltip Text="Delete">
+            <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"></MudIconButton>
+            </MudTooltip>*@
                 </MudTd>
             </RowTemplate>
         </MudTable>
@@ -60,7 +71,7 @@ else
             <MudSwitch @bind-Checked="@_bordered" Color="Color.Warning">Bordered</MudSwitch>*@
             <MudSwitch Checked="true" Color="Color.Tertiary">Show inactive indicators</MudSwitch>
             <MudSpacer />
-            <MudText Inline="true" Class="align-self-center" Style="min-width:200px;">Selected: @_selectedItem?.Id</MudText>
+            @*<MudText Inline="true" Class="align-self-center" Style="min-width:200px;">Selected: @_selectedItem?.Id</MudText>*@
         </div>
     </MudContainer>
 }

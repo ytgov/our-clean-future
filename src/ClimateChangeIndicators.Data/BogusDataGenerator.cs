@@ -20,6 +20,10 @@ namespace ClimateChangeIndicators.Data
 
         public void Init()
         {
+            _modelBuilder.Entity<UnitOfMeasurement>().HasData(new UnitOfMeasurement { Id = 1, Name = "Kilograms of carbon dioxide equivalent", Symbol = "kgCO2e" });
+            _modelBuilder.Entity<UnitOfMeasurement>().HasData(new UnitOfMeasurement { Id = 2, Name = "Count", Symbol = "Count" });
+
+
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 1, Name = "Yukon Government" });
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 2, Name = "ATCO Electric Yukon" });
 
@@ -69,7 +73,8 @@ namespace ClimateChangeIndicators.Data
                     Title = "ZEVs - Total heavy duty",
                     IsActive = true,
                     OurCleanFutureReferenceId = 1,
-                    OwnerId = 8
+                    OwnerId = 8,
+                    UnitOfMeasurementId = 2
                 });
 
             _modelBuilder.Entity<Indicator>()
@@ -81,7 +86,8 @@ namespace ClimateChangeIndicators.Data
                     Title = "Off-grid generation - total",
                     IsActive = true,
                     OurCleanFutureReferenceId = 2,
-                    OwnerId = 12
+                    OwnerId = 12,
+                    UnitOfMeasurementId = 2
                 });
 
             _modelBuilder.Entity<Indicator>()
@@ -93,7 +99,8 @@ namespace ClimateChangeIndicators.Data
                     Title = "YG buildings - energy assessments completed",
                     IsActive = true,
                     OurCleanFutureReferenceId = 3,
-                    OwnerId = 10
+                    OwnerId = 10,
+                    UnitOfMeasurementId = 2
                 });
 
             _modelBuilder.Entity<Indicator>()
@@ -105,7 +112,8 @@ namespace ClimateChangeIndicators.Data
                     Title = "Food self-sufficiency",
                     IsActive = true,
                     OurCleanFutureReferenceId = 4,
-                    OwnerId = 7
+                    OwnerId = 7,
+                    UnitOfMeasurementId = 2
                 });
 
             _modelBuilder.Entity<Indicator>()
@@ -117,7 +125,8 @@ namespace ClimateChangeIndicators.Data
                     Title = "YG GHGs - total",
                     IsActive = true,
                     OurCleanFutureReferenceId = 5,
-                    OwnerId = 1
+                    OwnerId = 1,
+                    UnitOfMeasurementId = 1
                 });
 
             //var indicatorId = 1;

@@ -8,6 +8,7 @@ namespace ClimateChangeIndicators.Data
         public DbSet<Indicator> Indicators { get; set; } = null!;
         public DbSet<Owner> Owners { get; set; } = null!;
         public DbSet<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = null!;
+        public DbSet<OurCleanFutureReference> OurCleanFutureReferences { get; set; } = null!;
 
         private readonly ConnectionStrings _connectionStrings;
 
@@ -68,6 +69,10 @@ namespace ClimateChangeIndicators.Data
                         .IsRequired()
                         .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Indicator>()
+                        .HasOne(i => i.UnitOfMeasurement)
+                        .WithMany()
+                        .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Indicator>()
                         .HasOne(i => i.OurCleanFutureReference)
                         .WithMany(o => o.Indicators)
                         .OnDelete(DeleteBehavior.Restrict);
@@ -76,9 +81,6 @@ namespace ClimateChangeIndicators.Data
                             ie => {
                                 ie.ToTable("Entries")
                                   .WithOwner(e => e.Indicator);
-                                ie.HasOne(e => e.UnitOfMeasurement)
-                                  .WithMany()
-                                  .OnDelete(DeleteBehavior.Restrict);
                             });
 
             //Generate bogus data for testing

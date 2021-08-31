@@ -20,9 +20,9 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         public int Id { get; set; }
 
         public List<Owner> Owners { get; set; } = new();
-        public List<UnitOfMeasurement> UnitsOfMeasurement { get; set; }
-        public List<OurCleanFutureReference> OurCleanFutureReferences { get; set; }
-        public Indicator _indicator { get; set; }
+        public List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
+        public List<OurCleanFutureReference> OurCleanFutureReferences { get; set; } = new();
+        public Indicator _indicator { get; set; } = null!;
 
         private readonly CollectionInterval[] _collectionIntervals = (CollectionInterval[])Enum.GetValues(typeof(CollectionInterval));
 
@@ -30,10 +30,10 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
         [Inject]
-        public NavigationManager Navigation { get; set; }
+        public NavigationManager Navigation { get; set; } = null!;
 
         [Inject]
-        public ISnackbar Snackbar { get; set; }
+        public ISnackbar Snackbar { get; set; } = null!;
 
         protected override async Task OnInitializedAsync()
         {

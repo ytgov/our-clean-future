@@ -2,14 +2,14 @@
 
 @if (_isLoaded == false)
 {
-    <p><em>Loading...</em></p>
+    @*<p><em>Loading...</em></p>*@
 }
 else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
         <MudText Typo="Typo.h3" GutterBottom="true">Edit indicator</MudText>
         <MudAlert Icon="@Icons.Material.Filled.Lightbulb" Severity="Severity.Normal" Class="mb-6">
-            If you need to modify any value within the dropdown menus, you can do that from the <b>Administration</b> menu in the lefthand navigation bar.
+            If you need to modify a value within the dropdown menus, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
         </MudAlert>
         <EditForm Model="@_indicator" OnValidSubmit="Update">
             <MudGrid>
@@ -18,7 +18,8 @@ else
                         <MudSelect T="Data.Entities.Owner" Label="Lead" @bind-Value="_indicator.Owner">
                             @foreach (var owner in Owners)
                             {
-                                <MudSelectItem Value="owner">@(owner.Branch?.Name ?? owner.Organization.Name)</MudSelectItem>
+                                @*<MudSelectItem Value="owner">@(owner.Branch?.Name ?? owner.Organization.Name)</MudSelectItem>*@
+                                <MudSelectItem Value="owner">@owner.ToString()</MudSelectItem>
                             }
                         </MudSelect>
                         <MudTextField Label="Title" T="string" @bind-Value="_indicator.Title" />

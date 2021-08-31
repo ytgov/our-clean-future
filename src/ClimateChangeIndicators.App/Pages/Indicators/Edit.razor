@@ -1,0 +1,43 @@
+﻿@page "/indicators/edit/{id:int}"
+
+@if (_isLoaded == false)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudText Typo="Typo.h3" GutterBottom="true">Edit indicator</MudText>
+        <EditForm Model="@_indicator" OnValidSubmit="Update">
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudSelect T="Data.Entities.Owner" Label="Lead" @bind-Value="_indicator.Owner">
+                            @foreach (var owner in Owners)
+                            {
+                                <MudSelectItem Value="@owner">@(owner.Branch?.Name ?? owner.Organization.Name)</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudTextField Label="Title" T="string" @bind-Value="_indicator.Title" />
+                        <MudTextField Label="Description" T="string" @bind-Value="_indicator.Description" Lines="2" />
+                        <MudAutocomplete Label="Collection Interval" T="Data.Entities.CollectionInterval" SearchFunc="@SearchCollectionIntervals"
+                                         CoerceText="true" SelectValueOnTab="true" ResetValueOnEmptyText="true" @bind-Value="_indicator.CollectionInterval">
+
+                        </MudAutocomplete>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudSwitch @bind-Checked="@_indicator.IsActive" Color="Color.Info">@(_indicator.IsActive?"Active":"Inactive")</MudSwitch>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
+                    <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/indicators">Cancel</MudButton>
+                    <MudButton ButtonType="ButtonType.Submit" Disabled="true" />
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
+                </MudItem>
+            </MudGrid>
+        </EditForm>
+    </MudContainer>
+}

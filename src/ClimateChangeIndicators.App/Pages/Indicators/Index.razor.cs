@@ -16,6 +16,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         private bool _dense = true;
         private bool _hover = true;
         private bool _striped = true;
+        private bool _showInactiveIndicators;
         private bool _isLoaded;
         private bool _mayRender = true;
         private AppDbContext _context = null!;
@@ -67,8 +68,14 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
             Navigation.NavigateTo("/indicators/details/" + indicatorId);
         }
 
+        private void Edit(int indicatorId)
+        {
+            Navigation.NavigateTo("/indicators/edit/" + indicatorId);
+        }
+
         private bool FilterFunc(Indicator indicator)
         {
+
             if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
             if (indicator.Owner.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))

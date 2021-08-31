@@ -23,12 +23,11 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 1, Name = "Yukon Government" });
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 2, Name = "ATCO Electric Yukon" });
 
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 1, Name = "Environment" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 2, Name = "Highways and Public Works" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 3, Name = "Tourism and Culture" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 4, Name = "Finance" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 5, Name = "Energy, Mines and Resources" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 6, Name = "Yukon Energy" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 1, Name = "Environment", ShortName = "ENV" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 2, Name = "Highways and Public Works", ShortName = "HPW" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 3, Name = "Tourism and Culture", ShortName = "TC" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 4, Name = "Finance", ShortName = "FIN" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 5, Name = "Energy, Mines and Resources", ShortName = "EMR" });
 
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 1, OrganizationId = 1 });
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 2, OrganizationId = 1 });

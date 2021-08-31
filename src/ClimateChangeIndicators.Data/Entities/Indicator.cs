@@ -23,15 +23,5 @@ namespace ClimateChangeIndicators.Data.Entities
 
         public string Notes { get; set; } = "";
         public bool IsActive { get; set; }
-
-        public override string ToString()
-        {
-            if (string.IsNullOrWhiteSpace(Owner.Branch?.Name)) {
-                return $"{Owner.Organization.Name}";
-            }
-            else {
-                return $"{Owner.Branch.Department.Name} | {Owner.Branch.Name}";
-            }
-        }
     }
 }

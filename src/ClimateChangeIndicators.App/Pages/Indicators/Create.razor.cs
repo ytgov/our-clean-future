@@ -26,7 +26,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         {
             try {
                 _context = ContextFactory.CreateDbContext();
-                Owners = await _context.Owners.Include(o => o.Organization).Include(o => o.Branch).ThenInclude(b => b.Department).OrderBy(o => o.Branch.Name).ToListAsync();
+                Owners = await _context.Owners.Include(o => o.Organization).Include(o => o.Branch).ThenInclude(b => b!.Department).OrderBy(o => o.Branch!.Name).ToListAsync();
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);

@@ -46,8 +46,6 @@ namespace ClimateChangeIndicators.App
                 options.FallbackPolicy = options.DefaultPolicy;
             });
 
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-
             services.AddRazorPages();
             services.AddServerSideBlazor()
                 .AddMicrosoftIdentityConsentHandler();

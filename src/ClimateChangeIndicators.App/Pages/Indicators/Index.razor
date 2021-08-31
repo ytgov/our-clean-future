@@ -9,7 +9,7 @@
 else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <MudTable Items="@_indicators" Dense="@_dense" Hover="@_hover" Bordered="@_bordered" Striped="@_striped" @bind-SelectedItem="_selectedItem" Filter="new Func<ViewModels.IndicatorIndexViewModel,bool>(FilterFunc)">
+        <MudTable Items="@_indicators" Dense="@_dense" Hover="@_hover" Bordered="@_bordered" Striped="@_striped" @bind-SelectedItem="_selectedItem" Filter="new Func<Data.Entities.Indicator,bool>(FilterFunc)">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Indicators</MudText>
                 <MudSpacer />
@@ -19,8 +19,8 @@ else
             </ToolBarContent>
             <HeaderContent>
                 <MudTh>Id</MudTh>
-                <MudTh>Owner</MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<ViewModels.IndicatorIndexViewModel, string>(i => i.Title)">Title</MudTableSortLabel></MudTh>
+                <MudTh>Lead</MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, string>(i => i.Title)">Title</MudTableSortLabel></MudTh>
                 <MudTh>Description</MudTh>
                 <MudTh>Trend</MudTh>
                 <MudTh>Next Collection</MudTh>
@@ -29,7 +29,7 @@ else
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Id">@context.Id</MudTd>
-                <MudTd DataLabel="Owner">@context.OwnerToString()</MudTd>
+                <MudTd DataLabel="Lead">@context.ToString()</MudTd>
                 <MudTd DataLabel="Title">@context.Title</MudTd>
                 <MudTd DataLabel="Description">@context.Description</MudTd>
                 @if (context.Id % 2 == 0)

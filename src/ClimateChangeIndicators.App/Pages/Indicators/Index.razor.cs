@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using ClimateChangeIndicators.App.ViewModels;
-using ClimateChangeIndicators.Data;
+﻿using ClimateChangeIndicators.Data;
 using ClimateChangeIndicators.Data.Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
@@ -21,9 +19,9 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         private bool _isLoaded;
         private bool _mayRender = true;
         private AppDbContext _context = null!;
-        private List<IndicatorIndexViewModel> _indicators = null!;
+        private List<Indicator> _indicators = null!;
         private string _searchString = "";
-        private IndicatorIndexViewModel _selectedItem = null!;
+        private Indicator _selectedItem = null!;
 
         private Random _rand = new();
 
@@ -33,14 +31,11 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         [Inject]
         public NavigationManager Navigation { get; set; } = null!;
 
-        [Inject]
-        public IMapper Mapper { get; set; } = null!;
-
         protected override async Task OnInitializedAsync()
         {
             try {
                 _context = ContextFactory.CreateDbContext();
-                var result = await _context.Indicators
+                _indicators = await _context.Indicators
                     .Include(i => i.OurCleanFutureReference)
                     .Include(i => i.Owner)
                     .ThenInclude(o => o.Organization)
@@ -49,8 +44,6 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                     .ThenInclude(b => b!.Department)
                     .AsSingleQuery()
                     .ToListAsync();
-
-                _indicators = Mapper.Map<List<IndicatorIndexViewModel>>(result);
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
@@ -74,15 +67,15 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
             Navigation.NavigateTo("/indicators/details/" + indicatorId);
         }
 
-        private bool FilterFunc(IndicatorIndexViewModel indicator)
+        private bool FilterFunc(Indicator indicator)
         {
             if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
-            if (indicator.Organization.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            if (indicator.Owner.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
-            if (indicator.Department?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            if (indicator.Owner.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
                 return true;
-            if (indicator.Branch?.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            if (indicator.Owner.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
                 return true;
             if (indicator.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;

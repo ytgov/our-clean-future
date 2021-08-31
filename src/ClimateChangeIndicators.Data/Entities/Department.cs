@@ -9,6 +9,8 @@ namespace ClimateChangeIndicators.Data.Entities
 
         public string Name { get; set; } = "";
 
+        public string ShortName { get; set; } = "";
+
         public List<Branch> Branches { get; set; } = new();
     }
 }

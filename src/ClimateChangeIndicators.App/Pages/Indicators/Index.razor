@@ -53,22 +53,11 @@ else
                         <MudMenuItem OnClick="(() => Edit(context.Id))">Edit</MudMenuItem>
                         <MudMenuItem>Delete</MudMenuItem>
                     </MudMenu>
-                    @*
-            <MudTooltip Text="Details">
-                <MudIconButton Icon="@Icons.Material.Filled.Info" OnClick="(() => Details(context.Id))"></MudIconButton>
-            </MudTooltip>
-
-                <MudTooltip Text="Edit">
-                <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary"></MudIconButton>
-                </MudTooltip>
-                <MudTooltip Text="Delete">
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error"></MudIconButton>
-                </MudTooltip>*@
                 </MudTd>
             </RowTemplate>
         </MudTable>
         <div class="d-flex flex-wrap mt-4">
-            <MudSwitch T="bool" @ref="ShowInactive" CheckedChanged="ToggleActiveIndicators" Color="Color.Tertiary">Show inactive indicators</MudSwitch>
+            <MudSwitch T="bool" @ref="ShowInactiveIndicators" CheckedChanged="ToggleInactiveIndicators" Color="Color.Tertiary">Show inactive indicators</MudSwitch>
             <MudSpacer />
         </div>
     </MudContainer>

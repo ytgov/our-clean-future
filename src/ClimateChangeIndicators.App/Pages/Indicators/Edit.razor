@@ -43,10 +43,10 @@ else
                                          CoerceText="true" SelectValueOnTab="true" ResetValueOnEmptyText="true" @bind-Value="_indicator.CollectionInterval">
                         </MudAutocomplete>
                         <MudItem Class="mb-16">
-                            <MudSelect Label="OCF Reference" T="Data.Entities.OurCleanFutureReference" @bind-Value="_indicator.OurCleanFutureReference" DisableUnderLine="true">
-                                @foreach (var reference in OurCleanFutureReferences)
+                            <MudSelect Label="Action" T="Data.Entities.Action" @bind-Value="_indicator.Action" DisableUnderLine="true">
+                                @foreach (var action in Actions)
                                 {
-                                    <MudSelectItem Value="reference">@reference.ReferenceText</MudSelectItem>
+                                    <MudSelectItem Value="action">@action.ReferenceText</MudSelectItem>
                                 }
                             </MudSelect>
                         </MudItem>

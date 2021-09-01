@@ -37,7 +37,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
             try {
                 _context = ContextFactory.CreateDbContext();
                 _indicators = await _context.Indicators
-                    .Include(i => i.OurCleanFutureReference)
+                    .Include(i => i.Action)
                     .Include(i => i.Owner)
                     .ThenInclude(o => o.Organization)
                     .Include(i => i.Owner)

@@ -21,7 +21,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
 
         public List<Owner> Owners { get; set; } = new();
         public List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
-        public List<OurCleanFutureReference> OurCleanFutureReferences { get; set; } = new();
+        public List<Data.Entities.Action> Actions { get; set; } = new();
         public Indicator _indicator { get; set; } = null!;
 
         private readonly CollectionInterval[] _collectionIntervals = (CollectionInterval[])Enum.GetValues(typeof(CollectionInterval));
@@ -41,7 +41,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                 _context = ContextFactory.CreateDbContext();
                 Owners = await _context.Owners.Include(o => o.Organization).Include(o => o.Branch).ThenInclude(b => b!.Department).OrderBy(o => o.Branch!.Name).ToListAsync();
                 UnitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
-                OurCleanFutureReferences = await _context.OurCleanFutureReferences.ToListAsync();
+                Actions = await _context.OurCleanFutureReferences.ToListAsync();
                 _indicator = await _context.Indicators.FindAsync(Id);
             }
             catch (Exception ex) {

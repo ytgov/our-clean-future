@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Bogus;
 using ClimateChangeIndicators.Data.Entities;
+using Action = ClimateChangeIndicators.Data.Entities.Action;
 
 namespace ClimateChangeIndicators.Data
 {
@@ -58,11 +59,11 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 2, Name = "Strategic Initiatives", OwnerId = 10 });
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 3, Name = "Culture Services", OwnerId = 11 });
 
-            _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 1, ReferenceText = "Increase the number of zero emission vehicles on our roads." });
-            _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 2, ReferenceText = "Ensure Yukoners have access to reliable, affordable and renewable energy." });
-            _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 3, ReferenceText = "Conduct energy assessments of Government of Yukon buildings to identify opportunities for energy efficiency and greenhouse gas reductions, with the first period of assessments completed by 2025 and the second period completed by 2030." });
-            _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 4, ReferenceText = "Supply more of what we eat through sustainable local food production." });
-            _modelBuilder.Entity<OurCleanFutureReference>().HasData(new OurCleanFutureReference { Id = 5, ReferenceText = "LEADERSHIP" });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 1, ReferenceText = "Increase the number of zero emission vehicles on our roads." });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 2, ReferenceText = "Ensure Yukoners have access to reliable, affordable and renewable energy." });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 3, ReferenceText = "Conduct energy assessments of Government of Yukon buildings to identify opportunities for energy efficiency and greenhouse gas reductions, with the first period of assessments completed by 2025 and the second period completed by 2030." });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 4, ReferenceText = "Supply more of what we eat through sustainable local food production." });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 5, ReferenceText = "LEADERSHIP" });
 
             _modelBuilder.Entity<Indicator>()
                 .HasData(new Indicator {
@@ -72,7 +73,7 @@ namespace ClimateChangeIndicators.Data
                     Description = "Total number of heavy-duty zero emission vehicles registered in Yukon.",
                     Title = "ZEVs - Total heavy duty",
                     IsActive = true,
-                    OurCleanFutureReferenceId = 1,
+                    ActionId = 1,
                     OwnerId = 8,
                     UnitOfMeasurementId = 2
                 });
@@ -85,7 +86,7 @@ namespace ClimateChangeIndicators.Data
                     Description = "Total electricity generated off-grid during the reporting year (thermal and renewable).",
                     Title = "Off-grid generation - total",
                     IsActive = true,
-                    OurCleanFutureReferenceId = 2,
+                    ActionId = 2,
                     OwnerId = 12,
                     UnitOfMeasurementId = 2
                 });
@@ -98,7 +99,7 @@ namespace ClimateChangeIndicators.Data
                     Description = "Number of energy assessments of Government of Yukon buildings completed during the reporting year.",
                     Title = "YG buildings - energy assessments completed",
                     IsActive = true,
-                    OurCleanFutureReferenceId = 3,
+                    ActionId = 3,
                     OwnerId = 10,
                     UnitOfMeasurementId = 2
                 });
@@ -111,7 +112,7 @@ namespace ClimateChangeIndicators.Data
                     Description = "Yukon Agricultural Self-Sufficiency Indicator",
                     Title = "Food self-sufficiency",
                     IsActive = true,
-                    OurCleanFutureReferenceId = 4,
+                    ActionId = 4,
                     OwnerId = 7,
                     UnitOfMeasurementId = 2
                 });
@@ -124,7 +125,7 @@ namespace ClimateChangeIndicators.Data
                     Description = "Total GHGs from the Government of Yukon's operations",
                     Title = "YG GHGs - total",
                     IsActive = true,
-                    OurCleanFutureReferenceId = 5,
+                    ActionId = 5,
                     OwnerId = 1,
                     UnitOfMeasurementId = 1
                 });

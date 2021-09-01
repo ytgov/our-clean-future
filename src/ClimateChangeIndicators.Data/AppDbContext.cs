@@ -8,7 +8,7 @@ namespace ClimateChangeIndicators.Data
         public DbSet<Indicator> Indicators { get; set; } = null!;
         public DbSet<Owner> Owners { get; set; } = null!;
         public DbSet<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = null!;
-        public DbSet<OurCleanFutureReference> OurCleanFutureReferences { get; set; } = null!;
+        public DbSet<Action> OurCleanFutureReferences { get; set; } = null!;
 
         private readonly ConnectionStrings _connectionStrings;
 
@@ -39,7 +39,7 @@ namespace ClimateChangeIndicators.Data
                         .Ignore(b => b.Owner);
             modelBuilder.Entity<Department>()
                         .ToTable("Departments");
-            modelBuilder.Entity<OurCleanFutureReference>()
+            modelBuilder.Entity<Action>()
                         .ToTable("OurCleanFutureReferences");
             modelBuilder.Entity<UnitOfMeasurement>()
                         .ToTable("UnitsOfMeasurement")
@@ -73,7 +73,7 @@ namespace ClimateChangeIndicators.Data
                         .WithMany()
                         .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Indicator>()
-                        .HasOne(i => i.OurCleanFutureReference)
+                        .HasOne(i => i.Action)
                         .WithMany(o => o.Indicators)
                         .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Indicator>()

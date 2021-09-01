@@ -9,7 +9,7 @@ else
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
         <MudText Typo="Typo.h3" GutterBottom="true">Edit indicator</MudText>
         <MudAlert Icon="@Icons.Material.Filled.Lightbulb" Severity="Severity.Normal" Class="mb-6">
-            If you need to modify a value within the dropdown menus, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
+            If you need to modify a value inside the dropdown menus, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
         </MudAlert>
         <EditForm Model="@_indicator" OnValidSubmit="Update">
             <MudGrid>
@@ -36,12 +36,17 @@ else
                 <MudItem xs="12" sm="6">
                     <MudPaper Elevation="2" Class="pa-4">
                         <MudSelect T="Data.Entities.DataType" Label="Data Type" @bind-Value="_indicator.DataType">
-                            <MudSelectItem Value="Data.Entities.DataType.Cumulative">Cumulative</MudSelectItem>
-                            <MudSelectItem Value="Data.Entities.DataType.Incremental">Incremental</MudSelectItem>
+                            @foreach (Data.Entities.DataType dataType in Enum.GetValues(typeof(Data.Entities.DataType)))
+                            {
+                                <MudSelectItem Value="dataType">@dataType</MudSelectItem>
+                            }
                         </MudSelect>
-                        <MudAutocomplete Label="Collection Interval" T="Data.Entities.CollectionInterval" SearchFunc="@SearchCollectionIntervals"
-                                         CoerceText="true" SelectValueOnTab="true" ResetValueOnEmptyText="true" @bind-Value="_indicator.CollectionInterval">
-                        </MudAutocomplete>
+                        <MudSelect Label="Collection Interval" T="Data.Entities.CollectionInterval" @bind-Value="_indicator.CollectionInterval">
+                            @foreach (Data.Entities.CollectionInterval interval in Enum.GetValues(typeof(Data.Entities.CollectionInterval)))
+                            {
+                                <MudSelectItem Value="interval">@interval</MudSelectItem>
+                            }
+                        </MudSelect>
                         <MudItem Class="mb-16">
                             <MudSelect Label="Action" T="Data.Entities.Action" @bind-Value="_indicator.Action" DisableUnderLine="true">
                                 @foreach (var action in Actions)

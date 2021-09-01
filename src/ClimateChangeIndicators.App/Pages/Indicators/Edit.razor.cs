@@ -24,8 +24,6 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         public List<Data.Entities.Action> Actions { get; set; } = new();
         public Indicator _indicator { get; set; } = null!;
 
-        private readonly CollectionInterval[] _collectionIntervals = (CollectionInterval[])Enum.GetValues(typeof(CollectionInterval));
-
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
@@ -52,11 +50,6 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
             }
 
             await base.OnInitializedAsync();
-        }
-
-        private Task<IEnumerable<CollectionInterval>> SearchCollectionIntervals(string value)
-        {
-            return Task.FromResult(_collectionIntervals.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase)));
         }
 
         private async Task Update()

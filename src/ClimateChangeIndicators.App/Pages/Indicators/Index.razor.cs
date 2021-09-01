@@ -7,16 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 namespace ClimateChangeIndicators.App.Pages.Indicators
 {
     public partial class Index : IDisposable
     {
-        private bool _bordered;
-        private bool _dense = true;
-        private bool _hover = true;
-        private bool _striped = true;
-        private bool _showInactiveIndicators;
         private bool _isLoaded;
         private bool _mayRender = true;
         private AppDbContext _context = null!;
@@ -25,6 +21,32 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         private Indicator _selectedItem = null!;
 
         private Random _rand = new();
+        private MudBlazor.MudSwitch<bool> ShowInactive;
+        private bool showInactiveIndicators;
+
+        //private bool ShowInactiveIndicators {
+        //    get {
+        //        return showInactiveIndicators;
+        //    }
+        //    set {
+        //        showInactiveIndicators = value;
+        //        SetIsActive(showInactiveIndicators);
+        //    }
+        //}
+        //private async Task GetIsActive()
+        //{
+        //    var result = await BrowserStorage.GetAsync<bool>("isActive");
+        //    showInactiveIndicators = result.Success ? result.Value : false;
+
+        //}
+
+        //private async void SetIsActive(bool isActive)
+        //{
+        //    await BrowserStorage.SetAsync("isActive", isActive);
+        //}
+
+        [Inject]
+        public ProtectedLocalStorage BrowserStorage { get; set; } = null!;
 
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
@@ -37,14 +59,15 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
             try {
                 _context = ContextFactory.CreateDbContext();
                 _indicators = await _context.Indicators
-                    .Include(i => i.Action)
-                    .Include(i => i.Owner)
-                    .ThenInclude(o => o.Organization)
-                    .Include(i => i.Owner)
-                    .ThenInclude(o => o.Branch)
-                    .ThenInclude(b => b!.Department)
-                    .AsSingleQuery()
-                    .ToListAsync();
+                .Where(i => i.IsActive)
+                .Include(i => i.Action)
+                .Include(i => i.Owner)
+                .ThenInclude(o => o.Organization)
+                .Include(i => i.Owner)
+                .ThenInclude(o => o.Branch)
+                .ThenInclude(b => b!.Department)
+                .AsSingleQuery()
+                .ToListAsync();
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
@@ -73,9 +96,43 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
             Navigation.NavigateTo("/indicators/edit/" + indicatorId);
         }
 
+        private async void ToggleActiveIndicators()
+        {
+            if (ShowInactive.Checked) {
+                _indicators = await _context.Indicators
+                    .Include(i => i.Action)
+                    .Include(i => i.Owner)
+                    .ThenInclude(o => o.Organization)
+                    .Include(i => i.Owner)
+                    .ThenInclude(o => o.Branch)
+                    .ThenInclude(b => b!.Department)
+                    .AsSingleQuery()
+                    .ToListAsync();
+                StateHasChanged();
+            }
+            else {
+                _indicators = await _context.Indicators
+                   .Where(i => i.IsActive)
+                   .Include(i => i.Action)
+                   .Include(i => i.Owner)
+                   .ThenInclude(o => o.Organization)
+                   .Include(i => i.Owner)
+                   .ThenInclude(o => o.Branch)
+                   .ThenInclude(b => b!.Department)
+                   .AsSingleQuery()
+                   .ToListAsync();
+                StateHasChanged();
+
+            }
+        }
+
         private bool FilterFunc(Indicator indicator)
         {
-
+            //if (showInactiveIndicators == false) {
+            //    if(indicator.IsActive == false) {
+            //        return false;
+            //    }
+            //}
             if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
             if (indicator.Owner.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))

@@ -28,11 +28,22 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 1, Name = "Yukon Government" });
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 2, Name = "ATCO Electric Yukon" });
 
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 1, Name = "Environment", ShortName = "ENV" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 2, Name = "Highways and Public Works", ShortName = "HPW" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 3, Name = "Tourism and Culture", ShortName = "TC" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 4, Name = "Finance", ShortName = "FIN" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 5, Name = "Energy, Mines and Resources", ShortName = "EMR" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 1, Name = "Community Services", ShortName = "CS" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 2, Name = "Economic Development", ShortName = "EcDev" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 3, Name = "Education", ShortName = "EDU" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 4, Name = "Energy, Mines and Resources", ShortName = "EMR" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 5, Name = "Environment", ShortName = "ENV" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 6, Name = "Executive Council Office", ShortName = "ECO" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 7, Name = "Finance", ShortName = "FIN" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 8, Name = "Health and Social Services", ShortName = "HSS" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 9, Name = "Highways and Public Works", ShortName = "HPW" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 10, Name = "Justice", ShortName = "JUS" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 11, Name = "Public Service Commission", ShortName = "PSC" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 12, Name = "Tourism and Culture", ShortName = "TC" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 13, Name = "Yukon Development Corporation", ShortName = "YDC" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 14, Name = "Yukon Energy Corporation", ShortName = "YEC" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 15, Name = "Yukon Housing Corporation", ShortName = "YHC" });
+
 
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 1, OrganizationId = 1 });
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 2, OrganizationId = 1 });
@@ -47,17 +58,17 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 11, OrganizationId = 1 });
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 12, OrganizationId = 2 });
 
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, DepartmentId = 1, Name = "Climate Change Secretariat", OwnerId = 1 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 1, Name = "Water Resources", OwnerId = 2 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 3, DepartmentId = 1, Name = "Parks", OwnerId = 3 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 4, DepartmentId = 1, Name = "Fish and Wildlife", OwnerId = 4 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 5, DepartmentId = 1, Name = "Conservation Officer Services", OwnerId = 5 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 6, DepartmentId = 5, Name = "Forest Resources", OwnerId = 6 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 7, DepartmentId = 5, Name = "Agriculture", OwnerId = 7 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 8, DepartmentId = 5, Name = "Energy", OwnerId = 8 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 9, DepartmentId = 2, Name = "Supply Services", OwnerId = 9 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 2, Name = "Strategic Initiatives", OwnerId = 10 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 3, Name = "Culture Services", OwnerId = 11 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, DepartmentId = 5, Name = "Climate Change Secretariat", OwnerId = 1 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 5, Name = "Water Resources", OwnerId = 2 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 3, DepartmentId = 5, Name = "Parks", OwnerId = 3 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 4, DepartmentId = 5, Name = "Fish and Wildlife", OwnerId = 4 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 5, DepartmentId = 5, Name = "Conservation Officer Services", OwnerId = 5 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 6, DepartmentId = 4, Name = "Forest Resources", OwnerId = 6 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 7, DepartmentId = 4, Name = "Agriculture", OwnerId = 7 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 8, DepartmentId = 4, Name = "Energy", OwnerId = 8 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 9, DepartmentId = 9, Name = "Supply Services", OwnerId = 9 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 9, Name = "Strategic Initiatives", OwnerId = 10 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 12, Name = "Culture Services", OwnerId = 11 });
 
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 1, ReferenceText = "Increase the number of zero emission vehicles on our roads." });
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 2, ReferenceText = "Ensure Yukoners have access to reliable, affordable and renewable energy." });

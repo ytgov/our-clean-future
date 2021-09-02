@@ -27,4 +27,8 @@
     <ProjectReference Include="..\ClimateChangeIndicators.Data\ClimateChangeIndicators.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Leads\" />
+  </ItemGroup>
+
 </Project>

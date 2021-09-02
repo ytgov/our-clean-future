@@ -1,0 +1,36 @@
+﻿@page "/admin/units"
+
+@if (_isLoaded == false)
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudText Typo="Typo.h6">Loading...</MudText>
+    </MudContainer>
+}
+else
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudTable Items="_unitsOfMeasurement" Dense="true" Striped="true" Hover="true">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Units Of Measurement</MudText>
+                <MudToolBarSpacer />
+                <MudButton Color="Color.Tertiary" Variant="Variant.Outlined">New Unit</MudButton>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.UnitOfMeasurement, object>(u => u.Id)">Id</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.UnitOfMeasurement, object>(u => u.Symbol)">Symbol</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.UnitOfMeasurement, object>(u => u.Name)">Name</MudTableSortLabel></MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Id">@context.Id</MudTd>
+                <MudTd DataLabel="Symbol">@context.Symbol</MudTd>
+                <MudTd DataLabel="Name">@context.Name</MudTd>
+                <MudTd>
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context))"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))"></MudIconButton>
+
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </MudContainer>
+}

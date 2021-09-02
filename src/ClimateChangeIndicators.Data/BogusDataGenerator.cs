@@ -59,11 +59,11 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 2, Name = "Strategic Initiatives", OwnerId = 10 });
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 3, Name = "Culture Services", OwnerId = 11 });
 
-            _modelBuilder.Entity<Action>().HasData(new Action { Id = 1, ReferenceText = "Increase the number of zero emission vehicles on our roads." });
-            _modelBuilder.Entity<Action>().HasData(new Action { Id = 2, ReferenceText = "Ensure Yukoners have access to reliable, affordable and renewable energy." });
-            _modelBuilder.Entity<Action>().HasData(new Action { Id = 3, ReferenceText = "Conduct energy assessments of Government of Yukon buildings to identify opportunities for energy efficiency and greenhouse gas reductions, with the first period of assessments completed by 2025 and the second period completed by 2030." });
-            _modelBuilder.Entity<Action>().HasData(new Action { Id = 4, ReferenceText = "Supply more of what we eat through sustainable local food production." });
-            _modelBuilder.Entity<Action>().HasData(new Action { Id = 5, ReferenceText = "LEADERSHIP" });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 1, ReferenceNumber = "", ReferenceText = "Increase the number of zero emission vehicles on our roads." });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 2, ReferenceNumber = "", ReferenceText = "Ensure Yukoners have access to reliable, affordable and renewable energy." });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 3, ReferenceNumber = "", ReferenceText = "Conduct energy assessments of Government of Yukon buildings to identify opportunities for energy efficiency and greenhouse gas reductions, with the first period of assessments completed by 2025 and the second period completed by 2030." });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 4, ReferenceNumber = "", ReferenceText = "Supply more of what we eat through sustainable local food production." });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 5, ReferenceNumber = "", ReferenceText = "LEADERSHIP" });
 
             _modelBuilder.Entity<Indicator>()
                 .HasData(new Indicator {

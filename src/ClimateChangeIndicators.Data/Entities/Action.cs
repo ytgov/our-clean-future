@@ -7,7 +7,7 @@ namespace ClimateChangeIndicators.Data.Entities
     {
         public int Id { get; set; }
 
-        public string ReferenceId { get; set; } = "";
+        public string ReferenceNumber { get; set; } = "";
 
         public string ReferenceText { get; set; } = "";
 

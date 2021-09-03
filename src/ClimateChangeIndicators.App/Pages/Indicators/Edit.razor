@@ -78,7 +78,7 @@ else
 
                 <MudItem xs="12" sm="6">
                     <MudPaper Class="pa-4" Elevation="2">
-                        <MudTable Items="Indicator.Entries.OrderBy(e => e.Date)" Elevation="0" Class="mt-n2">
+                        <MudTable Items="Indicator.Entries.OrderBy(e => e.Date)" Elevation="0" Class="mt-n2" Dense="true">
                             <ToolBarContent>
                                 <MudText Typo="Typo.h6">Entries</MudText>
                                 <MudSpacer />
@@ -88,11 +88,18 @@ else
                                 <MudTh>Date</MudTh>
                                 <MudTh>Value</MudTh>
                                 <MudTh>Comment</MudTh>
+                                <MudTh></MudTh>
                             </HeaderContent>
                             <RowTemplate Context="Entry">
                                 <MudTd DataLabel="Date">@Entry.Date.ToLongDateString()</MudTd>
                                 <MudTd DataLabel="Value">@Entry.Value @Indicator.UnitOfMeasurement.Symbol</MudTd>
                                 <MudTd DataLabel="Comment">@Entry.Comment</MudTd>
+                                <MudTd>
+                                    <MudMenu Icon="@Icons.Material.Filled.MoreVert">
+                                        <MudMenuItem>Edit</MudMenuItem>
+                                        <MudMenuItem>Delete</MudMenuItem>
+                                    </MudMenu>
+                                </MudTd>
                             </RowTemplate>
                         </MudTable>
                     </MudPaper>

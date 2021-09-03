@@ -9,5 +9,15 @@ namespace ClimateChangeIndicators.Data.Entities
         public string Name { get; set; } = "";
 
         public string Symbol { get; set; } = "";
+
+        public override string ToString()
+        {
+            if (string.IsNullOrWhiteSpace(Symbol)) {
+                return Name;
+            }
+            else {
+                return Symbol;
+            }
+        }
     }
 }

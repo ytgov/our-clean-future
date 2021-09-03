@@ -23,10 +23,10 @@ namespace ClimateChangeIndicators.App.Pages.UnitsOfMeasurement
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
         [Inject]
-        public IDialogService DialogService { get; set; }
+        public IDialogService DialogService { get; set; } = null!;
 
         [Inject]
-        public ISnackbar Snackbar { get; set; }
+        public ISnackbar Snackbar { get; set; } = null!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -57,7 +57,7 @@ namespace ClimateChangeIndicators.App.Pages.UnitsOfMeasurement
         private async Task Delete(UnitOfMeasurement unit)
         {
             bool? result = await DialogService.ShowMessageBox(
-                $"Are you sure that you want to delete {unit.Symbol}?",
+                $"Delete {unit.Symbol}?",
                 "This action cannot not be undone.",
                 yesText: "Delete", cancelText: "Cancel");
             if (result == true) {
@@ -70,7 +70,7 @@ namespace ClimateChangeIndicators.App.Pages.UnitsOfMeasurement
                     Snackbar.Add($"Deleted unit {unit.Symbol}", Severity.Success);
                 }
                 catch (DbUpdateException) {
-                    Snackbar.Add($"Unable to delete unit: {unit.Symbol}, as it is associated with an indicator", Severity.Error);
+                    Snackbar.Add($"Unable to delete unit {unit.Symbol}, as it is associated with an indicator", Severity.Error);
                 }
                 finally {
                     _mayRender = true;

@@ -14,8 +14,8 @@ namespace ClimateChangeIndicators.Data.Entities
         public string Description { get; set; } = "";
         public int UnitOfMeasurementId { get; set; }
         public UnitOfMeasurement UnitOfMeasurement { get; set; } = null!;
-        public string Target { get; set; } = "";
         public DataType DataType { get; set; }
+        public Target? Target { get; set; } = null!;
 
         public int ActionId { get; set; }
         public Action Action { get; set; } = null!;

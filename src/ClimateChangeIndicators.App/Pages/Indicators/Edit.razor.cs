@@ -22,8 +22,8 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         public List<Owner> Owners { get; set; } = new();
         public List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
         public List<Data.Entities.Action> Actions { get; set; } = new();
-        public Indicator _indicator { get; set; } = null!;
-
+        public Indicator Indicator { get; set; } = null!;
+        public Target Target { get; set; } = null!;
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
@@ -40,7 +40,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                 Owners = await _context.Owners.Include(o => o.Organization).Include(o => o.Branch).ThenInclude(b => b!.Department).OrderBy(o => o.Branch!.Name).ToListAsync();
                 UnitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
                 Actions = await _context.OurCleanFutureReferences.ToListAsync();
-                _indicator = await _context.Indicators.FindAsync(Id);
+                Indicator = await _context.Indicators.Include(i => i.Target).FirstOrDefaultAsync(i => i.Id == Id);
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
@@ -56,8 +56,23 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         {
             await _context.SaveChangesAsync();
             //Navigation.NavigateTo($"/indicators/details/{_indicator.Id}");
-            Snackbar.Add($"Successfully updated indicator: {_indicator.Title}", Severity.Success);
+            Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
             Navigation.NavigateTo($"/indicators");
+        }
+
+        private void CreateTarget()
+        {
+            Indicator.Target = new Target();
+        }
+
+        private void DeleteTarget()
+        {
+            Indicator.Target = null;
+        }
+
+        private void CreateEntry()
+        {
+            Indicator.Entries.Add(new Entry());
         }
     }
 }

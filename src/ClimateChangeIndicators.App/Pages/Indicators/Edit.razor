@@ -9,46 +9,24 @@ else
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
         <MudText Typo="Typo.h3" GutterBottom="true">Edit indicator</MudText>
         <MudAlert Icon="@Icons.Material.Filled.Lightbulb" Severity="Severity.Normal" Class="mb-6">
-            If you need to modify a value inside the dropdown menus, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
+            If you need to modify a value within a dropdown menu, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
         </MudAlert>
-        <EditForm Model="@_indicator" OnValidSubmit="Update">
+        <EditForm Model="@Indicator" OnValidSubmit="Update">
             <MudGrid>
                 <MudItem xs="12" sm="6">
                     <MudPaper Elevation="2" Class="pa-4">
-                        <MudSelect T="Data.Entities.Owner" Label="Lead" @bind-Value="_indicator.Owner">
+                        <MudSelect T="Data.Entities.Owner" Label="Lead" @bind-Value="Indicator.Owner">
                             @foreach (var owner in Owners)
                             {
                                 @*<MudSelectItem Value="owner">@(owner.Branch?.Name ?? owner.Organization.Name)</MudSelectItem>*@
                                 <MudSelectItem Value="owner">@owner.ToString()</MudSelectItem>
                             }
                         </MudSelect>
-                        <MudTextField Label="Title" T="string" @bind-Value="_indicator.Title" />
-                        <MudTextField Label="Description" T="string" @bind-Value="_indicator.Description" Lines="2" />
-                        <MudSelect T="Data.Entities.UnitOfMeasurement" Label="Unit of Measurement" @bind-Value="_indicator.UnitOfMeasurement">
-                            @foreach (var unit in UnitsOfMeasurement)
-                            {
-                                <MudSelectItem Value="unit">@unit.Symbol</MudSelectItem>
-                            }
-                        </MudSelect>
-                        <MudTextField Label="Target" T="string" @bind-Value="_indicator.Target"></MudTextField>
-                    </MudPaper>
-                </MudItem>
-                <MudItem xs="12" sm="6">
-                    <MudPaper Elevation="2" Class="pa-4">
-                        <MudSelect T="Data.Entities.DataType" Label="Data Type" @bind-Value="_indicator.DataType">
-                            @foreach (Data.Entities.DataType dataType in Enum.GetValues(typeof(Data.Entities.DataType)))
-                            {
-                                <MudSelectItem Value="dataType">@dataType</MudSelectItem>
-                            }
-                        </MudSelect>
-                        <MudSelect Label="Collection Interval" T="Data.Entities.CollectionInterval" @bind-Value="_indicator.CollectionInterval">
-                            @foreach (Data.Entities.CollectionInterval interval in Enum.GetValues(typeof(Data.Entities.CollectionInterval)))
-                            {
-                                <MudSelectItem Value="interval">@interval</MudSelectItem>
-                            }
-                        </MudSelect>
+                        <MudTextField Label="Title" T="string" @bind-Value="Indicator.Title" />
+                        <MudTextField Label="Description" T="string" @bind-Value="Indicator.Description" Lines="2" />
+
                         <MudItem Class="mb-16">
-                            <MudSelect Label="Action" T="Data.Entities.Action" @bind-Value="_indicator.Action" DisableUnderLine="true">
+                            <MudSelect Label="Action" T="Data.Entities.Action" @bind-Value="Indicator.Action" DisableUnderLine="true">
                                 @foreach (var action in Actions)
                                 {
                                     <MudSelectItem Value="action">@action.ReferenceText</MudSelectItem>
@@ -57,10 +35,65 @@ else
                         </MudItem>
                     </MudPaper>
                 </MudItem>
-                <MudItem xs="12" sm="6">
+                <MudItem xs="12" sm="6" md="3">
                     <MudPaper Elevation="2" Class="pa-4">
-                        <MudSwitch @bind-Checked="@_indicator.IsActive" Color="Color.Info">@(_indicator.IsActive?"Active":"Inactive")</MudSwitch>
+                        <MudSelect T="Data.Entities.DataType" Label="Data Type" @bind-Value="Indicator.DataType">
+                            @foreach (Data.Entities.DataType dataType in Enum.GetValues(typeof(Data.Entities.DataType)))
+                            {
+                                <MudSelectItem Value="dataType">@dataType</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudSelect Label="Collection Interval" T="Data.Entities.CollectionInterval" @bind-Value="Indicator.CollectionInterval">
+                            @foreach (Data.Entities.CollectionInterval interval in Enum.GetValues(typeof(Data.Entities.CollectionInterval)))
+                            {
+                                <MudSelectItem Value="interval">@interval</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudSelect T="Data.Entities.UnitOfMeasurement" Label="Unit of Measurement" @bind-Value="Indicator.UnitOfMeasurement">
+                            @foreach (var unit in UnitsOfMeasurement)
+                            {
+                                <MudSelectItem Value="unit">@unit.ToString()</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudSwitch @bind-Checked="@Indicator.IsActive" Color="Color.Info" Class="mt-4">@(Indicator.IsActive?"Active":"Inactive")</MudSwitch>
                     </MudPaper>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudText Typo="Typo.h6">Target</MudText>
+                        @if (Indicator.Target != null)
+                        {
+                            <MudNumericField Label="Value" @bind-Value="Indicator.Target.Value" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true"></MudNumericField>
+                            <MudDatePicker Label="Start Date" @bind-Date="Indicator.Target.StartDate" Editable="true"></MudDatePicker>
+                            <MudDatePicker Label="End Date" @bind-Date="Indicator.Target.EndDate" Editable="true"></MudDatePicker>
+                            <MudTextField Label="Comment" @bind-Value="Indicator.Target.Comment"></MudTextField>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="(() => DeleteTarget())" Class="mt-4">Delete target</MudButton>
+                        }
+                        else
+                        {
+                            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="(() => CreateTarget())" Class="mt-4">Add target</MudButton>
+                        }
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                        <MudTable Items="Indicator.Entries" Elevation="2">
+                            <ToolBarContent>
+                                <MudText Typo="Typo.h6">Entries</MudText>
+                                <MudSpacer />
+                                <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => CreateEntry())">New Entry</MudButton>
+                            </ToolBarContent>
+                            <HeaderContent>
+                                <MudTh>Date</MudTh>
+                                <MudTh>Value</MudTh>
+                                <MudTh>Comment</MudTh>
+                            </HeaderContent>
+                            <RowTemplate Context="Entry">
+                                <MudTd DataLabel="Date">@Entry.Date.ToLongDateString()</MudTd>
+                                <MudTd DataLabel="Value">@Entry.Value @Indicator.UnitOfMeasurement.Symbol</MudTd>
+                                <MudTd DataLabel="Comment">@Entry.Comment</MudTd>
+                            </RowTemplate>
+                        </MudTable>
                 </MudItem>
 
                 <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">

@@ -74,6 +74,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         {
             if (ShowInactiveIndicators.Checked) {
                 _indicators = await _context.Indicators
+                    .Where(i => i.IsActive == false)
                     .Include(i => i.Action)
                     .Include(i => i.Owner)
                     .ThenInclude(o => o.Organization)

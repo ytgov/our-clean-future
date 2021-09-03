@@ -46,7 +46,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                 Actions = await _context.OurCleanFutureReferences.ToListAsync();
                 Indicator = await _context.Indicators.Include(i => i.Target).FirstOrDefaultAsync(i => i.Id == Id);
                 double[] Data1 = { 26, 42, 49, 72 };
-                Series.Add(new ChartSeries() { Name = $"{Indicator.Title} ({Indicator.UnitOfMeasurement.Symbol})", Data = Data1});
+                Series.Add(new ChartSeries() { Name = $"{Indicator.Title} ({Indicator.UnitOfMeasurement})", Data = Data1});
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);

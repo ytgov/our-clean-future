@@ -64,9 +64,11 @@ else
                         @if (Indicator.Target != null)
                         {
                             <MudNumericField Label="Value" @bind-Value="Indicator.Target.Value" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true"></MudNumericField>
-                            <MudDatePicker Label="Start Date" @bind-Date="Indicator.Target.StartDate" Editable="true"></MudDatePicker>
+                            <MudTooltip Text="Use only if specifying a range">
+                                <MudDatePicker Label="Start Date" @bind-Date="Indicator.Target.StartDate" Editable="true"></MudDatePicker>
+                            </MudTooltip>
                             <MudDatePicker Label="End Date" @bind-Date="Indicator.Target.EndDate" Editable="true"></MudDatePicker>
-                            <MudTextField Label="Comment" @bind-Value="Indicator.Target.Comment"></MudTextField>
+                            <MudTextField Label="OCF Description" @bind-Value="Indicator.Target.OcfDescription" Lines="2"></MudTextField>
                             <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="(() => DeleteTarget())" Class="mt-4">Delete target</MudButton>
                         }
                         else

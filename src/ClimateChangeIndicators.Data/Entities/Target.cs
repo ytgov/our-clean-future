@@ -9,10 +9,10 @@ namespace ClimateChangeIndicators.Data.Entities
     public class Target
     {
         public int Id { get; set; }
-        public double Value { get; set; }
+        public double? Value { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public string Comment { get; set; } = "";
+        public string OcfDescription { get; set; } = "";
 
         public int IndicatorId { get; set; }
         public Indicator Indicator { get; set; } = null!;

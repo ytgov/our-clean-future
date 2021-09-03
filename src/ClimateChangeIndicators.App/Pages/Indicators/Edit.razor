@@ -25,7 +25,7 @@ else
                         <MudTextField Label="Title" T="string" @bind-Value="Indicator.Title" />
                         <MudTextField Label="Description" T="string" @bind-Value="Indicator.Description" Lines="2" />
 
-                        <MudItem Class="mb-16">
+                        <MudItem Class="mb-8">
                             <MudSelect Label="Action" T="Data.Entities.Action" @bind-Value="Indicator.Action" DisableUnderLine="true">
                                 @foreach (var action in Actions)
                                 {
@@ -77,7 +77,8 @@ else
                 </MudItem>
 
                 <MudItem xs="12" sm="6">
-                        <MudTable Items="Indicator.Entries" Elevation="2">
+                    <MudPaper Class="pa-4" Elevation="2">
+                        <MudTable Items="Indicator.Entries.OrderBy(e => e.Date)" Elevation="0" Class="mt-n2">
                             <ToolBarContent>
                                 <MudText Typo="Typo.h6">Entries</MudText>
                                 <MudSpacer />
@@ -94,6 +95,14 @@ else
                                 <MudTd DataLabel="Comment">@Entry.Comment</MudTd>
                             </RowTemplate>
                         </MudTable>
+                    </MudPaper>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudText Typo="Typo.h6">Visualization</MudText>
+                        <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%"></MudChart>
+                    </MudPaper>
                 </MudItem>
 
                 <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">

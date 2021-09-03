@@ -90,7 +90,7 @@ namespace ClimateChangeIndicators.Data
                             });
 
             //Generate bogus data for testing
-            new BogusDataGenerator(modelBuilder).Init();
+            new DataSeeder(modelBuilder).Init();
         }
     }
 }

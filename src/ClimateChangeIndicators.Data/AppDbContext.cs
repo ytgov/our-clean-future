@@ -1,5 +1,6 @@
 ﻿using ClimateChangeIndicators.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Action = ClimateChangeIndicators.Data.Entities.Action;
 
 namespace ClimateChangeIndicators.Data
 {

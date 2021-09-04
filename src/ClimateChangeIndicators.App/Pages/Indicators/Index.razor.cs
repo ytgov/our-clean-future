@@ -40,6 +40,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                 .Include(i => i.Owner)
                 .ThenInclude(o => o.Branch)
                 .ThenInclude(b => b!.Department)
+                .AsNoTracking()
                 .AsSingleQuery()
                 .ToListAsync();
             }
@@ -81,6 +82,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                     .Include(i => i.Owner)
                     .ThenInclude(o => o.Branch)
                     .ThenInclude(b => b!.Department)
+                    .AsNoTracking()
                     .AsSingleQuery()
                     .ToListAsync();
                 StateHasChanged();
@@ -94,6 +96,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                    .Include(i => i.Owner)
                    .ThenInclude(o => o.Branch)
                    .ThenInclude(b => b!.Department)
+                   .AsNoTracking()
                    .AsSingleQuery()
                    .ToListAsync();
                 StateHasChanged();

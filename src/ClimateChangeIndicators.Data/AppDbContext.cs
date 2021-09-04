@@ -80,7 +80,7 @@ namespace ClimateChangeIndicators.Data
                         .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Indicator>()
                         .HasOne(i => i.Target)
-                        .WithOne(t => t.Indicator)
+                        .WithOne(t => t!.Indicator)
                         .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Indicator>()
                         .OwnsMany(i => i.Entries,

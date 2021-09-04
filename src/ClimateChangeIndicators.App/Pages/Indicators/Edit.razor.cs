@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ClimateChangeIndicators.App.Pages.Indicators
 {
-    public partial class Edit
+    public partial class Edit : IDisposable
     {
         public List<ChartSeries> Series = new List<ChartSeries>();
         public ChartOptions Options = new ChartOptions();
@@ -22,6 +22,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
 
         [Parameter]
         public int Id { get; set; }
+
 
         public List<Owner> Owners { get; set; } = new();
         public List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
@@ -79,6 +80,11 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         private void CreateEntry()
         {
             Indicator.Entries.Add(new Entry());
+        }
+
+        public void Dispose()
+        {
+            _context.Dispose();
         }
     }
 }

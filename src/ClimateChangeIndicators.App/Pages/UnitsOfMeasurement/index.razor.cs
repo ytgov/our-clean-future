@@ -32,7 +32,7 @@ namespace ClimateChangeIndicators.App.Pages.UnitsOfMeasurement
         {
             try {
                 _context = ContextFactory.CreateDbContext();
-                _unitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
+                _unitsOfMeasurement = await _context.UnitsOfMeasurement.OrderBy(u => u.Symbol).ToListAsync();
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);

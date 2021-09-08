@@ -50,7 +50,7 @@ else
                             }
                         </MudSelect>
                         <MudSelect T="Data.Entities.UnitOfMeasurement" Label="Unit of Measurement" @bind-Value="Indicator.UnitOfMeasurement">
-                            @foreach (var unit in UnitsOfMeasurement)
+                            @foreach (var unit in UnitsOfMeasurement.OrderBy(u => u.Symbol))
                             {
                                 <MudSelectItem Value="unit">@unit.ToString()</MudSelectItem>
                             }
@@ -67,7 +67,7 @@ else
                             <MudTooltip Text="Use only if specifying a range">
                                 <MudDatePicker Label="Start Date" @bind-Date="Indicator.Target.StartDate" Editable="true"></MudDatePicker>
                             </MudTooltip>
-                            <MudDatePicker Label="End Date" @bind-Date="Indicator.Target.EndDate" Editable="true"></MudDatePicker>
+                            <MudDatePicker Label="Completion Date" @bind-Date="Indicator.Target.EndDate" Editable="true"></MudDatePicker>
                             <MudTextField Label="OCF Description" @bind-Value="Indicator.Target.OcfDescription" Lines="2"></MudTextField>
                             <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="(() => DeleteTarget())" Class="mt-4">Delete target</MudButton>
                         }

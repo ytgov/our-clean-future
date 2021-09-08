@@ -16,13 +16,13 @@ else
                 <MudButton Color="Color.Tertiary" Variant="Variant.Outlined">New Unit</MudButton>
             </ToolBarContent>
             <HeaderContent>
-                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.UnitOfMeasurement, object>(u => u.Id)">Id</MudTableSortLabel></MudTh>
+                @*<MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.UnitOfMeasurement, object>(u => u.Id)">Id</MudTableSortLabel></MudTh>*@
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.UnitOfMeasurement, object>(u => u.Symbol)">Symbol</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.UnitOfMeasurement, object>(u => u.Name)">Name</MudTableSortLabel></MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Id">@context.Id</MudTd>
+                @*<MudTd DataLabel="Id">@context.Id</MudTd>*@
                 <MudTd DataLabel="Symbol">@context.Symbol</MudTd>
                 <MudTd DataLabel="Name">@context.Name</MudTd>
                 <MudTd>

@@ -9,7 +9,7 @@ namespace ClimateChangeIndicators.Data
         public DbSet<Indicator> Indicators { get; set; } = null!;
         public DbSet<Owner> Owners { get; set; } = null!;
         public DbSet<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = null!;
-        public DbSet<Action> OurCleanFutureReferences { get; set; } = null!;
+        public DbSet<Action> Actions { get; set; } = null!;
         public DbSet<Target> Targets { get; set; } = null!;
 
         private readonly ConnectionStrings _connectionStrings;
@@ -26,6 +26,7 @@ namespace ClimateChangeIndicators.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            //Comment to allow EF Core Power Tools to generate a diagram
             optionsBuilder.UseSqlServer(_connectionStrings.AppContext);
 
             //Uncomment to allow EF Core Power Tools to generate a diagram
@@ -41,8 +42,8 @@ namespace ClimateChangeIndicators.Data
                         .Ignore(b => b.Owner);
             modelBuilder.Entity<Department>()
                         .ToTable("Departments");
-            modelBuilder.Entity<Action>()
-                        .ToTable("Actions");
+            //modelBuilder.Entity<Action>()
+            //            .ToTable("Actions");
             modelBuilder.Entity<UnitOfMeasurement>()
                         .ToTable("UnitsOfMeasurement")
                         .HasIndex(u => u.Symbol)

@@ -44,7 +44,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                 _context = ContextFactory.CreateDbContext();
                 Owners = await _context.Owners.Include(o => o.Organization).Include(o => o.Branch).ThenInclude(b => b!.Department).OrderBy(o => o.Branch!.Name).ToListAsync();
                 UnitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
-                Actions = await _context.OurCleanFutureReferences.ToListAsync();
+                Actions = await _context.Actions.ToListAsync();
                 Indicator = await _context.Indicators.Include(i => i.Target).FirstOrDefaultAsync(i => i.Id == Id);
                 double[] Data1 = { 26, 42, 49, 72 };
                 Series.Add(new ChartSeries() { Name = $"{Indicator.Title} ({Indicator.UnitOfMeasurement})", Data = Data1});

@@ -52,10 +52,12 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                 Goals = await _context.Goals.OrderBy(g => g.Title).ToListAsync();
                 Objectives = await _context.Objectives.OrderBy(o => o.Title).ToListAsync();
                 Actions = await _context.Actions.ToListAsync();
+#pragma warning disable CS8601 // Possible null reference assignment.
                 Indicator = await _context.Indicators.Include(i => i.Target).FirstOrDefaultAsync(i => i.Id == Id);
+#pragma warning restore CS8601 // Possible null reference assignment.
                 GetSelectedParentType();
                 double[] Data1 = { 26, 42, 49, 72 };
-                Series.Add(new ChartSeries() { Name = $"{Indicator.Title} ({Indicator.UnitOfMeasurement})", Data = Data1 });
+                Series.Add(new ChartSeries() { Name = $"{Indicator?.Title} ({Indicator?.UnitOfMeasurement})", Data = Data1 });
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
@@ -101,7 +103,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
             await _context.SaveChangesAsync();
             //Navigation.NavigateTo($"/indicators/details/{_indicator.Id}");
             Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
-            Navigation.NavigateTo($"/indicators");
+            Navigation.NavigateTo($"/indicators/details/{Id}");
         }
 
         private void CreateTarget()

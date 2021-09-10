@@ -60,9 +60,9 @@ else
                         {
                             <MudItem Class="mb-12">
                                 <MudSelect Label="Action" T="Data.Entities.Action" @bind-Value="Indicator.Action" DisableUnderLine="true">
-                                    @foreach (var action in Actions.OrderBy(a => a.Number[0]).ThenBy(a => a.Number.Length).ThenBy(a => a.Number))
+                                    @foreach (var action in Actions.OrderBy(a => a.Code[0]).ThenBy(a => a.Code.Length).ThenBy(a => a.Code))
                                     {
-                                        <MudSelectItem Value="action">@action.Number | @action.Title</MudSelectItem>
+                                        <MudSelectItem Value="action">@action.ToString()</MudSelectItem>
                                     }
                                 </MudSelect>
                             </MudItem>
@@ -98,7 +98,7 @@ else
                         @if (Indicator.Target != null)
                         {
                             <MudNumericField Label="Value" @bind-Value="Indicator.Target.Value" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true"></MudNumericField>
-                            <MudTooltip Text="Use only if specifying a range">
+                            <MudTooltip Text="Use only if the OCF Description specifies a date range">
                                 <MudDatePicker Label="Start Date" @bind-Date="Indicator.Target.StartDate" Editable="true"></MudDatePicker>
                             </MudTooltip>
                             <MudDatePicker Label="Completion Date" @bind-Date="Indicator.Target.EndDate" Editable="true"></MudDatePicker>

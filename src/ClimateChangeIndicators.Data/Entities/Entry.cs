@@ -7,7 +7,7 @@ namespace ClimateChangeIndicators.Data.Entities
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public double Value { get; set; }
-        public string Comment { get; set; } = "";
+        public string Note { get; set; } = "";
 
         public Indicator Indicator { get; set; } = null!;
     }

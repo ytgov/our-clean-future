@@ -35,30 +35,33 @@ else
                 <MudTd DataLabel="Description">@context.Description</MudTd>
                 <MudTd>@context.CollectionInterval</MudTd>
                 @if (context.Id % 2 == 0)
-                    {
-                    <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingUp" /></MudTd>
-                    }
-                    else if (context.Id == 3)
-                    {
-                    <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingFlat" /></MudTd>
-                    }
-                    else
-                    {
-                    <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingDown" /></MudTd>
-                    }
-                <MudTd DataLabel="Next Collection">@_rand.Next(-30, 76) days </MudTd>
-                <MudTd>
-                    <MudMenu Icon="@Icons.Material.Filled.MoreVert">
-                        <MudMenuItem OnClick="(() => Details(context.Id))">View</MudMenuItem>
-                        <MudMenuItem OnClick="(() => Edit(context.Id))">Edit</MudMenuItem>
-                        <MudMenuItem>Delete</MudMenuItem>
-                    </MudMenu>
-                </MudTd>
-            </RowTemplate>
-        </MudTable>
-        <div class="d-flex flex-wrap mt-4">
-            <MudSwitch T="bool" @ref="ShowInactiveIndicators" CheckedChanged="ToggleInactiveIndicators" Color="Color.Tertiary">Show inactive indicators</MudSwitch>
-            <MudSpacer />
-        </div>
-    </MudContainer>
+                {
+                <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingUp" /></MudTd>
+                }
+                else if (context.Id == 3)
+                {
+                <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingFlat" /></MudTd>
+                }
+                else
+                {
+                <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingDown" /></MudTd>
+                }
+            <MudTd DataLabel="Next Collection">@_rand.Next(-30, 76) days </MudTd>
+            <MudTd>
+                <MudMenu Icon="@Icons.Material.Filled.MoreVert">
+                    <MudMenuItem OnClick="(() => Details(context.Id))">View</MudMenuItem>
+                    <MudMenuItem OnClick="(() => Edit(context.Id))">Edit</MudMenuItem>
+                    <MudMenuItem>Delete</MudMenuItem>
+                </MudMenu>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+    <div class="d-flex flex-wrap mt-4">
+        <MudSwitch T="bool" @ref="ShowInactiveIndicators" CheckedChanged="ToggleInactiveIndicators" Color="Color.Tertiary">Show inactive indicators</MudSwitch>
+        <MudSpacer />
+    </div>
+</MudContainer>
 }

@@ -51,6 +51,13 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 3, Title = "Adapting to the impacts of climate change" });
             _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 4, Title = "Building a green economy" });
 
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 1, Title = "Increase the number of zero emission vehicles on our roads", AreaId = 1 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 2, Title = "Reduce the lifecycle carbon intensity of transportation fuels", AreaId = 1 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 3, Title = "Increase the use of public and active transportation", AreaId = 1 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 4, Title = "Reduce the carbon footprint from medium and heavy-duty vehicles", AreaId = 1 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 5, Title = "Be more efficient in how and when we travel", AreaId = 1 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 6, Title = "Ensure roads, runways and other transportation infrastructure are resilient to the impacts of climate change", AreaId = 1 });
+
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 1, Name = "Yukon Government" });
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 2, Name = "ATCO Electric Yukon" });
 
@@ -95,11 +102,11 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 9, Name = "Strategic Initiatives", OwnerId = 10 });
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 12, Name = "Culture Services", OwnerId = 11 });
 
-            _modelBuilder.Entity<Action>().HasData(new Action { Id = 1, ReferenceNumber = "", ReferenceText = "Increase the number of zero emission vehicles on our roads." });
-            _modelBuilder.Entity<Action>().HasData(new Action { Id = 2, ReferenceNumber = "", ReferenceText = "Ensure Yukoners have access to reliable, affordable and renewable energy." });
-            _modelBuilder.Entity<Action>().HasData(new Action { Id = 3, ReferenceNumber = "", ReferenceText = "Conduct energy assessments of Government of Yukon buildings to identify opportunities for energy efficiency and greenhouse gas reductions, with the first period of assessments completed by 2025 and the second period completed by 2030." });
-            _modelBuilder.Entity<Action>().HasData(new Action { Id = 4, ReferenceNumber = "", ReferenceText = "Supply more of what we eat through sustainable local food production." });
-            _modelBuilder.Entity<Action>().HasData(new Action { Id = 5, ReferenceNumber = "", ReferenceText = "LEADERSHIP" });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 1, Number = "T1", Title = "Work with local vehicle dealerships and manufacturers to establish a system by 2024 to ensure zero emission vehicles are 10 per cent of light duty vehicle sales by 2025 and 30 per cent by 2030." });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 2, Number = "T2", Title = "Ensure at least 50 per cent of all new light-duty cars purchased by the Government of Yukon are zero emission vehicles each year from 2020 to 2030." });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 3, Number = "T3", Title = "Provide a rebate to Yukon businesses and individuals who purchase eligible zero emission vehicles beginning in 2020." });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 4, Number = "T4", Title = "Continue to install fast-charging stations across Yukon to make it possible to travel between all road-accessible Yukon communities by 2027 and work with neighbouring governments and organizations to explore options to connect Yukon with BC, NWT and Alaska." });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 5, Number = "T5", Title = "Provide rebates to support the installation of smart electric vehicle charging stations at residential, commercial and institutional buildings in collaboration with Yukon’s public utilities beginning in 2020." });
 
             _modelBuilder.Entity<Indicator>()
                 .HasData(new Indicator {
@@ -109,7 +116,6 @@ namespace ClimateChangeIndicators.Data
                     Description = "Total number of heavy-duty zero emission vehicles registered in Yukon.",
                     Title = "ZEVs - Total heavy duty",
                     IsActive = true,
-                    ActionId = 1,
                     OwnerId = 8,
                     UnitOfMeasurementId = 2
                 });
@@ -122,7 +128,6 @@ namespace ClimateChangeIndicators.Data
                     Description = "Total electricity generated off-grid during the reporting year (thermal and renewable).",
                     Title = "Off-grid generation - total",
                     IsActive = true,
-                    ActionId = 2,
                     OwnerId = 12,
                     UnitOfMeasurementId = 2
                 });
@@ -135,7 +140,6 @@ namespace ClimateChangeIndicators.Data
                     Description = "Number of energy assessments of Government of Yukon buildings completed during the reporting year.",
                     Title = "YG buildings - energy assessments completed",
                     IsActive = true,
-                    ActionId = 3,
                     OwnerId = 10,
                     UnitOfMeasurementId = 2
                 });
@@ -148,7 +152,6 @@ namespace ClimateChangeIndicators.Data
                     Description = "Yukon Agricultural Self-Sufficiency Indicator",
                     Title = "Food self-sufficiency",
                     IsActive = true,
-                    ActionId = 4,
                     OwnerId = 7,
                     UnitOfMeasurementId = 2
                 });
@@ -161,7 +164,6 @@ namespace ClimateChangeIndicators.Data
                     Description = "Total GHGs from the Government of Yukon's operations",
                     Title = "YG GHGs - total",
                     IsActive = true,
-                    ActionId = 5,
                     OwnerId = 1,
                     UnitOfMeasurementId = 1
                 });

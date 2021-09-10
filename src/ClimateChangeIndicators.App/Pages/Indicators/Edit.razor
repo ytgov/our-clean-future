@@ -25,14 +25,69 @@ else
                         <MudTextField Label="Title" T="string" @bind-Value="Indicator.Title" />
                         <MudTextField Label="Description" T="string" @bind-Value="Indicator.Description" Lines="2" />
 
-                        <MudItem Class="mb-8">
-                            <MudSelect Label="Parent" T="Data.Entities.Action" @bind-Value="Indicator.Action" DisableUnderLine="true">
-                                @foreach (var action in Actions)
-                                {
-                                    <MudSelectItem Value="action">@action.ReferenceText</MudSelectItem>
-                                }
+                        <MudItem>
+                            <MudSelect Label="Parent Type" @bind-Value="SelectedParentType">
+                                <MudSelectItem Value='"Goal"'>Goal</MudSelectItem>
+                                <MudSelectItem Value='"Objective"'>Objective</MudSelectItem>
+                                <MudSelectItem Value='"Action"'>Action</MudSelectItem>
                             </MudSelect>
                         </MudItem>
+
+
+                        @if (SelectedParentType == "Goal")
+                        {
+                            <MudItem Class="mb-4">
+                                <MudSelect Label="Goal" T="Data.Entities.Goal" @bind-Value="Indicator.Goal" DisableUnderLine="true">
+                                    @foreach (var goal in Goals)
+                                    {
+                                        <MudSelectItem Value="goal">@goal.Title</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                        }
+                        else if (SelectedParentType == "Objective")
+                        {
+                            <MudItem Class="mb-6">
+                                <MudSelect Label="Objective" T="Data.Entities.Objective" @bind-Value="Indicator.Objective" DisableUnderLine="true">
+                                    @foreach (var objective in Objectives)
+                                    {
+                                        <MudSelectItem Value="objective">@objective.Title</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                        }
+                        else if (SelectedParentType == "Action")
+                        {
+                            <MudItem Class="mb-10">
+                                <MudSelect Label="Action" T="Data.Entities.Action" @bind-Value="Indicator.Action" DisableUnderLine="true">
+                                    @foreach (var action in Actions)
+                                    {
+                                        <MudSelectItem Value="action">@action.Number | @action.Title</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                        }
+
+                        @*<MudItem Class="mb-8">
+                            <MudSelect Label="Parent" T="Data.Entities.IIndicatorParent" @bind-Value="Parent" DisableUnderLine="true">
+                            @foreach (var parent in Parents)
+                            {
+                            if (parent is Data.Entities.Goal)
+                            {
+                            <MudSelectItem Value="parent">Goal: @parent.Title</MudSelectItem>
+                            }
+                            else if (parent is Data.Entities.Objective)
+                            {
+                            <MudSelectItem Value="parent">Objective: @parent.Title</MudSelectItem>
+                            }
+                            else if (parent is Data.Entities.Action)
+                            {
+                            <MudSelectItem Value="parent">Action: @parent.Title)</MudSelectItem>
+                            }
+                            <MudSelectItem Value="parent">@parent.ToString()</MudSelectItem>
+                            }
+                            </MudSelect>
+                            </MudItem>*@
                     </MudPaper>
                 </MudItem>
                 <MudItem xs="12" sm="6" md="3">

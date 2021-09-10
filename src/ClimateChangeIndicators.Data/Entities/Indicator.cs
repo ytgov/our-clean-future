@@ -18,13 +18,13 @@ namespace ClimateChangeIndicators.Data.Entities
         public Target? Target { get; set; } = null!;
 
         public int? ActionId { get; set; }
-        public Action Action { get; set; } = null!;
+        public Action? Action { get; set; } = null!;
 
         public int? ObjectiveId { get; set; }
-        public Objective Objective { get; set; } = null!;
+        public Objective? Objective { get; set; } = null!;
 
         public int? GoalId { get; set; }
-        public Goal Goal { get; set; } = null!;
+        public Goal? Goal { get; set; } = null!;
 
         public CollectionInterval CollectionInterval { get; set; }
         public List<Entry> Entries { get; set; } = new();

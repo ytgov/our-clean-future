@@ -60,7 +60,7 @@ else
                         {
                             <MudItem Class="mb-12">
                                 <MudSelect Label="Action" T="Data.Entities.Action" @bind-Value="Indicator.Action" DisableUnderLine="true">
-                                    @foreach (var action in Actions)
+                                    @foreach (var action in Actions.OrderBy(a => a.Number[0]).ThenBy(a => a.Number.Length).ThenBy(a => a.Number))
                                     {
                                         <MudSelectItem Value="action">@action.Number | @action.Title</MudSelectItem>
                                     }

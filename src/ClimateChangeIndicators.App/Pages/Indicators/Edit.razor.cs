@@ -51,7 +51,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                 UnitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
                 Goals = await _context.Goals.OrderBy(g => g.Title).ToListAsync();
                 Objectives = await _context.Objectives.OrderBy(o => o.Title).ToListAsync();
-                Actions = await _context.Actions.OrderBy(a => a.Number).ToListAsync();
+                Actions = await _context.Actions.ToListAsync();
                 Indicator = await _context.Indicators.Include(i => i.Target).FirstOrDefaultAsync(i => i.Id == Id);
                 GetSelectedParentType();
                 double[] Data1 = { 26, 42, 49, 72 };

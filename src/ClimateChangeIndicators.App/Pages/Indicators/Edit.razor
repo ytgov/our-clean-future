@@ -26,7 +26,7 @@ else
                         <MudTextField Label="Description" T="string" @bind-Value="Indicator.Description" Lines="2" />
 
                         <MudItem Class="mb-8">
-                            <MudSelect Label="Action" T="Data.Entities.Action" @bind-Value="Indicator.Action" DisableUnderLine="true">
+                            <MudSelect Label="Parent" T="Data.Entities.Action" @bind-Value="Indicator.Action" DisableUnderLine="true">
                                 @foreach (var action in Actions)
                                 {
                                     <MudSelectItem Value="action">@action.ReferenceText</MudSelectItem>

@@ -38,6 +38,18 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<UnitOfMeasurement>().HasData(new UnitOfMeasurement { Id = 15, Name = "Tons per person", Symbol = "t/person" });
             _modelBuilder.Entity<UnitOfMeasurement>().HasData(new UnitOfMeasurement { Id = 16, Name = "Kilotonnes per million chained (2012) dollars", Symbol = "kt/$1MM chained (2012)" });
 
+            _modelBuilder.Entity<Area>().HasData(new Area { Id = 1, Title = "Transportion" });
+            _modelBuilder.Entity<Area>().HasData(new Area { Id = 2, Title = "Homes and buildings" });
+            _modelBuilder.Entity<Area>().HasData(new Area { Id = 3, Title = "Energy production" });
+            _modelBuilder.Entity<Area>().HasData(new Area { Id = 4, Title = "People and the environment" });
+            _modelBuilder.Entity<Area>().HasData(new Area { Id = 5, Title = "Communities" });
+            _modelBuilder.Entity<Area>().HasData(new Area { Id = 6, Title = "Innovation" });
+            _modelBuilder.Entity<Area>().HasData(new Area { Id = 7, Title = "Leadership" });
+
+            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 1, Title = "Reducing greenhouse gas emissions" });
+            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 2, Title = "Ensuring Yukoners have access to reliable, affordable and renewable energy" });
+            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 3, Title = "Adapting to the impacts of climate change" });
+            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 4, Title = "Building a green economy" });
 
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 1, Name = "Yukon Government" });
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 2, Name = "ATCO Electric Yukon" });
@@ -57,7 +69,6 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Department>().HasData(new Department { Id = 13, Name = "Yukon Development Corporation", ShortName = "YDC" });
             _modelBuilder.Entity<Department>().HasData(new Department { Id = 14, Name = "Yukon Energy Corporation", ShortName = "YEC" });
             _modelBuilder.Entity<Department>().HasData(new Department { Id = 15, Name = "Yukon Housing Corporation", ShortName = "YHC" });
-
 
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 1, OrganizationId = 1 });
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 2, OrganizationId = 1 });

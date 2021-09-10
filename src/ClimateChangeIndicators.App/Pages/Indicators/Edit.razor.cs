@@ -14,10 +14,6 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
 {
     public partial class Edit : IDisposable
     {
-        public List<ChartSeries> Series = new List<ChartSeries>();
-        public ChartOptions Options = new ChartOptions();
-        public string[] XAxisLabels = { "2019", "2020", "2021", "2022", "2023", "2024" };
-
         private bool _isLoaded;
         private AppDbContext _context = null!;
 
@@ -56,8 +52,6 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                 Indicator = await _context.Indicators.Include(i => i.Target).FirstOrDefaultAsync(i => i.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
                 GetSelectedParentType();
-                double[] Data1 = { 26, 42, 49, 72 };
-                Series.Add(new ChartSeries() { Name = $"{Indicator?.Title} ({Indicator?.UnitOfMeasurement})", Data = Data1 });
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);

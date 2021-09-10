@@ -12,8 +12,11 @@ else
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
                     <MudField Label="Lead">@Indicator.Owner.ToString()</MudField>
-                    <MudField Label="Title">@Indicator.Title</MudField>
                     <MudTextField Label="Description" T="string" @bind-Value="Indicator.Description" Lines="2" />
+                    <MudField Label="Data Type">@Indicator.DataType</MudField>
+                    <MudField Label="Collection Interval">@Indicator.CollectionInterval</MudField>
+                    <MudField Label="Unit of Measurement">@Indicator.UnitOfMeasurement.Name (@Indicator.UnitOfMeasurement.Symbol)</MudField>
+                    <MudField Label="Active">@(Indicator.IsActive?"Yes":"No")</MudField>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6">
@@ -24,15 +27,22 @@ else
                             <MudText Typo="Typo.h6">Action</MudText>
                             <MudAlert Severity="Severity.Info" NoIcon="true">@Indicator.Action.ToString()</MudAlert>
                             <MudText Typo="Typo.h6">Objective</MudText>
-                            <MudAlert Severity="Severity.Warning" NoIcon="true">@Indicator.Action.Objective?.Title</MudAlert>
+                            <MudAlert Severity="Severity.Warning" NoIcon="true">@(Indicator.Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudAlert>
                             <MudText Typo="Typo.h6">Goal(s)</MudText>
                             <MudAlert Severity="Severity.Success" NoIcon="true">
-                                <MudList>
-                                    @foreach (var goal in Indicator.Action.Objective.Goals)
-                                    {
-                                        <MudListItem Class="my-n4">• @goal.Title</MudListItem>
-                                    }
-                                </MudList>
+                                @if (Indicator.Action.Objective is not null && Indicator.Action.Objective.Goals.Count > 0)
+                                {
+                                    <MudList>
+                                        @foreach (var goal in Indicator.Action.Objective.Goals)
+                                        {
+                                            <MudListItem Class="my-n4">• @goal.Title</MudListItem>
+                                        }
+                                    </MudList>
+                                }
+                                else
+                                {
+                                    <MudText Typo="Typo.body2">Error: This objective is not associated with any goals!</MudText>
+                                }
                             </MudAlert>
                         }
                         else if (Indicator.Objective is not null)
@@ -41,12 +51,20 @@ else
                             <MudAlert Severity="Severity.Warning" NoIcon="true">@Indicator.Objective.Title</MudAlert>
                             <MudText Typo="Typo.h6">Goal(s)</MudText>
                             <MudAlert Severity="Severity.Success" NoIcon="true">
-                                <MudList>
-                                    @foreach (var goal in Indicator.Objective.Goals)
-                                    {
-                                        <MudListItem Class="my-n4">• @goal.Title</MudListItem>
-                                    }
-                                </MudList>
+                                @if (Indicator.Objective.Goals.Count > 0)
+                                {
+                                    <MudList>
+                                        @foreach (var goal in Indicator.Objective.Goals)
+                                        {
+                                            <MudListItem Class="my-n4">• @goal.Title</MudListItem>
+                                        }
+                                    </MudList>
+                                }
+                                else
+                                {
+                                    <MudText Typo="Typo.body2">Error: This objective is not associated with any goals!</MudText>
+                                }
+
                             </MudAlert>
                         }
                         else if (Indicator.Goal is not null)
@@ -62,36 +80,14 @@ else
                 </MudPaper>
             </MudItem>
 
-            <MudItem xs="12" sm="6" md="3">
+            @*<MudItem xs="12" sm="6" md="3">
                 <MudPaper Elevation="2" Class="pa-4">
-                    <MudField Label="Data Type">@Indicator.DataType</MudField>
-                    <MudField Label="Collection Interval">@Indicator.CollectionInterval</MudField>
-                    <MudField Label="Unit of Measurement">@Indicator.UnitOfMeasurement.Name (@Indicator.UnitOfMeasurement.Symbol)</MudField>
-                    <MudField Label="Active">@(Indicator.IsActive?"Yes":"No")</MudField>
+                <MudField Label="Data Type">@Indicator.DataType</MudField>
+                <MudField Label="Collection Interval">@Indicator.CollectionInterval</MudField>
+                <MudField Label="Unit of Measurement">@Indicator.UnitOfMeasurement.Name (@Indicator.UnitOfMeasurement.Symbol)</MudField>
+                <MudField Label="Active">@(Indicator.IsActive?"Yes":"No")</MudField>
                 </MudPaper>
-            </MudItem>
-
-            @if (Indicator.Target != null)
-            {
-                <MudItem xs="12" sm="6" md="3">
-                    <MudPaper Elevation="2" Class="pa-4">
-                        <MudText Typo="Typo.h6">Target</MudText>
-                        @if (Indicator.Target.Value is not null)
-                        {
-                            <MudField Label="Value" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol">@Indicator.Target.Value</MudField>
-                        }
-                        @if (Indicator.Target.StartDate is not null)
-                        {
-                            <MudField Label="Start Date">@Indicator.Target.StartDate?.ToLongDateString()</MudField>
-                        }
-                        <MudField Label="Completion Date">@Indicator.Target.EndDate?.ToLongDateString()</MudField>
-                        @if (!string.IsNullOrWhiteSpace(Indicator.Target.OcfDescription))
-                        {
-                            <MudField Label="OCF Description">@Indicator.Target.OcfDescription</MudField>
-                        }
-                    </MudPaper>
-                </MudItem>
-            }
+                </MudItem>*@
 
             <MudItem xs="12" sm="6">
                 <MudPaper Class="pa-4" Elevation="2">
@@ -114,6 +110,30 @@ else
                     </MudTable>
                 </MudPaper>
             </MudItem>
+
+            @if (Indicator.Target != null)
+            {
+                <MudItem xs="12" sm="6" md="6">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudText Typo="Typo.h6">Target</MudText>
+                        @if (Indicator.Target.Value is not null)
+                        {
+                            <MudField Label="Value" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol">@Indicator.Target.Value</MudField>
+                        }
+                        @if (Indicator.Target.StartDate is not null)
+                        {
+                            <MudField Label="Start Date">@Indicator.Target.StartDate?.ToLongDateString()</MudField>
+                        }
+                        <MudField Label="Completion Date">@Indicator.Target.EndDate?.ToString("yyyy")</MudField>
+                        @if (!string.IsNullOrWhiteSpace(Indicator.Target.OcfDescription))
+                        {
+                            <MudField Label="OCF Description">@Indicator.Target.OcfDescription</MudField>
+                        }
+                    </MudPaper>
+                </MudItem>
+            }
+
+
 
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">

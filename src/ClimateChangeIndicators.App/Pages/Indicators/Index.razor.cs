@@ -20,7 +20,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         private string _searchString = "";
         private Indicator _selectedItem = null!;
         private Random _rand = new();
-        private MudBlazor.MudSwitch<bool> ShowInactiveIndicators = null!;
+        private MudBlazor.MudSwitch<bool> ViewInactiveIndicators = null!;
 
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
@@ -73,7 +73,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
 
         private async void ToggleInactiveIndicators()
         {
-            if (ShowInactiveIndicators.Checked) {
+            if (ViewInactiveIndicators.Checked) {
                 _indicators = await _context.Indicators
                     .Where(i => i.IsActive == false)
                     .Include(i => i.Action)

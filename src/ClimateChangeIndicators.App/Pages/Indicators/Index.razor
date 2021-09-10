@@ -26,7 +26,6 @@ else
                 <MudTh>Trend</MudTh>
                 <MudTh>Next Collection</MudTh>
                 <MudTh></MudTh>
-                <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Id">@context.Id</MudTd>
@@ -60,7 +59,7 @@ else
         </PagerContent>
     </MudTable>
     <div class="d-flex flex-wrap mt-4">
-        <MudSwitch T="bool" @ref="ShowInactiveIndicators" CheckedChanged="ToggleInactiveIndicators" Color="Color.Tertiary">Show inactive indicators</MudSwitch>
+        <MudSwitch T="bool" @ref="ViewInactiveIndicators" CheckedChanged="ToggleInactiveIndicators" Color="Color.Tertiary">View inactive indicators</MudSwitch>
         <MudSpacer />
     </div>
 </MudContainer>

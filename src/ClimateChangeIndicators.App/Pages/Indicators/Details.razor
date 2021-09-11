@@ -53,10 +53,10 @@ else
                                                 image = "";
                                                 break;
                                         }
-                                        <MudGrid>
-                                            <MudAvatar Image="@image" Class="mx-2 my-4" />
+                                        <div class="d-flex">
+                                            <MudAvatar Image="@image" Class="mr-2 my-4" />
                                             <MudText Class="my-6" Typo="Typo.body2">@goal.Title</MudText>
-                                        </MudGrid>
+                                        </div>
                                     }
                                 }
                                 else
@@ -94,10 +94,10 @@ else
                                                 image = "";
                                                 break;
                                         }
-                                        <MudGrid>
-                                            <MudAvatar Image="@image" Class="mx-2 my-4" />
+                                        <div class="d-flex">
+                                            <MudAvatar Image="@image" Class="mr-2 my-4" />
                                             <MudText Class="my-6" Typo="Typo.body2">@goal.Title</MudText>
-                                        </MudGrid>
+                                        </div>
                                     }
                                 }
                                 else
@@ -111,7 +111,9 @@ else
                         {
                             <MudText Typo="Typo.h6">Goal</MudText>
                             <MudAlert Severity="Severity.Success" NoIcon="true">
-                                @{string image;}
+                                @{
+                                    string image;
+                                }
                                 @switch (Indicator.Goal.Id)
                                 {
                                     case 1:
@@ -130,10 +132,10 @@ else
                                         image = "";
                                         break;
                                 }
-                                <MudGrid>
-                                    <MudAvatar Image="@image" Class="mx-2 my-4" />
+                                <div class="d-flex">
+                                    <MudAvatar Image="@image" Class="mr-2 my-4" />
                                     <MudText Class="my-6" Typo="Typo.body2">@Indicator.Goal.Title</MudText>
-                                </MudGrid>
+                                </div>
                             </MudAlert>
                         }
                     </MudItem>
@@ -151,11 +153,8 @@ else
 
             <MudItem xs="12" sm="6">
                 <MudPaper Class="pa-4" Elevation="2">
+                    <MudText Typo="Typo.h6" Class="mb-2">Entries</MudText>
                     <MudTable Items="Indicator.Entries.OrderBy(e => e.Date)" Elevation="0" Class="mt-n2" Dense="true">
-                        <ToolBarContent>
-                            <MudText Typo="Typo.h6">Entries</MudText>
-                            <MudSpacer />
-                        </ToolBarContent>
                         <HeaderContent>
                             <MudTh>Date</MudTh>
                             <MudTh>Value</MudTh>

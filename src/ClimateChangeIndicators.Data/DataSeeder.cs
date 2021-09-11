@@ -46,17 +46,17 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Area>().HasData(new Area { Id = 6, Title = "Innovation" });
             _modelBuilder.Entity<Area>().HasData(new Area { Id = 7, Title = "Leadership" });
 
-            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 1, Title = "Reduce Yukon's greenhouse gas emissions" });
-            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 2, Title = "Ensure Yukoners have access to reliable, affordable and renewable energy" });
-            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 3, Title = "Adapt to the impacts of climate change" });
-            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 4, Title = "Build a green economy" });
+            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 1, Title = "Reduce Yukon's greenhouse gas emissions." });
+            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 2, Title = "Ensure Yukoners have access to reliable, affordable and renewable energy." });
+            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 3, Title = "Adapt to the impacts of climate change." });
+            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 4, Title = "Build a green economy." });
 
-            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 1, Title = "Increase the number of zero emission vehicles on our roads", AreaId = 1 });
-            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 2, Title = "Reduce the lifecycle carbon intensity of transportation fuels", AreaId = 1 });
-            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 3, Title = "Increase the use of public and active transportation", AreaId = 1 });
-            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 4, Title = "Reduce the carbon footprint from medium and heavy-duty vehicles", AreaId = 1 });
-            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 5, Title = "Be more efficient in how and when we travel", AreaId = 1 });
-            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 6, Title = "Ensure roads, runways and other transportation infrastructure are resilient to the impacts of climate change", AreaId = 1 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 1, Title = "Increase the number of zero emission vehicles on our roads.", AreaId = 1 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 2, Title = "Reduce the lifecycle carbon intensity of transportation fuels.", AreaId = 1 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 3, Title = "Increase the use of public and active transportation.", AreaId = 1 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 4, Title = "Reduce the carbon footprint from medium and heavy-duty vehicles.", AreaId = 1 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 5, Title = "Be more efficient in how and when we travel.", AreaId = 1 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 6, Title = "Ensure roads, runways and other transportation infrastructure are resilient to the impacts of climate change.", AreaId = 1 });
 
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 1, Name = "Yukon Government" });
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 2, Name = "ATCO Electric Yukon" });
@@ -202,7 +202,7 @@ namespace ClimateChangeIndicators.Data
                     Id = 4,
                     CollectionInterval = CollectionInterval.Annual,
                     DataType = DataType.Incremental,
-                    Description = "Yukon Agricultural Self-Sufficiency Indicator",
+                    Description = "Yukon Agricultural Self-Sufficiency Indicator.",
                     Title = "Food self-sufficiency",
                     IsActive = true,
                     OwnerId = 7,
@@ -214,7 +214,7 @@ namespace ClimateChangeIndicators.Data
                     Id = 5,
                     CollectionInterval = CollectionInterval.Annual,
                     DataType = DataType.Incremental,
-                    Description = "Total GHGs from the Government of Yukon's operations",
+                    Description = "Total GHGs from the Government of Yukon's operations.",
                     Title = "YG GHGs - total",
                     IsActive = true,
                     OwnerId = 1,

@@ -32,12 +32,32 @@ else
                             <MudAlert Severity="Severity.Success" NoIcon="true">
                                 @if (Indicator.Action.Objective is not null && Indicator.Action.Objective.Goals.Count > 0)
                                 {
-                                    <MudList>
-                                        @foreach (var goal in Indicator.Action.Objective.Goals)
+                                    @foreach (var goal in Indicator.Action.Objective.Goals)
+                                    {
+                                        string image;
+                                        switch (goal.Id)
                                         {
-                                            <MudListItem Class="my-n4">• @goal.Title</MudListItem>
+                                            case 1:
+                                                image = "/images/reduce-greenhouse-gas-emissions.png";
+                                                break;
+                                            case 2:
+                                                image = "/images/ensure-yukoners-have-access-to-reliable-affordable-and-renewable-energy.png";
+                                                break;
+                                            case 3:
+                                                image = "/images/adapt-to-the-impacts-of-climate-change.png";
+                                                break;
+                                            case 4:
+                                                image = "/images/build-a-green-economy.png";
+                                                break;
+                                            default:
+                                                image = "";
+                                                break;
                                         }
-                                    </MudList>
+                                        <MudGrid>
+                                            <MudAvatar Image="@image" Class="mx-2 my-4" />
+                                            <MudText Class="my-6" Typo="Typo.body2">@goal.Title</MudText>
+                                        </MudGrid>
+                                    }
                                 }
                                 else
                                 {
@@ -53,12 +73,32 @@ else
                             <MudAlert Severity="Severity.Success" NoIcon="true">
                                 @if (Indicator.Objective.Goals.Count > 0)
                                 {
-                                    <MudList>
-                                        @foreach (var goal in Indicator.Objective.Goals)
+                                    @foreach (var goal in Indicator.Objective.Goals)
+                                    {
+                                        string image;
+                                        @switch (goal.Id)
                                         {
-                                            <MudListItem Class="my-n4">• @goal.Title</MudListItem>
+                                            case 1:
+                                                image = "/images/reduce-greenhouse-gas-emissions.png";
+                                                break;
+                                            case 2:
+                                                image = "/images/ensure-yukoners-have-access-to-reliable-affordable-and-renewable-energy.png";
+                                                break;
+                                            case 3:
+                                                image = "/images/adapt-to-the-impacts-of-climate-change.png";
+                                                break;
+                                            case 4:
+                                                image = "/images/build-a-green-economy.png";
+                                                break;
+                                            default:
+                                                image = "";
+                                                break;
                                         }
-                                    </MudList>
+                                        <MudGrid>
+                                            <MudAvatar Image="@image" Class="mx-2 my-4" />
+                                            <MudText Class="my-6" Typo="Typo.body2">@goal.Title</MudText>
+                                        </MudGrid>
+                                    }
                                 }
                                 else
                                 {
@@ -71,9 +111,29 @@ else
                         {
                             <MudText Typo="Typo.h6">Goal</MudText>
                             <MudAlert Severity="Severity.Success" NoIcon="true">
-                                <MudList>
-                                    <MudListItem Class="my-n4">@Indicator.Goal.Title</MudListItem>
-                                </MudList>
+                                @{string image;}
+                                @switch (Indicator.Goal.Id)
+                                {
+                                    case 1:
+                                        image = "/images/reduce-greenhouse-gas-emissions.png";
+                                        break;
+                                    case 2:
+                                        image = "/images/ensure-yukoners-have-access-to-reliable-affordable-and-renewable-energy.png";
+                                        break;
+                                    case 3:
+                                        image = "/images/adapt-to-the-impacts-of-climate-change.png";
+                                        break;
+                                    case 4:
+                                        image = "/images/build-a-green-economy.png";
+                                        break;
+                                    default:
+                                        image = "";
+                                        break;
+                                }
+                                <MudGrid>
+                                    <MudAvatar Image="@image" Class="mx-2 my-4" />
+                                    <MudText Class="my-6" Typo="Typo.body2">@Indicator.Goal.Title</MudText>
+                                </MudGrid>
                             </MudAlert>
                         }
                     </MudItem>

@@ -11,6 +11,9 @@ namespace ClimateChangeIndicators.Data
         public DbSet<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = null!;
         public DbSet<Action> Actions { get; set; } = null!;
         public DbSet<Target> Targets { get; set; } = null!;
+        public DbSet<Goal> Goals { get; set; } = null!;
+        public DbSet<Objective> Objectives { get; set; } = null!;
+        public DbSet<Area> Areas { get; set; } = null!;
 
         private readonly ConnectionStrings _connectionStrings;
 
@@ -78,6 +81,7 @@ namespace ClimateChangeIndicators.Data
             modelBuilder.Entity<Indicator>()
                         .HasOne(i => i.Action)
                         .WithMany(o => o.Indicators)
+                        .IsRequired(false)
                         .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Indicator>()
                         .HasOne(i => i.Target)

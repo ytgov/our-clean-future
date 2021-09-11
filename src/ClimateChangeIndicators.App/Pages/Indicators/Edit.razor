@@ -7,10 +7,10 @@
 else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <MudText Typo="Typo.h3" GutterBottom="true">Edit indicator</MudText>
-        <MudAlert Icon="@Icons.Material.Filled.Lightbulb" Severity="Severity.Normal" Class="mb-6">
+        <MudText Typo="Typo.h3" Class="mb-8"><b>Editing indicator:</b> @Indicator.Title</MudText>
+        @*<MudAlert Icon="@Icons.Material.Filled.Lightbulb" Severity="Severity.Normal" Class="mb-6">
             If you need to modify a value within a dropdown menu, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
-        </MudAlert>
+        </MudAlert>*@
         <EditForm Model="@Indicator" OnValidSubmit="Update">
             <MudGrid>
                 <MudItem xs="12" sm="6">
@@ -18,21 +18,53 @@ else
                         <MudSelect T="Data.Entities.Owner" Label="Lead" @bind-Value="Indicator.Owner">
                             @foreach (var owner in Owners)
                             {
-                                @*<MudSelectItem Value="owner">@(owner.Branch?.Name ?? owner.Organization.Name)</MudSelectItem>*@
                                 <MudSelectItem Value="owner">@owner.ToString()</MudSelectItem>
                             }
                         </MudSelect>
                         <MudTextField Label="Title" T="string" @bind-Value="Indicator.Title" />
                         <MudTextField Label="Description" T="string" @bind-Value="Indicator.Description" Lines="2" />
 
-                        <MudItem Class="mb-8">
-                            <MudSelect Label="Action" T="Data.Entities.Action" @bind-Value="Indicator.Action" DisableUnderLine="true">
-                                @foreach (var action in Actions)
-                                {
-                                    <MudSelectItem Value="action">@action.ReferenceText</MudSelectItem>
-                                }
+                        <MudItem>
+                            <MudSelect Label="Parent Type" @bind-Value="SelectedParentType">
+                                <MudSelectItem Value='"Goal"'>Goal</MudSelectItem>
+                                <MudSelectItem Value='"Objective"'>Objective</MudSelectItem>
+                                <MudSelectItem Value='"Action"'>Action</MudSelectItem>
                             </MudSelect>
                         </MudItem>
+
+                        @if (SelectedParentType == "Goal")
+                        {
+                            <MudItem Class="mb-4">
+                                <MudSelect Label="Goal" T="Data.Entities.Goal" @bind-Value="Indicator.Goal" DisableUnderLine="true">
+                                    @foreach (var goal in Goals)
+                                    {
+                                        <MudSelectItem Value="goal">@goal.Title</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                        }
+                        else if (SelectedParentType == "Objective")
+                        {
+                            <MudItem Class="mb-6">
+                                <MudSelect Label="Objective" T="Data.Entities.Objective" @bind-Value="Indicator.Objective" DisableUnderLine="true">
+                                    @foreach (var objective in Objectives)
+                                    {
+                                        <MudSelectItem Value="objective">@objective.Title</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                        }
+                        else if (SelectedParentType == "Action")
+                        {
+                            <MudItem Class="mb-12">
+                                <MudSelect Label="Action" T="Data.Entities.Action" @bind-Value="Indicator.Action" DisableUnderLine="true">
+                                    @foreach (var action in Actions.OrderBy(a => a.Code[0]).ThenBy(a => a.Code.Length).ThenBy(a => a.Code))
+                                    {
+                                        <MudSelectItem Value="action">@action.ToString()</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                        }
                     </MudPaper>
                 </MudItem>
                 <MudItem xs="12" sm="6" md="3">
@@ -64,7 +96,7 @@ else
                         @if (Indicator.Target != null)
                         {
                             <MudNumericField Label="Value" @bind-Value="Indicator.Target.Value" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true"></MudNumericField>
-                            <MudTooltip Text="Use only if specifying a range">
+                            <MudTooltip Text="Use only if the OCF Description specifies a date range">
                                 <MudDatePicker Label="Start Date" @bind-Date="Indicator.Target.StartDate" Editable="true"></MudDatePicker>
                             </MudTooltip>
                             <MudDatePicker Label="Completion Date" @bind-Date="Indicator.Target.EndDate" Editable="true"></MudDatePicker>
@@ -89,28 +121,21 @@ else
                             <HeaderContent>
                                 <MudTh>Date</MudTh>
                                 <MudTh>Value</MudTh>
-                                <MudTh>Comment</MudTh>
+                                <MudTh>Note</MudTh>
                                 <MudTh></MudTh>
                             </HeaderContent>
                             <RowTemplate Context="Entry">
                                 <MudTd DataLabel="Date">@Entry.Date.ToLongDateString()</MudTd>
                                 <MudTd DataLabel="Value">@Entry.Value @Indicator.UnitOfMeasurement.Symbol</MudTd>
-                                <MudTd DataLabel="Comment">@Entry.Comment</MudTd>
+                                <MudTd DataLabel="Note">@Entry.Note</MudTd>
                                 <MudTd>
-                                    <MudMenu Icon="@Icons.Material.Filled.MoreVert">
+                                    <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small">
                                         <MudMenuItem>Edit</MudMenuItem>
                                         <MudMenuItem>Delete</MudMenuItem>
                                     </MudMenu>
                                 </MudTd>
                             </RowTemplate>
                         </MudTable>
-                    </MudPaper>
-                </MudItem>
-
-                <MudItem xs="12" sm="6">
-                    <MudPaper Elevation="2" Class="pa-4">
-                        <MudText Typo="Typo.h6">Visualization</MudText>
-                        <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%"></MudChart>
                     </MudPaper>
                 </MudItem>
 

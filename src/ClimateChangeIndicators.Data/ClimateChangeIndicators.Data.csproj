@@ -16,4 +16,8 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0-preview.7.21377.19" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,210 @@
+﻿@page "/indicators/details/{id:int}"
+
+@if (_isLoaded == false)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudText Typo="Typo.h3" Class="mb-8"><b>Viewing indicator:</b> @Indicator.Title</MudText>
+        <MudGrid>
+            <MudItem xs="12" sm="6">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudField Label="Lead">@Indicator.Owner.ToString()</MudField>
+                    <MudTextField Label="Description" T="string" @bind-Value="Indicator.Description" Lines="2" />
+                    <MudField Label="Data Type">@Indicator.DataType</MudField>
+                    <MudField Label="Collection Interval">@Indicator.CollectionInterval</MudField>
+                    <MudField Label="Unit of Measurement">@Indicator.UnitOfMeasurement.Name (@Indicator.UnitOfMeasurement.Symbol)</MudField>
+                    <MudField Label="Active">@(Indicator.IsActive?"Yes":"No")</MudField>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudItem>
+                        @if (Indicator.Action is not null)
+                        {
+                            <MudText Typo="Typo.h6">Action</MudText>
+                            <MudAlert Severity="Severity.Info" NoIcon="true">@Indicator.Action.ToString()</MudAlert>
+                            <MudText Typo="Typo.h6">Objective</MudText>
+                            <MudAlert Severity="Severity.Warning" NoIcon="true">@(Indicator.Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudAlert>
+                            <MudText Typo="Typo.h6">Goals</MudText>
+                            <MudAlert Severity="Severity.Success" NoIcon="true">
+                                @if (Indicator.Action.Objective is not null && Indicator.Action.Objective.Goals.Count > 0)
+                                {
+                                    @foreach (var goal in Indicator.Action.Objective.Goals)
+                                    {
+                                        string image;
+                                        switch (goal.Id)
+                                        {
+                                            case 1:
+                                                image = "/images/reduce-greenhouse-gas-emissions.png";
+                                                break;
+                                            case 2:
+                                                image = "/images/ensure-yukoners-have-access-to-reliable-affordable-and-renewable-energy.png";
+                                                break;
+                                            case 3:
+                                                image = "/images/adapt-to-the-impacts-of-climate-change.png";
+                                                break;
+                                            case 4:
+                                                image = "/images/build-a-green-economy.png";
+                                                break;
+                                            default:
+                                                image = "";
+                                                break;
+                                        }
+                                        <div class="d-flex">
+                                            <MudAvatar Image="@image" Class="mr-2 my-4" />
+                                            <MudText Class="my-6" Typo="Typo.body2">@goal.Title</MudText>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <MudText Typo="Typo.body2">Error: This objective is not associated with any goals!</MudText>
+                                }
+                            </MudAlert>
+                        }
+                        else if (Indicator.Objective is not null)
+                        {
+                            <MudText Typo="Typo.h6">Objective</MudText>
+                            <MudAlert Severity="Severity.Warning" NoIcon="true">@Indicator.Objective.Title</MudAlert>
+                            <MudText Typo="Typo.h6">Goals</MudText>
+                            <MudAlert Severity="Severity.Success" NoIcon="true">
+                                @if (Indicator.Objective.Goals.Count > 0)
+                                {
+                                    @foreach (var goal in Indicator.Objective.Goals)
+                                    {
+                                        string image;
+                                        @switch (goal.Id)
+                                        {
+                                            case 1:
+                                                image = "/images/reduce-greenhouse-gas-emissions.png";
+                                                break;
+                                            case 2:
+                                                image = "/images/ensure-yukoners-have-access-to-reliable-affordable-and-renewable-energy.png";
+                                                break;
+                                            case 3:
+                                                image = "/images/adapt-to-the-impacts-of-climate-change.png";
+                                                break;
+                                            case 4:
+                                                image = "/images/build-a-green-economy.png";
+                                                break;
+                                            default:
+                                                image = "";
+                                                break;
+                                        }
+                                        <div class="d-flex">
+                                            <MudAvatar Image="@image" Class="mr-2 my-4" />
+                                            <MudText Class="my-6" Typo="Typo.body2">@goal.Title</MudText>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <MudText Typo="Typo.body2">Error: This objective is not associated with any goals!</MudText>
+                                }
+
+                            </MudAlert>
+                        }
+                        else if (Indicator.Goal is not null)
+                        {
+                            <MudText Typo="Typo.h6">Goal</MudText>
+                            <MudAlert Severity="Severity.Success" NoIcon="true">
+                                @{
+                                    string image;
+                                }
+                                @switch (Indicator.Goal.Id)
+                                {
+                                    case 1:
+                                        image = "/images/reduce-greenhouse-gas-emissions.png";
+                                        break;
+                                    case 2:
+                                        image = "/images/ensure-yukoners-have-access-to-reliable-affordable-and-renewable-energy.png";
+                                        break;
+                                    case 3:
+                                        image = "/images/adapt-to-the-impacts-of-climate-change.png";
+                                        break;
+                                    case 4:
+                                        image = "/images/build-a-green-economy.png";
+                                        break;
+                                    default:
+                                        image = "";
+                                        break;
+                                }
+                                <div class="d-flex">
+                                    <MudAvatar Image="@image" Class="mr-2 my-4" />
+                                    <MudText Class="my-6" Typo="Typo.body2">@Indicator.Goal.Title</MudText>
+                                </div>
+                            </MudAlert>
+                        }
+                    </MudItem>
+                </MudPaper>
+            </MudItem>
+
+            @*<MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="2" Class="pa-4">
+                <MudField Label="Data Type">@Indicator.DataType</MudField>
+                <MudField Label="Collection Interval">@Indicator.CollectionInterval</MudField>
+                <MudField Label="Unit of Measurement">@Indicator.UnitOfMeasurement.Name (@Indicator.UnitOfMeasurement.Symbol)</MudField>
+                <MudField Label="Active">@(Indicator.IsActive?"Yes":"No")</MudField>
+                </MudPaper>
+                </MudItem>*@
+
+            <MudItem xs="12" sm="6">
+                <MudPaper Class="pa-4" Elevation="2">
+                    <MudText Typo="Typo.h6" Class="mb-2">Entries</MudText>
+                    <MudTable Items="Indicator.Entries.OrderBy(e => e.Date)" Elevation="0" Class="mt-n2" Dense="true">
+                        <HeaderContent>
+                            <MudTh>Date</MudTh>
+                            <MudTh>Value</MudTh>
+                            <MudTh>Note</MudTh>
+                            <MudTh></MudTh>
+                        </HeaderContent>
+                        <RowTemplate Context="Entry">
+                            <MudTd DataLabel="Date">@Entry.Date.ToLongDateString()</MudTd>
+                            <MudTd DataLabel="Value">@Entry.Value @Indicator.UnitOfMeasurement.Symbol</MudTd>
+                            <MudTd DataLabel="Note">@Entry.Note</MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                </MudPaper>
+            </MudItem>
+
+            @if (Indicator.Target != null)
+            {
+                <MudItem xs="12" sm="6" md="6">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudText Typo="Typo.h6">Target</MudText>
+                        @if (Indicator.Target.Value is not null)
+                        {
+                            <MudField Label="Value" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol">@Indicator.Target.Value</MudField>
+                        }
+                        @if (Indicator.Target.StartDate is not null)
+                        {
+                            <MudField Label="Start Date">@Indicator.Target.StartDate?.ToLongDateString()</MudField>
+                        }
+                        <MudField Label="Completion Date">@Indicator.Target.EndDate?.ToString("yyyy")</MudField>
+                        @if (!string.IsNullOrWhiteSpace(Indicator.Target.OcfDescription))
+                        {
+                            <MudField Label="OCF Description">@Indicator.Target.OcfDescription</MudField>
+                        }
+                    </MudPaper>
+                </MudItem>
+            }
+
+
+
+            <MudItem xs="12" sm="6">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudText Typo="Typo.h6">Visualization</MudText>
+                    <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%"></MudChart>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
+                <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/indicators">Back</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+}
+

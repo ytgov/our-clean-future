@@ -30,27 +30,8 @@ else
                                 {
                                     @foreach (var goal in Indicator.Action.Objective.Goals)
                                     {
-                                        string image;
-                                        switch (goal.Id)
-                                        {
-                                            case 1:
-                                                image = "/images/reduce-greenhouse-gas-emissions.png";
-                                                break;
-                                            case 2:
-                                                image = "/images/ensure-yukoners-have-access-to-reliable-affordable-and-renewable-energy.png";
-                                                break;
-                                            case 3:
-                                                image = "/images/adapt-to-the-impacts-of-climate-change.png";
-                                                break;
-                                            case 4:
-                                                image = "/images/build-a-green-economy.png";
-                                                break;
-                                            default:
-                                                image = "";
-                                                break;
-                                        }
                                         <div class="d-flex">
-                                            <MudAvatar Image="@image" Class="mr-2 my-2" />
+                                            <MudAvatar Image="@GetGoalIconPath(goal)" Class="mr-2 my-2" />
                                             <MudText Class="my-4" Typo="Typo.body2">@goal.Title</MudText>
                                         </div>
                                     }
@@ -81,27 +62,8 @@ else
                                 {
                                     @foreach (var goal in Indicator.Objective.Goals)
                                     {
-                                        string image;
-                                        switch (goal.Id)
-                                        {
-                                            case 1:
-                                                image = "/images/reduce-greenhouse-gas-emissions.png";
-                                                break;
-                                            case 2:
-                                                image = "/images/ensure-yukoners-have-access-to-reliable-affordable-and-renewable-energy.png";
-                                                break;
-                                            case 3:
-                                                image = "/images/adapt-to-the-impacts-of-climate-change.png";
-                                                break;
-                                            case 4:
-                                                image = "/images/build-a-green-economy.png";
-                                                break;
-                                            default:
-                                                image = "";
-                                                break;
-                                        }
                                         <div class="d-flex">
-                                            <MudAvatar Image="@image" Class="mr-2 my-2" />
+                                            <MudAvatar Image="@GetGoalIconPath(goal)" Class="mr-2 my-2" />
                                             <MudText Class="my-4" Typo="Typo.body2">@goal.Title</MudText>
                                         </div>
                                     }
@@ -126,29 +88,8 @@ else
                         {
                             <MudText Typo="Typo.h6">Goal</MudText>
                             <MudAlert Severity="Severity.Success" NoIcon="true">
-                                @{
-                                    string image;
-                                }
-                                @switch (Indicator.Goal.Id)
-                                {
-                                    case 1:
-                                        image = "/images/reduce-greenhouse-gas-emissions.png";
-                                        break;
-                                    case 2:
-                                        image = "/images/ensure-yukoners-have-access-to-reliable-affordable-and-renewable-energy.png";
-                                        break;
-                                    case 3:
-                                        image = "/images/adapt-to-the-impacts-of-climate-change.png";
-                                        break;
-                                    case 4:
-                                        image = "/images/build-a-green-economy.png";
-                                        break;
-                                    default:
-                                        image = "";
-                                        break;
-                                }
                                 <div class="d-flex">
-                                    <MudAvatar Image="@image" Class="mr-2 my-2" />
+                                    <MudAvatar Image="@GetGoalIconPath(Indicator.Goal)" Class="mr-2 my-2" />
                                     <MudText Class="my-4" Typo="Typo.body2">@Indicator.Goal.Title</MudText>
                                 </div>
                             </MudAlert>

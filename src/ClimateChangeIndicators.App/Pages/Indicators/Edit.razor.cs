@@ -89,13 +89,13 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
             else if (SelectedParentType == "Action") {
                 Indicator.Goal = null;
                 Indicator.Objective = null;
-            } else {
+            }
+            else {
                 Indicator.Goal = null;
                 Indicator.Objective = null;
                 Indicator.Action = null;
             }
             await _context.SaveChangesAsync();
-            //Navigation.NavigateTo($"/indicators/details/{_indicator.Id}");
             Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
             Navigation.NavigateTo($"/indicators/details/{Id}");
         }
@@ -112,7 +112,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
 
         private void CreateEntry()
         {
-            Indicator.Entries.Add(new Entry());
+            Indicator.Entries.Add(new Entry() { Date = DateTime.UtcNow, Value = new Random().Next(1, 6000) });
         }
 
         public void Dispose()

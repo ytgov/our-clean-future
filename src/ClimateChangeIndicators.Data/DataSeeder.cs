@@ -37,6 +37,11 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<UnitOfMeasurement>().HasData(new UnitOfMeasurement { Id = 14, Name = "Cubic kilometres", Symbol = "km³" });
             _modelBuilder.Entity<UnitOfMeasurement>().HasData(new UnitOfMeasurement { Id = 15, Name = "Tons per person", Symbol = "t/person" });
             _modelBuilder.Entity<UnitOfMeasurement>().HasData(new UnitOfMeasurement { Id = 16, Name = "Kilotonnes per million chained (2012) dollars", Symbol = "kt/$1MM chained (2012)" });
+            
+            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 1, Title = "Reduce Yukon's greenhouse gas emissions." });
+            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 2, Title = "Ensure Yukoners have access to reliable, affordable and renewable energy." });
+            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 3, Title = "Adapt to the impacts of climate change." });
+            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 4, Title = "Build a green economy." });
 
             _modelBuilder.Entity<Area>().HasData(new Area { Id = 1, Title = "Transportion" });
             _modelBuilder.Entity<Area>().HasData(new Area { Id = 2, Title = "Homes and buildings" });
@@ -46,17 +51,38 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Area>().HasData(new Area { Id = 6, Title = "Innovation" });
             _modelBuilder.Entity<Area>().HasData(new Area { Id = 7, Title = "Leadership" });
 
-            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 1, Title = "Reduce Yukon's greenhouse gas emissions." });
-            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 2, Title = "Ensure Yukoners have access to reliable, affordable and renewable energy." });
-            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 3, Title = "Adapt to the impacts of climate change." });
-            _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 4, Title = "Build a green economy." });
-
             _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 1, Title = "Increase the number of zero emission vehicles on our roads.", AreaId = 1 });
             _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 2, Title = "Reduce the lifecycle carbon intensity of transportation fuels.", AreaId = 1 });
             _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 3, Title = "Increase the use of public and active transportation.", AreaId = 1 });
             _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 4, Title = "Reduce the carbon footprint from medium and heavy-duty vehicles.", AreaId = 1 });
             _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 5, Title = "Be more efficient in how and when we travel.", AreaId = 1 });
             _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 6, Title = "Ensure roads, runways and other transportation infrastructure are resilient to the impacts of climate change.", AreaId = 1 });
+
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 7, Title = "Improve the energy efficiency and climate resilience of existing homes and buildings.", AreaId = 2 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 8, Title = "Ensure new homes and buildings are built to be low-carbon and climate-resilient.", AreaId = 2 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 9, Title = "Increase the use of biomass and other renewable energy sources for heating.", AreaId = 2 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 10, Title = "Use energy more efficiently and better align energy supply and demand.", AreaId = 2 });
+
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 11, Title = "Increase the supply of electricity generated from renewable sources.", AreaId = 3 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 12, Title = "Support local and community-based renewable energy projects for heating and electricity.", AreaId = 3 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 13, Title = "Ensure electricity generation, transmission and distribution infrastructure is resilient to the impacts of climate change.", AreaId = 3 });
+
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 14, Title = "Respond to the impacts of climate change on wild species and their habitats.", AreaId = 4 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 15, Title = "Maintain our ability to practice traditional and cultural activities on the land.", AreaId = 4 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 16, Title = "Protect and enhance human health and wellbeing in a changing climate.", AreaId = 4 });
+
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 17, Title = "Design our communities to be low-carbon and resilient to the impacts of climate change.", AreaId = 5 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 18, Title = "Ensure we are prepared for emergencies that are becoming more likely due to climate change.", AreaId = 5 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 19, Title = "Supply more of what we eat through sustainable local food production.", AreaId = 5 });
+
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 20, Title = "Support innovation and green business practices.", AreaId = 6 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 21, Title = "Reduce the carbon intensity of mining and ensure mining projects are prepared for the impacts of climate change.", AreaId = 6 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 22, Title = "Enhance the sustainability of Yukon’s tourism industry.", AreaId = 6 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 23, Title = "Improve how we manage our waste to move toward a more circular economy.", AreaId = 6 });
+
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 24, Title = "Ensure the goals of this strategy are incorporated into government planning and operations.", AreaId = 7 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 25, Title = "Educate and empower youth as the next generation of leaders.", AreaId = 7 });
+            _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 26, Title = "Ensure Yukoners have the information needed to make evidence-based decisions.", AreaId = 7 });
 
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 1, Name = "Yukon Government" });
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 2, Name = "ATCO Electric Yukon" });
@@ -125,7 +151,7 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 21, Code = "T21", Title = "Develop guidelines for the Government of Yukon Fleet Vehicle Agency’s fleet by 2021 to ensure appropriate vehicles are used for the task at hand." });
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 22, Code = "T22", Title = "Incorporate fuel efficiency into purchasing decisions for Government of Yukon fleet vehicles beginning in 2020 to reduce greenhouse gas emissions and fuel costs." });
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 23, Code = "T23", Title = "Expand virtual health care services to Whitehorse medical clinics by 2022 in order to improve access to healthcare while reducing greenhouse gas emissions from travel to and from Whitehorse." });
-            _modelBuilder.Entity<Action>().HasData(new Action { Id = 24, Code = "T24", Title = "Continue to operate the Yukon Rideshare program to make carpooling and other shared travel easier." });
+            _modelBuilder.Entity<Action>().HasData(new Action { Id = 24, Code = "T24", Title = "Cont   inue to operate the Yukon Rideshare program to make carpooling and other shared travel easier." });
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 25, Code = "T25", Title = "Complete a climate change vulnerability study of the road transportation network by 2023 to inform the development of standards and specifications." });
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 26, Code = "T26", Title = "Establish a geohazard mapping program for major transportation corridors and prioritize sections for targeted permafrost study by 2022." });
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 27, Code = "T27", Title = "Analyze flood risk along critical transportation corridors at risk of flooding by 2023." });

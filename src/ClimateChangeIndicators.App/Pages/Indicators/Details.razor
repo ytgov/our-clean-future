@@ -24,10 +24,6 @@ else
                     <MudItem>
                         @if (Indicator.Action is not null)
                         {
-                            <MudText Typo="Typo.h6">Action</MudText>
-                            <MudAlert Severity="Severity.Info" NoIcon="true">@Indicator.Action.ToString()</MudAlert>
-                            <MudText Typo="Typo.h6">Objective</MudText>
-                            <MudAlert Severity="Severity.Warning" NoIcon="true">@(Indicator.Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudAlert>
                             <MudText Typo="Typo.h6">Goals</MudText>
                             <MudAlert Severity="Severity.Success" NoIcon="true">
                                 @if (Indicator.Action.Objective is not null && Indicator.Action.Objective.Goals.Count > 0)
@@ -64,19 +60,29 @@ else
                                     <MudText Typo="Typo.body2">Error: This objective is not associated with any goals!</MudText>
                                 }
                             </MudAlert>
+                            <MudText Typo="Typo.h6">Objective</MudText>
+                            <MudAlert Severity="Severity.Warning" NoIcon="true">
+                                <div class="d-flex">
+                                    @if (Indicator.Action.Objective is not null && Indicator.Action.Objective.Area is not null)
+                                    {
+                                        <MudAvatar Image="@GetAreaIconPath(Indicator.Action.Objective.Area)" Class="mr-2 my-2" />
+                                    }
+                                    <MudText Class="my-4" Typo="Typo.body2">@(Indicator.Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudText>
+                                </div>
+                            </MudAlert>
+                            <MudText Typo="Typo.h6">Action</MudText>
+                            <MudAlert Severity="Severity.Info" NoIcon="true">@Indicator.Action.ToString()</MudAlert>
                         }
                         else if (Indicator.Objective is not null)
                         {
-                            <MudText Typo="Typo.h6">Objective</MudText>
-                            <MudAlert Severity="Severity.Warning" NoIcon="true">@Indicator.Objective.Title</MudAlert>
                             <MudText Typo="Typo.h6">Goals</MudText>
                             <MudAlert Severity="Severity.Success" NoIcon="true">
-                                @if (Indicator.Objective.Goals.Count > 0)
+                                @if (Indicator.Objective is not null && Indicator.Objective.Goals.Count > 0)
                                 {
                                     @foreach (var goal in Indicator.Objective.Goals)
                                     {
                                         string image;
-                                        @switch (goal.Id)
+                                        switch (goal.Id)
                                         {
                                             case 1:
                                                 image = "/images/reduce-greenhouse-gas-emissions.png";
@@ -104,7 +110,16 @@ else
                                 {
                                     <MudText Typo="Typo.body2">Error: This objective is not associated with any goals!</MudText>
                                 }
-
+                            </MudAlert>
+                            <MudText Typo="Typo.h6">Objective</MudText>
+                            <MudAlert Severity="Severity.Warning" NoIcon="true">
+                                <div class="d-flex">
+                                    @if (Indicator.Objective.Area is not null)
+                                    {
+                                        <MudAvatar Image="@GetAreaIconPath(Indicator.Objective.Area)" Class="mr-2 my-2" />
+                                    }
+                                    <MudText Class="my-4" Typo="Typo.body2">@(Indicator.Objective.Title)</MudText>
+                                </div>
                             </MudAlert>
                         }
                         else if (Indicator.Goal is not null)
@@ -141,15 +156,6 @@ else
                     </MudItem>
                 </MudPaper>
             </MudItem>
-
-            @*<MudItem xs="12" sm="6" md="3">
-                <MudPaper Elevation="2" Class="pa-4">
-                <MudField Label="Data Type">@Indicator.DataType</MudField>
-                <MudField Label="Collection Interval">@Indicator.CollectionInterval</MudField>
-                <MudField Label="Unit of Measurement">@Indicator.UnitOfMeasurement.Name (@Indicator.UnitOfMeasurement.Symbol)</MudField>
-                <MudField Label="Active">@(Indicator.IsActive?"Yes":"No")</MudField>
-                </MudPaper>
-                </MudItem>*@
 
             <MudItem xs="12" sm="6">
                 <MudPaper Class="pa-4" Elevation="2">

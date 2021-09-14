@@ -79,5 +79,18 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
 
             await base.OnInitializedAsync();
         }
+
+        string GetAreaIconPath(Area area)
+        {
+            return area.Id switch {
+                1 => "/images/transportation.png",
+                2 => "/images/homes-and-buildings.png",
+                3 => "/images/energy-production.png",
+                4 => "/images/people-and-the-environment.png",
+                5 => "/images/communities.png",
+                6 => "/images/innovation.png",
+                _ => "/images/leadership.png",
+            };
+        }
     }
 }

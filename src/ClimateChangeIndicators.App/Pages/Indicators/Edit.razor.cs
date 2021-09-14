@@ -46,7 +46,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                 Owners = await _context.Owners.Include(o => o.Organization).Include(o => o.Branch).ThenInclude(b => b!.Department).OrderBy(o => o.Branch!.Name).ToListAsync();
                 UnitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
                 Goals = await _context.Goals.OrderBy(g => g.Title).ToListAsync();
-                Objectives = await _context.Objectives.OrderBy(o => o.Title).ToListAsync();
+                Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
                 Actions = await _context.Actions.ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.
                 Indicator = await _context.Indicators.Include(i => i.Target).FirstOrDefaultAsync(i => i.Id == Id);

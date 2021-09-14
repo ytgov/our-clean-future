@@ -49,7 +49,7 @@ else
                                 <MudSelect Label="Objective" T="Data.Entities.Objective" @bind-Value="Indicator.Objective" DisableUnderLine="true">
                                     @foreach (var objective in Objectives)
                                     {
-                                        <MudSelectItem Value="objective">@objective.Title</MudSelectItem>
+                                        <MudSelectItem Value="objective">@objective.Area.Title | @objective.Title</MudSelectItem>
                                     }
                                 </MudSelect>
                             </MudItem>

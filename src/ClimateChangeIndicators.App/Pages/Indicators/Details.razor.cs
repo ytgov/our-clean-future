@@ -22,8 +22,8 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
 {
     public partial class Details
     {
-        public List<ChartSeries> Series = new List<ChartSeries>();
-        public ChartOptions Options = new ChartOptions();
+        public List<ChartSeries> Series = new();
+        public ChartOptions Options = new();
         public string[] XAxisLabels = { "2019", "2020", "2021", "2022", "2023", "2024" };
         private bool _isLoaded;
         private AppDbContext _context = null!;
@@ -80,7 +80,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
             await base.OnInitializedAsync();
         }
 
-        string GetAreaIconPath(Area area)
+        private static string GetAreaIconPath(Area area)
         {
             return area.Id switch {
                 1 => "/images/transportation.png",
@@ -94,7 +94,7 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
             };
         }
 
-        string GetGoalIconPath(Goal goal)
+        private static string GetGoalIconPath(Goal goal)
         {
             return goal.Id switch {
                 1 => "/images/reduce-greenhouse-gas-emissions.png",
@@ -103,6 +103,11 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                 4 => "/images/build-a-green-economy.png",
                 _ => ""
             };
+        }
+
+        private void Edit()
+        {
+            Navigation.NavigateTo("/indicators/edit/" + Indicator.Id);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<UnitOfMeasurement>().HasData(new UnitOfMeasurement { Id = 14, Name = "Cubic kilometres", Symbol = "km³" });
             _modelBuilder.Entity<UnitOfMeasurement>().HasData(new UnitOfMeasurement { Id = 15, Name = "Tons per person", Symbol = "t/person" });
             _modelBuilder.Entity<UnitOfMeasurement>().HasData(new UnitOfMeasurement { Id = 16, Name = "Kilotonnes per million chained (2012) dollars", Symbol = "kt/$1MM chained (2012)" });
-            
+
             _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 1, Title = "Reduce Yukon's greenhouse gas emissions." });
             _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 2, Title = "Ensure Yukoners have access to reliable, affordable and renewable energy." });
             _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 3, Title = "Adapt to the impacts of climate change." });
@@ -84,49 +84,84 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 25, Title = "Educate and empower youth as the next generation of leaders.", AreaId = 7 });
             _modelBuilder.Entity<Objective>().HasData(new Objective { Id = 26, Title = "Ensure Yukoners have the information needed to make evidence-based decisions.", AreaId = 7 });
 
-            _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 1, Name = "Yukon Government" });
-            _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 2, Name = "ATCO Electric Yukon" });
-
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 1, Name = "Community Services", ShortName = "CS" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 2, Name = "Economic Development", ShortName = "EcDev" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 3, Name = "Education", ShortName = "EDU" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 4, Name = "Energy, Mines and Resources", ShortName = "EMR" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 5, Name = "Environment", ShortName = "ENV" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 6, Name = "Executive Council Office", ShortName = "ECO" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 7, Name = "Finance", ShortName = "FIN" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 8, Name = "Health and Social Services", ShortName = "HSS" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 9, Name = "Highways and Public Works", ShortName = "HPW" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 10, Name = "Justice", ShortName = "JUS" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 11, Name = "Public Service Commission", ShortName = "PSC" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 12, Name = "Tourism and Culture", ShortName = "TC" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 13, Name = "Yukon Development Corporation", ShortName = "YDC" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 14, Name = "Yukon Energy Corporation", ShortName = "YEC" });
-            _modelBuilder.Entity<Department>().HasData(new Department { Id = 15, Name = "Yukon Housing Corporation", ShortName = "YHC" });
-
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 1, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 2, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 3, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 4, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 5, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 6, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 7, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 8, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 9, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 10, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 11, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 12, OrganizationId = 2 });
-
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, DepartmentId = 5, Name = "Climate Change Secretariat", OwnerId = 1 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 5, Name = "Water Resources", OwnerId = 2 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 3, DepartmentId = 5, Name = "Parks", OwnerId = 3 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 4, DepartmentId = 5, Name = "Fish and Wildlife", OwnerId = 4 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 5, DepartmentId = 5, Name = "Conservation Officer Services", OwnerId = 5 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 6, DepartmentId = 4, Name = "Forest Resources", OwnerId = 6 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 7, DepartmentId = 4, Name = "Agriculture", OwnerId = 7 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 8, DepartmentId = 4, Name = "Energy", OwnerId = 8 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 9, DepartmentId = 9, Name = "Supply Services", OwnerId = 9 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 9, Name = "Strategic Initiatives", OwnerId = 10 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 12, Name = "Culture Services", OwnerId = 11 });
+            _modelBuilder.Entity("GoalObjective").HasData(
+                new { GoalsId = 1, ObjectivesId = 1 },
+                new { GoalsId = 4, ObjectivesId = 1 },
+                new { GoalsId = 1, ObjectivesId = 2 },
+                new { GoalsId = 1, ObjectivesId = 3 },
+                new { GoalsId = 2, ObjectivesId = 3 },
+                new { GoalsId = 4, ObjectivesId = 3 },
+                new { GoalsId = 1, ObjectivesId = 4 },
+                new { GoalsId = 2, ObjectivesId = 4 },
+                new { GoalsId = 1, ObjectivesId = 5 },
+                new { GoalsId = 2, ObjectivesId = 5 },
+                new { GoalsId = 4, ObjectivesId = 5 },
+                new { GoalsId = 3, ObjectivesId = 6 },
+                new { GoalsId = 4, ObjectivesId = 6 },
+                new { GoalsId = 1, ObjectivesId = 7 },
+                new { GoalsId = 2, ObjectivesId = 7 },
+                new { GoalsId = 3, ObjectivesId = 7 },
+                new { GoalsId = 4, ObjectivesId = 7 },
+                new { GoalsId = 1, ObjectivesId = 8 },
+                new { GoalsId = 2, ObjectivesId = 8 },
+                new { GoalsId = 3, ObjectivesId = 8 },
+                new { GoalsId = 4, ObjectivesId = 8 },
+                new { GoalsId = 1, ObjectivesId = 9 },
+                new { GoalsId = 2, ObjectivesId = 9 },
+                new { GoalsId = 3, ObjectivesId = 9 },
+                new { GoalsId = 4, ObjectivesId = 9 },
+                new { GoalsId = 1, ObjectivesId = 10 },
+                new { GoalsId = 2, ObjectivesId = 10 },
+                new { GoalsId = 4, ObjectivesId = 10 },
+                new { GoalsId = 1, ObjectivesId = 11 },
+                new { GoalsId = 2, ObjectivesId = 11 },
+                new { GoalsId = 4, ObjectivesId = 11 },
+                new { GoalsId = 1, ObjectivesId = 12 },
+                new { GoalsId = 2, ObjectivesId = 12 },
+                new { GoalsId = 4, ObjectivesId = 12 },
+                new { GoalsId = 3, ObjectivesId = 13 },
+                new { GoalsId = 4, ObjectivesId = 13 },
+                new { GoalsId = 3, ObjectivesId = 14 },
+                new { GoalsId = 4, ObjectivesId = 14 },
+                new { GoalsId = 3, ObjectivesId = 15 },
+                new { GoalsId = 4, ObjectivesId = 15 },
+                new { GoalsId = 3, ObjectivesId = 16 },
+                new { GoalsId = 1, ObjectivesId = 17 },
+                new { GoalsId = 2, ObjectivesId = 17 },
+                new { GoalsId = 3, ObjectivesId = 17 },
+                new { GoalsId = 4, ObjectivesId = 17 },
+                new { GoalsId = 3, ObjectivesId = 18 },
+                new { GoalsId = 4, ObjectivesId = 18 },
+                new { GoalsId = 1, ObjectivesId = 19 },
+                new { GoalsId = 3, ObjectivesId = 19 },
+                new { GoalsId = 4, ObjectivesId = 19 },
+                new { GoalsId = 1, ObjectivesId = 20 },
+                new { GoalsId = 2, ObjectivesId = 20 },
+                new { GoalsId = 3, ObjectivesId = 20 },
+                new { GoalsId = 4, ObjectivesId = 20 },
+                new { GoalsId = 1, ObjectivesId = 21 },
+                new { GoalsId = 2, ObjectivesId = 21 },
+                new { GoalsId = 3, ObjectivesId = 21 },
+                new { GoalsId = 4, ObjectivesId = 21 },
+                new { GoalsId = 1, ObjectivesId = 22 },
+                new { GoalsId = 2, ObjectivesId = 22 },
+                new { GoalsId = 3, ObjectivesId = 22 },
+                new { GoalsId = 4, ObjectivesId = 22 },
+                new { GoalsId = 1, ObjectivesId = 23 },
+                new { GoalsId = 4, ObjectivesId = 23 },
+                new { GoalsId = 1, ObjectivesId = 24 },
+                new { GoalsId = 2, ObjectivesId = 24 },
+                new { GoalsId = 3, ObjectivesId = 24 },
+                new { GoalsId = 4, ObjectivesId = 24 },
+                new { GoalsId = 1, ObjectivesId = 25 },
+                new { GoalsId = 2, ObjectivesId = 25 },
+                new { GoalsId = 3, ObjectivesId = 25 },
+                new { GoalsId = 4, ObjectivesId = 25 },
+                new { GoalsId = 1, ObjectivesId = 26 },
+                new { GoalsId = 2, ObjectivesId = 26 },
+                new { GoalsId = 3, ObjectivesId = 26 },
+                new { GoalsId = 4, ObjectivesId = 26 }
+            );
 
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 1, ObjectiveId = 1, Code = "T1", Title = "Work with local vehicle dealerships and manufacturers to establish a system by 2024 to ensure zero emission vehicles are 10 per cent of light duty vehicle sales by 2025 and 30 per cent by 2030." });
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 2, ObjectiveId = 1, Code = "T2", Title = "Ensure at least 50 per cent of all new light-duty cars purchased by the Government of Yukon are zero emission vehicles each year from 2020 to 2030." });
@@ -266,6 +301,49 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 130, ObjectiveId = 26, Code = "L12", Title = "Create easy access to technical information and lessons learned about climate change, energy and green economy for governments and stakeholders by 2021." });
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 131, ObjectiveId = 26, Code = "L13", Title = "Launch a Yukon-wide information or social marketing campaign in 2021 that will educate Yukoners on greenhouse gas emissions, renewable energy, climate change adaptation, and other topics and highlight what Yukoners can do to support climate change initiatives." });
 
+            _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 1, Name = "Yukon Government" });
+            _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 2, Name = "ATCO Electric Yukon" });
+
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 1, Name = "Community Services", ShortName = "CS" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 2, Name = "Economic Development", ShortName = "EcDev" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 3, Name = "Education", ShortName = "EDU" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 4, Name = "Energy, Mines and Resources", ShortName = "EMR" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 5, Name = "Environment", ShortName = "ENV" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 6, Name = "Executive Council Office", ShortName = "ECO" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 7, Name = "Finance", ShortName = "FIN" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 8, Name = "Health and Social Services", ShortName = "HSS" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 9, Name = "Highways and Public Works", ShortName = "HPW" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 10, Name = "Justice", ShortName = "JUS" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 11, Name = "Public Service Commission", ShortName = "PSC" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 12, Name = "Tourism and Culture", ShortName = "TC" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 13, Name = "Yukon Development Corporation", ShortName = "YDC" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 14, Name = "Yukon Energy Corporation", ShortName = "YEC" });
+            _modelBuilder.Entity<Department>().HasData(new Department { Id = 15, Name = "Yukon Housing Corporation", ShortName = "YHC" });
+
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 1, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 2, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 3, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 4, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 5, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 6, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 7, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 8, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 9, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 10, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 11, OrganizationId = 1 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 12, OrganizationId = 2 });
+
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, DepartmentId = 5, Name = "Climate Change Secretariat", OwnerId = 1 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 5, Name = "Water Resources", OwnerId = 2 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 3, DepartmentId = 5, Name = "Parks", OwnerId = 3 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 4, DepartmentId = 5, Name = "Fish and Wildlife", OwnerId = 4 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 5, DepartmentId = 5, Name = "Conservation Officer Services", OwnerId = 5 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 6, DepartmentId = 4, Name = "Forest Resources", OwnerId = 6 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 7, DepartmentId = 4, Name = "Agriculture", OwnerId = 7 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 8, DepartmentId = 4, Name = "Energy", OwnerId = 8 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 9, DepartmentId = 9, Name = "Supply Services", OwnerId = 9 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 9, Name = "Strategic Initiatives", OwnerId = 10 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 12, Name = "Culture Services", OwnerId = 11 });
 
             _modelBuilder.Entity<Indicator>()
                 .HasData(new Indicator {

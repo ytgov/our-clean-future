@@ -41,15 +41,19 @@ else
                                     <MudText Typo="Typo.body2">Error: This objective is not associated with any goals!</MudText>
                                 }
                             </MudAlert>
-                            <MudText Typo="Typo.h6">Objective</MudText>
-                            <MudAlert Severity="Severity.Warning" NoIcon="true">
+                            <MudText Typo="Typo.h6">Area</MudText>
+                            <MudAlert Severity="Severity.Normal" NoIcon="true">
                                 <div class="d-flex">
                                     @if (Indicator.Action.Objective is not null && Indicator.Action.Objective.Area is not null)
                                     {
                                         <MudAvatar Image="@GetAreaIconPath(Indicator.Action.Objective.Area)" Class="mr-2 my-2" />
                                     }
-                                    <MudText Class="my-4" Typo="Typo.body2">@(Indicator.Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudText>
+                                    <MudText Class="my-4" Typo="Typo.body2">@(Indicator.Action.Objective?.Area?.Title ?? "Error: This objective is not associated with an area!")</MudText>
                                 </div>
+                            </MudAlert>
+                            <MudText Typo="Typo.h6">Objective</MudText>
+                            <MudAlert Severity="Severity.Warning" NoIcon="true">
+                                <MudText Class="my-4" Typo="Typo.body2">@(Indicator.Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudText>
                             </MudAlert>
                             <MudText Typo="Typo.h6">Action</MudText>
                             <MudAlert Severity="Severity.Info" NoIcon="true">@Indicator.Action.ToString()</MudAlert>
@@ -73,15 +77,19 @@ else
                                     <MudText Typo="Typo.body2">Error: This objective is not associated with any goals!</MudText>
                                 }
                             </MudAlert>
-                            <MudText Typo="Typo.h6">Objective</MudText>
-                            <MudAlert Severity="Severity.Warning" NoIcon="true">
+                            <MudText Typo="Typo.h6">Area</MudText>
+                            <MudAlert Severity="Severity.Normal" NoIcon="true">
                                 <div class="d-flex">
                                     @if (Indicator.Objective.Area is not null)
                                     {
                                         <MudAvatar Image="@GetAreaIconPath(Indicator.Objective.Area)" Class="mr-2 my-2" />
                                     }
-                                    <MudText Class="my-4" Typo="Typo.body2">@(Indicator.Objective.Title)</MudText>
+                                    <MudText Class="my-4" Typo="Typo.body2">@(Indicator.Objective?.Area?.Title ?? "Error: This objective is not associated with an area!")</MudText>
                                 </div>
+                            </MudAlert>
+                            <MudText Typo="Typo.h6">Objective</MudText>
+                            <MudAlert Severity="Severity.Warning" NoIcon="true">
+                                <MudText Class="my-4" Typo="Typo.body2">@(Indicator.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudText>
                             </MudAlert>
                         }
                         else if (Indicator.Goal is not null)

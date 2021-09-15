@@ -1,4 +1,4 @@
-﻿using System;
+﻿Add musing System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -332,6 +332,7 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 10, OrganizationId = 1 });
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 11, OrganizationId = 1 });
             _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 12, OrganizationId = 2 });
+            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 13, OrganizationId = 1 });
 
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, DepartmentId = 5, Name = "Climate Change Secretariat", OwnerId = 1 });
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 5, Name = "Water Resources", OwnerId = 2 });
@@ -344,6 +345,7 @@ namespace ClimateChangeIndicators.Data
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 9, DepartmentId = 9, Name = "Supply Services", OwnerId = 9 });
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 9, Name = "Strategic Initiatives", OwnerId = 10 });
             _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 12, Name = "Culture Services", OwnerId = 11 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 12, DepartmentId = 4, Name = "Yukon Geological Survey", OwnerId = 13 });
 
             _modelBuilder.Entity<Indicator>()
                 .HasData(new Indicator {
@@ -405,17 +407,41 @@ namespace ClimateChangeIndicators.Data
                     UnitOfMeasurementId = 1
                 });
 
-            //var indicatorId = 1;
-            //var indicators = new Faker<Indicator>("en_CA")
-            //    .RuleFor(i => i.Id, _ => indicatorId++)
-            //    .RuleFor(i => i.CollectionInterval, _ => _.PickRandom<CollectionInterval>())
-            //    .RuleFor(i => i.DataType, _ => _.PickRandom<DataType>())
-            //    .RuleFor(i => i.Description, _ => "Total number of heavy-duty zero emission vehicles registered in Yukon.")
-            //    .RuleFor(i => i.DisplayName, _ => "ZEVs - Total heavy duty")
-            //    .RuleFor(i => i.IsActive, _ => true)
-            //    .RuleFor(i => i.OurCleanFutureReferenceId, _ => 1)
-            //    .RuleFor(i => i.OwnerId, _ => 1);
-            //_modelBuilder.Entity<Indicator>().HasData(indicators.Generate(1));
-        }
+            _modelBuilder.Entity<Indicator>()
+                .HasData(new Indicator {
+                    Id = 6,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Volume of wood harvested by commercial entities for biomass energy during the reporting year.",
+                    Title = "Commercial biomass harvest",
+                    IsActive = true,
+                    OwnerId = 6,
+                    UnitOfMeasurementId = 12
+                });
+
+            _modelBuilder.Entity<Indicator>()
+                .HasData(new Indicator {
+                    Id= 7,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Change in volume of glaciers in the coast mountains during the reporting year.",
+                    Title = "Glacier volume change",
+                    IsActive = true,
+                    OwnerId = 13,
+                    UnitOfMeasurementId = 14
+                });
+
+                    //var indicatorId = 1;
+                    //var indicators = new Faker<Indicator>("en_CA")
+                    //    .RuleFor(i => i.Id, _ => indicatorId++)
+                    //    .RuleFor(i => i.CollectionInterval, _ => _.PickRandom<CollectionInterval>())
+                    //    .RuleFor(i => i.DataType, _ => _.PickRandom<DataType>())
+                    //    .RuleFor(i => i.Description, _ => "Total number of heavy-duty zero emission vehicles registered in Yukon.")
+                    //    .RuleFor(i => i.DisplayName, _ => "ZEVs - Total heavy duty")
+                    //    .RuleFor(i => i.IsActive, _ => true)
+                    //    .RuleFor(i => i.OurCleanFutureReferenceId, _ => 1)
+                    //    .RuleFor(i => i.OwnerId, _ => 1);
+                    //_modelBuilder.Entity<Indicator>().HasData(indicators.Generate(1));
+                }
     }
 }

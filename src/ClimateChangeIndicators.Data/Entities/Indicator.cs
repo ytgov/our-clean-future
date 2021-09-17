@@ -6,15 +6,19 @@ namespace ClimateChangeIndicators.Data.Entities
     public class Indicator
     {
         public int Id { get; set; }
+
+        [MinLength(1, ErrorMessage = "Title is required.")]
         public string Title { get; set; } = "";
 
         public int OwnerId { get; set; }
         public Owner Owner { get; set; } = null!;
 
+        [MinLength(1, ErrorMessage = "Description is required.")]
         public string Description { get; set; } = "";
         public int UnitOfMeasurementId { get; set; }
         public UnitOfMeasurement UnitOfMeasurement { get; set; } = null!;
         public DataType DataType { get; set; }
+        [ValidateComplexType]
         public Target? Target { get; set; } = null!;
 
         public int? ActionId { get; set; }

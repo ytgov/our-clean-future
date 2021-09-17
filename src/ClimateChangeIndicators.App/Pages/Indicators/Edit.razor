@@ -10,8 +10,9 @@ else
         <MudText Typo="Typo.h3" Class="mb-8"><b>Editing indicator:</b> @Indicator.Title</MudText>
         @*<MudAlert Icon="@Icons.Material.Filled.Lightbulb" Severity="Severity.Normal" Class="mb-6">
             If you need to modify a value within a dropdown menu, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
-        </MudAlert>*@
+            </MudAlert>*@
         <EditForm Model="@Indicator" OnValidSubmit="Update">
+            <ObjectGraphDataAnnotationsValidator />
             <MudGrid>
                 <MudItem xs="12" sm="6">
                     <MudPaper Elevation="2" Class="pa-4">
@@ -21,8 +22,8 @@ else
                                 <MudSelectItem Value="owner">@owner.ToString()</MudSelectItem>
                             }
                         </MudSelect>
-                        <MudTextField Label="Title" T="string" @bind-Value="Indicator.Title" />
-                        <MudTextField Label="Description" T="string" @bind-Value="Indicator.Description" Lines="2" />
+                        <MudTextField Label="Title" T="string" @bind-Value="Indicator.Title" For="@(() => Indicator.Title)"/>
+                        <MudTextField Label="Description" T="string" @bind-Value="Indicator.Description" Lines="2" For="@(() => Indicator.Description)"/>
 
                         <MudItem>
                             <MudSelect Label="Parent Type" @bind-Value="SelectedParentType">
@@ -99,8 +100,8 @@ else
                             <MudTooltip Text="Use only if the OCF Description specifies a date range">
                                 <MudDatePicker Label="Start Date" @bind-Date="Indicator.Target.StartDate" Editable="true"></MudDatePicker>
                             </MudTooltip>
-                            <MudDatePicker Label="Completion Date" @bind-Date="Indicator.Target.EndDate" Editable="true"></MudDatePicker>
-                            <MudTextField Label="OCF Description" @bind-Value="Indicator.Target.OcfDescription" Lines="2"></MudTextField>
+                            <MudDatePicker Label="Completion Date" @bind-Date="Indicator.Target.EndDate" Editable="true" For="@(() => Indicator.Target.EndDate)"/>
+                            <MudTextField Label="OCF Description" @bind-Value="Indicator.Target.OcfDescription" Lines="2"For="@(() => Indicator.Target.OcfDescription)"/>
                             <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="(() => DeleteTarget())" Class="mt-4">Delete target</MudButton>
                         }
                         else

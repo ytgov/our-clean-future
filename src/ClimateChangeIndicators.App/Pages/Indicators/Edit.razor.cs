@@ -140,16 +140,8 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
                 "",
                 yesText: "Delete", cancelText: "Cancel");
             if (result == true) {
-                //Prevents mid-method rerendering of the component, which avoids overlapping threads
-                try {
-                    Indicator.Entries.Remove(entry);
-                    Snackbar.Add($"Deleted unit {entry.Date}", Severity.Success);
-                }
-                catch (DbUpdateException) {
-                    Snackbar.Add($"Unable to delete unit {entry.Date}, as it is associated with an indicator", Severity.Error);
-                }
-                finally {
-                }
+                Indicator.Entries.Remove(entry);
+                Snackbar.Add($"Deleted entry dated {entry.Date.ToLongDateString()}", Severity.Success);
             }
         }
 

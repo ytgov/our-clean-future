@@ -130,8 +130,8 @@ else
                                 <MudTd DataLabel="Note">@Entry.Note</MudTd>
                                 <MudTd>
                                     <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small">
-                                        <MudMenuItem>Edit</MudMenuItem>
-                                        <MudMenuItem>Delete</MudMenuItem>
+                                        <MudMenuItem OnClick="(() => EditEntry(Entry))">Edit</MudMenuItem>
+                                        <MudMenuItem OnClick="(() => DeleteEntry(Entry))">Delete</MudMenuItem>
                                     </MudMenu>
                                 </MudTd>
                             </RowTemplate>

@@ -117,11 +117,39 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         {
             var parameters = new DialogParameters { ["Indicator"] = Indicator };
 
-            var dialog = DialogService.Show<IndicatorEntryDialog>("Add entry", parameters);
+            var dialog = DialogService.Show<CreateEntryDialog>("Add entry", parameters);
             var result = await dialog.Result;
 
             if (!result.Cancelled) {
                 Indicator.Entries.Add((Entry)result.Data);
+            }
+        }
+
+        private async Task EditEntry(Entry entry)
+        {
+            var parameters = new DialogParameters { ["Indicator"] = Indicator, ["Entry"] = entry };
+
+            var dialog = DialogService.Show<EditEntryDialog>("Edit entry", parameters);
+            _ = await dialog.Result;
+        }
+
+        private async Task DeleteEntry(Entry entry)
+        {
+            bool? result = await DialogService.ShowMessageBox(
+                $"Delete entry dated {entry.Date.ToLongDateString()}?",
+                "",
+                yesText: "Delete", cancelText: "Cancel");
+            if (result == true) {
+                //Prevents mid-method rerendering of the component, which avoids overlapping threads
+                try {
+                    Indicator.Entries.Remove(entry);
+                    Snackbar.Add($"Deleted unit {entry.Date}", Severity.Success);
+                }
+                catch (DbUpdateException) {
+                    Snackbar.Add($"Unable to delete unit {entry.Date}, as it is associated with an indicator", Severity.Error);
+                }
+                finally {
+                }
             }
         }
 

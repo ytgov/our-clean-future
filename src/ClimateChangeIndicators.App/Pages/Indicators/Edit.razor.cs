@@ -34,6 +34,9 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
         [Inject]
+        public IDialogService DialogService { get; set; } = null!;
+
+        [Inject]
         public NavigationManager Navigation { get; set; } = null!;
 
         [Inject]
@@ -110,9 +113,16 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
             Indicator.Target = null;
         }
 
-        private void CreateEntry()
+        private async Task CreateEntry()
         {
-            Indicator.Entries.Add(new Entry() { Date = DateTime.UtcNow, Value = new Random().Next(1, 6000) });
+            var parameters = new DialogParameters { ["Indicator"] = Indicator };
+
+            var dialog = DialogService.Show<IndicatorEntryDialog>("Add entry", parameters);
+            var result = await dialog.Result;
+
+            if (!result.Cancelled) {
+                Indicator.Entries.Add((Entry)result.Data);
+            }
         }
 
         public void Dispose()

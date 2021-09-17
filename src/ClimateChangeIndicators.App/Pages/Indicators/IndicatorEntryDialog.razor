@@ -1,0 +1,46 @@
+﻿@using Data.Entities
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            New entry
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudDatePicker Label="Date" @bind-Date="TempDate" Editable="true" />
+        <MudNumericField Label="Value" @bind-Value="TempValue" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true" />
+        <MudTextField @bind-Value="Entry.Note" Label="Note (optional)" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="AddEntry">Add entry</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
+
+    [Parameter]
+    public Indicator Indicator { get; set; } = null!;
+
+    public DateTime? TempDate { get; set; }
+
+    public int? TempValue { get; set; }
+
+    public Entry Entry { get; set; } = new();
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void AddEntry()
+    {
+        if (TempDate is not null && TempValue is not null)
+        {
+            Entry.Date = (DateTime)TempDate;
+            Entry.Value = (int)TempValue;
+            MudDialog.Close(DialogResult.Ok(Entry));
+        }
+    }
+}

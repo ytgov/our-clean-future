@@ -1,0 +1,37 @@
+﻿@page "/actions"
+
+@if (_isLoaded == false)
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudText Typo="Typo.h6">Loading...</MudText>
+    </MudContainer>
+}
+else
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudTable Items="@Actions.OrderBy(a => a.Code[0]).ThenBy(a => a.Code.Length).ThenBy(a => a.Code)" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="_selectedItem">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Actions</MudText>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, string>(a => a.Code)">Code</MudTableSortLabel></MudTh>
+                <MudTh>Title</MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Code">@context.Code</MudTd>
+                <MudTd DataLabel="Title">@context.Title</MudTd>
+                <MudTd>
+                    <MudMenu Icon="@Icons.Material.Filled.MoreVert">
+                        <MudMenuItem>View</MudMenuItem>
+                        <MudMenuItem>Edit</MudMenuItem>
+                        <MudMenuItem>Delete</MudMenuItem>
+                    </MudMenu>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+    </MudContainer>
+}

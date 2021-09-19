@@ -354,7 +354,6 @@ namespace ClimateChangeIndicators.Data
                     DataType = DataType.Cumulative,
                     Description = "Total number of heavy-duty zero emission vehicles registered in Yukon.",
                     Title = "ZEVs - Total heavy duty",
-                    IsActive = true,
                     OwnerId = 8,
                     UnitOfMeasurementId = 2
                 });
@@ -366,7 +365,6 @@ namespace ClimateChangeIndicators.Data
                     DataType = DataType.Incremental,
                     Description = "Total electricity generated off-grid during the reporting year (thermal and renewable).",
                     Title = "Off-grid generation - total",
-                    IsActive = true,
                     OwnerId = 12,
                     UnitOfMeasurementId = 2
                 });
@@ -378,7 +376,6 @@ namespace ClimateChangeIndicators.Data
                     DataType = DataType.Cumulative,
                     Description = "Number of energy assessments of Government of Yukon buildings completed during the reporting year.",
                     Title = "YG buildings - energy assessments completed",
-                    IsActive = true,
                     OwnerId = 10,
                     UnitOfMeasurementId = 2
                 });
@@ -390,7 +387,6 @@ namespace ClimateChangeIndicators.Data
                     DataType = DataType.Incremental,
                     Description = "Yukon Agricultural Self-Sufficiency Indicator.",
                     Title = "Food self-sufficiency",
-                    IsActive = true,
                     OwnerId = 7,
                     UnitOfMeasurementId = 2
                 });
@@ -402,7 +398,6 @@ namespace ClimateChangeIndicators.Data
                     DataType = DataType.Incremental,
                     Description = "Total GHGs from the Government of Yukon's operations.",
                     Title = "YG GHGs - total",
-                    IsActive = true,
                     OwnerId = 1,
                     UnitOfMeasurementId = 1
                 });
@@ -414,7 +409,6 @@ namespace ClimateChangeIndicators.Data
                     DataType = DataType.Incremental,
                     Description = "Volume of wood harvested by commercial entities for biomass energy during the reporting year.",
                     Title = "Commercial biomass harvest",
-                    IsActive = true,
                     OwnerId = 6,
                     UnitOfMeasurementId = 12
                 });
@@ -426,7 +420,6 @@ namespace ClimateChangeIndicators.Data
                     DataType = DataType.Incremental,
                     Description = "Change in volume of glaciers in the coast mountains during the reporting year.",
                     Title = "Glacier volume change",
-                    IsActive = true,
                     OwnerId = 13,
                     UnitOfMeasurementId = 14
                 });

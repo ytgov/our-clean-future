@@ -94,6 +94,10 @@ namespace ClimateChangeIndicators.Data
                                   .WithOwner(e => e.Indicator);
                             });
 
+            modelBuilder.Entity<Target>()
+                        .Property(t => t.EndDate)
+                        .IsRequired();
+
             //Generate bogus data for testing
             new DataSeeder(modelBuilder).Init();
         }

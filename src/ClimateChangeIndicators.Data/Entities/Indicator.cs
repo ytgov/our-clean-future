@@ -34,6 +34,5 @@ namespace ClimateChangeIndicators.Data.Entities
         public List<Entry> Entries { get; set; } = new();
 
         public string Notes { get; set; } = "";
-        public bool IsActive { get; set; }
     }
 }

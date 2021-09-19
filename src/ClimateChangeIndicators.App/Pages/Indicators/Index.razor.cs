@@ -33,7 +33,6 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
             try {
                 _context = ContextFactory.CreateDbContext();
                 _indicators = await _context.Indicators
-                .Where(i => i.IsActive)
                 .Include(i => i.Action)
                 .Include(i => i.Owner)
                 .ThenInclude(o => o.Organization)
@@ -69,38 +68,6 @@ namespace ClimateChangeIndicators.App.Pages.Indicators
         private void Edit(int indicatorId)
         {
             Navigation.NavigateTo("/indicators/edit/" + indicatorId);
-        }
-
-        private async void ToggleInactiveIndicators()
-        {
-            if (ViewInactiveIndicators.Checked) {
-                _indicators = await _context.Indicators
-                    .Where(i => i.IsActive == false)
-                    .Include(i => i.Action)
-                    .Include(i => i.Owner)
-                    .ThenInclude(o => o.Organization)
-                    .Include(i => i.Owner)
-                    .ThenInclude(o => o.Branch)
-                    .ThenInclude(b => b!.Department)
-                    .AsNoTracking()
-                    .AsSingleQuery()
-                    .ToListAsync();
-                StateHasChanged();
-            }
-            else {
-                _indicators = await _context.Indicators
-                   .Where(i => i.IsActive)
-                   .Include(i => i.Action)
-                   .Include(i => i.Owner)
-                   .ThenInclude(o => o.Organization)
-                   .Include(i => i.Owner)
-                   .ThenInclude(o => o.Branch)
-                   .ThenInclude(b => b!.Department)
-                   .AsNoTracking()
-                   .AsSingleQuery()
-                   .ToListAsync();
-                StateHasChanged();
-            }
         }
 
         private bool FilterFunc(Indicator indicator)

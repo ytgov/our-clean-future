@@ -1,4 +1,5 @@
 ﻿@page "/actions/edit/{id:int}"
+@using OurCleanFuture.App.Extensions;
 
 @if (_isLoaded == false)
 {
@@ -16,25 +17,51 @@ else
             <MudGrid>
                 <MudItem xs="12" sm="6">
                     <MudPaper Elevation="2" Class="pa-4">
-                        <MudTextField Label="Number" @bind-Value="Action.Number"/>
-                        <MudTextField Label="Title" @bind-Value="Action.Title" Lines="3"/>
+                        <MudTextField Label="Number" @bind-Value="Action.Number" />
+                        <MudTextField Label="Title" @bind-Value="Action.Title" Lines="3" />
+                        <MudItem Class="mb-6">
+                            <MudSelect Label="Objective" T="Data.Entities.Objective" @bind-Value="Action.Objective" DisableUnderLine="true">
+                                @foreach (var objective in Objectives)
+                                {
+                                    <MudSelectItem Value="objective">@objective.Area.Title | @objective.Title</MudSelectItem>
+                                }
+                            </MudSelect>
+                        </MudItem>
+                        <MudSelect Label="Director's Committees" MultiSelection="true" ToStringFunc="@committeeConverter" @bind-SelectedValues="SelectedDirectorsCommittees">
+
+                            @foreach (var committee in DirectorsCommittees)
+                            {
+                                <MudSelectItem Value="committee">@committee.Name</MudSelectItem>
+                            }
+                    </MudSelect>
+                    <MudSelect T="Data.Entities.ExternalStatus" Label="External Status" @bind-Value="Action.ExternalStatus">
+                        @foreach (Data.Entities.ExternalStatus externalStatus in Enum.GetValues(typeof(Data.Entities.ExternalStatus)))
+                            {
+                                <MudSelectItem Value="externalStatus">@externalStatus.GetDisplayName()</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudDatePicker Label="Start Date" @bind-Date="Action.StartDate" Editable="true" />
+                        <MudDatePicker Label="Target Completion Date" @bind-Date="Action.TargetCompletionDate" Editable="true" />
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudPaper Elevation="2" Class="pa-4">
                         <MudSelect T="Data.Entities.InternalStatus" Label="Internal Status" @bind-Value="Action.InternalStatus">
                             @foreach (Data.Entities.InternalStatus internalStatus in Enum.GetValues(typeof(Data.Entities.InternalStatus)))
                             {
-                                <MudSelectItem Value="internalStatus">@internalStatus</MudSelectItem>
+                                <MudSelectItem Value="internalStatus">@internalStatus.GetDisplayName()</MudSelectItem>
                             }
                         </MudSelect>
-                        <MudSelect T="Data.Entities.ExternalStatus" Label="External Status" @bind-Value="Action.ExternalStatus">
-                            @foreach (Data.Entities.ExternalStatus externalStatus in Enum.GetValues(typeof(Data.Entities.ExternalStatus)))
-                            {
-                                <MudSelectItem Value="externalStatus">@externalStatus</MudSelectItem>
-                            }
-                        </MudSelect>
-                        <MudDatePicker Label="Start Date" @bind-Date="Action.InternalStartDate" Editable="true"/>
-                        <MudDatePicker Label="Internal Completion Date" @bind-Date="Action.InternalCompletionDate" Editable="true"/>
-                        <MudDatePicker Label="Actual/Anticipated Completion Date" @bind-Date="Action.ActualCompletionDate" Editable="true"/>
-                        <MudTextField Label="Notes" @bind-Value="Action.Notes" />
+                        <MudField Label="Internal Status Last Updated">@Action.InternalStatusUpdatedDate?.LocalDateTime</MudField>
+                        <MudDatePicker Label="Actual/Anticipated Completion Date" @bind-Date="Action.ActualCompletionDate" Editable="true" />
+                        <MudTextField Label="Internal Notes" @bind-Value="Action.Notes" Lines="2" />
+                        <MudTextField Label="Public Explanation" @bind-Value="Action.PublicExplanation" Lines="2" />
                     </MudPaper>
+                </MudItem>
+                <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
+                    <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/actions">Cancel</MudButton>
+                    <MudButton ButtonType="ButtonType.Submit" Disabled="true" />
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
                 </MudItem>
             </MudGrid>
         </EditForm>

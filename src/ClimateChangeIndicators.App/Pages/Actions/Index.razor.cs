@@ -49,5 +49,15 @@ namespace ClimateChangeIndicators.App.Pages.Actions
                 _isLoaded = true;
             }
         }
+
+        private void Details(int actionId)
+        {
+            Navigation.NavigateTo("/actions/details/" + actionId);
+        }
+
+        private void Edit(int actionId)
+        {
+            Navigation.NavigateTo("/actions/edit/" + actionId);
+        }
     }
 }

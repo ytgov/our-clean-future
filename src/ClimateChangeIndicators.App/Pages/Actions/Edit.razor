@@ -1,0 +1,43 @@
+﻿@page "/actions/edit/{id:int}"
+
+@if (_isLoaded == false)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudText Typo="Typo.h3" Class="mb-8"><b>Editing action:</b> @Action.Number</MudText>
+        @*<MudAlert Icon="@Icons.Material.Filled.Lightbulb" Severity="Severity.Normal" Class="mb-6">
+            If you need to modify a value within a dropdown menu, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
+            </MudAlert>*@
+        <EditForm Model="Action" OnValidSubmit="Update">
+            <ObjectGraphDataAnnotationsValidator />
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudTextField Label="Number" @bind-Value="Action.Number"/>
+                        <MudTextField Label="Title" @bind-Value="Action.Title" Lines="3"/>
+                        <MudSelect T="Data.Entities.InternalStatus" Label="Internal Status" @bind-Value="Action.InternalStatus">
+                            @foreach (Data.Entities.InternalStatus internalStatus in Enum.GetValues(typeof(Data.Entities.InternalStatus)))
+                            {
+                                <MudSelectItem Value="internalStatus">@internalStatus</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudSelect T="Data.Entities.ExternalStatus" Label="External Status" @bind-Value="Action.ExternalStatus">
+                            @foreach (Data.Entities.ExternalStatus externalStatus in Enum.GetValues(typeof(Data.Entities.ExternalStatus)))
+                            {
+                                <MudSelectItem Value="externalStatus">@externalStatus</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudDatePicker Label="Start Date" @bind-Date="Action.InternalStartDate" Editable="true"/>
+                        <MudDatePicker Label="Internal Completion Date" @bind-Date="Action.InternalCompletionDate" Editable="true"/>
+                        <MudDatePicker Label="Actual/Anticipated Completion Date" @bind-Date="Action.ActualCompletionDate" Editable="true"/>
+                        <MudTextField Label="Notes" @bind-Value="Action.Notes" />
+                    </MudPaper>
+                </MudItem>
+            </MudGrid>
+        </EditForm>
+    </MudContainer>
+}
+

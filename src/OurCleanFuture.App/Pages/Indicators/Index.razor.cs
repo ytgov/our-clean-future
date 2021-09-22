@@ -1,4 +1,4 @@
-﻿using OurCleanFuture.Data;
+﻿ on using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
@@ -19,8 +19,6 @@ namespace OurCleanFuture.App.Pages.Indicators
         private List<Indicator> _indicators = null!;
         private string _searchString = "";
         private Indicator _selectedItem = null!;
-        private Random _rand = new();
-        private MudBlazor.MudSwitch<bool> ViewInactiveIndicators = null!;
 
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
@@ -55,9 +53,9 @@ namespace OurCleanFuture.App.Pages.Indicators
 
         protected override bool ShouldRender() => _mayRender;
 
-        private DateTime? GetDateLastEntry(Indicator indicator)
+        private static DateTime? GetDateLastEntry(Indicator indicator)
         {
-            return indicator.Entries.OrderBy(e => e.Date).FirstOrDefault()?.Date;
+            return indicator.Entries.OrderByDescending(e => e.Date).FirstOrDefault()?.Date;
         }
 
         private void Create()

@@ -24,7 +24,7 @@ else
                 <MudTh>Description</MudTh>
                 <MudTh>Interval</MudTh>
                 <MudTh>Trend</MudTh>
-                <MudTh>Last Entry</MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, object>(i => GetDateLastEntry(i)!)">Last Entry</MudTableSortLabel></MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>

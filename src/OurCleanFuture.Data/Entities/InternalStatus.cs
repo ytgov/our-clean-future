@@ -4,7 +4,9 @@ namespace OurCleanFuture.Data.Entities
 {
     public enum InternalStatus
     {
+        [Display(Name = "Complete")]
         Complete = 0,
+        [Display(Name = "Delayed")]
         Delayed = 1,
         [Display(Name = "Not Applicable")]
         NotApplicable = 2,

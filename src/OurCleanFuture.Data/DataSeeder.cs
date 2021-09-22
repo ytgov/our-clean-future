@@ -301,6 +301,11 @@ namespace OurCleanFuture.Data
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 130, ObjectiveId = 26, Number = "L12", Title = "Create easy access to technical information and lessons learned about climate change, energy and green economy for governments and stakeholders by 2021." });
             _modelBuilder.Entity<Action>().HasData(new Action { Id = 131, ObjectiveId = 26, Number = "L13", Title = "Launch a Yukon-wide information or social marketing campaign in 2021 that will educate Yukoners on greenhouse gas emissions, renewable energy, climate change adaptation, and other topics and highlight what Yukoners can do to support climate change initiatives." });
 
+            _modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 1, Name = "Resilient Infrastructure" });
+            _modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 2, Name = "Social and Ecological Resilience" });
+            _modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 3, Name = "YG Leadership" });
+            _modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 4, Name = "Unknown" });
+
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 1, Name = "Yukon Government" });
             _modelBuilder.Entity<Organization>().HasData(new Organization { Id = 2, Name = "ATCO Electric Yukon" });
 

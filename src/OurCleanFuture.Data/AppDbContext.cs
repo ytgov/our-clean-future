@@ -9,6 +9,7 @@ namespace OurCleanFuture.Data
         public DbSet<Indicator> Indicators { get; set; } = null!;
         public DbSet<Owner> Owners { get; set; } = null!;
         public DbSet<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = null!;
+        public DbSet<DirectorsCommittee> DirectorsCommittees { get; set; } = null!;
         public DbSet<Action> Actions { get; set; } = null!;
         public DbSet<Target> Targets { get; set; } = null!;
         public DbSet<Goal> Goals { get; set; } = null!;

@@ -9,19 +9,20 @@ namespace OurCleanFuture.Data.Entities
         public int Id { get; set; }
         public string Number { get; set; } = "";
         public string Title { get; set; } = "";
-        public DateTime? InternalStartDate { get; set; }
-        public DateTime? InternalCompletionDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? TargetCompletionDate { get; set; }
         public DateTime? ActualCompletionDate { get; set; }
         public InternalStatus InternalStatus { get; set; }
+        public DateTimeOffset? InternalStatusUpdatedDate { get; set; }
         public ExternalStatus ExternalStatus { get; set; }
 
         public string PublicExplanation { get; set; } = "";
-
         public string Notes { get; set; } = "";
 
         public List<Indicator> Indicators { get; set; } = new();
         public Objective Objective { get; set; } = null!;
         public int? ObjectiveId { get; set; }
+        public List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();
 
         public override string ToString()
         {

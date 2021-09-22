@@ -24,7 +24,7 @@ else
                 <MudTh>Description</MudTh>
                 <MudTh>Interval</MudTh>
                 <MudTh>Trend</MudTh>
-                <MudTh>Next Collection</MudTh>
+                <MudTh>Last Entry</MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
@@ -45,7 +45,7 @@ else
                 {
                 <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingDown" /></MudTd>
                 }
-            <MudTd DataLabel="Next Collection">@_rand.Next(-30, 76) days </MudTd>
+            <MudTd DataLabel="Last Entry">@GetDateLastEntry(context)?.ToLongDateString()</MudTd>
             <MudTd>
                 <MudMenu Icon="@Icons.Material.Filled.MoreVert">
                     <MudMenuItem OnClick="(() => Details(context.Id))">View</MudMenuItem>

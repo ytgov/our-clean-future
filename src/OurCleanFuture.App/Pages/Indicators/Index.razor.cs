@@ -55,6 +55,11 @@ namespace OurCleanFuture.App.Pages.Indicators
 
         protected override bool ShouldRender() => _mayRender;
 
+        private DateTime? GetDateLastEntry(Indicator indicator)
+        {
+            return indicator.Entries.OrderBy(e => e.Date).FirstOrDefault()?.Date;
+        }
+
         private void Create()
         {
             Navigation.NavigateTo("/indicators/create/");

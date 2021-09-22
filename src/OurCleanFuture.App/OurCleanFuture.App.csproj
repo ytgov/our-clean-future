@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<UserSecretsId>aspnet-ClimateChangeIndicators.App-B5D24B22-92E1-45F4-8F18-129997494BB9</UserSecretsId>
+		<WebProject_DirectoryAccessLevelKey>0</WebProject_DirectoryAccessLevelKey>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerfileContext>..\..</DockerfileContext>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0-rc.1.21452.15" NoWarn="NU1605" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.0-rc.1.21452.15" NoWarn="NU1605" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0-rc.1.21452.10">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Identity.Web" Version="1.16.1" />
+		<PackageReference Include="Microsoft.Identity.Web.UI" Version="1.16.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.11.1" />
+		<PackageReference Include="MudBlazor" Version="5.1.4" />
+		<PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\OurCleanFuture.Data\OurCleanFuture.Data.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Pages\Leads\" />
+	</ItemGroup>
+
+</Project>

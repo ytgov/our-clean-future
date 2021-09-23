@@ -85,7 +85,7 @@ namespace OurCleanFuture.App.Pages.Actions
                 Action.DirectorsCommittees.Add(committee);
             }
             await _context.SaveChangesAsync();
-            Snackbar.Add($"Successfully updated action: {Action.Title}", Severity.Success);
+            Snackbar.Add($"Successfully updated action: {Action.Number}", Severity.Success);
             Navigation.NavigateTo($"/actions/details/{Id}");
         }
     }

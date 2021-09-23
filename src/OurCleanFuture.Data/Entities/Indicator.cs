@@ -34,6 +34,8 @@ namespace OurCleanFuture.Data.Entities
 
         public string Notes { get; set; } = "";
 
+        public string UpdatedBy { get; set; } = "";
+
         public string LeadsToString()
         {
             if (Leads.Count == 1) {

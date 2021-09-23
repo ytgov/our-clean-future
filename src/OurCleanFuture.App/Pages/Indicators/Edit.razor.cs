@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Action = OurCleanFuture.Data.Entities.Action;
+using Microsoft.AspNetCore.Components.Authorization;
+using System.Security.Claims;
 
 namespace OurCleanFuture.App.Pages.Indicators
 {
@@ -16,6 +18,7 @@ namespace OurCleanFuture.App.Pages.Indicators
     {
         private bool _isLoaded;
         private AppDbContext _context = null!;
+        private ClaimsPrincipal user = null!;
 
         [Parameter]
         public int Id { get; set; }
@@ -31,6 +34,9 @@ namespace OurCleanFuture.App.Pages.Indicators
         public List<Action> Actions { get; set; } = new();
         public Indicator Indicator { get; set; } = null!;
         public Target Target { get; set; } = null!;
+
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
 
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
@@ -60,6 +66,7 @@ namespace OurCleanFuture.App.Pages.Indicators
                     SelectedLeads.Add(lead);
                 }
                 GetSelectedParentType();
+                await GetUserPrincipal();
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
@@ -69,6 +76,11 @@ namespace OurCleanFuture.App.Pages.Indicators
             }
 
             await base.OnInitializedAsync();
+        }
+        private async Task GetUserPrincipal()
+        {
+            var authState = await AuthenticationStateTask;
+            user = authState.User;
         }
 
         private void GetSelectedParentType()
@@ -110,6 +122,8 @@ namespace OurCleanFuture.App.Pages.Indicators
             foreach (var lead in SelectedLeads) {
                 Indicator.Leads.Add(lead);
             }
+
+            Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
 
             await _context.SaveChangesAsync();
             Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);

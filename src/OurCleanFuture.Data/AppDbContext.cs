@@ -64,6 +64,13 @@ namespace OurCleanFuture.Data
                         .HasForeignKey<Branch>(b => b.LeadId)
                         .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Action>()
+                        .Property(i => i.InternalStatus)
+                        .HasConversion<string>();
+            modelBuilder.Entity<Action>()
+                        .Property(i => i.ExternalStatus)
+                        .HasConversion<string>();
+
             modelBuilder.Entity<Indicator>()
                         .Property(i => i.DataType)
                         .HasConversion<string>();

@@ -63,7 +63,7 @@ namespace OurCleanFuture.App.Pages.Indicators
                     .Include(i => i.Action)
                     .ThenInclude(a => a!.Objective)
                     .ThenInclude(o => o.Goals)
-                    .AsNoTracking()
+                    //.AsNoTracking()
                     .AsSingleQuery()
                     .FirstOrDefaultAsync(i => i.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.

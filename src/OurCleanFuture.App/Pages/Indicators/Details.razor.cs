@@ -27,6 +27,7 @@ namespace OurCleanFuture.App.Pages.Indicators
         public string[] XAxisLabels = { "2019", "2020", "2021", "2022", "2023", "2024" };
         private bool _isLoaded;
         private AppDbContext _context = null!;
+        private Target _target = null!;
 
         [Parameter]
         public int Id { get; set; }
@@ -66,6 +67,7 @@ namespace OurCleanFuture.App.Pages.Indicators
                     //.AsNoTracking()
                     .AsSingleQuery()
                     .FirstOrDefaultAsync(i => i.Id == Id);
+                _target = Indicator?.Target;
 #pragma warning restore CS8601 // Possible null reference assignment.
                 double[] Data1 = { 26, 42, 49, 72 };
                 Series.Add(new ChartSeries() { Name = $"{Indicator?.Title} ({Indicator?.UnitOfMeasurement})", Data = Data1 });
@@ -78,6 +80,13 @@ namespace OurCleanFuture.App.Pages.Indicators
             }
 
             await base.OnInitializedAsync();
+        }
+
+        private DateTime GetLastUpdatedDate()
+        {
+            var indicatorUpdatedDate = _context.Entry(Indicator).Property<DateTime>("PeriodStart").CurrentValue;
+            var targetUpdatedDate = _context.Entry(_target).Property<DateTime>("PeriodStart").CurrentValue;
+            return indicatorUpdatedDate > targetUpdatedDate ? indicatorUpdatedDate : targetUpdatedDate;
         }
 
         private static string GetAreaIconPath(Area area)

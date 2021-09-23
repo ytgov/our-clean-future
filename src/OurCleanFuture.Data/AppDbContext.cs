@@ -97,12 +97,12 @@ namespace OurCleanFuture.Data
                                 ie.ToTable("Entries")
                                   .WithOwner(e => e.Indicator);
                             });
-
             modelBuilder.Entity<Indicator>().ToTable(tb => tb.IsTemporal());
 
             modelBuilder.Entity<Target>()
                         .Property(t => t.EndDate)
                         .IsRequired();
+            modelBuilder.Entity<Target>().ToTable(tb => tb.IsTemporal());
 
             //Generate bogus data for testing
             new DataSeeder(modelBuilder).Init();

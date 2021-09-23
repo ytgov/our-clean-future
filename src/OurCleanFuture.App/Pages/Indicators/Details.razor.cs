@@ -67,7 +67,7 @@ namespace OurCleanFuture.App.Pages.Indicators
                     //.AsNoTracking()
                     .AsSingleQuery()
                     .FirstOrDefaultAsync(i => i.Id == Id);
-                _target = Indicator?.Target;
+                _target = Indicator.Target;
 #pragma warning restore CS8601 // Possible null reference assignment.
                 double[] Data1 = { 26, 42, 49, 72 };
                 Series.Add(new ChartSeries() { Name = $"{Indicator?.Title} ({Indicator?.UnitOfMeasurement})", Data = Data1 });
@@ -85,7 +85,11 @@ namespace OurCleanFuture.App.Pages.Indicators
         private DateTime GetLastUpdatedDate()
         {
             var indicatorUpdatedDate = _context.Entry(Indicator).Property<DateTime>("PeriodStart").CurrentValue;
-            var targetUpdatedDate = _context.Entry(_target).Property<DateTime>("PeriodStart").CurrentValue;
+            //An indicator might not have a target, so in that case we return the indicatorUpdatedDate
+            var targetUpdatedDate = DateTime.MinValue;
+            if(_target is not null) {
+                targetUpdatedDate = _context.Entry(_target).Property<DateTime>("PeriodStart").CurrentValue;
+            }
             return indicatorUpdatedDate > targetUpdatedDate ? indicatorUpdatedDate : targetUpdatedDate;
         }
 

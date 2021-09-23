@@ -33,5 +33,21 @@ namespace OurCleanFuture.Data.Entities
         public List<Entry> Entries { get; set; } = new();
 
         public string Notes { get; set; } = "";
+
+        public string LeadsToString()
+        {
+            if (Leads.Count == 1) {
+                return Leads[0].ToString();
+            }
+            else {
+                var result = "";
+                foreach (var lead in Leads) {
+                    result += $"{lead}, ";
+                }
+                //Trim the trailing comma and space
+                result = result.Remove(result.Length - 2, 2);
+                return result;
+            }
+        }
     }
 }

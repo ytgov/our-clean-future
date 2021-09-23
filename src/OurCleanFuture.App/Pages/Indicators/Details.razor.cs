@@ -105,22 +105,6 @@ namespace OurCleanFuture.App.Pages.Indicators
             };
         }
 
-        private string GetLeads()
-        {
-            if (Indicator.Leads.Count == 1) {
-                return Indicator.Leads[0].ToString();
-            }
-            else {
-                var result = "";
-                foreach (var lead in Indicator.Leads) {
-                    result += $"{lead}, ";
-                }
-                //Trim the trailing comma and space
-                result = result.Remove(result.Length - 2, 2);
-                return result;
-            }
-        }
-
         private void Edit()
         {
             Navigation.NavigateTo("/indicators/edit/" + Indicator.Id);

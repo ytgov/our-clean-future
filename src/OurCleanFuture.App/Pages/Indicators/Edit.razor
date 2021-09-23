@@ -16,7 +16,7 @@ else
             <MudGrid>
                 <MudItem xs="12" sm="6">
                     <MudPaper Elevation="2" Class="pa-4">
-                        <MudSelect T="Data.Entities.Lead" Label="Lead" MultiSelection="true" @bind-SelectedValues="SelectedLeads">
+                        <MudSelect T="Data.Entities.Lead" Label="Lead(s)" MultiSelection="true" @bind-SelectedValues="SelectedLeads">
                             @foreach (var lead in Leads)
                             {
                                 <MudSelectItem Value="lead">@lead.ToString()</MudSelectItem>

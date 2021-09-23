@@ -29,7 +29,7 @@ else
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Id">@context.Id</MudTd>
-                <MudTd DataLabel="Lead(s)">@context.Leads.ToString()</MudTd>
+                <MudTd DataLabel="Lead(s)">@context.LeadsToString()</MudTd>
                 <MudTd DataLabel="Title">@context.Title</MudTd>
                 <MudTd DataLabel="Description">@context.Description</MudTd>
                 <MudTd>@context.CollectionInterval</MudTd>

@@ -7,7 +7,7 @@ namespace OurCleanFuture.Data
     public class AppDbContext : DbContext
     {
         public DbSet<Indicator> Indicators { get; set; } = null!;
-        public DbSet<Owner> Owners { get; set; } = null!;
+        public DbSet<Lead> Leads { get; set; } = null!;
         public DbSet<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = null!;
         public DbSet<DirectorsCommittee> DirectorsCommittees { get; set; } = null!;
         public DbSet<Action> Actions { get; set; } = null!;
@@ -43,7 +43,7 @@ namespace OurCleanFuture.Data
                         .ToTable("Organizations");
             modelBuilder.Entity<Branch>()
                         .ToTable("Branches")
-                        .Ignore(b => b.Owner);
+                        .Ignore(b => b.Lead);
             modelBuilder.Entity<Department>()
                         .ToTable("Departments");
             //modelBuilder.Entity<Action>()
@@ -53,15 +53,15 @@ namespace OurCleanFuture.Data
                         .HasIndex(u => u.Symbol)
                         .IsUnique();
 
-            modelBuilder.Entity<Owner>()
+            modelBuilder.Entity<Lead>()
                         .HasOne(o => o.Organization)
                         .WithMany()
                         .IsRequired()
                         .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Owner>()
+            modelBuilder.Entity<Lead>()
                         .HasOne(o => o.Branch)
                         .WithOne()
-                        .HasForeignKey<Branch>(b => b.OwnerId)
+                        .HasForeignKey<Branch>(b => b.LeadId)
                         .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Indicator>()
@@ -71,10 +71,8 @@ namespace OurCleanFuture.Data
                         .Property(i => i.CollectionInterval)
                         .HasConversion<string>();
             modelBuilder.Entity<Indicator>()
-                        .HasOne(i => i.Owner)
-                        .WithMany(o => o.Indicators)
-                        .IsRequired()
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasMany(i => i.Leads)
+                        .WithMany(o => o.Indicators);
             modelBuilder.Entity<Indicator>()
                         .HasOne(i => i.UnitOfMeasurement)
                         .WithMany()

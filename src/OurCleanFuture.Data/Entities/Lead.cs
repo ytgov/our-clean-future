@@ -2,7 +2,7 @@
 
 namespace OurCleanFuture.Data.Entities
 {
-    public class Owner
+    public class Lead
     {
         public int Id { get; set; }
         public int OrganizationId { get; set; }

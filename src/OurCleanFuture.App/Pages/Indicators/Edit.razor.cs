@@ -21,8 +21,10 @@ namespace OurCleanFuture.App.Pages.Indicators
         public int Id { get; set; }
 
         public string SelectedParentType { get; set; } = "";
+        public HashSet<Lead> SelectedLeads { get; set; } = new();
 
-        public List<Owner> Owners { get; set; } = new();
+
+        public List<Lead> Leads { get; set; } = new();
         public List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
         public List<Goal> Goals { get; set; } = new();
         public List<Objective> Objectives { get; set; } = new();
@@ -46,14 +48,17 @@ namespace OurCleanFuture.App.Pages.Indicators
         {
             try {
                 _context = ContextFactory.CreateDbContext();
-                Owners = await _context.Owners.Include(o => o.Organization).Include(o => o.Branch).ThenInclude(b => b!.Department).OrderBy(o => o.Branch!.Name).ToListAsync();
+                Leads = await _context.Leads.Include(o => o.Organization).Include(o => o.Branch).ThenInclude(b => b!.Department).OrderBy(o => o.Branch!.Name).ToListAsync();
                 UnitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
                 Goals = await _context.Goals.OrderBy(g => g.Title).ToListAsync();
                 Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
                 Actions = await _context.Actions.ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.
-                Indicator = await _context.Indicators.Include(i => i.Target).FirstOrDefaultAsync(i => i.Id == Id);
+                Indicator = await _context.Indicators.Include(i => i.Target).Include(i => i.Leads).FirstOrDefaultAsync(i => i.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
+                foreach (var lead in Indicator.Leads) {
+                    SelectedLeads.Add(lead);
+                }
                 GetSelectedParentType();
             }
             catch (Exception ex) {
@@ -81,23 +86,31 @@ namespace OurCleanFuture.App.Pages.Indicators
 
         private async Task Update()
         {
-            if (SelectedParentType == "Goal") {
-                Indicator.Objective = null;
-                Indicator.Action = null;
+            switch (SelectedParentType) {
+                case "Goal":
+                    Indicator.Objective = null;
+                    Indicator.Action = null;
+                    break;
+                case "Objective":
+                    Indicator.Goal = null;
+                    Indicator.Action = null;
+                    break;
+                case "Action":
+                    Indicator.Goal = null;
+                    Indicator.Objective = null;
+                    break;
+                default:
+                    Indicator.Goal = null;
+                    Indicator.Objective = null;
+                    Indicator.Action = null;
+                    break;
             }
-            else if (SelectedParentType == "Objective") {
-                Indicator.Goal = null;
-                Indicator.Action = null;
+
+            Indicator.Leads.Clear();
+            foreach (var lead in SelectedLeads) {
+                Indicator.Leads.Add(lead);
             }
-            else if (SelectedParentType == "Action") {
-                Indicator.Goal = null;
-                Indicator.Objective = null;
-            }
-            else {
-                Indicator.Goal = null;
-                Indicator.Objective = null;
-                Indicator.Action = null;
-            }
+
             await _context.SaveChangesAsync();
             Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
             Navigation.NavigateTo($"/indicators/details/{Id}");

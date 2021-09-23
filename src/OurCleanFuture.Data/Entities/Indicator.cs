@@ -10,8 +10,7 @@ namespace OurCleanFuture.Data.Entities
         [MinLength(1, ErrorMessage = "Title is required.")]
         public string Title { get; set; } = "";
 
-        public int OwnerId { get; set; }
-        public Owner Owner { get; set; } = null!;
+        public List<Lead> Leads { get; set; } = new();
 
         [MinLength(1, ErrorMessage = "Description is required.")]
         public string Description { get; set; } = "";

@@ -15,7 +15,7 @@ namespace OurCleanFuture.App.Pages.Indicators
         private bool _isLoaded;
         private AppDbContext _context = null!;
 
-        public List<Owner> Owners { get; set; } = new();
+        public List<Lead> Leads { get; set; } = new();
 
         private readonly CollectionInterval[] _collectionIntervals = (CollectionInterval[])Enum.GetValues(typeof(CollectionInterval));
 
@@ -26,7 +26,7 @@ namespace OurCleanFuture.App.Pages.Indicators
         {
             try {
                 _context = ContextFactory.CreateDbContext();
-                Owners = await _context.Owners.Include(o => o.Organization).Include(o => o.Branch).ThenInclude(b => b!.Department).OrderBy(o => o.Branch!.Name).ToListAsync();
+                Leads = await _context.Leads.Include(o => o.Organization).Include(o => o.Branch).ThenInclude(b => b!.Department).OrderBy(o => o.Branch!.Name).ToListAsync();
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);

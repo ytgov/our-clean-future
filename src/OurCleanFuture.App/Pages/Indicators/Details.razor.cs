@@ -47,10 +47,10 @@ namespace OurCleanFuture.App.Pages.Indicators
                 Indicator = await _context.Indicators
                     .Include(i => i.Target)
                     .Include(i => i.UnitOfMeasurement)
-                    .Include(i => i.Owner)
+                    .Include(i => i.Leads)
                     .ThenInclude(o => o.Branch)
                     .ThenInclude(b => b!.Department)
-                    .Include(i => i.Owner)
+                    .Include(i => i.Leads)
                     .ThenInclude(o => o.Organization)
                     .Include(i => i.Goal)
                     .Include(i => i.Objective)
@@ -103,6 +103,22 @@ namespace OurCleanFuture.App.Pages.Indicators
                 4 => "/images/build-a-green-economy.png",
                 _ => ""
             };
+        }
+
+        private string GetLeads()
+        {
+            if (Indicator.Leads.Count == 1) {
+                return Indicator.Leads[0].ToString();
+            }
+            else {
+                var result = "";
+                foreach (var lead in Indicator.Leads) {
+                    result += $"{lead}, ";
+                }
+                //Trim the trailing comma and space
+                result = result.Remove(result.Length - 2, 2);
+                return result;
+            }
         }
 
         private void Edit()

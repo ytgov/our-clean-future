@@ -8,8 +8,8 @@ namespace OurCleanFuture.Data.Entities
 
         public string Name { get; set; } = "";
 
-        public int OwnerId { get; set; }
-        public Owner Owner { get; set; } = null!;
+        public int LeadId { get; set; }
+        public Lead Lead { get; set; } = null!;
 
         public int DepartmentId { get; set; }
         public Department Department { get; set; } = null!;

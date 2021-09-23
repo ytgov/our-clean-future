@@ -11,10 +11,10 @@ else
     <MudGrid>
         <MudItem xs="12" sm="6">
             <MudPaper Elevation="2" Class="pa-4">
-                <MudSelect T="Data.Entities.Owner" Label="Owner">
-                    @foreach (var owner in Owners)
+                <MudSelect T="Data.Entities.Lead" Label="Lead(s)">
+                    @foreach (var lead in Leads)
                     {
-                    <MudSelectItem Value="@owner">@(owner.Branch?.Name ?? owner.Organization.Name)</MudSelectItem>
+                    <MudSelectItem Value="@lead">@(lead.Branch?.Name ?? lead.Organization.Name)</MudSelectItem>
                     }
                 </MudSelect>
                 <MudTextField Label="Title" T="string" />

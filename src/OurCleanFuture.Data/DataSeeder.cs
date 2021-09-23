@@ -325,32 +325,32 @@ namespace OurCleanFuture.Data
             _modelBuilder.Entity<Department>().HasData(new Department { Id = 14, Name = "Yukon Energy Corporation", ShortName = "YEC" });
             _modelBuilder.Entity<Department>().HasData(new Department { Id = 15, Name = "Yukon Housing Corporation", ShortName = "YHC" });
 
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 1, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 2, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 3, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 4, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 5, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 6, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 7, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 8, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 9, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 10, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 11, OrganizationId = 1 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 12, OrganizationId = 2 });
-            _modelBuilder.Entity<Owner>().HasData(new Owner { Id = 13, OrganizationId = 1 });
+            _modelBuilder.Entity<Lead>().HasData(new Lead { Id = 1, OrganizationId = 1 });
+            _modelBuilder.Entity<Lead>().HasData(new Lead { Id = 2, OrganizationId = 1 });
+            _modelBuilder.Entity<Lead>().HasData(new Lead { Id = 3, OrganizationId = 1 });
+            _modelBuilder.Entity<Lead>().HasData(new Lead { Id = 4, OrganizationId = 1 });
+            _modelBuilder.Entity<Lead>().HasData(new Lead { Id = 5, OrganizationId = 1 });
+            _modelBuilder.Entity<Lead>().HasData(new Lead { Id = 6, OrganizationId = 1 });
+            _modelBuilder.Entity<Lead>().HasData(new Lead { Id = 7, OrganizationId = 1 });
+            _modelBuilder.Entity<Lead>().HasData(new Lead { Id = 8, OrganizationId = 1 });
+            _modelBuilder.Entity<Lead>().HasData(new Lead { Id = 9, OrganizationId = 1 });
+            _modelBuilder.Entity<Lead>().HasData(new Lead { Id = 10, OrganizationId = 1 });
+            _modelBuilder.Entity<Lead>().HasData(new Lead { Id = 11, OrganizationId = 1 });
+            _modelBuilder.Entity<Lead>().HasData(new Lead { Id = 12, OrganizationId = 2 });
+            _modelBuilder.Entity<Lead>().HasData(new Lead { Id = 13, OrganizationId = 1 });
 
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, DepartmentId = 5, Name = "Climate Change Secretariat", OwnerId = 1 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 5, Name = "Water Resources", OwnerId = 2 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 3, DepartmentId = 5, Name = "Parks", OwnerId = 3 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 4, DepartmentId = 5, Name = "Fish and Wildlife", OwnerId = 4 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 5, DepartmentId = 5, Name = "Conservation Officer Services", OwnerId = 5 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 6, DepartmentId = 4, Name = "Forest Resources", OwnerId = 6 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 7, DepartmentId = 4, Name = "Agriculture", OwnerId = 7 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 8, DepartmentId = 4, Name = "Energy", OwnerId = 8 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 9, DepartmentId = 9, Name = "Supply Services", OwnerId = 9 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 9, Name = "Strategic Initiatives", OwnerId = 10 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 12, Name = "Culture Services", OwnerId = 11 });
-            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 12, DepartmentId = 4, Name = "Yukon Geological Survey", OwnerId = 13 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, DepartmentId = 5, Name = "Climate Change Secretariat", LeadId = 1 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 5, Name = "Water Resources", LeadId = 2 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 3, DepartmentId = 5, Name = "Parks", LeadId = 3 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 4, DepartmentId = 5, Name = "Fish and Wildlife", LeadId = 4 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 5, DepartmentId = 5, Name = "Conservation Officer Services", LeadId = 5 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 6, DepartmentId = 4, Name = "Forest Resources", LeadId = 6 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 7, DepartmentId = 4, Name = "Agriculture", LeadId = 7 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 8, DepartmentId = 4, Name = "Energy", LeadId = 8 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 9, DepartmentId = 9, Name = "Supply Services", LeadId = 9 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 9, Name = "Strategic Initiatives", LeadId = 10 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 12, Name = "Culture Services", LeadId = 11 });
+            _modelBuilder.Entity<Branch>().HasData(new Branch { Id = 12, DepartmentId = 4, Name = "Yukon Geological Survey", LeadId = 13 });
 
             _modelBuilder.Entity<Indicator>()
                 .HasData(new Indicator {
@@ -359,7 +359,6 @@ namespace OurCleanFuture.Data
                     DataType = DataType.Cumulative,
                     Description = "Total number of heavy-duty zero emission vehicles registered in Yukon.",
                     Title = "ZEVs - Total heavy duty",
-                    OwnerId = 8,
                     UnitOfMeasurementId = 2
                 });
 
@@ -370,7 +369,6 @@ namespace OurCleanFuture.Data
                     DataType = DataType.Incremental,
                     Description = "Total electricity generated off-grid during the reporting year (thermal and renewable).",
                     Title = "Off-grid generation - total",
-                    OwnerId = 12,
                     UnitOfMeasurementId = 2
                 });
 
@@ -381,7 +379,6 @@ namespace OurCleanFuture.Data
                     DataType = DataType.Cumulative,
                     Description = "Number of energy assessments of Government of Yukon buildings completed during the reporting year.",
                     Title = "YG buildings - energy assessments completed",
-                    OwnerId = 10,
                     UnitOfMeasurementId = 2
                 });
 
@@ -392,7 +389,6 @@ namespace OurCleanFuture.Data
                     DataType = DataType.Incremental,
                     Description = "Yukon Agricultural Self-Sufficiency Indicator.",
                     Title = "Food self-sufficiency",
-                    OwnerId = 7,
                     UnitOfMeasurementId = 2
                 });
 
@@ -403,7 +399,6 @@ namespace OurCleanFuture.Data
                     DataType = DataType.Incremental,
                     Description = "Total GHGs from the Government of Yukon's operations.",
                     Title = "YG GHGs - total",
-                    OwnerId = 1,
                     UnitOfMeasurementId = 1
                 });
 
@@ -414,7 +409,6 @@ namespace OurCleanFuture.Data
                     DataType = DataType.Incremental,
                     Description = "Volume of wood harvested by commercial entities for biomass energy during the reporting year.",
                     Title = "Commercial biomass harvest",
-                    OwnerId = 6,
                     UnitOfMeasurementId = 12
                 });
 
@@ -425,9 +419,18 @@ namespace OurCleanFuture.Data
                     DataType = DataType.Incremental,
                     Description = "Change in volume of glaciers in the coast mountains during the reporting year.",
                     Title = "Glacier volume change",
-                    OwnerId = 13,
                     UnitOfMeasurementId = 14
                 });
+
+            _modelBuilder.Entity("IndicatorLead").HasData(
+                new { IndicatorsId = 1, LeadsId = 8 },
+                new { IndicatorsId = 2, LeadsId = 12 },
+                new { IndicatorsId = 3, LeadsId = 10 },
+                new { IndicatorsId = 4, LeadsId = 7 },
+                new { IndicatorsId = 5, LeadsId = 1 },
+                new { IndicatorsId = 6, LeadsId = 6 },
+                new { IndicatorsId = 7, LeadsId = 13 }
+                );
 
                     //var indicatorId = 1;
                     //var indicators = new Faker<Indicator>("en_CA")
@@ -438,8 +441,8 @@ namespace OurCleanFuture.Data
                     //    .RuleFor(i => i.DisplayName, _ => "ZEVs - Total heavy duty")
                     //    .RuleFor(i => i.IsActive, _ => true)
                     //    .RuleFor(i => i.OurCleanFutureReferenceId, _ => 1)
-                    //    .RuleFor(i => i.OwnerId, _ => 1);
+                    //    .RuleFor(i => i.LeadId, _ => 1);
                     //_modelBuilder.Entity<Indicator>().HasData(indicators.Generate(1));
-                }
+        }
     }
 }

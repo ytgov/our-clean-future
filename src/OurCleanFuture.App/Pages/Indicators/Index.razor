@@ -19,7 +19,7 @@ else
             </ToolBarContent>
             <HeaderContent>
                 <MudTh>Id</MudTh>
-                <MudTh>Lead</MudTh>
+                <MudTh>Lead(s)</MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, string>(i => i.Title)">Title</MudTableSortLabel></MudTh>
                 <MudTh>Description</MudTh>
                 <MudTh>Interval</MudTh>
@@ -29,7 +29,7 @@ else
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Id">@context.Id</MudTd>
-                <MudTd DataLabel="Lead">@context.Owner.ToString()</MudTd>
+                <MudTd DataLabel="Lead(s)">@context.Leads.ToString()</MudTd>
                 <MudTd DataLabel="Title">@context.Title</MudTd>
                 <MudTd DataLabel="Description">@context.Description</MudTd>
                 <MudTd>@context.CollectionInterval</MudTd>

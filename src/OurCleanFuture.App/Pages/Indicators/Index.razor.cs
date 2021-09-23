@@ -1,4 +1,4 @@
-﻿ on using OurCleanFuture.Data;
+﻿using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
@@ -32,9 +32,9 @@ namespace OurCleanFuture.App.Pages.Indicators
                 _context = ContextFactory.CreateDbContext();
                 _indicators = await _context.Indicators
                 .Include(i => i.Action)
-                .Include(i => i.Owner)
+                .Include(i => i.Leads)
                 .ThenInclude(o => o.Organization)
-                .Include(i => i.Owner)
+                .Include(i => i.Leads)
                 .ThenInclude(o => o.Branch)
                 .ThenInclude(b => b!.Department)
                 .AsNoTracking()
@@ -77,12 +77,14 @@ namespace OurCleanFuture.App.Pages.Indicators
         {
             if (string.IsNullOrWhiteSpace(_searchString))
                 return true;
-            if (indicator.Owner.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (indicator.Owner.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
-                return true;
-            if (indicator.Owner.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
-                return true;
+            foreach(var lead in indicator.Leads) {
+                if (lead.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+                    return true;
+                if (lead.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+                    return true;
+                if (lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+                    return true;
+            }
             if (indicator.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;

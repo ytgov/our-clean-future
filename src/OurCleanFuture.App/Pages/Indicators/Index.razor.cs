@@ -33,9 +33,9 @@ namespace OurCleanFuture.App.Pages.Indicators
                 _indicators = await _context.Indicators
                 .Include(i => i.Action)
                 .Include(i => i.Leads)
-                .ThenInclude(o => o.Organization)
+                .ThenInclude(l => l.Organization)
                 .Include(i => i.Leads)
-                .ThenInclude(o => o.Branch)
+                .ThenInclude(l => l.Branch)
                 .ThenInclude(b => b!.Department)
                 .AsNoTracking()
                 .AsSingleQuery()

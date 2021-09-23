@@ -57,7 +57,7 @@ namespace OurCleanFuture.App.Pages.Actions
                 _context = ContextFactory.CreateDbContext();
                 Goals = await _context.Goals.OrderBy(g => g.Title).ToListAsync();
                 Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
-                DirectorsCommittees = await _context.DirectorsCommittees.OrderBy(d => d.Name).ToListAsync();
+                DirectorsCommittees = await _context.DirectorsCommittees.OrderBy(dc => dc.Name).ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.
                 Action = await _context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.

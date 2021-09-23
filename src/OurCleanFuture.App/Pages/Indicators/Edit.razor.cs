@@ -48,7 +48,7 @@ namespace OurCleanFuture.App.Pages.Indicators
         {
             try {
                 _context = ContextFactory.CreateDbContext();
-                Leads = await _context.Leads.Include(o => o.Organization).Include(o => o.Branch).ThenInclude(b => b!.Department).OrderBy(o => o.Branch!.Name).ToListAsync();
+                Leads = await _context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Name).ToListAsync();
                 UnitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
                 Goals = await _context.Goals.OrderBy(g => g.Title).ToListAsync();
                 Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();

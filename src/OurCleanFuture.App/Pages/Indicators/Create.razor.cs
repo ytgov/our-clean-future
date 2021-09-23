@@ -26,7 +26,7 @@ namespace OurCleanFuture.App.Pages.Indicators
         {
             try {
                 _context = ContextFactory.CreateDbContext();
-                Leads = await _context.Leads.Include(o => o.Organization).Include(o => o.Branch).ThenInclude(b => b!.Department).OrderBy(o => o.Branch!.Name).ToListAsync();
+                Leads = await _context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Name).ToListAsync();
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);

@@ -23,19 +23,17 @@ namespace OurCleanFuture.Data
         //{
         //}
 
+        //Uncomment to allow EF Core Power Tools to generate a diagram
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=EnvOurCleanFuture; Integrated Security=True");
+        //}
+
         public AppDbContext(DbContextOptions options, ConnectionStrings connectionStrings) : base(options)
         {
             _connectionStrings = connectionStrings;
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            //Comment to allow EF Core Power Tools to generate a diagram
-            optionsBuilder.UseSqlServer(_connectionStrings.AppContext);
-
-            //Uncomment to allow EF Core Power Tools to generate a diagram
-            //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=EnvOurCleanFuture; Integrated Security=True");
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -99,6 +97,8 @@ namespace OurCleanFuture.Data
                                 ie.ToTable("Entries")
                                   .WithOwner(e => e.Indicator);
                             });
+
+            modelBuilder.Entity<Indicator>().ToTable(tb => tb.IsTemporal());
 
             modelBuilder.Entity<Target>()
                         .Property(t => t.EndDate)

@@ -54,7 +54,7 @@ else
                         </MudSelect>
                         <MudField Label="Internal Status Last Updated">@Action.InternalStatusUpdatedDate?.LocalDateTime</MudField>
                         <MudDatePicker Label="Actual/Anticipated Completion Date" @bind-Date="Action.ActualCompletionDate" Editable="true" />
-                        <MudTextField Label="Internal Notes" @bind-Value="Action.Notes" Lines="2" />
+                        <MudTextField Label="Internal Notes" @bind-Value="Action.Note" Lines="2" />
                         <MudTextField Label="Public Explanation" @bind-Value="Action.PublicExplanation" Lines="2" />
                     </MudPaper>
                 </MudItem>

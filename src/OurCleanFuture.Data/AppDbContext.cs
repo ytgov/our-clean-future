@@ -31,7 +31,7 @@ namespace OurCleanFuture.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //Comment to allow EF Core Power Tools to generate a diagram
-            optionsBuilder.UseSqlServer(_connectionStrings.AppContext);
+            optionsBuilder.UseSqlServer(_connectionStrings.AppContext, options => options.EnableRetryOnFailure());
 
             //Uncomment to allow EF Core Power Tools to generate a diagram
             //optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=EnvOurCleanFuture; Integrated Security=True");

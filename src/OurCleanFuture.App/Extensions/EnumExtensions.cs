@@ -16,7 +16,7 @@ namespace OurCleanFuture.App.Extensions
               .GetMember(enumValue.ToString())
               .First()
               .GetCustomAttribute<DisplayAttribute>()
-              ?.GetName();
+              ?.GetName() ?? $"Error: enum {enumValue} is missing a displayname attribute";
         }
     }
 }

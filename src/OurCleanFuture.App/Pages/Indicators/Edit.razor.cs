@@ -168,7 +168,7 @@ namespace OurCleanFuture.App.Pages.Indicators
                 yesText: "Delete", cancelText: "Cancel");
             if (result == true) {
                 Indicator.Entries.Remove(entry);
-                Snackbar.Add($"Deleted entry dated {entry.Date.ToLongDateString()}", Severity.Success);
+                Snackbar.Add($"Click submit to confirm deletion of entry dated {entry.Date.ToLongDateString()}", Severity.Info);
             }
         }
 

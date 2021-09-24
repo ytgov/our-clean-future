@@ -19,6 +19,28 @@ else
                     <MudField Label="Last Updated By">@(Indicator.UpdatedBy) on @(GetLastUpdatedDate().ToLocalTime().ToString("f"))</MudField>
                 </MudPaper>
             </MudItem>
+            @if (Indicator.Target != null)
+            {
+                <MudItem xs="12" sm="6" md="6">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudText Typo="Typo.h6">Target</MudText>
+                        @if (Indicator.Target.Value is not null)
+                        {
+                            <MudField Label="Value" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol">@Indicator.Target.Value</MudField>
+                        }
+                        @if (Indicator.Target.StartDate is not null)
+                        {
+                            <MudField Label="Start Date">@Indicator.Target.StartDate?.ToLongDateString()</MudField>
+                        }
+                        <MudField Label="Completion Date">@Indicator.Target.EndDate?.ToString("yyyy")</MudField>
+                        @if (!string.IsNullOrWhiteSpace(Indicator.Target.OcfDescription))
+                        {
+                            <MudField Label="OCF Description">@Indicator.Target.OcfDescription</MudField>
+                        }
+                    </MudPaper>
+                </MudItem>
+            }
+
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
                     <MudItem>
@@ -125,36 +147,16 @@ else
                 </MudPaper>
             </MudItem>
 
-            @if (Indicator.Target != null)
-            {
-                <MudItem xs="12" sm="6" md="6">
-                    <MudPaper Elevation="2" Class="pa-4">
-                        <MudText Typo="Typo.h6">Target</MudText>
-                        @if (Indicator.Target.Value is not null)
-                        {
-                            <MudField Label="Value" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol">@Indicator.Target.Value</MudField>
-                        }
-                        @if (Indicator.Target.StartDate is not null)
-                        {
-                            <MudField Label="Start Date">@Indicator.Target.StartDate?.ToLongDateString()</MudField>
-                        }
-                        <MudField Label="Completion Date">@Indicator.Target.EndDate?.ToString("yyyy")</MudField>
-                        @if (!string.IsNullOrWhiteSpace(Indicator.Target.OcfDescription))
-                        {
-                            <MudField Label="OCF Description">@Indicator.Target.OcfDescription</MudField>
-                        }
-                    </MudPaper>
-                </MudItem>
-            }
+            
 
 
 
-            <MudItem xs="12" sm="6">
+            @*<MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
                     <MudText Typo="Typo.h6">Visualization</MudText>
                     <MudChart ChartType="ChartType.Line" ChartSeries="@Series" XAxisLabels="@XAxisLabels" Width="100%"></MudChart>
                 </MudPaper>
-            </MudItem>
+            </MudItem>*@
 
             <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
                 <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/indicators">Back</MudButton>

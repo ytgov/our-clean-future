@@ -17,7 +17,7 @@ namespace OurCleanFuture.App.Pages.UnitsOfMeasurement
         private bool _mayRender = true;
         private AppDbContext _context = null!;
 
-        public List<UnitOfMeasurement> _unitsOfMeasurement { get; set; } = new();
+        public List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
 
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
@@ -32,7 +32,7 @@ namespace OurCleanFuture.App.Pages.UnitsOfMeasurement
         {
             try {
                 _context = ContextFactory.CreateDbContext();
-                _unitsOfMeasurement = await _context.UnitsOfMeasurement.OrderBy(u => u.Symbol).ToListAsync();
+                UnitsOfMeasurement = await _context.UnitsOfMeasurement.OrderBy(u => u.Symbol).ToListAsync();
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
@@ -44,33 +44,65 @@ namespace OurCleanFuture.App.Pages.UnitsOfMeasurement
             await base.OnInitializedAsync();
         }
 
-        private async Task Edit(UnitOfMeasurement unit)
+        private async Task Create()
         {
-            var parameters = new DialogParameters
-            {
-                { "ButtonText", "Update" },
-                { "Color", Color.Success },
-                { "Entity", unit }
-            };
+            var dialog = DialogService.Show<CreateDialog>("Create");
+            var result = await dialog.Result;
+            if (!result.Cancelled) {
+                var newUnitOfMeasurement = (UnitOfMeasurement)result.Data;
+                try {
+                    _context.Add(newUnitOfMeasurement);
+                    var entriesSaved = await _context.SaveChangesAsync();
+                    if (entriesSaved == 1) {
+                        UnitsOfMeasurement.Add(newUnitOfMeasurement);
+                        Snackbar.Add($"Created unit {newUnitOfMeasurement.Symbol}", Severity.Success);
+                    }
+                }
+                catch (DbUpdateException ex) {
+
+                    Snackbar.Add($"Unable to add new unit {newUnitOfMeasurement.Symbol}. Does it already exist?", Severity.Error);
+                }
+            }
         }
 
-        private async Task Delete(UnitOfMeasurement unit)
+        private async Task Edit(UnitOfMeasurement unitOfMeasurement)
+        {
+            var parameters = new DialogParameters { ["UnitOfMeasurement"] = unitOfMeasurement };
+
+            var dialog = DialogService.Show<EditDialog>("Edit", parameters);
+            var result = await dialog.Result;
+            if (!result.Cancelled) {
+                var updatedUnitOfMeasurement = (UnitOfMeasurement)result.Data;
+                try {
+                    var entriesSaved = await _context.SaveChangesAsync();
+                    if (entriesSaved == 1) {
+                        Snackbar.Add($"Updated unit {updatedUnitOfMeasurement.Symbol}", Severity.Success);
+                    }
+                }
+                catch (DbUpdateException ex) {
+
+                    Snackbar.Add($"Unable to edit unit {unitOfMeasurement.Symbol}", Severity.Error);
+                }
+            }
+        }
+
+        private async Task Delete(UnitOfMeasurement unitOfMeasurement)
         {
             bool? result = await DialogService.ShowMessageBox(
-                $"Delete {unit.Symbol}?",
+                $"Delete {unitOfMeasurement.Symbol}?",
                 "This action cannot not be undone.",
                 yesText: "Delete", cancelText: "Cancel");
             if (result == true) {
                 //Prevents mid-method rerendering of the component, which avoids overlapping threads
                 _mayRender = false;
                 try {
-                    _context.Remove(unit);
+                    _context.Remove(unitOfMeasurement);
                     await _context.SaveChangesAsync();
-                    _unitsOfMeasurement.Remove(unit);
-                    Snackbar.Add($"Deleted unit {unit.Symbol}", Severity.Success);
+                    UnitsOfMeasurement.Remove(unitOfMeasurement);
+                    Snackbar.Add($"Deleted unit {unitOfMeasurement.Symbol}", Severity.Success);
                 }
                 catch (DbUpdateException) {
-                    Snackbar.Add($"Unable to delete unit {unit.Symbol}, as it is associated with an indicator", Severity.Error);
+                    Snackbar.Add($"Unable to delete unit {unitOfMeasurement.Symbol}, as it is associated with an indicator", Severity.Error);
                 }
                 finally {
                     _mayRender = true;

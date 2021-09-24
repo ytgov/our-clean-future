@@ -1,0 +1,33 @@
+﻿@using Data.Entities
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            Create unit of measurement
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField Label="Symbol" @bind-Value="UnitOfMeasurement.Symbol" />
+        <MudTextField Label="Name" @bind-Value="UnitOfMeasurement.Name" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Update">Submit</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
+
+    public UnitOfMeasurement UnitOfMeasurement { get; set; } = new();
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void Update()
+    {
+        MudDialog.Close(DialogResult.Ok(UnitOfMeasurement));
+    }
+}

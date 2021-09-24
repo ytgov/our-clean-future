@@ -1,13 +1,13 @@
 ﻿<MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
     <MudNavGroup Icon="@Icons.Material.Filled.AreaChart" Title="Areas">
-        <MudNavLink Href="/areas/details/1">Transportation</MudNavLink>
-        <MudNavLink Href="/areas/details/2">Homes and buildings</MudNavLink>
-        <MudNavLink Href="/areas/details/3">Energy production</MudNavLink>
-        <MudNavLink Href="/areas/details/4">People and the environment</MudNavLink>
-        <MudNavLink Href="/areas/details/5">Communities</MudNavLink>
-        <MudNavLink Href="/areas/details/6">Innovation</MudNavLink>
-        <MudNavLink Href="/areas/details/7">Leadership</MudNavLink>
+        <MudNavLink Href="/areas/transportation" Match="NavLinkMatch.All">Transportation</MudNavLink>
+        <MudNavLink Href="/areas/homes-and-buildings" Match="NavLinkMatch.All" OnClick="(() => StateHasChanged())">Homes and buildings</MudNavLink>
+        <MudNavLink Href="/areas/energy-production" Match="NavLinkMatch.All">Energy production</MudNavLink>
+        <MudNavLink Href="/areas/people-and-the-environment" Match="NavLinkMatch.All">People and the environment</MudNavLink>
+        <MudNavLink Href="/areas/communities" Match="NavLinkMatch.All">Communities</MudNavLink>
+        <MudNavLink Href="/areas/innovation" Match="NavLinkMatch.All">Innovation</MudNavLink>
+        <MudNavLink Href="/areas/leadership" Match="NavLinkMatch.All">Leadership</MudNavLink>
     </MudNavGroup>
     <MudNavLink Href="/actions" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.DirectionsRun">Actions</MudNavLink>
     <MudNavLink Href="/indicators" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Indicators</MudNavLink>
@@ -23,3 +23,4 @@
     <MudNavLink Href="/dashboard" Icon="@Icons.Material.Filled.Insights">Dashboard</MudNavLink>
     <MudNavLink Href="/help" Icon="@Icons.Material.Filled.Help">Help</MudNavLink>
 </MudNavMenu>
+

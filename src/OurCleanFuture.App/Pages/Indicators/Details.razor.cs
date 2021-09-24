@@ -106,7 +106,7 @@ namespace OurCleanFuture.App.Pages.Indicators
 
         private void ViewArea(Area area)
         {
-            Navigation.NavigateTo("/areas/details/" + area.Id);
+            Navigation.NavigateTo("/areas/" + area.Title.ToLower().Replace(' ', '-'));
         }
     }
 }

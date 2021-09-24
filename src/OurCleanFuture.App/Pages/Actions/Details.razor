@@ -9,7 +9,7 @@
 else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <MudText Typo="Typo.h3" Class="mb-8"><b>Viewing action:</b> @Action.Number</MudText>
+        <MudText Typo="Typo.h3" Class="mb-8"><b>Action:</b> @Action.Number</MudText>
         <MudGrid>
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
@@ -51,17 +51,27 @@ else
                         </MudAlert>
                         <MudText Typo="Typo.h6">Area</MudText>
                         <MudAlert Severity="Severity.Normal" NoIcon="true">
-                            <div class="d-flex">
+                            <MudList Clickable="true" DisableGutters="true" Dense="true" Class="mx-n2">
                                 @if (Action.Objective.Area is not null)
                                 {
-                                    <MudAvatar Image="@ImageHelpers.GetAreaIconPath(Action.Objective.Area)" Class="mr-2 my-2" />
+                                    <MudListItem Class="my-n4 px-2" OnClick="(() => ViewArea(Action.Objective.Area))">
+                                        <div class="d-flex">
+                                            <MudAvatar Image="@ImageHelpers.GetAreaIconPath(Action.Objective.Area)" Class="mr-2 my-2" />
+                                            <MudText Class="my-4">@Action.Objective?.Area?.Title</MudText>
+                                        </div>
+                                    </MudListItem>
                                 }
-                                <MudText Class="my-4" Typo="Typo.body2">@(Action.Objective?.Area?.Title ?? "Error: This objective is not associated with an area!")</MudText>
-                            </div>
+                                else
+                                {
+                                    <MudText Class="my-4" Typo="Typo.body2">Error: This objective is not associated with an area!</MudText>
+                                }
+                            </MudList>
                         </MudAlert>
                         <MudText Typo="Typo.h6">Objective</MudText>
                         <MudAlert Severity="Severity.Warning" NoIcon="true">
-                            <MudText Class="my-2" Typo="Typo.body2">@(Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudText>
+                            <MudList Clickable="true" DisableGutters="true" Dense="true">
+                                <MudListItem Class="my-n2 px-2 mx-n2" OnClick="(() => ViewArea(Action.Objective.Area))">@(Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudListItem>
+                            </MudList>
                         </MudAlert>
                     </MudItem>
                 </MudPaper>
@@ -70,10 +80,10 @@ else
                 <MudPaper Elevation="2" Class="pa-4">
                     <MudText Typo="Typo.h6">Indicators</MudText>
                     <MudList Clickable="true">
-                    @foreach (var indicator in Action.Indicators)
-                    {
-                        <MudListItem OnClick="(() => ViewIndicator(indicator))">@indicator.Title</MudListItem>
-                    }
+                        @foreach (var indicator in Action.Indicators)
+                        {
+                            <MudListItem OnClick="(() => ViewIndicator(indicator))">@indicator.Title</MudListItem>
+                        }
                     </MudList>
                 </MudPaper>
             </MudItem>

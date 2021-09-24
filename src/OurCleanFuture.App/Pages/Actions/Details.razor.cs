@@ -97,5 +97,10 @@ namespace OurCleanFuture.App.Pages.Actions
         {
             Navigation.NavigateTo("/indicators/details/" + indicator.Id);
         }
+
+        private void ViewArea(Area area)
+        {
+            Navigation.NavigateTo("/areas/details/" + area.Id);
+        }
     }
 }

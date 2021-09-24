@@ -22,7 +22,7 @@ else
                         <MudList Clickable="true" Dense="true" DisableGutters="true">
                             @foreach (var action in objective.Actions)
                             {
-                                <MudListItem OnClick="(() => ViewAction(action))">
+                                <MudListItem Class="px-2" OnClick="(() => ViewAction(action))">
                                     <div class="d-flex">
                                         <MudText Class="mr-2">@(action.Number).</MudText>
                                         <MudText>@action.Title</MudText>

@@ -43,7 +43,7 @@ namespace OurCleanFuture.Data
             _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 3, Title = "Adapt to the impacts of climate change." });
             _modelBuilder.Entity<Goal>().HasData(new Goal { Id = 4, Title = "Build a green economy." });
 
-            _modelBuilder.Entity<Area>().HasData(new Area { Id = 1, Title = "Transportion" });
+            _modelBuilder.Entity<Area>().HasData(new Area { Id = 1, Title = "Transportation" });
             _modelBuilder.Entity<Area>().HasData(new Area { Id = 2, Title = "Homes and buildings" });
             _modelBuilder.Entity<Area>().HasData(new Area { Id = 3, Title = "Energy production" });
             _modelBuilder.Entity<Area>().HasData(new Area { Id = 4, Title = "People and the environment" });

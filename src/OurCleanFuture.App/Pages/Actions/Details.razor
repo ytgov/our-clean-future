@@ -13,7 +13,7 @@ else
         <MudGrid>
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
-                    <MudField Label="Number">@Action.Number</MudField>
+                    @*<MudField Label="Number">@Action.Number</MudField>*@
                     <MudField Label="Title">@Action.Title</MudField>
                     <MudField Label="Director's Committee(s)">@Action.DirectorsCommitteesToString()</MudField>
                     <MudField Label="Start Date">@Action.StartDate?.ToLongDateString()</MudField>

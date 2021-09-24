@@ -13,7 +13,7 @@
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Update">Submit</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Update">Update</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -47,7 +47,7 @@
         {
             Entry.Date = (DateTime)TempDate;
             Entry.Value = (int)TempValue;
-            MudDialog.Close();
+            MudDialog.Close(DialogResult.Ok(Entry));
         }
     }
 }

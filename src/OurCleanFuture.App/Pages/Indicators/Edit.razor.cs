@@ -148,7 +148,9 @@ namespace OurCleanFuture.App.Pages.Indicators
             var result = await dialog.Result;
 
             if (!result.Cancelled) {
-                Indicator.Entries.Add((Entry)result.Data);
+                var newEntry = (Entry)result.Data;
+                Indicator.Entries.Add(newEntry);
+                Snackbar.Add($"Click submit to confirm adding entry dated {newEntry.Date.ToLongDateString()}", Severity.Info);
             }
         }
 
@@ -157,7 +159,12 @@ namespace OurCleanFuture.App.Pages.Indicators
             var parameters = new DialogParameters { ["Indicator"] = Indicator, ["Entry"] = entry };
 
             var dialog = DialogService.Show<EditEntryDialog>("Edit entry", parameters);
-            _ = await dialog.Result;
+            var result = await dialog.Result;
+
+            if (!result.Cancelled) {
+                var editedEntry = (Entry)result.Data;
+                Snackbar.Add($"Click submit to confirm update of entry dated {editedEntry.Date.ToLongDateString()}", Severity.Info);
+            }
         }
 
         private async Task DeleteEntry(Entry entry)

@@ -1,0 +1,75 @@
+﻿@page "/actions/details/{id:int}"
+@using OurCleanFuture.App.Extensions;
+
+@if (_isLoaded == false)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudText Typo="Typo.h3" Class="mb-8"><b>Viewing action:</b> @Action.Number</MudText>
+        <MudGrid>
+            <MudItem xs="12" sm="6">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudField Label="Number">@Action.Number</MudField>
+                    <MudField Label="Title">@Action.Title</MudField>
+                    <MudField Label="Director's Committee(s)">@Action.DirectorsCommitteesToString()</MudField>
+                    <MudField Label="Start Date">@Action.StartDate?.ToLongDateString()</MudField>
+                    <MudField Label="Target Completion Date">@Action.TargetCompletionDate?.ToLongDateString()</MudField>
+                    <MudField Label="External Status">@Action.ExternalStatus.GetDisplayName()</MudField>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudField Label="Internal Status">@Action.InternalStatus.GetDisplayName()</MudField>
+                        <MudField Label="Internal Status Last Updated">@Action.InternalStatusUpdatedDate?.LocalDateTime</MudField>
+                        <MudField Label="Actual/Anticipated Completion Date">@Action.ActualCompletionDate?.ToLongDateString()</MudField>
+                        <MudField Label="Internal Notes">@Action.Note</MudField>
+                        <MudField Label="Public Explanation">@Action.PublicExplanation</MudField>
+                    </MudPaper>
+                </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudItem>
+                        <MudText Typo="Typo.h6">Goals</MudText>
+                        <MudAlert Severity="Severity.Success" NoIcon="true">
+                            @if (Action.Objective is not null && Action.Objective.Goals.Count > 0)
+                            {
+                                @foreach (var goal in Action.Objective.Goals)
+                                {
+                                    <div class="d-flex">
+                                        <MudAvatar Image="@GetGoalIconPath(goal)" Class="mr-2 my-2" />
+                                        <MudText Class="my-4" Typo="Typo.body2">@goal.Title</MudText>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <MudText Typo="Typo.body2">Error: This objective is not associated with any goals!</MudText>
+                            }
+                        </MudAlert>
+                        <MudText Typo="Typo.h6">Area</MudText>
+                        <MudAlert Severity="Severity.Normal" NoIcon="true">
+                            <div class="d-flex">
+                                @if (Action.Objective.Area is not null)
+                                {
+                                    <MudAvatar Image="@GetAreaIconPath(Action.Objective.Area)" Class="mr-2 my-2" />
+                                }
+                                <MudText Class="my-4" Typo="Typo.body2">@(Action.Objective?.Area?.Title ?? "Error: This objective is not associated with an area!")</MudText>
+                            </div>
+                        </MudAlert>
+                        <MudText Typo="Typo.h6">Objective</MudText>
+                        <MudAlert Severity="Severity.Warning" NoIcon="true">
+                            <MudText Class="my-4" Typo="Typo.body2">@(Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudText>
+                        </MudAlert>
+                    </MudItem>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
+                <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/actions">Back</MudButton>
+                <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Material.Filled.Edit" OnClick="(() => Edit())">Edit</MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+}

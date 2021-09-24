@@ -38,18 +38,13 @@ namespace OurCleanFuture.Data.Entities
 
         public string LeadsToString()
         {
-            if (Leads.Count == 1) {
-                return Leads[0].ToString();
+            var result = "";
+            foreach (var lead in Leads) {
+                result += $"{lead}, ";
             }
-            else {
-                var result = "";
-                foreach (var lead in Leads) {
-                    result += $"{lead}, ";
-                }
-                //Trim the trailing comma and space
-                result = result.Remove(result.Length - 2, 2);
-                return result;
-            }
+            //Trim the trailing comma and space
+            result = result.Remove(result.Length - 2, 2);
+            return result;
         }
     }
 }

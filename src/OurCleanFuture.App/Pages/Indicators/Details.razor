@@ -12,7 +12,7 @@ else
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
                     <MudField Label="Lead(s)">@Indicator.LeadsToString()</MudField>
-                    <MudTextField Label="Description" T="string" @bind-Value="Indicator.Description" Lines="2" />
+                    <MudField Label="Description">@Indicator.Description</MudField>
                     <MudField Label="Data Type">@Indicator.DataType</MudField>
                     <MudField Label="Collection Interval">@Indicator.CollectionInterval</MudField>
                     <MudField Label="Unit of Measurement">@Indicator.UnitOfMeasurement.Name (@Indicator.UnitOfMeasurement.Symbol)</MudField>

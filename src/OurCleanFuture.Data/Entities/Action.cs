@@ -28,5 +28,21 @@ namespace OurCleanFuture.Data.Entities
         {
             return $"{Number}. {Title}";
         }
+
+        public string DirectorsCommitteesToString()
+        {
+            if(DirectorsCommittees.Count == 0) {
+                return "";
+            }
+            else {
+                var result = "";
+                foreach (var directorsCommittee in DirectorsCommittees) {
+                    result += $"{directorsCommittee.Name}, ";
+                }
+                //Trim the trailing comma and space
+                result = result.Remove(result.Length - 2, 2);
+                return result;
+            }
+        }
     }
 }

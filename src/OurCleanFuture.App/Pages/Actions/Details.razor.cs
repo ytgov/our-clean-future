@@ -92,5 +92,10 @@ namespace OurCleanFuture.App.Pages.Actions
         {
             Navigation.NavigateTo("/actions/edit/" + Action.Id);
         }
+
+        private void ViewIndicator(Indicator indicator)
+        {
+            Navigation.NavigateTo("/indicators/details/" + indicator.Id);
+        }
     }
 }

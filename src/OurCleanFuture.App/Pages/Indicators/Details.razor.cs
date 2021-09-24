@@ -17,6 +17,7 @@ using MudBlazor;
 using OurCleanFuture.Data;
 using Microsoft.EntityFrameworkCore;
 using OurCleanFuture.Data.Entities;
+using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Indicators
 {
@@ -121,6 +122,11 @@ namespace OurCleanFuture.App.Pages.Indicators
         private void Edit()
         {
             Navigation.NavigateTo("/indicators/edit/" + Indicator.Id);
+        }
+
+        private void ViewAction(Action action)
+        {
+            Navigation.NavigateTo("/actions/details/" + action.Id);
         }
     }
 }

@@ -25,12 +25,12 @@ namespace OurCleanFuture.App.Pages.Areas
     {
         private bool _isLoaded;
         private AppDbContext context = null!;
-        private int id;
+        private int areaId;
 
         public Area Area { get; set; } = null!;
 
         [Parameter]
-        public string Title { get; set; } = null!;
+        public string AreaTitle { get; set; } = null!;
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
@@ -43,7 +43,7 @@ namespace OurCleanFuture.App.Pages.Areas
         [Inject]
         public ISnackbar Snackbar { get; set; } = null!;
 
-        //Required to force the app to re-render when moving between Area pages
+        //Required to force the app to re-render when navigating between Area pages
         protected override async Task OnParametersSetAsync()
         {
             await OnInitializedAsync();
@@ -51,27 +51,27 @@ namespace OurCleanFuture.App.Pages.Areas
 
         protected override async Task OnInitializedAsync()
         {
-            switch (Title) {
+            switch (AreaTitle) {
                 case "transportation":
-                    id = 1;
+                    areaId = 1;
                     break;
                 case "homes-and-buildings":
-                    id = 2;
+                    areaId = 2;
                     break;
                 case "energy-production":
-                    id = 3;
+                    areaId = 3;
                     break;
                 case "people-and-the-environment":
-                    id = 4;
+                    areaId = 4;
                     break;
                 case "communities":
-                    id = 5;
+                    areaId = 5;
                     break;
                 case "innovation":
-                    id = 6;
+                    areaId = 6;
                     break;
                 case "leadership":
-                    id = 7;
+                    areaId = 7;
                     break;
                 default:
                     Navigation.NavigateTo("");
@@ -80,7 +80,7 @@ namespace OurCleanFuture.App.Pages.Areas
             try {
                 context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.
-                Area = await context.Areas.Include(a => a.Objectives).ThenInclude(o => o.Actions).FirstOrDefaultAsync(a => a.Id == id);
+                Area = await context.Areas.Include(a => a.Objectives).ThenInclude(o => o.Actions).FirstOrDefaultAsync(a => a.Id == areaId);
 #pragma warning restore CS8601 // Possible null reference assignment.
             }
             catch (Exception ex) {

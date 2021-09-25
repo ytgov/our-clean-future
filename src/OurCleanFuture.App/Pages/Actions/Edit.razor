@@ -28,30 +28,29 @@ else
                             </MudSelect>
                         </MudItem>
                         <MudSelect Label="Director's Committee(s)" MultiSelection="true" ToStringFunc="@committeeConverter" @bind-SelectedValues="SelectedDirectorsCommittees">
-
                             @foreach (var committee in DirectorsCommittees)
                             {
-                                <MudSelectItem Value="committee">@committee.Name</MudSelectItem>
+                            <MudSelectItem Value="committee">@committee.Name</MudSelectItem>
                             }
                     </MudSelect>
-                    <MudSelect T="Data.Entities.ExternalStatus" Label="External Status" @bind-Value="Action.ExternalStatus">
-                        @foreach (Data.Entities.ExternalStatus externalStatus in Enum.GetValues(typeof(Data.Entities.ExternalStatus)))
-                            {
-                                <MudSelectItem Value="externalStatus">@externalStatus.GetDisplayName()</MudSelectItem>
-                            }
-                        </MudSelect>
-                        <MudDatePicker Label="Start Date" @bind-Date="Action.StartDate" Editable="true" />
-                        <MudDatePicker Label="Target Completion Date" @bind-Date="Action.TargetCompletionDate" Editable="true" />
-                    </MudPaper>
-                </MudItem>
-                <MudItem xs="12" sm="6">
-                    <MudPaper Elevation="2" Class="pa-4">
-                        <MudSelect T="Data.Entities.InternalStatus" Label="Internal Status" @bind-Value="Action.InternalStatus">
-                            @foreach (Data.Entities.InternalStatus internalStatus in Enum.GetValues(typeof(Data.Entities.InternalStatus)))
+                    <MudSelect T="Data.Entities.InternalStatus" Label="Internal Status" @bind-Value="Action.InternalStatus">
+                        @foreach (Data.Entities.InternalStatus internalStatus in Enum.GetValues(typeof(Data.Entities.InternalStatus)))
                             {
                                 <MudSelectItem Value="internalStatus">@internalStatus.GetDisplayName()</MudSelectItem>
                             }
                         </MudSelect>
+                        <MudSelect T="Data.Entities.ExternalStatus" Label="External Status" @bind-Value="Action.ExternalStatus">
+                            @foreach (Data.Entities.ExternalStatus externalStatus in Enum.GetValues(typeof(Data.Entities.ExternalStatus)))
+                            {
+                                <MudSelectItem Value="externalStatus">@externalStatus.GetDisplayName()</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudDatePicker Label="Start Date" @bind-Date="Action.StartDate" Editable="true" />
+                        <MudDatePicker Label="Target Completion Date" @bind-Date="Action.TargetCompletionDate" Editable="true" />
                         <MudDatePicker Label="Actual/Anticipated Completion Date" @bind-Date="Action.ActualCompletionDate" Editable="true" />
                         <MudTextField Label="Internal Notes" @bind-Value="Action.Note" Lines="2" />
                         <MudTextField Label="Public Explanation" @bind-Value="Action.PublicExplanation" Lines="2" />

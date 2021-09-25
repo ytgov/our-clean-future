@@ -16,14 +16,14 @@ else
                     @*<MudField Label="Number">@Action.Number</MudField>*@
                     <MudField Label="Title">@Action.Title</MudField>
                     <MudField Label="Director's Committee(s)">@Action.DirectorsCommitteesToString()</MudField>
-                    <MudField Label="Start Date">@Action.StartDate?.ToLongDateString()</MudField>
-                    <MudField Label="Target Completion Date">@Action.TargetCompletionDate?.ToLongDateString()</MudField>
+                    <MudField Label="Internal Status">@Action.InternalStatus.GetDisplayName() (last updated on @Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f"))</MudField>
                     <MudField Label="External Status">@Action.ExternalStatus.GetDisplayName()</MudField>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
-                    <MudField Label="Internal Status">@Action.InternalStatus.GetDisplayName() (last updated on @Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f"))</MudField>
+                    <MudField Label="Start Date">@Action.StartDate?.ToLongDateString()</MudField>
+                    <MudField Label="Target Completion Date">@Action.TargetCompletionDate?.ToLongDateString()</MudField>
                     <MudField Label="Actual/Anticipated Completion Date">@Action.ActualCompletionDate?.ToLongDateString()</MudField>
                     <MudField Label="Internal Notes">@Action.Note</MudField>
                     <MudField Label="Public Explanation">@Action.PublicExplanation</MudField>

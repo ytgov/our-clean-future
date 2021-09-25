@@ -25,7 +25,6 @@ namespace OurCleanFuture.App.Pages.Areas
     {
         private bool _isLoaded;
         private AppDbContext context = null!;
-        private int areaId;
 
         public Area Area { get; set; } = null!;
 
@@ -51,36 +50,10 @@ namespace OurCleanFuture.App.Pages.Areas
 
         protected override async Task OnInitializedAsync()
         {
-            switch (AreaTitle) {
-                case "transportation":
-                    areaId = 1;
-                    break;
-                case "homes-and-buildings":
-                    areaId = 2;
-                    break;
-                case "energy-production":
-                    areaId = 3;
-                    break;
-                case "people-and-the-environment":
-                    areaId = 4;
-                    break;
-                case "communities":
-                    areaId = 5;
-                    break;
-                case "innovation":
-                    areaId = 6;
-                    break;
-                case "leadership":
-                    areaId = 7;
-                    break;
-                default:
-                    Navigation.NavigateTo("");
-                    break;
-            }
             try {
                 context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.
-                Area = await context.Areas.Include(a => a.Objectives).ThenInclude(o => o.Actions).FirstOrDefaultAsync(a => a.Id == areaId);
+                Area = await context.Areas.Include(a => a.Objectives).ThenInclude(o => o.Actions).FirstOrDefaultAsync(a => a.Title == AreaTitle.Replace('-', ' '));
 #pragma warning restore CS8601 // Possible null reference assignment.
             }
             catch (Exception ex) {

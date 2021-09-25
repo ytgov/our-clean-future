@@ -23,8 +23,8 @@ namespace OurCleanFuture.App.Pages.Actions
 {
     public partial class Edit
     {
-        private bool _isLoaded;
-        private AppDbContext _context = null!;
+        private bool isLoaded;
+        private AppDbContext context = null!;
         private Func<DirectorsCommittee, string> committeeConverter = d => d.Name;
 
         [Parameter]
@@ -54,12 +54,12 @@ namespace OurCleanFuture.App.Pages.Actions
         protected override async Task OnInitializedAsync()
         {
             try {
-                _context = ContextFactory.CreateDbContext();
-                Goals = await _context.Goals.OrderBy(g => g.Title).ToListAsync();
-                Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
-                DirectorsCommittees = await _context.DirectorsCommittees.OrderBy(dc => dc.Name).ToListAsync();
+                context = ContextFactory.CreateDbContext();
+                Goals = await context.Goals.OrderBy(g => g.Title).ToListAsync();
+                Objectives = await context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
+                DirectorsCommittees = await context.DirectorsCommittees.OrderBy(dc => dc.Name).ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.
-                Action = await _context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).FirstOrDefaultAsync(a => a.Id == Id);
+                Action = await context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
                 foreach (var committee in Action!.DirectorsCommittees) {
                     SelectedDirectorsCommittees.Add(committee);
@@ -69,7 +69,7 @@ namespace OurCleanFuture.App.Pages.Actions
                 Console.WriteLine(ex);
             }
             finally {
-                _isLoaded = true;
+                isLoaded = true;
             }
 
             await base.OnInitializedAsync();
@@ -77,14 +77,14 @@ namespace OurCleanFuture.App.Pages.Actions
 
         private async Task Update()
         {
-            if (_context.Entry(Action).Property(a => a.InternalStatus).IsModified) {
+            if (context.Entry(Action).Property(a => a.InternalStatus).IsModified) {
                 Action.InternalStatusUpdatedDate = DateTimeOffset.Now;
             }
             Action.DirectorsCommittees.Clear();
             foreach (var committee in SelectedDirectorsCommittees) {
                 Action.DirectorsCommittees.Add(committee);
             }
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             Snackbar.Add($"Successfully updated action: {Action.Number}", Severity.Success);
             Navigation.NavigateTo($"/actions/details/{Id}");
         }

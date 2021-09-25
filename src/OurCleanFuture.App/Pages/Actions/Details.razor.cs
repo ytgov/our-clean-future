@@ -23,8 +23,8 @@ namespace OurCleanFuture.App.Pages.Actions
 {
     public partial class Details
     {
-        private bool _isLoaded;
-        private AppDbContext _context = null!;
+        private bool isLoaded;
+        private AppDbContext context = null!;
 
         [Parameter]
         public int Id { get; set; }
@@ -50,16 +50,16 @@ namespace OurCleanFuture.App.Pages.Actions
         protected override async Task OnInitializedAsync()
         {
             try {
-                _context = ContextFactory.CreateDbContext();
+                context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.
-                Action = await _context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).Include(a => a.Objective).ThenInclude(a => a.Area).Include(a => a.Objective).ThenInclude(a => a.Goals).FirstOrDefaultAsync(a => a.Id == Id);
+                Action = await context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).Include(a => a.Objective).ThenInclude(a => a.Area).Include(a => a.Objective).ThenInclude(a => a.Goals).FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
             }
             finally {
-                _isLoaded = true;
+                isLoaded = true;
             }
 
             await base.OnInitializedAsync();

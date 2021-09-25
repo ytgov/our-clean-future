@@ -22,8 +22,8 @@ namespace OurCleanFuture.App.Pages.Actions
 {
     public partial class Index
     {
-        private bool _isLoaded;
-        private Action _selectedItem = null!;
+        private bool isLoaded;
+        private Action selectedItem = null!;
 
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
@@ -46,7 +46,7 @@ namespace OurCleanFuture.App.Pages.Actions
                 Console.WriteLine(ex);
             }
             finally {
-                _isLoaded = true;
+                isLoaded = true;
             }
         }
 

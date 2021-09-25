@@ -13,12 +13,12 @@ namespace OurCleanFuture.App.Pages.Indicators
 {
     public partial class Index : IDisposable
     {
-        private bool _isLoaded;
-        private bool _mayRender = true;
-        private AppDbContext _context = null!;
-        private List<Indicator> _indicators = null!;
-        private string _searchString = "";
-        private Indicator _selectedItem = null!;
+        private bool isLoaded;
+        private bool mayRender = true;
+        private AppDbContext context = null!;
+        private List<Indicator> indicators = null!;
+        private string searchString = "";
+        private Indicator selectedItem = null!;
 
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
@@ -29,8 +29,8 @@ namespace OurCleanFuture.App.Pages.Indicators
         protected override async Task OnInitializedAsync()
         {
             try {
-                _context = ContextFactory.CreateDbContext();
-                _indicators = await _context.Indicators
+                context = ContextFactory.CreateDbContext();
+                indicators = await context.Indicators
                 .Include(i => i.Action)
                 .Include(i => i.Leads)
                 .ThenInclude(l => l.Organization)
@@ -45,13 +45,13 @@ namespace OurCleanFuture.App.Pages.Indicators
                 Console.WriteLine(ex);
             }
             finally {
-                _isLoaded = true;
+                isLoaded = true;
             }
 
             await base.OnInitializedAsync();
         }
 
-        protected override bool ShouldRender() => _mayRender;
+        protected override bool ShouldRender() => mayRender;
 
         private static DateTime? GetDateLastEntry(Indicator indicator)
         {
@@ -75,24 +75,24 @@ namespace OurCleanFuture.App.Pages.Indicators
 
         private bool FilterFunc(Indicator indicator)
         {
-            if (string.IsNullOrWhiteSpace(_searchString))
+            if (string.IsNullOrWhiteSpace(searchString))
                 return true;
             foreach(var lead in indicator.Leads) {
-                if (lead.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+                if (lead.Organization.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                     return true;
-                if (lead.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+                if (lead.Branch?.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
                     return true;
-                if (lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+                if (lead.Branch?.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
                     return true;
             }
-            if (indicator.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            if (indicator.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
         }
 
         public void Dispose()
         {
-            _context.Dispose();
+            context.Dispose();
         }
     }
 }

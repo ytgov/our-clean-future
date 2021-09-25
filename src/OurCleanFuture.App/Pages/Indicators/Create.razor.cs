@@ -12,12 +12,12 @@ namespace OurCleanFuture.App.Pages.Indicators
 {
     public partial class Create
     {
-        private bool _isLoaded;
-        private AppDbContext _context = null!;
+        private bool isLoaded;
+        private AppDbContext context = null!;
 
         public List<Lead> Leads { get; set; } = new();
 
-        private readonly CollectionInterval[] _collectionIntervals = (CollectionInterval[])Enum.GetValues(typeof(CollectionInterval));
+        private readonly CollectionInterval[] collectionIntervals = (CollectionInterval[])Enum.GetValues(typeof(CollectionInterval));
 
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
@@ -25,14 +25,14 @@ namespace OurCleanFuture.App.Pages.Indicators
         protected override async Task OnInitializedAsync()
         {
             try {
-                _context = ContextFactory.CreateDbContext();
-                Leads = await _context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Name).ToListAsync();
+                context = ContextFactory.CreateDbContext();
+                Leads = await context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Name).ToListAsync();
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
             }
             finally {
-                _isLoaded = true;
+                isLoaded = true;
             }
 
             await base.OnInitializedAsync();
@@ -40,7 +40,7 @@ namespace OurCleanFuture.App.Pages.Indicators
 
         private Task<IEnumerable<CollectionInterval>> SearchCollectionIntervals(string value)
         {
-            return Task.FromResult(_collectionIntervals.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase)));
+            return Task.FromResult(collectionIntervals.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase)));
         }
 
     }

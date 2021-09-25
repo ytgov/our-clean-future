@@ -13,9 +13,9 @@ namespace OurCleanFuture.App.Pages.UnitsOfMeasurement
 {
     public partial class Index
     {
-        private bool _isLoaded;
-        private bool _mayRender = true;
-        private AppDbContext _context = null!;
+        private bool isLoaded;
+        private bool mayRender = true;
+        private AppDbContext context = null!;
 
         public List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
 
@@ -31,14 +31,14 @@ namespace OurCleanFuture.App.Pages.UnitsOfMeasurement
         protected override async Task OnInitializedAsync()
         {
             try {
-                _context = ContextFactory.CreateDbContext();
-                UnitsOfMeasurement = await _context.UnitsOfMeasurement.OrderBy(u => u.Symbol).ToListAsync();
+                context = ContextFactory.CreateDbContext();
+                UnitsOfMeasurement = await context.UnitsOfMeasurement.OrderBy(u => u.Symbol).ToListAsync();
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
             }
             finally {
-                _isLoaded = true;
+                isLoaded = true;
             }
 
             await base.OnInitializedAsync();
@@ -51,14 +51,14 @@ namespace OurCleanFuture.App.Pages.UnitsOfMeasurement
             if (!result.Cancelled) {
                 var newUnitOfMeasurement = (UnitOfMeasurement)result.Data;
                 try {
-                    _context.Add(newUnitOfMeasurement);
-                    var entriesSaved = await _context.SaveChangesAsync();
+                    context.Add(newUnitOfMeasurement);
+                    var entriesSaved = await context.SaveChangesAsync();
                     if (entriesSaved == 1) {
                         UnitsOfMeasurement.Add(newUnitOfMeasurement);
                         Snackbar.Add($"Created unit {newUnitOfMeasurement.Symbol}", Severity.Success);
                     }
                 }
-                catch (DbUpdateException ex) {
+                catch (DbUpdateException) {
 
                     Snackbar.Add($"Unable to add new unit {newUnitOfMeasurement.Symbol}. Does it already exist?", Severity.Error);
                 }
@@ -74,12 +74,12 @@ namespace OurCleanFuture.App.Pages.UnitsOfMeasurement
             if (!result.Cancelled) {
                 var updatedUnitOfMeasurement = (UnitOfMeasurement)result.Data;
                 try {
-                    var entriesSaved = await _context.SaveChangesAsync();
+                    var entriesSaved = await context.SaveChangesAsync();
                     if (entriesSaved == 1) {
                         Snackbar.Add($"Updated unit {updatedUnitOfMeasurement.Symbol}", Severity.Success);
                     }
                 }
-                catch (DbUpdateException ex) {
+                catch (DbUpdateException) {
 
                     Snackbar.Add($"Unable to edit unit {unitOfMeasurement.Symbol}", Severity.Error);
                 }
@@ -94,10 +94,10 @@ namespace OurCleanFuture.App.Pages.UnitsOfMeasurement
                 yesText: "Delete", cancelText: "Cancel");
             if (result == true) {
                 //Prevents mid-method rerendering of the component, which avoids overlapping threads
-                _mayRender = false;
+                mayRender = false;
                 try {
-                    _context.Remove(unitOfMeasurement);
-                    await _context.SaveChangesAsync();
+                    context.Remove(unitOfMeasurement);
+                    await context.SaveChangesAsync();
                     UnitsOfMeasurement.Remove(unitOfMeasurement);
                     Snackbar.Add($"Deleted unit {unitOfMeasurement.Symbol}", Severity.Success);
                 }
@@ -105,7 +105,7 @@ namespace OurCleanFuture.App.Pages.UnitsOfMeasurement
                     Snackbar.Add($"Unable to delete unit {unitOfMeasurement.Symbol}, as it is associated with an indicator", Severity.Error);
                 }
                 finally {
-                    _mayRender = true;
+                    mayRender = true;
                 }
             }
         }

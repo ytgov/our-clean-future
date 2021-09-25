@@ -16,8 +16,8 @@ namespace OurCleanFuture.App.Pages.Indicators
 {
     public partial class Edit : IDisposable
     {
-        private bool _isLoaded;
-        private AppDbContext _context = null!;
+        private bool isLoaded;
+        private AppDbContext context = null!;
         private ClaimsPrincipal user = null!;
 
         [Parameter]
@@ -53,14 +53,14 @@ namespace OurCleanFuture.App.Pages.Indicators
         protected override async Task OnInitializedAsync()
         {
             try {
-                _context = ContextFactory.CreateDbContext();
-                Leads = await _context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Name).ToListAsync();
-                UnitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
-                Goals = await _context.Goals.OrderBy(g => g.Title).ToListAsync();
-                Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
-                Actions = await _context.Actions.ToListAsync();
+                context = ContextFactory.CreateDbContext();
+                Leads = await context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Name).ToListAsync();
+                UnitsOfMeasurement = await context.UnitsOfMeasurement.ToListAsync();
+                Goals = await context.Goals.OrderBy(g => g.Title).ToListAsync();
+                Objectives = await context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
+                Actions = await context.Actions.ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.
-                Indicator = await _context.Indicators.Include(i => i.Target).Include(i => i.Leads).FirstOrDefaultAsync(i => i.Id == Id);
+                Indicator = await context.Indicators.Include(i => i.Target).Include(i => i.Leads).FirstOrDefaultAsync(i => i.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
                 foreach (var lead in Indicator.Leads) {
                     SelectedLeads.Add(lead);
@@ -72,7 +72,7 @@ namespace OurCleanFuture.App.Pages.Indicators
                 Console.WriteLine(ex);
             }
             finally {
-                _isLoaded = true;
+                isLoaded = true;
             }
 
             await base.OnInitializedAsync();
@@ -125,7 +125,7 @@ namespace OurCleanFuture.App.Pages.Indicators
 
             Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
 
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
             Navigation.NavigateTo($"/indicators/details/{Id}");
         }
@@ -181,7 +181,7 @@ namespace OurCleanFuture.App.Pages.Indicators
 
         public void Dispose()
         {
-            _context.Dispose();
+            context.Dispose();
         }
     }
 }

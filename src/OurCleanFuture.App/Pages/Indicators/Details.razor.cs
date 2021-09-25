@@ -26,9 +26,9 @@ namespace OurCleanFuture.App.Pages.Indicators
         public List<ChartSeries> Series = new();
         public ChartOptions Options = new();
         public string[] XAxisLabels = { "2019", "2020", "2021", "2022", "2023", "2024" };
-        private bool _isLoaded;
-        private AppDbContext _context = null!;
-        private Target _target = null!;
+        private bool isLoaded;
+        private AppDbContext context = null!;
+        private Target target = null!;
 
         [Parameter]
         public int Id { get; set; }
@@ -44,9 +44,9 @@ namespace OurCleanFuture.App.Pages.Indicators
         protected override async Task OnInitializedAsync()
         {
             try {
-                _context = ContextFactory.CreateDbContext();
+                context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.
-                Indicator = await _context.Indicators
+                Indicator = await context.Indicators
                     .Include(i => i.Target)
                     .Include(i => i.UnitOfMeasurement)
                     .Include(i => i.Leads)
@@ -68,7 +68,7 @@ namespace OurCleanFuture.App.Pages.Indicators
                     //.AsNoTracking()
                     .AsSingleQuery()
                     .FirstOrDefaultAsync(i => i.Id == Id);
-                _target = Indicator.Target;
+                target = Indicator.Target;
 #pragma warning restore CS8601 // Possible null reference assignment.
                 double[] Data1 = { 26, 42, 49, 72 };
                 Series.Add(new ChartSeries() { Name = $"{Indicator?.Title} ({Indicator?.UnitOfMeasurement})", Data = Data1 });
@@ -77,7 +77,7 @@ namespace OurCleanFuture.App.Pages.Indicators
                 Console.WriteLine(ex);
             }
             finally {
-                _isLoaded = true;
+                isLoaded = true;
             }
 
             await base.OnInitializedAsync();
@@ -85,11 +85,11 @@ namespace OurCleanFuture.App.Pages.Indicators
 
         private DateTime GetLastUpdatedDate()
         {
-            var indicatorUpdatedDate = _context.Entry(Indicator).Property<DateTime>("PeriodStart").CurrentValue;
+            var indicatorUpdatedDate = context.Entry(Indicator).Property<DateTime>("PeriodStart").CurrentValue;
             //An indicator might not have a target, in which case we return the indicatorUpdatedDate
             var targetUpdatedDate = DateTime.MinValue;
-            if(_target is not null) {
-                targetUpdatedDate = _context.Entry(_target).Property<DateTime>("PeriodStart").CurrentValue;
+            if(target is not null) {
+                targetUpdatedDate = context.Entry(target).Property<DateTime>("PeriodStart").CurrentValue;
             }
             return indicatorUpdatedDate > targetUpdatedDate ? indicatorUpdatedDate : targetUpdatedDate;
         }

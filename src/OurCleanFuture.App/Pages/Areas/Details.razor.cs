@@ -23,7 +23,7 @@ namespace OurCleanFuture.App.Pages.Areas
 {
     public partial class Details
     {
-        private bool _isLoaded;
+        private bool isLoaded;
         private AppDbContext context = null!;
 
         public Area Area { get; set; } = null!;
@@ -60,7 +60,7 @@ namespace OurCleanFuture.App.Pages.Areas
                 Console.WriteLine(ex);
             }
             finally {
-                _isLoaded = true;
+                isLoaded = true;
             }
 
             await base.OnInitializedAsync();

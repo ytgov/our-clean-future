@@ -21,7 +21,7 @@ namespace OurCleanFuture.Data.Entities
 
         public List<Indicator> Indicators { get; set; } = new();
         public Objective Objective { get; set; } = null!;
-        public int? ObjectiveId { get; set; }
+        public int ObjectiveId { get; set; }
         public List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();
 
         public override string ToString()

@@ -8,6 +8,8 @@ namespace OurCleanFuture.Data
     {
         public DbSet<Indicator> Indicators { get; set; } = null!;
         public DbSet<Lead> Leads { get; set; } = null!;
+        public DbSet<Branch> Branches { get; set; } = null!;
+        public DbSet<Department> Departments { get; set; } = null!;
         public DbSet<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = null!;
         public DbSet<DirectorsCommittee> DirectorsCommittees { get; set; } = null!;
         public DbSet<Action> Actions { get; set; } = null!;
@@ -16,7 +18,7 @@ namespace OurCleanFuture.Data
         public DbSet<Objective> Objectives { get; set; } = null!;
         public DbSet<Area> Areas { get; set; } = null!;
 
-        private readonly ConnectionStrings _connectionStrings;
+        private readonly ConnectionStrings connectionStrings;
 
         //Uncomment to allow EF Core Power Tools to generate a diagram
         //public AppDbContext()
@@ -31,7 +33,7 @@ namespace OurCleanFuture.Data
 
         public AppDbContext(DbContextOptions options, ConnectionStrings connectionStrings) : base(options)
         {
-            _connectionStrings = connectionStrings;
+            this.connectionStrings = connectionStrings;
         }
 
 
@@ -59,7 +61,6 @@ namespace OurCleanFuture.Data
             modelBuilder.Entity<Lead>()
                         .HasOne(o => o.Branch)
                         .WithOne()
-                        .HasForeignKey<Branch>(b => b.LeadId)
                         .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Action>()

@@ -6,9 +6,9 @@ namespace OurCleanFuture.Data.Entities
     {
         public int Id { get; set; }
 
+        [MinLength(2, ErrorMessage = "Branch name is required.")]
         public string Name { get; set; } = "";
 
-        public int LeadId { get; set; }
         public Lead Lead { get; set; } = null!;
 
         public int DepartmentId { get; set; }

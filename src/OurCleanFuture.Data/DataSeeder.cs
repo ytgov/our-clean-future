@@ -325,32 +325,32 @@ namespace OurCleanFuture.Data
             modelBuilder.Entity<Department>().HasData(new Department { Id = 14, Name = "Yukon Energy Corporation", ShortName = "YEC" });
             modelBuilder.Entity<Department>().HasData(new Department { Id = 15, Name = "Yukon Housing Corporation", ShortName = "YHC" });
 
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 1, OrganizationId = 1 });
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 2, OrganizationId = 1 });
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 3, OrganizationId = 1 });
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 4, OrganizationId = 1 });
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 5, OrganizationId = 1 });
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 6, OrganizationId = 1 });
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 7, OrganizationId = 1 });
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 8, OrganizationId = 1 });
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 9, OrganizationId = 1 });
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 10, OrganizationId = 1 });
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 11, OrganizationId = 1 });
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 12, OrganizationId = 2 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 1, OrganizationId = 1, BranchId = 1 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 2, OrganizationId = 1, BranchId = 2 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 3, OrganizationId = 1, BranchId = 3 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 4, OrganizationId = 1, BranchId = 4 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 5, OrganizationId = 1, BranchId = 5 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 6, OrganizationId = 1, BranchId = 6 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 7, OrganizationId = 1, BranchId = 7 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 8, OrganizationId = 1, BranchId = 8 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 9, OrganizationId = 1, BranchId = 9 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 10, OrganizationId = 1, BranchId = 10 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 11, OrganizationId = 1, BranchId = 11 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 12, OrganizationId = 2, BranchId = 12 });
             modelBuilder.Entity<Lead>().HasData(new Lead { Id = 13, OrganizationId = 1 });
 
-            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, DepartmentId = 5, Name = "Climate Change Secretariat", LeadId = 1 });
-            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 5, Name = "Water Resources", LeadId = 2 });
-            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 3, DepartmentId = 5, Name = "Parks", LeadId = 3 });
-            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 4, DepartmentId = 5, Name = "Fish and Wildlife", LeadId = 4 });
-            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 5, DepartmentId = 5, Name = "Conservation Officer Services", LeadId = 5 });
-            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 6, DepartmentId = 4, Name = "Forest Resources", LeadId = 6 });
-            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 7, DepartmentId = 4, Name = "Agriculture", LeadId = 7 });
-            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 8, DepartmentId = 4, Name = "Energy", LeadId = 8 });
-            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 9, DepartmentId = 9, Name = "Supply Services", LeadId = 9 });
-            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 9, Name = "Strategic Initiatives", LeadId = 10 });
-            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 12, Name = "Culture Services", LeadId = 11 });
-            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 12, DepartmentId = 4, Name = "Yukon Geological Survey", LeadId = 13 });
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, DepartmentId = 5, Name = "Climate Change Secretariat" });
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 5, Name = "Water Resources" });
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 3, DepartmentId = 5, Name = "Parks" });
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 4, DepartmentId = 5, Name = "Fish and Wildlife" });
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 5, DepartmentId = 5, Name = "Conservation Officer Services" });
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 6, DepartmentId = 4, Name = "Forest Resources" });
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 7, DepartmentId = 4, Name = "Agriculture" });
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 8, DepartmentId = 4, Name = "Energy" });
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 9, DepartmentId = 9, Name = "Supply Services" });
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 10, DepartmentId = 9, Name = "Strategic Initiatives" });
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 11, DepartmentId = 12, Name = "Culture Services" });
+            modelBuilder.Entity<Branch>().HasData(new Branch { Id = 12, DepartmentId = 4, Name = "Yukon Geological Survey" });
 
             modelBuilder.Entity<Indicator>()
                 .HasData(new Indicator {
@@ -414,7 +414,7 @@ namespace OurCleanFuture.Data
 
             modelBuilder.Entity<Indicator>()
                 .HasData(new Indicator {
-                    Id= 7,
+                    Id = 7,
                     CollectionInterval = CollectionInterval.Annual,
                     DataType = DataType.Incremental,
                     Description = "Change in volume of glaciers in the coast mountains during the reporting year.",
@@ -432,17 +432,17 @@ namespace OurCleanFuture.Data
                 new { IndicatorsId = 7, LeadsId = 13 }
                 );
 
-                    //var indicatorId = 1;
-                    //var indicators = new Faker<Indicator>("en_CA")
-                    //    .RuleFor(i => i.Id, _ => indicatorId++)
-                    //    .RuleFor(i => i.CollectionInterval, _ => _.PickRandom<CollectionInterval>())
-                    //    .RuleFor(i => i.DataType, _ => _.PickRandom<DataType>())
-                    //    .RuleFor(i => i.Description, _ => "Total number of heavy-duty zero emission vehicles registered in Yukon.")
-                    //    .RuleFor(i => i.DisplayName, _ => "ZEVs - Total heavy duty")
-                    //    .RuleFor(i => i.IsActive, _ => true)
-                    //    .RuleFor(i => i.OurCleanFutureReferenceId, _ => 1)
-                    //    .RuleFor(i => i.LeadId, _ => 1);
-                    //_modelBuilder.Entity<Indicator>().HasData(indicators.Generate(1));
+            //var indicatorId = 1;
+            //var indicators = new Faker<Indicator>("en_CA")
+            //    .RuleFor(i => i.Id, _ => indicatorId++)
+            //    .RuleFor(i => i.CollectionInterval, _ => _.PickRandom<CollectionInterval>())
+            //    .RuleFor(i => i.DataType, _ => _.PickRandom<DataType>())
+            //    .RuleFor(i => i.Description, _ => "Total number of heavy-duty zero emission vehicles registered in Yukon.")
+            //    .RuleFor(i => i.DisplayName, _ => "ZEVs - Total heavy duty")
+            //    .RuleFor(i => i.IsActive, _ => true)
+            //    .RuleFor(i => i.OurCleanFutureReferenceId, _ => 1)
+            //    .RuleFor(i => i.LeadId, _ => 1);
+            //_modelBuilder.Entity<Indicator>().HasData(indicators.Generate(1));
         }
     }
 }

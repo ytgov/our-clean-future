@@ -1,0 +1,36 @@
+﻿@page "/admin/leads/branches"
+
+@if (isLoaded == false)
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudText Typo="Typo.h6">Loading...</MudText>
+    </MudContainer>
+}
+else
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudTable Items="Branches" Dense="true" Striped="true" Hover="true">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Branches</MudText>
+                <MudSpacer />
+                <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Create(Departments))">New Branch</MudButton>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Branch, object>(b => b.Name)">Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Branch, object>(b => b.Department.Name)">Department</MudTableSortLabel></MudTh>
+                <MudTh></MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Name">@context.Name</MudTd>
+                <MudTd DataLabel="Department">@context.Department.Name</MudTd>
+                <MudTd>
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context, Departments))"></MudIconButton>
+                    @*<MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))"></MudIconButton*@
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+    </MudContainer>
+}

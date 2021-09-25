@@ -1,0 +1,41 @@
+﻿@using Data.Entities
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            Create branch
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField Label="Name" @bind-Value="Branch.Name" />
+        <MudSelect Label="Department" @bind-Value="Branch.Department" DisableUnderLine="true">
+            @foreach (var department in Departments)
+            {
+                <MudSelectItem Value="department">@department.Name</MudSelectItem>
+            }
+        </MudSelect>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Update">Submit</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
+
+    public Branch Branch { get; set; } = new();
+
+    [Parameter]
+    public List<Department> Departments { get; set; } = new();
+
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+
+    private void Update()
+    {
+        MudDialog.Close(DialogResult.Ok(Branch));
+    }
+}

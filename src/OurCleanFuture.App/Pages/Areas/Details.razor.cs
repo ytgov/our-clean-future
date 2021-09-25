@@ -42,7 +42,8 @@ namespace OurCleanFuture.App.Pages.Areas
         [Inject]
         public ISnackbar Snackbar { get; set; } = null!;
 
-        //Required to force the app to re-render when navigating between Area pages
+        // Required to force the app to re-render when navigating between Areas.
+        // OnInitializedAsync is not called by default in this situation, as the user is merely changing the parameter, while staying on the same page.
         protected override async Task OnParametersSetAsync()
         {
             await OnInitializedAsync();
@@ -53,7 +54,7 @@ namespace OurCleanFuture.App.Pages.Areas
             try {
                 context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.
-                Area = await context.Areas.Include(a => a.Objectives).ThenInclude(o => o.Actions).FirstOrDefaultAsync(a => a.Title == AreaTitle.Replace('-', ' '));
+                Area = await context.Areas.Include(a => a.Objectives).ThenInclude(o => o.Actions).AsSingleQuery().FirstOrDefaultAsync(a => a.Title == AreaTitle.Replace('-', ' '));
 #pragma warning restore CS8601 // Possible null reference assignment.
             }
             catch (Exception ex) {

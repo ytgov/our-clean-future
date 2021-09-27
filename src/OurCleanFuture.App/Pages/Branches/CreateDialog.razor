@@ -1,25 +1,28 @@
 ﻿@using Data.Entities
 
-<MudDialog>
-    <TitleContent>
-        <MudText Typo="Typo.h6">
-            Create branch
-        </MudText>
-    </TitleContent>
-    <DialogContent>
-        <MudTextField Label="Name" @bind-Value="Branch.Name" />
-        <MudSelect Label="Department" @bind-Value="Branch.Department" DisableUnderLine="true">
-            @foreach (var department in Departments)
-            {
-                <MudSelectItem Value="department">@department.Name</MudSelectItem>
-            }
-        </MudSelect>
-    </DialogContent>
-    <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Update">Submit</MudButton>
-    </DialogActions>
-</MudDialog>
+<EditForm Model="Branch" OnValidSubmit="Update">
+    <DataAnnotationsValidator />
+    <MudDialog>
+        <TitleContent>
+            <MudText Typo="Typo.h6">
+                Create branch
+            </MudText>
+        </TitleContent>
+        <DialogContent>
+            <MudTextField Label="Name" @bind-Value="Branch.Name" For="(() => Branch.Name)" />
+            <MudSelect Label="Department" @bind-Value="Branch.Department" DisableUnderLine="true">
+                @foreach (var department in Departments)
+                {
+                    <MudSelectItem Value="department">@department.Name</MudSelectItem>
+                }
+            </MudSelect>
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+            <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit">Submit</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
 
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;

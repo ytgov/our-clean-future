@@ -25,7 +25,7 @@ else
                 <MudTd DataLabel="Department">@context.Department.Name</MudTd>
                 <MudTd>
                     <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context, Departments))"></MudIconButton>
-                    @*<MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))"></MudIconButton*@
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))"></MudIconButton>
                 </MudTd>
             </RowTemplate>
             <PagerContent>

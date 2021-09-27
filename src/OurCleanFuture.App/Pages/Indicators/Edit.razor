@@ -7,15 +7,14 @@
 else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <AuthorizeView Roles="@AuthorizedRoles" Context="_">
-            <Authorized>
-            <MudText Typo="Typo.h3" Class="mb-8"><b>Editing indicator:</b> @Indicator.Title</MudText>
-            @*<MudAlert Icon="@Icons.Material.Filled.Lightbulb" Severity="Severity.Normal" Class="mb-6">
-                If you need to modify a value within a dropdown menu, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
-                </MudAlert>*@
-            <EditForm Model="@Indicator" OnValidSubmit="Update">
-                <ObjectGraphDataAnnotationsValidator />
-                <MudGrid>
+        <MudText Typo="Typo.h3" Class="mb-8"><b>Editing indicator:</b> @Indicator.Title</MudText>
+        @*<MudAlert Icon="@Icons.Material.Filled.Lightbulb" Severity="Severity.Normal" Class="mb-6">
+            If you need to modify a value within a dropdown menu, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
+            </MudAlert>*@
+        <EditForm Model="@Indicator" OnValidSubmit="Update">
+            <ObjectGraphDataAnnotationsValidator />
+            <MudGrid>
+                <AuthorizeView Roles="Admin" Context="_">
                     <MudItem xs="12" sm="6">
                         <MudPaper Elevation="2" Class="pa-4">
                             <MudSelect T="Data.Entities.Lead" Label="Lead(s)" MultiSelection="true" @bind-SelectedValues="SelectedLeads">
@@ -111,7 +110,10 @@ else
                             }
                         </MudPaper>
                     </MudItem>
+                </AuthorizeView>
 
+                <AuthorizeView Roles="@AuthorizedRoles" Context="_A">
+                    <Authorized>
                     <MudItem xs="12" sm="6">
                         <MudPaper Class="pa-4" Elevation="2">
                             <MudTable Items="Indicator.Entries.OrderBy(e => e.Date)" Elevation="0" Class="mt-n2" Dense="true">
@@ -146,12 +148,12 @@ else
                         <MudButton ButtonType="ButtonType.Submit" Disabled="true" />
                         <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
                     </MudItem>
-                </MudGrid>
-            </EditForm>
-            </Authorized>
-            <NotAuthorized>
-                <MudAlert Severity="Severity.Warning">You are not authorized to view this page.</MudAlert>
-            </NotAuthorized>
-        </AuthorizeView>
+                    </Authorized>
+                    <NotAuthorized>
+                        <MudAlert Severity="Severity.Warning">You are not authorized to view this page.</MudAlert>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </MudGrid>
+        </EditForm>
     </MudContainer>
 }

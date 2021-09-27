@@ -23,6 +23,7 @@ namespace OurCleanFuture.App.Pages.Indicators
         [Parameter]
         public int Id { get; set; }
 
+        public string AuthorizedRoles { get; set; } = "Admin";
         public string SelectedParentType { get; set; } = "";
         public HashSet<Lead> SelectedLeads { get; set; } = new();
 
@@ -67,6 +68,7 @@ namespace OurCleanFuture.App.Pages.Indicators
                 }
                 GetSelectedParentType();
                 await GetUserPrincipal();
+                AuthorizedRoles += GetAuthorizedRoles();
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
@@ -77,6 +79,25 @@ namespace OurCleanFuture.App.Pages.Indicators
 
             await base.OnInitializedAsync();
         }
+
+        private string GetAuthorizedRoles()
+        {
+            var authorizedRoles = "";
+            foreach(var lead in Indicator.Leads) {
+                switch (lead.Branch?.Department.ShortName) {
+                    case "CS":
+                        authorizedRoles += ", CS.Writer";
+                        break;
+                    case "EcDev":
+                        authorizedRoles += ", EcDev.Writer";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return authorizedRoles;
+        }
+
         private async Task GetUserPrincipal()
         {
             var authState = await AuthenticationStateTask;

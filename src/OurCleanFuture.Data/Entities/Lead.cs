@@ -10,6 +10,7 @@ namespace OurCleanFuture.Data.Entities
         public int? BranchId { get; set; }
         public Branch? Branch { get; set; }
         public List<Indicator> Indicators { get; set; } = new();
+        public List<IndicatorLead> IndicatorLeads { get; set; } = new();
         public override string ToString()
         {
             if (string.IsNullOrWhiteSpace(Branch?.Name)) {

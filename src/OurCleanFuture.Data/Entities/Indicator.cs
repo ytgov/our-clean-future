@@ -11,6 +11,7 @@ namespace OurCleanFuture.Data.Entities
         public string Title { get; set; } = "";
 
         public List<Lead> Leads { get; set; } = new();
+        public List<IndicatorLead> IndicatorLeads { get; set; } = new();
 
         [MinLength(1, ErrorMessage = "Description is required.")]
         public string Description { get; set; } = "";

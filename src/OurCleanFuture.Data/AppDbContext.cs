@@ -1,6 +1,7 @@
 ﻿using OurCleanFuture.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Action = OurCleanFuture.Data.Entities.Action;
+using System.Collections.Generic;
 
 namespace OurCleanFuture.Data
 {
@@ -42,8 +43,11 @@ namespace OurCleanFuture.Data
             modelBuilder.Entity<Organization>()
                         .ToTable("Organizations");
             modelBuilder.Entity<Branch>()
-                        .ToTable("Branches")
-                        .Ignore(b => b.Lead);
+                        .ToTable("Branches");
+            modelBuilder.Entity<Branch>()
+                        .HasOne(b => b.Lead)
+                        .WithOne(l => l.Branch)
+                        .IsRequired(false);
             modelBuilder.Entity<Department>()
                         .ToTable("Departments");
             //modelBuilder.Entity<Action>()
@@ -52,22 +56,17 @@ namespace OurCleanFuture.Data
                         .ToTable("UnitsOfMeasurement")
                         .HasIndex(u => u.Symbol)
                         .IsUnique();
-
             modelBuilder.Entity<Lead>()
-                        .HasOne(o => o.Organization)
+                        .HasOne(l => l.Organization)
                         .WithMany()
                         .IsRequired()
                         .OnDelete(DeleteBehavior.Restrict);
-            modelBuilder.Entity<Lead>()
-                        .HasOne(o => o.Branch)
-                        .WithOne()
-                        .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Action>()
-                        .Property(i => i.InternalStatus)
+                        .Property(a => a.InternalStatus)
                         .HasConversion<string>();
             modelBuilder.Entity<Action>()
-                        .Property(i => i.ExternalStatus)
+                        .Property(a => a.ExternalStatus)
                         .HasConversion<string>();
 
             modelBuilder.Entity<Indicator>()
@@ -76,16 +75,29 @@ namespace OurCleanFuture.Data
             modelBuilder.Entity<Indicator>()
                         .Property(i => i.CollectionInterval)
                         .HasConversion<string>();
+
             modelBuilder.Entity<Indicator>()
                         .HasMany(i => i.Leads)
-                        .WithMany(o => o.Indicators);
+                        .WithMany(l => l.Indicators)
+                        .UsingEntity<IndicatorLead>(
+                            j => j
+                            .HasOne(il => il.Lead)
+                            .WithMany(l => l.IndicatorLeads)
+                            .HasForeignKey("LeadId")
+                            .OnDelete(DeleteBehavior.Restrict),
+                            j => j
+                            .HasOne(il => il.Indicator)
+                            .WithMany(i => i.IndicatorLeads)
+                            .HasForeignKey("IndicatorId")
+                            .OnDelete(DeleteBehavior.Cascade));
+
             modelBuilder.Entity<Indicator>()
                         .HasOne(i => i.UnitOfMeasurement)
                         .WithMany()
                         .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Indicator>()
                         .HasOne(i => i.Action)
-                        .WithMany(o => o.Indicators)
+                        .WithMany(a => a.Indicators)
                         .IsRequired(false)
                         .OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Indicator>()

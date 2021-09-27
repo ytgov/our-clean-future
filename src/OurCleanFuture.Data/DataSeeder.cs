@@ -422,15 +422,25 @@ namespace OurCleanFuture.Data
                     UnitOfMeasurementId = 14
                 });
 
-            modelBuilder.Entity("IndicatorLead").HasData(
-                new { IndicatorsId = 1, LeadsId = 8 },
-                new { IndicatorsId = 2, LeadsId = 12 },
-                new { IndicatorsId = 3, LeadsId = 10 },
-                new { IndicatorsId = 4, LeadsId = 7 },
-                new { IndicatorsId = 5, LeadsId = 1 },
-                new { IndicatorsId = 6, LeadsId = 6 },
-                new { IndicatorsId = 7, LeadsId = 13 }
+            modelBuilder.Entity<IndicatorLead>().HasData(
+                new IndicatorLead { IndicatorId = 1, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 2, LeadId = 12 },
+                new IndicatorLead { IndicatorId = 3, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 4, LeadId = 7 },
+                new IndicatorLead { IndicatorId = 5, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 6, LeadId = 6 },
+                new IndicatorLead { IndicatorId = 7, LeadId = 13 }
                 );
+
+            //modelBuilder.Entity("IndicatorLead").HasData(
+            //    new { IndicatorsId = 1, LeadsId = 8 },
+            //    new { IndicatorsId = 2, LeadsId = 12 },
+            //    new { IndicatorsId = 3, LeadsId = 10 },
+            //    new { IndicatorsId = 4, LeadsId = 7 },
+            //    new { IndicatorsId = 5, LeadsId = 1 },
+            //    new { IndicatorsId = 6, LeadsId = 6 },
+            //    new { IndicatorsId = 7, LeadsId = 13 }
+            //    );
 
             //var indicatorId = 1;
             //var indicators = new Faker<Indicator>("en_CA")

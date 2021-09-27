@@ -89,7 +89,7 @@ namespace OurCleanFuture.Data
                             .HasOne(il => il.Indicator)
                             .WithMany(i => i.IndicatorLeads)
                             .HasForeignKey("IndicatorId")
-                            .OnDelete(DeleteBehavior.Cascade));
+                            .OnDelete(DeleteBehavior.Restrict));
 
             modelBuilder.Entity<Indicator>()
                         .HasOne(i => i.UnitOfMeasurement)
@@ -107,7 +107,8 @@ namespace OurCleanFuture.Data
             modelBuilder.Entity<Indicator>()
                         .OwnsMany(i => i.Entries,
                             ie => {
-                                ie.ToTable("Entries")
+                                ie.ToTable("Entries");
+                                ie.ToTable(tb => tb.IsTemporal())
                                   .WithOwner(e => e.Indicator);
                             });
             modelBuilder.Entity<Indicator>().ToTable(tb => tb.IsTemporal());

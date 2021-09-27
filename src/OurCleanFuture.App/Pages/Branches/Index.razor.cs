@@ -20,6 +20,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace OurCleanFuture.App.Pages.Branches
 {
+    [Authorize(Roles = "Admin")]
     public partial class Index : IDisposable
     {
         private bool isLoaded;

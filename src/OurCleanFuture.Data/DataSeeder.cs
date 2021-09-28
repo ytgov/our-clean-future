@@ -336,8 +336,8 @@ namespace OurCleanFuture.Data
             modelBuilder.Entity<Lead>().HasData(new Lead { Id = 9, OrganizationId = 1, BranchId = 9 });
             modelBuilder.Entity<Lead>().HasData(new Lead { Id = 10, OrganizationId = 1, BranchId = 10 });
             modelBuilder.Entity<Lead>().HasData(new Lead { Id = 11, OrganizationId = 1, BranchId = 11 });
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 12, OrganizationId = 2, BranchId = 12 });
-            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 13, OrganizationId = 1 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 12, OrganizationId = 1, BranchId = 12 });
+            modelBuilder.Entity<Lead>().HasData(new Lead { Id = 13, OrganizationId = 2});
 
             modelBuilder.Entity<Branch>().HasData(new Branch { Id = 1, DepartmentId = 5, Name = "Climate Change Secretariat" });
             modelBuilder.Entity<Branch>().HasData(new Branch { Id = 2, DepartmentId = 5, Name = "Water Resources" });

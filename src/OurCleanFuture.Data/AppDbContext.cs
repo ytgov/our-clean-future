@@ -50,8 +50,6 @@ namespace OurCleanFuture.Data
                         .IsRequired(false);
             modelBuilder.Entity<Department>()
                         .ToTable("Departments");
-            //modelBuilder.Entity<Action>()
-            //            .ToTable("Actions");
             modelBuilder.Entity<UnitOfMeasurement>()
                         .ToTable("UnitsOfMeasurement")
                         .HasIndex(u => u.Symbol)
@@ -68,6 +66,9 @@ namespace OurCleanFuture.Data
             modelBuilder.Entity<Action>()
                         .Property(a => a.ExternalStatus)
                         .HasConversion<string>();
+            modelBuilder.Entity<Action>()
+                        .ToTable("Actions")
+                        .ToTable(tb => tb.IsTemporal(tb => tb.UseHistoryTable("ActionsHistory")));
 
             modelBuilder.Entity<Indicator>()
                         .Property(i => i.DataType)
@@ -108,15 +109,17 @@ namespace OurCleanFuture.Data
                         .OwnsMany(i => i.Entries,
                             ie => {
                                 ie.ToTable("Entries");
-                                ie.ToTable(tb => tb.IsTemporal())
+                                ie.ToTable(tb => tb.IsTemporal(tb => tb.UseHistoryTable("EntriesHistory")))
                                   .WithOwner(e => e.Indicator);
                             });
-            modelBuilder.Entity<Indicator>().ToTable(tb => tb.IsTemporal());
+            modelBuilder.Entity<Indicator>()
+                        .ToTable(tb => tb.IsTemporal(tb => tb.UseHistoryTable("IndicatorsHistory")));
 
             modelBuilder.Entity<Target>()
                         .Property(t => t.EndDate)
                         .IsRequired();
-            modelBuilder.Entity<Target>().ToTable(tb => tb.IsTemporal());
+            modelBuilder.Entity<Target>()
+                        .ToTable(tb => tb.IsTemporal(tb => tb.UseHistoryTable("TargetsHistory")));
 
             //Generate bogus data for testing
             new DataSeeder(modelBuilder).Init();

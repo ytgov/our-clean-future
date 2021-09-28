@@ -54,7 +54,7 @@ namespace OurCleanFuture.App.Pages.Areas
             try {
                 context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.
-                Area = await context.Areas.Include(a => a.Objectives).ThenInclude(o => o.Actions).AsSingleQuery().FirstOrDefaultAsync(a => a.Title == AreaTitle.Replace('-', ' '));
+                Area = await context.Areas.Include(a => a.Objectives).ThenInclude(o => o.Actions).AsSingleQuery().AsNoTracking().FirstOrDefaultAsync(a => a.Title == AreaTitle.Replace('-', ' '));
 #pragma warning restore CS8601 // Possible null reference assignment.
             }
             catch (Exception ex) {

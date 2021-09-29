@@ -24,6 +24,7 @@ namespace OurCleanFuture.App.Pages.Actions
     {
         private bool isLoaded;
         private Action selectedItem = null!;
+        private string searchString = "";
 
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
@@ -58,6 +59,15 @@ namespace OurCleanFuture.App.Pages.Actions
         private void Edit(int actionId)
         {
             Navigation.NavigateTo("/actions/edit/" + actionId);
+        }
+
+        private bool FilterFunc(Action action)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (action.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            return false;
         }
     }
 }

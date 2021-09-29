@@ -302,10 +302,10 @@ namespace OurCleanFuture.Data
             modelBuilder.Entity<Action>().HasData(new Action { Id = 131, ObjectiveId = 26, Number = "L13", Title = "Launch a Yukon-wide information or social marketing campaign in 2021 that will educate Yukoners on greenhouse gas emissions, renewable energy, climate change adaptation, and other topics and highlight what Yukoners can do to support climate change initiatives." });
 
             modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 1, Name = "N/A" });
-            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 2, Name = "Resilient Infrastructure" });
-            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 3, Name = "Social and Ecological Resilience" });
-            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 4, Name = "YG Leadership" });
-            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 5, Name = "Unknown" });
+            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 2, Name = "AGEDS" });
+            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 3, Name = "Resilient Infrastructure" });
+            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 4, Name = "Social and Ecological Resilience" });
+            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 5, Name = "YG Leadership" });
 
             modelBuilder.Entity<Organization>().HasData(new Organization { Id = 1, Name = "Yukon Government" });
             modelBuilder.Entity<Organization>().HasData(new Organization { Id = 2, Name = "ATCO Electric Yukon" });

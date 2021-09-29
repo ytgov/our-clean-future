@@ -18,6 +18,7 @@ using Action = OurCleanFuture.Data.Entities.Action;
 using OurCleanFuture.Data.Entities;
 using OurCleanFuture.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace OurCleanFuture.App.Pages.Actions
 {
@@ -25,6 +26,7 @@ namespace OurCleanFuture.App.Pages.Actions
     {
         private bool isLoaded;
         private AppDbContext context = null!;
+        private ClaimsPrincipal user = null!;
         private Func<DirectorsCommittee, string> committeeConverter = d => d.Name;
 
         [Parameter]
@@ -39,6 +41,8 @@ namespace OurCleanFuture.App.Pages.Actions
         public HashSet<DirectorsCommittee> SelectedDirectorsCommittees { get; set; } = new();
         public List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();
 
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
         [Inject]
         public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
@@ -64,6 +68,7 @@ namespace OurCleanFuture.App.Pages.Actions
                 foreach (var committee in Action!.DirectorsCommittees) {
                     SelectedDirectorsCommittees.Add(committee);
                 }
+                await GetUserPrincipal();
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);
@@ -75,15 +80,23 @@ namespace OurCleanFuture.App.Pages.Actions
             await base.OnInitializedAsync();
         }
 
+        private async Task GetUserPrincipal()
+        {
+            var authState = await AuthenticationStateTask;
+            user = authState.User;
+        }
+
         private async Task Update()
         {
             if (context.Entry(Action).Property(a => a.InternalStatus).IsModified) {
+                Action.InternalStatusUpdatedBy = user.FindFirst("name")?.Value ?? "";
                 Action.InternalStatusUpdatedDate = DateTimeOffset.Now;
             }
             Action.DirectorsCommittees.Clear();
             foreach (var committee in SelectedDirectorsCommittees) {
                 Action.DirectorsCommittees.Add(committee);
             }
+
             await context.SaveChangesAsync();
             Snackbar.Add($"Successfully updated action: {Action.Number}", Severity.Success);
             Navigation.NavigateTo($"/actions/details/{Id}");

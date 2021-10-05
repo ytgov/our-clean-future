@@ -186,7 +186,7 @@ namespace OurCleanFuture.Data
             modelBuilder.Entity<Action>().HasData(new Action { Id = 21, ObjectiveId = 5, Number = "T21", Title = "Develop guidelines for the Government of Yukon Fleet Vehicle Agency’s fleet by 2021 to ensure appropriate vehicles are used for the task at hand." });
             modelBuilder.Entity<Action>().HasData(new Action { Id = 22, ObjectiveId = 5, Number = "T22", Title = "Incorporate fuel efficiency into purchasing decisions for Government of Yukon fleet vehicles beginning in 2020 to reduce greenhouse gas emissions and fuel costs." });
             modelBuilder.Entity<Action>().HasData(new Action { Id = 23, ObjectiveId = 5, Number = "T23", Title = "Expand virtual health care services to Whitehorse medical clinics by 2022 in order to improve access to healthcare while reducing greenhouse gas emissions from travel to and from Whitehorse." });
-            modelBuilder.Entity<Action>().HasData(new Action { Id = 24, ObjectiveId = 5, Number = "T24", Title = "Cont   inue to operate the Yukon Rideshare program to make carpooling and other shared travel easier." });
+            modelBuilder.Entity<Action>().HasData(new Action { Id = 24, ObjectiveId = 5, Number = "T24", Title = "Continue to operate the Yukon Rideshare program to make carpooling and other shared travel easier." });
             modelBuilder.Entity<Action>().HasData(new Action { Id = 25, ObjectiveId = 6, Number = "T25", Title = "Complete a climate change vulnerability study of the road transportation network by 2023 to inform the development of standards and specifications." });
             modelBuilder.Entity<Action>().HasData(new Action { Id = 26, ObjectiveId = 6, Number = "T26", Title = "Establish a geohazard mapping program for major transportation corridors and prioritize sections for targeted permafrost study by 2022." });
             modelBuilder.Entity<Action>().HasData(new Action { Id = 27, ObjectiveId = 6, Number = "T27", Title = "Analyze flood risk along critical transportation corridors at risk of flooding by 2023." });
@@ -301,11 +301,10 @@ namespace OurCleanFuture.Data
             modelBuilder.Entity<Action>().HasData(new Action { Id = 130, ObjectiveId = 26, Number = "L12", Title = "Create easy access to technical information and lessons learned about climate change, energy and green economy for governments and stakeholders by 2021." });
             modelBuilder.Entity<Action>().HasData(new Action { Id = 131, ObjectiveId = 26, Number = "L13", Title = "Launch a Yukon-wide information or social marketing campaign in 2021 that will educate Yukoners on greenhouse gas emissions, renewable energy, climate change adaptation, and other topics and highlight what Yukoners can do to support climate change initiatives." });
 
-            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 1, Name = "N/A" });
-            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 2, Name = "AGEDS" });
-            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 3, Name = "Resilient Infrastructure" });
-            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 4, Name = "Social and Ecological Resilience" });
-            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 5, Name = "YG Leadership" });
+            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 1, Name = "AGEDS" });
+            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 2, Name = "Resilient Infrastructure" });
+            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 3, Name = "Social and Ecological Resilience" });
+            modelBuilder.Entity<DirectorsCommittee>().HasData(new DirectorsCommittee { Id = 4, Name = "YG Leadership" });
 
             modelBuilder.Entity<Organization>().HasData(new Organization { Id = 1, Name = "Yukon Government" });
             modelBuilder.Entity<Organization>().HasData(new Organization { Id = 2, Name = "ATCO Electric Yukon" });

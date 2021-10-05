@@ -1,5 +1,5 @@
 ﻿@page "/indicators/details/{id:int}"
-@using OurCleanFuture.App.Helpers
+@using OurCleanFuture.App.Utils
 
 @if (isLoaded == false)
 {
@@ -54,7 +54,7 @@ else
                                     @foreach (var goal in Indicator.Action.Objective.Goals)
                                     {
                                         <div class="d-flex">
-                                            <MudAvatar Image="@ImageHelpers.GetGoalIconPath(goal)" Class="mr-2 my-2" />
+                                            <MudAvatar Image="@ImageUtils.GetGoalIconPath(goal)" Class="mr-2 my-2" />
                                             <MudText Class="my-4" Typo="Typo.body2">@goal.Title</MudText>
                                         </div>
                                     }
@@ -71,7 +71,7 @@ else
                                     {
                                         <MudListItem Class="my-n4 px-2" OnClick="(() => ViewArea(Indicator.Action.Objective.Area))">
                                             <div class="d-flex">
-                                                <MudAvatar Image="@ImageHelpers.GetAreaIconPath(Indicator.Action.Objective.Area)" Class="mr-2 my-2" />
+                                                <MudAvatar Image="@ImageUtils.GetAreaIconPath(Indicator.Action.Objective.Area)" Class="mr-2 my-2" />
                                                 <MudText Class="my-4">@Indicator.Action.Objective?.Area?.Title</MudText>
                                             </div>
                                         </MudListItem>
@@ -111,7 +111,7 @@ else
                                     @foreach (var goal in Indicator.Objective.Goals)
                                     {
                                         <div class="d-flex">
-                                            <MudAvatar Image="@ImageHelpers.GetGoalIconPath(goal)" Class="mr-2 my-2" />
+                                            <MudAvatar Image="@ImageUtils.GetGoalIconPath(goal)" Class="mr-2 my-2" />
                                             <MudText Class="my-4" Typo="Typo.body2">@goal.Title</MudText>
                                         </div>
                                     }
@@ -128,7 +128,7 @@ else
                                     {
                                         <MudListItem Class="my-n4 px-2" OnClick="(() => ViewArea(Indicator.Objective.Area))">
                                             <div class="d-flex">
-                                                <MudAvatar Image="@ImageHelpers.GetAreaIconPath(Indicator.Objective.Area)" Class="mr-2 my-2" />
+                                                <MudAvatar Image="@ImageUtils.GetAreaIconPath(Indicator.Objective.Area)" Class="mr-2 my-2" />
                                                 <MudText Class="my-4">@Indicator.Objective?.Area?.Title</MudText>
                                             </div>
                                         </MudListItem>
@@ -151,7 +151,7 @@ else
                             <MudText Typo="Typo.h6">Goal</MudText>
                             <MudAlert Severity="Severity.Success" NoIcon="true">
                                 <div class="d-flex">
-                                    <MudAvatar Image="@ImageHelpers.GetGoalIconPath(Indicator.Goal)" Class="mr-2 my-2" />
+                                    <MudAvatar Image="@ImageUtils.GetGoalIconPath(Indicator.Goal)" Class="mr-2 my-2" />
                                     <MudText Class="my-4" Typo="Typo.body2">@Indicator.Goal.Title</MudText>
                                 </div>
                             </MudAlert>

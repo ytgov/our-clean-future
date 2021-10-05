@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OurCleanFuture.App.Helpers
+namespace OurCleanFuture.App.Utils
 {
-    public static class ImageHelpers
+    public static class ImageUtils
     {
         public static string GetAreaIconPath(Area area)
         {

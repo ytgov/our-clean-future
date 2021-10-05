@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OurCleanFuture.App.Utils
+namespace OurCleanFuture.App.Extensions
 {
-    public static class ImageUtils
+    public static class AreaExtensions
     {
-        public static string GetAreaIconPath(Area area)
+        public static string GetIconPath(this Area area)
         {
             if (area is not null) {
                 return area.Id switch {
@@ -20,21 +20,6 @@ namespace OurCleanFuture.App.Utils
                     5 => "/images/communities.png",
                     6 => "/images/innovation.png",
                     7 => "/images/leadership.png",
-                    _ => ""
-                };
-            }
-            else {
-                return string.Empty;
-            }
-        }
-        public static string GetGoalIconPath(Goal goal)
-        {
-            if (goal is not null) {
-                return goal.Id switch {
-                    1 => "/images/reduce-greenhouse-gas-emissions.png",
-                    2 => "/images/ensure-yukoners-have-access-to-reliable-affordable-and-renewable-energy.png",
-                    3 => "/images/adapt-to-the-impacts-of-climate-change.png",
-                    4 => "/images/build-a-green-economy.png",
                     _ => ""
                 };
             }

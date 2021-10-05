@@ -1,5 +1,6 @@
 ﻿@page "/areas/{areatitle}"
-@using OurCleanFuture.App.Utils
+@using OurCleanFuture.App.Extensions
+
 
 @if (isLoaded == false)
 {
@@ -10,7 +11,7 @@ else
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
         <div class="d-flex">
             <MudText Class="my-2 mr-4" Typo="Typo.h3"><b>Area:</b></MudText>
-            <MudAvatar Image="@ImageUtils.GetAreaIconPath(Area)" Class="mr-2 my-2" Size="Size.Large" />
+            <MudAvatar Image="@Area.GetIconPath()" Class="mr-2 my-2" Size="Size.Large" />
             <MudText Class="my-2 ml-1" Typo="Typo.h3">@Area.Title</MudText>
         </div>
         <MudGrid Class="mt-1">

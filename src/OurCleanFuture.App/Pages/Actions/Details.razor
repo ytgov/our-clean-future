@@ -1,6 +1,5 @@
 ﻿@page "/actions/details/{id:int}"
 @using OurCleanFuture.App.Extensions;
-@using OurCleanFuture.App.Utils
 
 @if (isLoaded == false)
 {
@@ -39,7 +38,7 @@ else
                                 @foreach (var goal in Action.Objective.Goals)
                                 {
                                     <div class="d-flex">
-                                        <MudAvatar Image="@ImageUtils.GetGoalIconPath(goal)" Class="mr-2 my-2" />
+                                        <MudAvatar Image="@goal.GetIconPath()" Class="mr-2 my-2" />
                                         <MudText Class="my-4" Typo="Typo.body2">@goal.Title</MudText>
                                     </div>
                                 }
@@ -56,7 +55,7 @@ else
                                 {
                                     <MudListItem Class="my-n4 px-2" OnClick="(() => ViewArea(Action.Objective.Area))">
                                         <div class="d-flex">
-                                            <MudAvatar Image="@ImageUtils.GetAreaIconPath(Action.Objective.Area)" Class="mr-2 my-2" />
+                                            <MudAvatar Image="@Action.Objective.Area.GetIconPath()" Class="mr-2 my-2" />
                                             <MudText Class="my-4">@Action.Objective?.Area?.Title</MudText>
                                         </div>
                                     </MudListItem>

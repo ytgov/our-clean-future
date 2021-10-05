@@ -1,6 +1,6 @@
 ﻿@page "/actions/details/{id:int}"
 @using OurCleanFuture.App.Extensions;
-@using OurCleanFuture.App.Helpers
+@using OurCleanFuture.App.Utils
 
 @if (isLoaded == false)
 {
@@ -16,7 +16,7 @@ else
                     @*<MudField Label="Number">@Action.Number</MudField>*@
                     <MudField Label="Title">@Action.Title</MudField>
                     <MudField Label="Director's Committee(s)">@Action.DirectorsCommitteesToString()</MudField>
-                    <MudField Label="Internal Status">@Action.InternalStatus.GetDisplayName() (last updated by @Action.InternalStatusUpdatedBy on @Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f"))</MudField>
+                    <MudField Label="Internal Status">@InternalStatusToString()</MudField>
                     <MudField Label="External Status">@Action.ExternalStatus.GetDisplayName()</MudField>
                 </MudPaper>
             </MudItem>
@@ -39,7 +39,7 @@ else
                                 @foreach (var goal in Action.Objective.Goals)
                                 {
                                     <div class="d-flex">
-                                        <MudAvatar Image="@ImageHelpers.GetGoalIconPath(goal)" Class="mr-2 my-2" />
+                                        <MudAvatar Image="@ImageUtils.GetGoalIconPath(goal)" Class="mr-2 my-2" />
                                         <MudText Class="my-4" Typo="Typo.body2">@goal.Title</MudText>
                                     </div>
                                 }
@@ -56,7 +56,7 @@ else
                                 {
                                     <MudListItem Class="my-n4 px-2" OnClick="(() => ViewArea(Action.Objective.Area))">
                                         <div class="d-flex">
-                                            <MudAvatar Image="@ImageHelpers.GetAreaIconPath(Action.Objective.Area)" Class="mr-2 my-2" />
+                                            <MudAvatar Image="@ImageUtils.GetAreaIconPath(Action.Objective.Area)" Class="mr-2 my-2" />
                                             <MudText Class="my-4">@Action.Objective?.Area?.Title</MudText>
                                         </div>
                                     </MudListItem>

@@ -34,7 +34,7 @@ namespace OurCleanFuture.Data.Entities
         public string DirectorsCommitteesToString()
         {
             if(DirectorsCommittees.Count == 0) {
-                return "";
+                return "None";
             }
             else {
                 var result = "";

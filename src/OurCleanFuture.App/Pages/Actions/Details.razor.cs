@@ -18,6 +18,7 @@ using Action = OurCleanFuture.Data.Entities.Action;
 using OurCleanFuture.Data.Entities;
 using OurCleanFuture.Data;
 using Microsoft.EntityFrameworkCore;
+using OurCleanFuture.App.Extensions;
 
 namespace OurCleanFuture.App.Pages.Actions
 {
@@ -63,6 +64,16 @@ namespace OurCleanFuture.App.Pages.Actions
             }
 
             await base.OnInitializedAsync();
+        }
+
+        private string InternalStatusToString()
+        {
+            var result = $"{Action.InternalStatus.GetDisplayName()}";
+            // Only append updated by information if the InternalStatus has been updated after database creation
+            if(!string.IsNullOrWhiteSpace(Action.InternalStatusUpdatedBy)) {
+                result += $" (last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f")})";
+            }
+            return result;
         }
 
         private void Edit()

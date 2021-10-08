@@ -33,7 +33,7 @@ namespace OurCleanFuture.Data.Entities
         public CollectionInterval CollectionInterval { get; set; }
         public List<Entry> Entries { get; set; } = new();
 
-        public string Notes { get; set; } = "";
+        public string Note { get; set; } = "";
 
         public string UpdatedBy { get; set; } = "";
 

@@ -19,7 +19,7 @@ namespace OurCleanFuture.Data.Entities
         public ExternalStatus ExternalStatus { get; set; }
 
         public string PublicExplanation { get; set; } = "";
-        public string Notes { get; set; } = "";
+        public string Note { get; set; } = "";
 
         public List<Indicator> Indicators { get; set; } = new();
         public Objective Objective { get; set; } = null!;

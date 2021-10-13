@@ -37,7 +37,9 @@ namespace OurCleanFuture.Data
                 new UnitOfMeasurement { Id = 13, Name = "Kilometres", Symbol = "km" },
                 new UnitOfMeasurement { Id = 14, Name = "Cubic kilometres", Symbol = "km³" },
                 new UnitOfMeasurement { Id = 15, Name = "Tons per person", Symbol = "t/person" },
-                new UnitOfMeasurement { Id = 16, Name = "Kilotonnes per million chained (2012) dollars", Symbol = "kt/$1MM chained (2012)" }
+                new UnitOfMeasurement { Id = 16, Name = "Kilotonnes per million chained (2012) dollars", Symbol = "kt/$1MM chained (2012)" },
+                new UnitOfMeasurement { Id = 17, Name = "Gigawatts", Symbol = "GW" },
+                new UnitOfMeasurement { Id = 18, Name = "Megawatt hours", Symbol = "MWh" }
             );
 
             modelBuilder.Entity<Goal>().HasData(
@@ -342,7 +344,25 @@ namespace OurCleanFuture.Data
                 new Lead { Id = 10, OrganizationId = 1, BranchId = 10 },
                 new Lead { Id = 11, OrganizationId = 1, BranchId = 11 },
                 new Lead { Id = 12, OrganizationId = 1, BranchId = 12 },
-                new Lead { Id = 13, OrganizationId = 2 }
+                new Lead { Id = 13, OrganizationId = 1, BranchId = 13 },
+                new Lead { Id = 14, OrganizationId = 1, BranchId = 14 },
+                new Lead { Id = 15, OrganizationId = 1, BranchId = 15 },
+                new Lead { Id = 16, OrganizationId = 1, BranchId = 16 },
+                new Lead { Id = 17, OrganizationId = 1, BranchId = 17 },
+                new Lead { Id = 18, OrganizationId = 1, BranchId = 18 },
+                new Lead { Id = 19, OrganizationId = 1, BranchId = 19 },
+                new Lead { Id = 20, OrganizationId = 1, BranchId = 20 },
+                new Lead { Id = 21, OrganizationId = 1, BranchId = 21 },
+                new Lead { Id = 22, OrganizationId = 1, BranchId = 22 },
+                new Lead { Id = 23, OrganizationId = 1, BranchId = 23 },
+                new Lead { Id = 24, OrganizationId = 1, BranchId = 24 },
+                new Lead { Id = 25, OrganizationId = 1, BranchId = 25 },
+                new Lead { Id = 26, OrganizationId = 1, BranchId = 26 },
+                new Lead { Id = 27, OrganizationId = 1, BranchId = 27 },
+                new Lead { Id = 28, OrganizationId = 1, BranchId = 28 },
+                new Lead { Id = 29, OrganizationId = 1, BranchId = 29 },
+                new Lead { Id = 30, OrganizationId = 1, BranchId = 30 },
+                new Lead { Id = 31, OrganizationId = 2 }
             );
 
             modelBuilder.Entity<Branch>().HasData(
@@ -351,82 +371,1885 @@ namespace OurCleanFuture.Data
                 new Branch { Id = 3, DepartmentId = 5, Name = "Parks" },
                 new Branch { Id = 4, DepartmentId = 5, Name = "Fish and Wildlife" },
                 new Branch { Id = 5, DepartmentId = 5, Name = "Conservation Officer Services" },
-                new Branch { Id = 6, DepartmentId = 4, Name = "Forest Resources" },
+                new Branch { Id = 6, DepartmentId = 4, Name = "Forest Management" },
                 new Branch { Id = 7, DepartmentId = 4, Name = "Agriculture" },
                 new Branch { Id = 8, DepartmentId = 4, Name = "Energy" },
                 new Branch { Id = 9, DepartmentId = 9, Name = "Supply Services" },
                 new Branch { Id = 10, DepartmentId = 9, Name = "Strategic Initiatives" },
                 new Branch { Id = 11, DepartmentId = 12, Name = "Culture Services" },
-                new Branch { Id = 12, DepartmentId = 4, Name = "Yukon Geological Survey" }
+                new Branch { Id = 12, DepartmentId = 4, Name = "Yukon Geological Survey" },
+                new Branch { Id = 13, DepartmentId = 4, Name = "Mineral Resources" },
+                new Branch { Id = 14, DepartmentId = 5, Name = "Environmental Protection and Assessment" },
+                new Branch { Id = 15, DepartmentId = 4, Name = "Land Planning" },
+                new Branch { Id = 16, DepartmentId = 1, Name = "Infrastructure Development" },
+                new Branch { Id = 17, DepartmentId = 9, Name = "Corporate Services" },
+                new Branch { Id = 18, DepartmentId = 8, Name = "Community Nursing" },
+                new Branch { Id = 19, DepartmentId = 13, Name = "Yukon Development Corporation" },
+                new Branch { Id = 20, DepartmentId = 14, Name = "Yukon Energy Corporation" },
+                new Branch { Id = 21, DepartmentId = 15, Name = "Capital Development" },
+                new Branch { Id = 22, DepartmentId = 8, Name = "Population and Public Health Evidence and Evaluation" },
+                new Branch { Id = 23, DepartmentId = 9, Name = "Transportation Engineering" },
+                new Branch { Id = 24, DepartmentId = 4, Name = "Policy and Planning" },
+                new Branch { Id = 25, DepartmentId = 8, Name = "Emergency Management Unit" },
+                new Branch { Id = 26, DepartmentId = 9, Name = "Realty and Capital Asset Planning" },
+                new Branch { Id = 27, DepartmentId = 9, Name = "Chief Information Office" },
+                new Branch { Id = 28, DepartmentId = 1, Name = "Emergency Measures Organization" },
+                new Branch { Id = 29, DepartmentId = 4, Name = "Finance" },
+                new Branch { Id = 30, DepartmentId = 1, Name = "Fix me: Branch/Department is unknown" }
             );
 
             modelBuilder.Entity<Indicator>().HasData(
-                 new Indicator {
-                     Id = 1,
-                     CollectionInterval = CollectionInterval.Biannual,
-                     DataType = DataType.Cumulative,
-                     Description = "Total number of heavy-duty zero emission vehicles registered in Yukon.",
-                     Title = "ZEVs - Total heavy duty",
-                     UnitOfMeasurementId = 2
-                 },
-                 new Indicator {
-                     Id = 2,
-                     CollectionInterval = CollectionInterval.Annual,
-                     DataType = DataType.Incremental,
-                     Description = "Total electricity generated off-grid during the reporting year (thermal and renewable).",
-                     Title = "Off-grid generation - total",
-                     UnitOfMeasurementId = 2
-                 },
-                 new Indicator {
-                     Id = 3,
-                     CollectionInterval = CollectionInterval.Biannual,
-                     DataType = DataType.Cumulative,
-                     Description = "Number of energy assessments of Government of Yukon buildings completed during the reporting year.",
-                     Title = "YG buildings - energy assessments completed",
-                     UnitOfMeasurementId = 2
-                 },
-                 new Indicator {
-                     Id = 4,
-                     CollectionInterval = CollectionInterval.Annual,
-                     DataType = DataType.Incremental,
-                     Description = "Yukon Agricultural Self-Sufficiency Indicator.",
-                     Title = "Food self-sufficiency",
-                     UnitOfMeasurementId = 2
-                 },
-                 new Indicator {
-                     Id = 5,
-                     CollectionInterval = CollectionInterval.Annual,
-                     DataType = DataType.Incremental,
-                     Description = "Total GHGs from the Government of Yukon's operations.",
-                     Title = "YG GHGs - total",
-                     UnitOfMeasurementId = 1
-                 },
-                 new Indicator {
-                     Id = 6,
-                     CollectionInterval = CollectionInterval.Annual,
-                     DataType = DataType.Incremental,
-                     Description = "Volume of wood harvested by commercial entities for biomass energy during the reporting year.",
-                     Title = "Commercial biomass harvest",
-                     UnitOfMeasurementId = 12
-                 },
-                 new Indicator {
-                     Id = 7,
-                     CollectionInterval = CollectionInterval.Annual,
-                     DataType = DataType.Incremental,
-                     Description = "Change in volume of glaciers in the coast mountains during the reporting year.",
-                     Title = "Glacier volume change",
-                     UnitOfMeasurementId = 14
-                 }
+                new Indicator {
+                    Id = 1,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of high-risk communities with geohazard maps.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 2,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of community garden and greenhouse projects supported through the Canadian Agricultural Partnership that were completed during the reporting year.",
+                    UnitOfMeasurementId = 2,
+                },
+                new Indicator {
+                    Id = 3,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of First Nations and municipal agricultural and animal husbandry projects supported that were completed during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 4,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of research projects on climate impacts on agriculture that were supported during the reporting year:",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 5,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of projects supported during the reporting year to help agricultural producers adapt to the impacts of climate change, adopt low-carbon practices and use surface and groundwater efficiently:",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 6,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of at-risk communities with completed flood maps",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 7,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Proportion of community infrastructure projects over $10 million built or funded by YG during the reporting year that underwent a climate risk assessment.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 8,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Proportion of regional land use plans and local area plans completed during the reporting year that considered climate change.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 9,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of First Nations and municipalities with completed asset management plans.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 10,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of geothermal wells drilled during the reporting year:",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 11,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Change in volume of glaciers in the coast mountains during the reporting year.",
+                    UnitOfMeasurementId = 14
+                },
+                new Indicator {
+                    Id = 12,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of biodiesel and/or renewable diesel by volume in diesel fuel used for electricity generation on-grid during the reporting year.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 13,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of renewable electricity systems installed in YG buildings in off-grid locations during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 14,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of remote historic sites that have been evaluated for renewable electricity potential.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 15,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 16,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of signed Energy Purchase Agreements with Independent Power Producers that have First Nations ownership.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 17,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Percentage of independent power producers with signed Energy Purchase Agreements that have First Nations ownership.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 18,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of new electricity demand met by independent power producers during the reporting year",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 19,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Predicted energy generation from Independent Power Producers in future reporting years.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 20,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Percentage of YG buildings on permafrost that are being routinely monitored.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 21,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Proportion of identified deficiencies from YG building structural condition permafrost monitoring that are addressed by completed or planned actions.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 22,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Proportion of new construction projects for YG buildings during the reporting year that substantially met the energy performance target of 35 per cent less than the National Energy Code for Buildings.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 23,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Proportion of major building projects over $10 million built or funded by YG that during the reporting year that underwent a climate risk assessment.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 24,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Proportion of major transportation infrastructure projects over $10 million during the reporting year that underwent a climate risk assessment.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 25,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of biomass feasibility studies completed with First Nations governments or development corporations during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 26,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Volume of wood harvested by commercial entities for biomass energy during the reporting year:",
+                    UnitOfMeasurementId = 12
+                },
+                new Indicator {
+                    Id = 27,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of Peak Smart demand response events completed during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 28,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Average greenhouse gas reduction percentage from Government of Yukon community housing buildings retrofitted during the reporting year.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 29,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Results of the sustainable tourism measurement framework for the reporting year.",
+                    UnitOfMeasurementId = 1
+                },
+                new Indicator {
+                    Id = 30,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Greenhouse gas emissions from tourism during the reporting year.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 31,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Diversion rate of product streams managed by Extended Producer Responsibility during the reporting year.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 32,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Proportion of products from CCME�s 2009 Action Plan on EPR that are included in Yukon�s EPR system.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 33,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of Yukoners that participated in green economy professional development opportunities during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 34,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Proportion of quartz mines covered by new climate resilience license requirements.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 35,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Proportion of quartz mines covered by new greenhouse gas reporting license requirements.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 36,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Projected greenhouse gas emissions from quartz mines during future reporting years without identified mitigation measures.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 37,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Projected greenhouse gas emissions from quartz mines during future reporting years with identified mitigation measures.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 38,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of National Forest Inventory test plots established during the reporting year:",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 39,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Proportion of new construction or retrofit projects for YG buildings during the reporting year that used the new prioritization process.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 40,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of Youth Panel on Climate Change meetings during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 41,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of youth brought to international climate change/energy conferences/events during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 42,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Yukon�s climate resilience during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 43,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Fuel consumption of the Government of Yukon light duty fleet during the reporting year.",
+                    UnitOfMeasurementId = 10
+                },
+                new Indicator {
+                    Id = 44,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Distance travelled by YG staff by air for work purposes during the reporting year.",
+                    UnitOfMeasurementId = 13
+                },
+                new Indicator {
+                    Id = 45,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Distance travelled by YG staff by road for work purposes during the reporting year.",
+                    UnitOfMeasurementId = 13
+                },
+                new Indicator {
+                    Id = 46,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs per unit of GDP during the reporting year.",
+                    UnitOfMeasurementId = 16
+                },
+                new Indicator {
+                    Id = 47,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs per capita during the reporting year.",
+                    UnitOfMeasurementId = 9
+                },
+                new Indicator {
+                    Id = 48,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from Government of Yukon departmental and YukonU buildings",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 49,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from electricity generation during the reporting year.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 50,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Total amount of diesel used for electricity generation in off-grid communities during the reporting year.",
+                    UnitOfMeasurementId = 10
+                },
+                new Indicator {
+                    Id = 51,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Amount of diesel used for electricity generation in Destruction Bay/Burwash Landing during the reporting year.",
+                    UnitOfMeasurementId = 10
+                },
+                new Indicator {
+                    Id = 52,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Amount of diesel used for electricity generation in Beaver Creek during the reporting year.",
+                    UnitOfMeasurementId = 10
+                },
+                new Indicator {
+                    Id = 53,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Amount of diesel used for electricity generation in Watson Lake during the reporting year.",
+                    UnitOfMeasurementId = 10
+                },
+                new Indicator {
+                    Id = 54,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Amount of diesel used for electricity generation in Old Crow during the reporting year.",
+                    UnitOfMeasurementId = 10
+                },
+                new Indicator {
+                    Id = 55,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Amount of diesel used for electricity generation in Swift River during the reporting year.",
+                    UnitOfMeasurementId = 10
+                },
+                new Indicator {
+                    Id = 56,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Total electricity generated off-grid during the reporting year (thermal and renewable).",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 57,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Total electricity generated from fossil fuels off-grid during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 58,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity generated from fossil fuels in Destruction Bay/Burwash Landing during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 59,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity generated from fossil fuels in Beaver Creek during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 60,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity generated from fossil fuels in Watson Lake during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 61,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity generated from fossil fuels in Old Crow during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 62,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity generated from fossil fuels in Swift River during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 63,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "25-year rolling average percentage of renewable electricity supply on the Yukon Integrated System during the reporting year.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 64,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of renewable electricity supply on the Yukon Integrated System during the reporting year.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 65,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from heating fuel during the reporting year.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 66,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from waste during the reporting year.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 67,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Per capita waste generation in Yukon during the reporting year",
+                    UnitOfMeasurementId = 15
+                },
+                new Indicator {
+                    Id = 68,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Waste diversion percentage in Yukon during the reporting year",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 69,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Total installed renewable electricity capacity off-grid",
+                    UnitOfMeasurementId = 17
+                },
+                new Indicator {
+                    Id = 70,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Installed renewable capacity in Destruction Bay/Burwash Landing.",
+                    UnitOfMeasurementId = 17
+                },
+                new Indicator {
+                    Id = 71,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Installed renewable capacity in Beaver Creek.",
+                    UnitOfMeasurementId = 17
+                },
+                new Indicator {
+                    Id = 72,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Installed renewable capacity in Watson Lake.",
+                    UnitOfMeasurementId = 17
+                },
+                new Indicator {
+                    Id = 73,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Installed renewable capacity in Old Crow.",
+                    UnitOfMeasurementId = 17
+                },
+                new Indicator {
+                    Id = 74,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Installed renewable capacity in Swift River.",
+                    UnitOfMeasurementId = 17
+                },
+                new Indicator {
+                    Id = 75,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Total electricity generated from renewable sources off-grid during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 76,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity generated from renewable sources in Destruction Bay/Burwash Landing during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 77,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity generated from renewable sources in Beaver Creek during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 78,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity generated from renewable sources in Watson Lake during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 79,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity generated from renewable sources in Old Crow during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 80,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity generated from renewable sources in Swift River during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 81,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Installed renewable electricity capacity on-grid",
+                    UnitOfMeasurementId = 3
+                },
+                new Indicator {
+                    Id = 82,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity generated from renewable resources on-grid during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 83,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Total GHGs from the Government of Yukon's operations",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 84,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from Government of Yukon departmental and YukonU transportation",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 85,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from Government of Yukon departmental and YukonU other sources (refrigerants and waste)",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 86,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from Yukon Housing Corporation, Hospital Corporation and Liquor Corporation",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 87,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from Yukon Energy Corporation",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 88,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Total number of licensed hunters, trappers and fishers in Yukon during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 89,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Total number of resident licensed hunters during the reporting year (Indigenous and non-Indigenous).",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 90,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of resident non-Indigenous licensed hunters during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 91,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of resident First Nations and Inuit licensed hunters during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 92,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of resident and non-resident licensed fishers during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 93,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of resident licensed trappers and assistant trappers during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 94,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of zero emission cars relative to total YG car purchases during the reporting year.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 95,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from on-road diesel during the reporting year.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 96,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Fuel consumption of Government of Yukon off-road vehicles during the reporting year.",
+                    UnitOfMeasurementId = 10
+                },
+                new Indicator {
+                    Id = 97,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Fuel consumption of Government of Yukon heavy duty vehicles (both fleet and non-fleet vehicles) during the reporting year.",
+                    UnitOfMeasurementId = 10
+                },
+                new Indicator {
+                    Id = 98,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Carbon intensity of gasoline for transportation used in GHG calculations during the reporting year.",
+                    UnitOfMeasurementId = 7
+                },
+                new Indicator {
+                    Id = 99,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Carbon intensity of diesel for transportation used in GHG calculations during the reporting year.",
+                    UnitOfMeasurementId = 7
+                },
+                new Indicator {
+                    Id = 100,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from mining during the reporting year.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 101,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Emission intensity of mining during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 102,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Total non-mining GHGs during the reporting year.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 103,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from non-mining off-road diesel during the reporting year.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 104,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from other sources (industrial processes and fugitive emissions) during the reporting year.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 105,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Yukon's total GHGs during the reporting year.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 106,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Yukon Agricultural Self-Sufficiency Indicator",
+                    UnitOfMeasurementId = 4
+                },
+                new Indicator {
+                    Id = 107,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of large-scale renewable heating projects in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 108,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of off-grid communities with operational renewable electricity projects.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 109,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from aviation during the reporting year.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 110,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Total GHGs from road transportation during the reporting year.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 111,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "GHGs from on-road gasoline during the reporting year.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 112,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity demand avoided through demand-side management during the reporting year.",
+                    UnitOfMeasurementId = 11
+                },
+                new Indicator {
+                    Id = 113,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Peak electricity demand avoided through demand-side management during the reporting year.",
+                    UnitOfMeasurementId = 3
+                },
+                new Indicator {
+                    Id = 114,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of commuting trips in Whitehorse made by walking",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 115,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of energy used for heating from renewable sources during the reporting year.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 116,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of cases of climate-related illnesses in Yukon during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 117,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of times the clean air shelter was deployed during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 118,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of Yukoners that were food insecure during the reporting year.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 119,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Proportion of recommendations from surface and groundwater monitoring network evaluation that have been implemented:",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 120,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Proportion of surface and groundwater monitoring stations that have climate change indicators identified and analyzed:",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 121,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of climate indicator species being monitored.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 122,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of taxonomic groups represented by climate indicator species.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 123,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Percent of Yukon's landscape covered by terrestrial and freshwater protected areas.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 124,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Percentage of Yukon's eco-regions with zero per cent of their area protected.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 125,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Percentage of Yukon's eco-regions with 1-10 per cent of their area protected.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 126,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Percentage of Yukon's eco-regions with 11-20 per cent of their area protected.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 127,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Total number of invasive species in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 128,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of invasive species in Yukon believed to be present.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 129,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of invasive species in Yukon believed to be absent.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 130,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of invasive species in Yukon whose presence is unknown.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 131,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of participants in First Nations-tailored hunter education courses during the reporting year:",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 132,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of healthcare providers that were provided climate change training during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 133,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of light-duty zero emission vehicle sales relative to total light-duty vehicle sales during the reporting year.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 134,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of ethanol by volume in transportation gasoline during the reporting year.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 135,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Proportion of designs for highway reconstruction projects on Class 1 and 2 highways during the reporting year that included an evaluation of active transportation options.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 136,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of video or audio conference calls by YG staff during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 137,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of YG flexible workplace pilot projects completed during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 138,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of zero emission vehicles in YG fleet.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 139,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of YG staff that carpooled rather than drove separately when signing out a fleet vehicle during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 140,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Proportion of fleet vehicles that were purchased using value-driven procurement during the reporting year.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 141,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of telehealth appointments facilitated from Whitehorse medical clinics during the reporting year:",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 142,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of active Rideshare users during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 143,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Proportion of recommendations from the road transportation network vulnerability assessment that have been implemented.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 144,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Length of highway for which targeted permafrost studies were completed during the reporting year.",
+                    UnitOfMeasurementId = 13
+                },
+                new Indicator {
+                    Id = 145,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of critical transportation corridors that flood risk has been analyzed for:",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 146,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of road-accessible communities in Yukon that can be reached in an electric vehicle from Whitehorse.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 147,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of electric vehicle fast-charging stations installed during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 148,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of electric vehicle discovery days, events or campaigns delivered during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 149,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of biodiesel and/or renewable diesel by volume in transportation diesel during the reporting year.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 150,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Average percentage improvement over code for new homes built in Whitehorse during the reporting year",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 151,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Average distance travelled by light-duty vehicles in Yukon during the reporting year.",
+                    UnitOfMeasurementId = 13
+                },
+                new Indicator {
+                    Id = 152,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of commuting trips in Whitehorse made as a driver",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 153,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of commuting trips in Whitehorse made as a passenger",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 154,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of commuting trips in Whitehorse made by bicycle",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 155,
+                    CollectionInterval = CollectionInterval.Annual,
+                    DataType = DataType.Incremental,
+                    Description = "Percentage of commuting trips in Whitehorse made by public transportation",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 156,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity produced on residential, commercial and institutional buildings through the Micro-generation Program during the reporting period.",
+                    UnitOfMeasurementId = 18
+                },
+                new Indicator {
+                    Id = 157,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Cumulative,
+                    Description = "Installed renewable electricity capacity on residential, commercial and institutional buildings through the Micro-generation Program.",
+                    UnitOfMeasurementId = 3
+                },
+                new Indicator {
+                    Id = 158,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of energy efficiency retrofits (envelope improvements and/or heating system upgrades) to residential, commercial and non-YG institutional buildings during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 159,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of First Nations housing units retrofitted during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 160,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of major energy retrofits to First Nations and municipal buildings completed during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 161,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of private sector high performance thermal enclosure upgrades supported through Energy Branch prgrams during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 162,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of residential high performance thermal enclosure upgrades supported through Energy Branch programs during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 163,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of commercial high performance thermal enclosure upgrades supported through Energy Branch programs during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 164,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of Government of Yukon community housing buildings retrofitted during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 165,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of Government of Yukon community housing units retrofitted during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 166,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of energy efficient insulation and equipment rebates issued during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 167,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of residential energy efficient insulation and equipment rebates issued during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 168,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of commercial energy efficient insulation and equipment rebates issued during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 169,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of new home rebates issued during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 170,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of electric bicycle rebates issued during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 171,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Dollars of electric bicycle rebates issued during the reporting period",
+                    UnitOfMeasurementId = 4
+                },
+                new Indicator {
+                    Id = 172,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of heat pump installations during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 173,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of heat pumps supported through the Energy Branch's rebate program during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 174,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of heat pumps installed through the industry partnership during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 175,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of electric thermal storage systems installed through the Yukon Conservation Society's electric thermal storage demonstration project.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 176,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of heat pumps installed through the Better Buildings Loan during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 177,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of commercial and non-YG institutional biomass energy systems in Yukon installed during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 178,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number rebates provided for commercial and institutional biomass systems during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 179,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Dollars of rebates provided for residential, commercial and institutional biomass heating systems and smart electric heating devices during the reporting period.",
+                    UnitOfMeasurementId = 4
+                },
+                new Indicator {
+                    Id = 180,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of rebates issued for battery electric vehicles, plug-in hybrid electric vehicles and hydrogen fuel cell vehicles during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 181,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of rebates issued for battery electric vehicles during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 182,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of rebates issued for plugin hybrid electric vehicles during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 183,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of rebates isssued for",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 184,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of rebates issued for shipping of used electric vehicles during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 185,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of rebates issued for e-motorcycles during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 186,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of rebates issued for e-snowmobiles during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 187,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Dollars of zero emission vehicle rebates issued during the reporting period.",
+                    UnitOfMeasurementId = 4
+                },
+                new Indicator {
+                    Id = 188,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Number of smart electric vehicle charging station rebates issued during the reporting period.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 189,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Incremental,
+                    Description = "Dollars of smart electric charging station rebates issued during the reporting period.",
+                    UnitOfMeasurementId = 4
+                },
+                new Indicator {
+                    Id = 190,
+                    CollectionInterval = CollectionInterval.Quarter,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of Yukon communities with air quality monitoring.",
+                    UnitOfMeasurementId = 6
+                },
+                new Indicator {
+                    Id = 191,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of Yukon communities with completed hazard identification and risk assessments.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 192,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of Yukon communities with completed emergency management plans.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 193,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of municipal and First Nations energy efficiency projects that were supported during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 194,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of municipal and First Nations energy efficiency projects that were supported and completed during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 195,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of municipal and First Nations public and active transportation infrastructure projects that were supported during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 196,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of high-emitting Government of Yukon buildings that were substantially connected to renewable energy heating systems during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 197,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of high-emitting Government of Yukon buildings in the process of being substantially connected to renewable energy heating systems.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 198,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of high-emitting Government of Yukon buildings with feasibility studies underway to be substantially connected to renewable energy heating systems.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 199,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Anticipated greenhouse gas reductions from completed renewable energy heating system projects in Government of Yukon buildings to date.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 200,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of high efficiency energy retrofits to Government of Yukon buildings completed during the reporting year.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 201,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of Government of Yukon buildings for which high efficiency energy retrofits are in progress.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 202,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Anticipated greenhouse gas reductions from completed high efficiency energy retrofit projects in Government of Yukon buildings.",
+                    UnitOfMeasurementId = 8
+                },
+                new Indicator {
+                    Id = 203,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Percentage of high-emitting Government of Yukon buildings for which energy assessments were completed during the reporting year.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 204,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Percentage of high-emitting Government of Yukon buildings that energy assessments are in progress for.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 205,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of Yukon communities with wildfire protection plans.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 206,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Incremental,
+                    Description = "Number of renewable energy projects supported during the reporting year through the Innovative Renewable Energy Initiative and/or the Arctic Energy Fund.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 207,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of zero emission vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 208,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of light-duty zero emission vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 209,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of light-duty plug-in hybrid electric vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 210,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of light-duty battery electric vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 211,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of light-duty hydrogen cell vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 212,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of light-duty conventional fossil fuel vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 213,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of light-duty hybrid fossil fuel vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 214,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of light-duty fossil fuel vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 215,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of light-duty vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 216,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Percentage of light-duty zero emission vehicles relative to total registered light-duty vehicles.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 217,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of battery electric snowmobiles registered in Yukon.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 218,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of conventional snowmobiles registered in Yukon.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 219,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of battery electric motorcycles registered in Yukon.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 220,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of conventional motorcycles registered in Yukon.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 221,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Total number of heavy-duty zero emission vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 222,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of heavy-duty plug-in hybrid electric vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 223,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of heavy-duty battery electric vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 224,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of heavy-duty hydrogen fuel cell vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 225,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of heavy-duty conventional fossil fuel vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 226,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of heavy-duty hybrid fossil fuel vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 227,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of heavy-duty fossil fuel vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 228,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Number of heavy-duty vehicles registered in Yukon.",
+                    UnitOfMeasurementId = 2
+                },
+                new Indicator {
+                    Id = 229,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Percentage of heavy-duty zero emission vehicles relative to total registered heavy-duty vehicles.",
+                    UnitOfMeasurementId = 5
+                },
+                new Indicator {
+                    Id = 230,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Cumulative,
+                    Description = "Installed Independent Power Production Capacity.",
+                    UnitOfMeasurementId = 3
+                },
+                new Indicator {
+                    Id = 231,
+                    CollectionInterval = CollectionInterval.Biannual,
+                    DataType = DataType.Incremental,
+                    Description = "Electricity generated by Independent Power Producers during the reporting period.",
+                    UnitOfMeasurementId = 11
+                }
             );
 
             modelBuilder.Entity<IndicatorLead>().HasData(
-                new IndicatorLead { IndicatorId = 1, LeadId = 8 },
-                new IndicatorLead { IndicatorId = 2, LeadId = 12 },
-                new IndicatorLead { IndicatorId = 3, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 1, LeadId = 16 },
+                new IndicatorLead { IndicatorId = 2, LeadId = 7 },
+                new IndicatorLead { IndicatorId = 3, LeadId = 7 },
                 new IndicatorLead { IndicatorId = 4, LeadId = 7 },
-                new IndicatorLead { IndicatorId = 5, LeadId = 1 },
-                new IndicatorLead { IndicatorId = 6, LeadId = 6 },
-                new IndicatorLead { IndicatorId = 7, LeadId = 13 }
+                new IndicatorLead { IndicatorId = 5, LeadId = 7 },
+                new IndicatorLead { IndicatorId = 6, LeadId = 2 },
+                new IndicatorLead { IndicatorId = 7, LeadId = 16 },
+                new IndicatorLead { IndicatorId = 8, LeadId = 15 },
+                new IndicatorLead { IndicatorId = 9, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 10, LeadId = 12 },
+                new IndicatorLead { IndicatorId = 11, LeadId = 12 },
+                new IndicatorLead { IndicatorId = 12, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 13, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 14, LeadId = 11 },
+                new IndicatorLead { IndicatorId = 15, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 16, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 17, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 18, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 19, LeadId = 19 },
+                new IndicatorLead { IndicatorId = 20, LeadId = 21 },
+                new IndicatorLead { IndicatorId = 21, LeadId = 21 },
+                new IndicatorLead { IndicatorId = 22, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 23, LeadId = 16 },
+                new IndicatorLead { IndicatorId = 24, LeadId = 23 },
+                new IndicatorLead { IndicatorId = 25, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 26, LeadId = 6 },
+                new IndicatorLead { IndicatorId = 27, LeadId = 20 },
+                new IndicatorLead { IndicatorId = 28, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 29, LeadId = 11 },
+                new IndicatorLead { IndicatorId = 30, LeadId = 11 },
+                new IndicatorLead { IndicatorId = 31, LeadId = 14 },
+                new IndicatorLead { IndicatorId = 32, LeadId = 14 },
+                new IndicatorLead { IndicatorId = 33, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 34, LeadId = 13 },
+                new IndicatorLead { IndicatorId = 35, LeadId = 13 },
+                new IndicatorLead { IndicatorId = 36, LeadId = 13 },
+                new IndicatorLead { IndicatorId = 37, LeadId = 13 },
+                new IndicatorLead { IndicatorId = 38, LeadId = 6 },
+                new IndicatorLead { IndicatorId = 39, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 40, LeadId = 24 },
+                new IndicatorLead { IndicatorId = 41, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 42, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 43, LeadId = 30 },
+                new IndicatorLead { IndicatorId = 44, LeadId = 30 },
+                new IndicatorLead { IndicatorId = 45, LeadId = 30 },
+                new IndicatorLead { IndicatorId = 46, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 47, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 48, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 49, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 50, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 51, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 52, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 53, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 54, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 55, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 56, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 57, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 58, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 59, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 60, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 61, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 62, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 63, LeadId = 20 },
+                new IndicatorLead { IndicatorId = 64, LeadId = 20 },
+                new IndicatorLead { IndicatorId = 65, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 66, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 67, LeadId = 14 },
+                new IndicatorLead { IndicatorId = 68, LeadId = 14 },
+                new IndicatorLead { IndicatorId = 69, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 70, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 71, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 72, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 73, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 74, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 75, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 76, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 77, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 78, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 79, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 80, LeadId = 31 },
+                new IndicatorLead { IndicatorId = 81, LeadId = 20 },
+                new IndicatorLead { IndicatorId = 82, LeadId = 20 },
+                new IndicatorLead { IndicatorId = 83, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 84, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 85, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 86, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 87, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 88, LeadId = 5 },
+                new IndicatorLead { IndicatorId = 89, LeadId = 5 },
+                new IndicatorLead { IndicatorId = 90, LeadId = 5 },
+                new IndicatorLead { IndicatorId = 91, LeadId = 5 },
+                new IndicatorLead { IndicatorId = 92, LeadId = 5 },
+                new IndicatorLead { IndicatorId = 93, LeadId = 5 },
+                new IndicatorLead { IndicatorId = 94, LeadId = 9 },
+                new IndicatorLead { IndicatorId = 95, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 96, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 97, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 98, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 99, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 100, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 101, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 102, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 103, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 104, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 105, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 106, LeadId = 7 },
+                new IndicatorLead { IndicatorId = 107, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 108, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 109, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 110, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 111, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 112, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 113, LeadId = 20 },
+                new IndicatorLead { IndicatorId = 114, LeadId = 30 },
+                new IndicatorLead { IndicatorId = 115, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 116, LeadId = 22 },
+                new IndicatorLead { IndicatorId = 117, LeadId = 25 },
+                new IndicatorLead { IndicatorId = 118, LeadId = 22 },
+                new IndicatorLead { IndicatorId = 119, LeadId = 2 },
+                new IndicatorLead { IndicatorId = 120, LeadId = 2 },
+                new IndicatorLead { IndicatorId = 121, LeadId = 4 },
+                new IndicatorLead { IndicatorId = 122, LeadId = 4 },
+                new IndicatorLead { IndicatorId = 123, LeadId = 3 },
+                new IndicatorLead { IndicatorId = 124, LeadId = 3 },
+                new IndicatorLead { IndicatorId = 125, LeadId = 3 },
+                new IndicatorLead { IndicatorId = 126, LeadId = 3 },
+                new IndicatorLead { IndicatorId = 127, LeadId = 4 },
+                new IndicatorLead { IndicatorId = 128, LeadId = 4 },
+                new IndicatorLead { IndicatorId = 129, LeadId = 4 },
+                new IndicatorLead { IndicatorId = 130, LeadId = 4 },
+                new IndicatorLead { IndicatorId = 131, LeadId = 5 },
+                new IndicatorLead { IndicatorId = 132, LeadId = 17 },
+                new IndicatorLead { IndicatorId = 133, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 134, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 135, LeadId = 23 },
+                new IndicatorLead { IndicatorId = 136, LeadId = 27 },
+                new IndicatorLead { IndicatorId = 137, LeadId = 26 },
+                new IndicatorLead { IndicatorId = 138, LeadId = 9 },
+                new IndicatorLead { IndicatorId = 139, LeadId = 9 },
+                new IndicatorLead { IndicatorId = 140, LeadId = 9 },
+                new IndicatorLead { IndicatorId = 141, LeadId = 18 },
+                new IndicatorLead { IndicatorId = 142, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 143, LeadId = 23 },
+                new IndicatorLead { IndicatorId = 144, LeadId = 12 },
+                new IndicatorLead { IndicatorId = 145, LeadId = 2 },
+                new IndicatorLead { IndicatorId = 146, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 147, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 148, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 149, LeadId = 1 },
+                new IndicatorLead { IndicatorId = 150, LeadId = 30 },
+                new IndicatorLead { IndicatorId = 151, LeadId = 30 },
+                new IndicatorLead { IndicatorId = 152, LeadId = 30 },
+                new IndicatorLead { IndicatorId = 153, LeadId = 30 },
+                new IndicatorLead { IndicatorId = 154, LeadId = 30 },
+                new IndicatorLead { IndicatorId = 155, LeadId = 30 },
+                new IndicatorLead { IndicatorId = 156, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 157, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 158, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 159, LeadId = 29 },
+                new IndicatorLead { IndicatorId = 160, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 161, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 162, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 163, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 164, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 165, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 166, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 167, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 168, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 169, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 170, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 171, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 172, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 173, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 174, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 175, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 176, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 177, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 178, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 179, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 180, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 181, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 182, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 183, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 184, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 185, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 186, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 187, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 188, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 189, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 190, LeadId = 14 },
+                new IndicatorLead { IndicatorId = 191, LeadId = 28 },
+                new IndicatorLead { IndicatorId = 192, LeadId = 28 },
+                new IndicatorLead { IndicatorId = 193, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 194, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 195, LeadId = 16 },
+                new IndicatorLead { IndicatorId = 196, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 197, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 198, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 199, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 200, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 201, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 202, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 203, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 204, LeadId = 10 },
+                new IndicatorLead { IndicatorId = 205, LeadId = 28 },
+                new IndicatorLead { IndicatorId = 206, LeadId = 19 },
+                new IndicatorLead { IndicatorId = 207, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 208, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 209, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 210, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 211, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 212, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 213, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 214, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 215, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 216, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 217, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 218, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 219, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 220, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 221, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 222, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 223, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 224, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 225, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 226, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 227, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 228, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 229, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 230, LeadId = 8 },
+                new IndicatorLead { IndicatorId = 231, LeadId = 8 }
             );
         }
     }

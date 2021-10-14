@@ -8,11 +8,11 @@ namespace OurCleanFuture.Data.Entities
         Complete = 0,
         [Display(Name = "Delayed")]
         Delayed = 1,
-        [Display(Name = "Not Applicable")]
+        [Display(Name = "Not applicable")]
         NotApplicable = 2,
-        [Display(Name = "Not Started")]
+        [Display(Name = "Not started")]
         NotStarted = 3,
-        [Display(Name = "On Track")]
+        [Display(Name = "On track")]
         OnTrack = 4
     }
 }

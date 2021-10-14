@@ -6,9 +6,9 @@ namespace OurCleanFuture.Data.Entities
     {
         [Display(Name = "Complete")]
         Complete = 0,
-        [Display(Name = "In Progress")]
+        [Display(Name = "In progress")]
         InProgress = 1,
-        [Display(Name = "Not Started")]
+        [Display(Name = "Not started")]
         NotStarted = 2,
         [Display(Name = "Ongoing")]
         Ongoing = 3

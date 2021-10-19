@@ -19,7 +19,7 @@ else
             </ToolBarContent>
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, string>(i => i.Title)">Title</MudTableSortLabel></MudTh>
-                <MudTh>Lead(s)</MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, object>(i => i.LeadsToString())">Lead(s)</MudTableSortLabel></MudTh>
                 <MudTh>Description</MudTh>
                 <MudTh>Interval</MudTh>
                 <MudTh>Trend</MudTh>

@@ -85,11 +85,11 @@ namespace OurCleanFuture.App.Pages.Indicators
 
         private DateTime GetLastUpdatedDate()
         {
-            var indicatorUpdatedDate = context.Entry(Indicator).Property<DateTime>("PeriodStart").CurrentValue;
+            var indicatorUpdatedDate = context.Entry(Indicator).Property<DateTime>("ValidFrom").CurrentValue;
             //An indicator might not have a target, in which case we return the indicatorUpdatedDate
             var targetUpdatedDate = DateTime.MinValue;
             if(target is not null) {
-                targetUpdatedDate = context.Entry(target).Property<DateTime>("PeriodStart").CurrentValue;
+                targetUpdatedDate = context.Entry(target).Property<DateTime>("ValidFrom").CurrentValue;
             }
             return indicatorUpdatedDate > targetUpdatedDate ? indicatorUpdatedDate : targetUpdatedDate;
         }

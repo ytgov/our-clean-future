@@ -14,7 +14,7 @@ else
         <EditForm Model="@Indicator" OnValidSubmit="Update">
             <ObjectGraphDataAnnotationsValidator />
             <MudGrid>
-                <AuthorizeView Roles="Admin" Context="_">
+                <AuthorizeView Roles="Administrator" Context="_">
                     <MudItem xs="12" sm="6">
                         <MudPaper Elevation="2" Class="pa-4">
                             <MudSelect T="Data.Entities.Lead" Label="Lead(s)" MultiSelection="true" @bind-SelectedValues="SelectedLeads">

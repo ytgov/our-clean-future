@@ -23,7 +23,7 @@ namespace OurCleanFuture.App.Pages.Indicators
         [Parameter]
         public int Id { get; set; }
 
-        public string AuthorizedRoles { get; set; } = "Admin";
+        public string AuthorizedRoles { get; set; } = "Administrator";
         public string SelectedParentType { get; set; } = "";
         public HashSet<Lead> SelectedLeads { get; set; } = new();
 

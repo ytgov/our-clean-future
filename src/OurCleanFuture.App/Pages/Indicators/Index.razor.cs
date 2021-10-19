@@ -82,6 +82,8 @@ namespace OurCleanFuture.App.Pages.Indicators
                     return true;
                 if (lead.Branch?.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
                     return true;
+                if (lead.Branch?.Department.ShortName.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
+                    return true;
                 if (lead.Branch?.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
                     return true;
             }

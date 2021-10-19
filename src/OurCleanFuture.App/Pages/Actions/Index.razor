@@ -20,10 +20,10 @@ else
                 <MudSpacer />
             </ToolBarContent>
             <HeaderContent>
-                <MudTh>#</MudTh>
-                <MudTh>Title</MudTh>
-                <MudTh>Internal Status</MudTh>
-                <MudTh>External Status</MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, object>(a => a.Number[0])">#</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, string>(a => a.Title)">Title</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, string>(a => a.InternalStatus.GetDisplayName())">Internal Status</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, string>(a => a.ExternalStatus.GetDisplayName())">External Status</MudTableSortLabel></MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>

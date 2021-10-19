@@ -68,7 +68,11 @@ namespace OurCleanFuture.Data
                         .HasConversion<string>();
             modelBuilder.Entity<Action>()
                         .ToTable("Actions")
-                        .ToTable(tb => tb.IsTemporal(tb => tb.UseHistoryTable("ActionsHistory")));
+                        .ToTable(tb => tb.IsTemporal(tb => {
+                            tb.UseHistoryTable("ActionsHistory");
+                            tb.HasPeriodStart("ValidFrom");
+                            tb.HasPeriodEnd("ValidTo");
+                        }));
 
             modelBuilder.Entity<Indicator>()
                         .Property(i => i.DataType)
@@ -109,17 +113,29 @@ namespace OurCleanFuture.Data
                         .OwnsMany(i => i.Entries,
                             ie => {
                                 ie.ToTable("Entries");
-                                ie.ToTable(tb => tb.IsTemporal(tb => tb.UseHistoryTable("EntriesHistory")))
+                                ie.ToTable(tb => tb.IsTemporal(tb => {
+                                    tb.UseHistoryTable("EntriesHistory");
+                                    tb.HasPeriodStart("ValidFrom");
+                                    tb.HasPeriodEnd("ValidTo");
+                                }))
                                   .WithOwner(e => e.Indicator);
                             });
             modelBuilder.Entity<Indicator>()
-                        .ToTable(tb => tb.IsTemporal(tb => tb.UseHistoryTable("IndicatorsHistory")));
+                        .ToTable(tb => tb.IsTemporal(tb => {
+                            tb.UseHistoryTable("IndicatorsHistory");
+                            tb.HasPeriodStart("ValidFrom");
+                            tb.HasPeriodEnd("ValidTo");
+                        }));
 
             modelBuilder.Entity<Target>()
                         .Property(t => t.EndDate)
                         .IsRequired();
             modelBuilder.Entity<Target>()
-                        .ToTable(tb => tb.IsTemporal(tb => tb.UseHistoryTable("TargetsHistory")));
+                        .ToTable(tb => tb.IsTemporal(tb => {
+                            tb.UseHistoryTable("TargetsHistory");
+                            tb.HasPeriodStart("ValidFrom");
+                            tb.HasPeriodEnd("ValidTo");
+                        }));
 
             //Generate bogus data for testing
             new DataSeeder(modelBuilder).Init();

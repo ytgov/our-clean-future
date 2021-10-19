@@ -20,8 +20,8 @@ else
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, string>(i => i.Title)">Title</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, object>(i => i.LeadsToString())">Lead(s)</MudTableSortLabel></MudTh>
-                <MudTh>Description</MudTh>
-                <MudTh>Interval</MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, string>(i => i.Description)">Description</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, object>(i => i.CollectionInterval)">Interval</MudTableSortLabel></MudTh>
                 <MudTh>Trend</MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, object>(i => GetDateLastEntry(i)!)">Last Entry</MudTableSortLabel></MudTh>
                 <MudTh></MudTh>

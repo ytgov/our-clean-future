@@ -1,5 +1,15 @@
 # Our Clean Future
 
+This app is used by 10 departments in Yukon Government to record data on ~230 indicators for the [Our Clean Future](https://yukon.ca/our-clean-future) iniatitive.
+
+>We live in a world that’s rapidly changing. Climate change is threatening ecosystems, subsistence harvesting, infrastructure, leisure activities, and many other aspects of our >lives.
+>
+>Yukon’s population is growing, along with our need for reliable, affordable and renewable energy to continue to power our lives, our work and our economy. New economic >opportunities are emerging in the sustainable, green economy.
+>
+>Our Clean Future is our answer to the climate emergency.
+>
+>The Government of Yukon developed Our Clean Future in partnership with Yukon First Nations, transboundary Indigenous groups and Yukon municipalities over the course of 3 years. >During this time, the partner group gathered 4 times to establish a vision and values for Our Clean Future and to prioritize the areas we should focus on over the next 10 years >to respond to the climate emergency. As a result of this collaborative process, the strategy reflects multiple perspectives, worldviews and ideas.
+
 ## Stack
 
 * UI Component Library: [MudBlazor](https://github.com/Garderoben/MudBlazor)

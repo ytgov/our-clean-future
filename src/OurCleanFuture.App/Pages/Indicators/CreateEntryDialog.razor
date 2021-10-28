@@ -25,7 +25,7 @@
 
     public DateTime? TempDate { get; set; }
 
-    public int? TempValue { get; set; }
+    public double? TempValue { get; set; }
 
     public Entry Entry { get; set; } = new();
 
@@ -39,7 +39,7 @@
         if (TempDate is not null && TempValue is not null)
         {
             Entry.Date = (DateTime)TempDate;
-            Entry.Value = (int)TempValue;
+            Entry.Value = (double)TempValue;
             MudDialog.Close(DialogResult.Ok(Entry));
         }
     }

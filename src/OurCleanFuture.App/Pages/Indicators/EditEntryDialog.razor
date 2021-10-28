@@ -46,7 +46,7 @@
         if (TempDate is not null && TempValue is not null)
         {
             Entry.Date = (DateTime)TempDate;
-            Entry.Value = (int)TempValue;
+            Entry.Value = (double)TempValue;
             MudDialog.Close(DialogResult.Ok(Entry));
         }
     }

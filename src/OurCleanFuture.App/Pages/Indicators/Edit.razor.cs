@@ -23,7 +23,7 @@ namespace OurCleanFuture.App.Pages.Indicators
         [Parameter]
         public int Id { get; set; }
 
-        public string AuthorizedRoles { get; set; } = "Administrator";
+        public string AuthorizedRoles { get; set; } = "Administrator, ENV-CCS.Writer";
         public string SelectedParentType { get; set; } = "";
         public HashSet<Lead> SelectedLeads { get; set; } = new();
 
@@ -90,6 +90,45 @@ namespace OurCleanFuture.App.Pages.Indicators
                         break;
                     case "EcDev":
                         authorizedRoles += ", EcDev.Writer";
+                        break;
+                    case "EDU":
+                        authorizedRoles += ", EDU.Writer";
+                        break;
+                    case "EMR":
+                        authorizedRoles += ", EMR.Writer";
+                        break;
+                    case "ENV":
+                        authorizedRoles += ", ENV.Writer";
+                        break;
+                    case "ECO":
+                        authorizedRoles += ", ECO.Writer";
+                        break;
+                    case "FIN":
+                        authorizedRoles += ", FIN.Writer";
+                        break;
+                    case "HSS":
+                        authorizedRoles += ", HSS.Writer";
+                        break;
+                    case "HPW":
+                        authorizedRoles += ", HPW.Writer";
+                        break;
+                    case "JUS":
+                        authorizedRoles += ", JUS.Writer";
+                        break;
+                    case "PSC":
+                        authorizedRoles += ", PSC.Writer";
+                        break;
+                    case "TC":
+                        authorizedRoles += ", TC.Writer";
+                        break;
+                    case "YDC":
+                        authorizedRoles += ", YDC.Writer";
+                        break;
+                    case "YEC":
+                        authorizedRoles += ", YEC.Writer";
+                        break;
+                    case "YHC":
+                        authorizedRoles += ", YHC.Writer";
                         break;
                     default:
                         break;

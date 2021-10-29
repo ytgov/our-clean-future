@@ -17,7 +17,7 @@ else
                     <MudField Label="Data Type">@Indicator.DataType</MudField>
                     <MudField Label="Collection Interval">@Indicator.CollectionInterval</MudField>
                     <MudField Label="Unit of Measurement">@Indicator.UnitOfMeasurement.Name</MudField>
-                    <MudField Label="Last Updated By">@(Indicator.UpdatedBy) on @(GetLastUpdatedDate().ToLocalTime().ToString("f"))</MudField>
+                    <MudField Label="Last Updated By">@(Indicator.UpdatedBy) on @(GetIndicatorLastUpdatedDate().ToLocalTime().ToString("f"))</MudField>
                 </MudPaper>
             </MudItem>
             @if (Indicator.Target != null)
@@ -174,6 +174,16 @@ else
                             <MudTd DataLabel="Date">@Entry.Date.ToLongDateString()</MudTd>
                             <MudTd DataLabel="Value">@Entry.Value @Indicator.UnitOfMeasurement.Symbol</MudTd>
                             <MudTd DataLabel="Note">@Entry.Note</MudTd>
+                            <MudTd>
+                                <MudTooltip Placement="Placement.Left">
+                                    <ChildContent>
+                                        <MudIcon Icon="@Icons.Material.Outlined.Info"></MudIcon>
+                                    </ChildContent>
+                                    <TooltipContent>
+                                        <MudText>Last updated by @(Entry.UpdatedBy) on @(GetEntryLastUpdatedDate(Entry).ToLocalTime().ToString("f"))</MudText>
+                                    </TooltipContent>
+                                </MudTooltip>
+                            </MudTd>
                         </RowTemplate>
                     </MudTable>
                 </MudPaper>

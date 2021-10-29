@@ -62,6 +62,7 @@ namespace OurCleanFuture.App.Pages.Indicators
                 Actions = await context.Actions.ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.
                 Indicator = await context.Indicators.Include(i => i.Target).Include(i => i.Leads).FirstOrDefaultAsync(i => i.Id == Id);
+                Target = Indicator.Target;
 #pragma warning restore CS8601 // Possible null reference assignment.
                 foreach (var lead in Indicator.Leads) {
                     SelectedLeads.Add(lead);
@@ -83,7 +84,7 @@ namespace OurCleanFuture.App.Pages.Indicators
         private string GetAuthorizedRoles()
         {
             var authorizedRoles = "";
-            foreach(var lead in Indicator.Leads) {
+            foreach (var lead in Indicator.Leads) {
                 switch (lead.Branch?.Department.ShortName) {
                     case "CS":
                         authorizedRoles += ", CS.Writer";
@@ -183,7 +184,13 @@ namespace OurCleanFuture.App.Pages.Indicators
                 Indicator.Leads.Add(lead);
             }
 
-            Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
+            // Don't update Indicator.UpdatedBy if only the Entries were modified.
+            if (context.Entry(Indicator).State == EntityState.Modified
+                || context.Entry(Target).State == EntityState.Added
+                || context.Entry(Target).State == EntityState.Modified
+                || context.Entry(Target).State == EntityState.Deleted) {
+                Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
+            }
 
             await context.SaveChangesAsync();
             Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
@@ -193,11 +200,13 @@ namespace OurCleanFuture.App.Pages.Indicators
         private void CreateTarget()
         {
             Indicator.Target = new Target();
+            Target = Indicator.Target;
         }
 
         private void DeleteTarget()
         {
             Indicator.Target = null;
+            context.Entry(Target).State = EntityState.Deleted;
         }
 
         private async Task CreateEntry()
@@ -209,6 +218,7 @@ namespace OurCleanFuture.App.Pages.Indicators
 
             if (!result.Cancelled) {
                 var newEntry = (Entry)result.Data;
+                newEntry.UpdatedBy = user.FindFirst("name")?.Value ?? "";
                 Indicator.Entries.Add(newEntry);
                 Snackbar.Add($"Click submit to confirm adding entry dated {newEntry.Date.ToLongDateString()}", Severity.Info);
             }
@@ -223,6 +233,7 @@ namespace OurCleanFuture.App.Pages.Indicators
 
             if (!result.Cancelled) {
                 var editedEntry = (Entry)result.Data;
+                editedEntry.UpdatedBy = user.FindFirst("name")?.Value ?? "";
                 Snackbar.Add($"Click submit to confirm update of entry dated {editedEntry.Date.ToLongDateString()}", Severity.Info);
             }
         }

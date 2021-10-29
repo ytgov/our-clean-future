@@ -25,7 +25,7 @@ namespace OurCleanFuture.App.Pages.Indicators
 
         public string AuthorizedRoles { get; set; } = "Administrator, ENV-CCS.Writer";
         public string SelectedParentType { get; set; } = "";
-        public HashSet<Lead> SelectedLeads { get; set; } = new();
+        public IEnumerable<Lead> SelectedLeads { get; set; } = new List<Lead>();
 
 
         public List<Lead> Leads { get; set; } = new();
@@ -65,7 +65,7 @@ namespace OurCleanFuture.App.Pages.Indicators
                 Target = Indicator.Target;
 #pragma warning restore CS8601 // Possible null reference assignment.
                 foreach (var lead in Indicator.Leads) {
-                    SelectedLeads.Add(lead);
+                    SelectedLeads = SelectedLeads.Append(lead);
                 }
                 GetSelectedParentType();
                 await GetUserPrincipal();

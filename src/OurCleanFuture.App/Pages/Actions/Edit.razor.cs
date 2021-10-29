@@ -38,7 +38,7 @@ namespace OurCleanFuture.App.Pages.Actions
         public List<Objective> Objectives { get; set; } = new();
         public Action Action { get; set; } = null!;
         public List<Indicator> Indicators { get; set; } = new();
-        public HashSet<DirectorsCommittee> SelectedDirectorsCommittees { get; set; } = new();
+        public IEnumerable<DirectorsCommittee> SelectedDirectorsCommittees { get; set; } = new List<DirectorsCommittee>();
         public List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();
 
         [CascadingParameter]
@@ -66,7 +66,7 @@ namespace OurCleanFuture.App.Pages.Actions
                 Action = await context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
                 foreach (var committee in Action!.DirectorsCommittees) {
-                    SelectedDirectorsCommittees.Add(committee);
+                    SelectedDirectorsCommittees = SelectedDirectorsCommittees.Append(committee);
                 }
                 await GetUserPrincipal();
             }

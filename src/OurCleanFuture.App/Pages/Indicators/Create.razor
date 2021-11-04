@@ -6,31 +6,38 @@
 }
 else
 {
-<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-    <MudText Typo="Typo.h3" GutterBottom="true">New indicator</MudText>
-    <MudGrid>
-        <MudItem xs="12" sm="6">
-            <MudPaper Elevation="2" Class="pa-4">
-                <MudSelect T="Data.Entities.Lead" Label="Lead(s)">
-                    @foreach (var lead in Leads)
-                    {
-                    <MudSelectItem Value="@lead">@(lead.Branch?.Name ?? lead.Organization.Name)</MudSelectItem>
-                    }
-                </MudSelect>
-                <MudTextField Label="Title" T="string" />
-                <MudTextField Label="Description" T="string" />
-                <MudAutocomplete Label="Collection Interval" T="Data.Entities.CollectionInterval" SearchFunc="@SearchCollectionIntervals"
-                                 CoerceText="true" SelectValueOnTab="true" ResetValueOnEmptyText="true">
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudText Typo="Typo.h3" GutterBottom="true">New indicator</MudText>
+        <MudGrid>
+            <AuthorizeView Roles="Administrator, ENV-CCS.Writer">
+                <Authorized>
+                    <MudItem xs="12" sm="6">
+                        <MudPaper Elevation="2" Class="pa-4">
+                            <MudSelect T="Data.Entities.Lead" Label="Lead(s)">
+                                @foreach (var lead in Leads)
+                                {
+                                    <MudSelectItem Value="@lead">@(lead.Branch?.Name ?? lead.Organization.Name)</MudSelectItem>
+                                }
+                            </MudSelect>
+                            <MudTextField Label="Title" T="string" />
+                            <MudTextField Label="Description" T="string" />
+                            <MudAutocomplete Label="Collection Interval" T="Data.Entities.CollectionInterval" SearchFunc="@SearchCollectionIntervals"
+                                         CoerceText="true" SelectValueOnTab="true" ResetValueOnEmptyText="true">
 
-                </MudAutocomplete>
-            </MudPaper>
-        </MudItem>
+                            </MudAutocomplete>
+                        </MudPaper>
+                    </MudItem>
 
-            <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
-                <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/indicators">Cancel</MudButton>
-                <MudButton ButtonType="ButtonType.Submit" Disabled="true" />
-                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Create</MudButton>
-            </MudItem>
-    </MudGrid>
-</MudContainer>
+                    <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
+                        <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/indicators">Cancel</MudButton>
+                        <MudButton ButtonType="ButtonType.Submit" Disabled="true" />
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Create</MudButton>
+                    </MudItem>
+                </Authorized>
+                <NotAuthorized>
+                    <MudAlert Severity="Severity.Warning">You are not authorized to view this page.</MudAlert>
+                </NotAuthorized>
+            </AuthorizeView>
+        </MudGrid>
+    </MudContainer>
 }

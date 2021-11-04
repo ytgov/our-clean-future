@@ -4,13 +4,15 @@ namespace OurCleanFuture.Data.Entities
 {
     public enum ExternalStatus
     {
+        [Display(Name = "N/A")]
+        NotApplicable = 0,
         [Display(Name = "Complete")]
-        Complete = 0,
+        Complete = 1,
         [Display(Name = "In progress")]
-        InProgress = 1,
+        InProgress = 2,
         [Display(Name = "Not started")]
-        NotStarted = 2,
+        NotStarted = 3,
         [Display(Name = "Ongoing")]
-        Ongoing = 3
+        Ongoing = 4
     }
 }

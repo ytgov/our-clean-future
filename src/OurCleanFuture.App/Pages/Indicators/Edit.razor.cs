@@ -19,6 +19,7 @@ namespace OurCleanFuture.App.Pages.Indicators
         private bool isLoaded;
         private AppDbContext context = null!;
         private ClaimsPrincipal user = null!;
+        private bool targetIsDeleted = false;
 
         [Parameter]
         public int Id { get; set; }
@@ -62,9 +63,9 @@ namespace OurCleanFuture.App.Pages.Indicators
                 Actions = await context.Actions.ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.
                 Indicator = await context.Indicators.Include(i => i.Target).Include(i => i.Leads).FirstOrDefaultAsync(i => i.Id == Id);
-                Target = Indicator.Target;
+                Target = Indicator!.Target;
 #pragma warning restore CS8601 // Possible null reference assignment.
-                foreach (var lead in Indicator.Leads) {
+                foreach (var lead in Indicator!.Leads) {
                     SelectedLeads = SelectedLeads.Append(lead);
                 }
                 GetSelectedParentType();
@@ -185,10 +186,18 @@ namespace OurCleanFuture.App.Pages.Indicators
             }
 
             // Don't update Indicator.UpdatedBy if only the Entries were modified.
-            if (context.Entry(Indicator).State == EntityState.Modified
-                || context.Entry(Target).State == EntityState.Added
-                || context.Entry(Target).State == EntityState.Modified
-                || context.Entry(Target).State == EntityState.Deleted) {
+
+            if (context.Entry(Indicator).State == EntityState.Modified) {
+                Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
+            }
+            else if (Indicator.Target is not null) {
+                Console.WriteLine($"Indicator.Target state is: {context.Entry(Indicator.Target).State}");
+                if (context.Entry(Indicator.Target).State == EntityState.Added
+                || context.Entry(Indicator.Target).State == EntityState.Modified) {
+                    Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
+                }
+            }
+            else if (targetIsDeleted) {
                 Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
             }
 
@@ -200,13 +209,15 @@ namespace OurCleanFuture.App.Pages.Indicators
         private void CreateTarget()
         {
             Indicator.Target = new Target();
-            Target = Indicator.Target;
+            context.Attach(Indicator.Target);
         }
 
         private void DeleteTarget()
         {
+            // This flag is used by the Update() method instead of checking EntityState, as we cannot check the EntityState of a null reference (Indicator.Target). 
+            targetIsDeleted = true;
             Indicator.Target = null;
-            context.Entry(Target).State = EntityState.Deleted;
+            StateHasChanged();
         }
 
         private async Task CreateEntry()

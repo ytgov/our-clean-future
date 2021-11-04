@@ -43,7 +43,6 @@ namespace OurCleanFuture.App.Pages.Indicators
         {
             try {
                 context = ContextFactory.CreateDbContext();
-#pragma warning disable CS8601 // Possible null reference assignment.
                 Indicator = await context.Indicators
                     .Include(i => i.Target)
                     .Include(i => i.UnitOfMeasurement)
@@ -66,8 +65,6 @@ namespace OurCleanFuture.App.Pages.Indicators
                     .AsSingleQuery()
                     .FirstAsync(i => i.Id == Id);
                 IndicatorLastUpdated = await GetIndicatorLastUpdatedDate();
-
-#pragma warning restore CS8601 // Possible null reference assignment.
             }
             catch (Exception ex) {
                 Console.WriteLine(ex);

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace OurCleanFuture.App.Pages.Indicators
 {
-    public partial class Create
+    public partial class Create : IDisposable
     {
         private bool isLoaded;
         private AppDbContext context = null!;
@@ -43,5 +43,9 @@ namespace OurCleanFuture.App.Pages.Indicators
             return Task.FromResult(collectionIntervals.Where(p => p.ToString().StartsWith(value, StringComparison.InvariantCultureIgnoreCase)));
         }
 
+        public void Dispose()
+        {
+            context.DisposeAsync();
+        }
     }
 }

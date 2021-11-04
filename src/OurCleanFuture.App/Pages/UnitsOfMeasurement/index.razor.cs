@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace OurCleanFuture.App.Pages.UnitsOfMeasurement
 {
-    public partial class Index
+    public partial class Index : IDisposable
     {
         private bool isLoaded;
         private bool mayRender = true;
@@ -108,6 +108,11 @@ namespace OurCleanFuture.App.Pages.UnitsOfMeasurement
                     mayRender = true;
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            context.DisposeAsync();
         }
     }
 }

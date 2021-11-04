@@ -22,7 +22,7 @@ using System.Security.Claims;
 
 namespace OurCleanFuture.App.Pages.Actions
 {
-    public partial class Edit
+    public partial class Edit : IDisposable
     {
         private bool isLoaded;
         private AppDbContext context = null!;
@@ -100,6 +100,11 @@ namespace OurCleanFuture.App.Pages.Actions
             await context.SaveChangesAsync();
             Snackbar.Add($"Successfully updated action: {Action.Number}", Severity.Success);
             Navigation.NavigateTo($"/actions/details/{Id}");
+        }
+
+        public void Dispose()
+        {
+            context.DisposeAsync();
         }
     }
 }

@@ -22,7 +22,7 @@ using OurCleanFuture.App.Extensions;
 
 namespace OurCleanFuture.App.Pages.Actions
 {
-    public partial class Details
+    public partial class Details : IDisposable
     {
         private bool isLoaded;
         private AppDbContext context = null!;
@@ -89,6 +89,11 @@ namespace OurCleanFuture.App.Pages.Actions
         private void ViewArea(Area area)
         {
             Navigation.NavigateTo("/areas/" + area.Title.ToLower().Replace(' ', '-'));
+        }
+
+        public void Dispose()
+        {
+            context.DisposeAsync();
         }
     }
 }

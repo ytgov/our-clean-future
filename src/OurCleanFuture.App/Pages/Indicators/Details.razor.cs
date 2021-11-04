@@ -21,7 +21,7 @@ using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Indicators
 {
-    public partial class Details
+    public partial class Details : IDisposable
     {
         private bool isLoaded;
         private AppDbContext context = null!;
@@ -114,6 +114,11 @@ namespace OurCleanFuture.App.Pages.Indicators
         private void ViewArea(Area area)
         {
             Navigation.NavigateTo("/areas/" + area.Title.ToLower().Replace(' ', '-'));
+        }
+
+        public void Dispose()
+        {
+            context.DisposeAsync();
         }
     }
 }

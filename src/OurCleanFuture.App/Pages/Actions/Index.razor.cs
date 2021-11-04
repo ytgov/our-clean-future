@@ -20,7 +20,7 @@ using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Actions
 {
-    public partial class Index
+    public partial class Index : IDisposable
     {
         private bool isLoaded;
         private Action selectedItem = null!;
@@ -68,6 +68,11 @@ namespace OurCleanFuture.App.Pages.Actions
             if (action.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
                 return true;
             return false;
+        }
+
+        public void Dispose()
+        {
+            Context.DisposeAsync();
         }
     }
 }

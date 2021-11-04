@@ -21,7 +21,7 @@ using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Areas
 {
-    public partial class Details
+    public partial class Details : IDisposable
     {
         private bool isLoaded;
         private AppDbContext context = null!;
@@ -69,6 +69,11 @@ namespace OurCleanFuture.App.Pages.Areas
         private void ViewAction(Action action)
         {
             Navigation.NavigateTo("/actions/details/" + action.Id);
+        }
+
+        public void Dispose()
+        {
+            context.DisposeAsync();
         }
     }
 }

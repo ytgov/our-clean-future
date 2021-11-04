@@ -131,7 +131,7 @@ namespace OurCleanFuture.App.Pages.Branches
 
         public void Dispose()
         {
-            context.Dispose();
+            context.DisposeAsync();
         }
     }
 }

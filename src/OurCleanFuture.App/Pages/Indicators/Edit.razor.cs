@@ -252,7 +252,7 @@ namespace OurCleanFuture.App.Pages.Indicators
 
         public void Dispose()
         {
-            context.Dispose();
+            context.DisposeAsync();
         }
     }
 }

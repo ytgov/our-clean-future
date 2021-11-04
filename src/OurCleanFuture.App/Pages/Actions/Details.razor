@@ -78,6 +78,9 @@ else
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
                     <MudText Typo="Typo.h6">Indicators</MudText>
+                    @if(Action.Indicators.Count == 0) {
+                        <MudText Class="ml-2 mt-2 mb-n2">None</MudText>
+                    }
                     <MudList Clickable="true">
                         @foreach (var indicator in Action.Indicators)
                         {

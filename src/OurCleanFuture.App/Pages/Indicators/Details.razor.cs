@@ -76,6 +76,16 @@ namespace OurCleanFuture.App.Pages.Indicators
             await base.OnInitializedAsync();
         }
 
+        private string GetIndicatorLastUpdatedBy()
+        {
+            if (!string.IsNullOrWhiteSpace(Indicator.UpdatedBy)) {
+                return $"{Indicator.UpdatedBy} on {IndicatorLastUpdated.ToLocalTime():f}";
+            }
+            else {
+                return string.Empty;
+            }
+        }
+
         private async Task<DateTime> GetIndicatorLastUpdatedDate()
         {
             var targetUpdatedDate = DateTime.MinValue;

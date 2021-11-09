@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OurCleanFuture.Data.Entities;
+﻿namespace OurCleanFuture.Data.Entities;
 
 public class Entry
 {

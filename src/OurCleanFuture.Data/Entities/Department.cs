@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace OurCleanFuture.Data.Entities;
+﻿namespace OurCleanFuture.Data.Entities;
 
 public class Department
 {

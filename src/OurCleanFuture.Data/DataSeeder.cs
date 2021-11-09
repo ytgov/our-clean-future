@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Bogus;
+﻿using Microsoft.EntityFrameworkCore;
 using OurCleanFuture.Data.Entities;
 using Action = OurCleanFuture.Data.Entities.Action;
 

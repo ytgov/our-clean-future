@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace OurCleanFuture.Data.Entities;
+﻿namespace OurCleanFuture.Data.Entities;
 
 public class Lead
 {
@@ -11,6 +9,7 @@ public class Lead
     public Branch? Branch { get; set; }
     public List<Indicator> Indicators { get; set; } = new();
     public List<IndicatorLead> IndicatorLeads { get; set; } = new();
+
     public override string ToString()
     {
         if (string.IsNullOrWhiteSpace(Branch?.Name)) {

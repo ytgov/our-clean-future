@@ -1,13 +1,7 @@
-﻿using OurCleanFuture.Data;
-using OurCleanFuture.Data.Entities;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using OurCleanFuture.Data;
+using OurCleanFuture.Data.Entities;
 
 namespace OurCleanFuture.App.Pages.Indicators;
 

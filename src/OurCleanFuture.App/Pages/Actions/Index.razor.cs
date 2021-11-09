@@ -1,19 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using System.Net.Http;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.JSInterop;
-using OurCleanFuture.App;
-using OurCleanFuture.App.Shared;
-using MudBlazor;
 using Microsoft.EntityFrameworkCore;
 using OurCleanFuture.Data;
 using Action = OurCleanFuture.Data.Entities.Action;
@@ -31,6 +16,7 @@ public partial class Index : IDisposable
 
     [Inject]
     public NavigationManager Navigation { get; set; } = null!;
+
     public AppDbContext Context { get; private set; } = null!;
     public List<Action> Actions { get; set; } = new();
 

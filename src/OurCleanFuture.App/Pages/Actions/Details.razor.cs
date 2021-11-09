@@ -1,24 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using System.Net.Http;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.JSInterop;
-using OurCleanFuture.App;
-using OurCleanFuture.App.Shared;
-using MudBlazor;
-using Action = OurCleanFuture.Data.Entities.Action;
-using OurCleanFuture.Data.Entities;
-using OurCleanFuture.Data;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor;
 using OurCleanFuture.App.Extensions;
+using OurCleanFuture.Data;
+using OurCleanFuture.Data.Entities;
+using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Actions;
 

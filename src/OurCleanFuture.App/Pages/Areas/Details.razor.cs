@@ -1,20 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using System.Net.Http;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.JSInterop;
-using OurCleanFuture.App;
-using OurCleanFuture.App.Shared;
-using MudBlazor;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using Action = OurCleanFuture.Data.Entities.Action;
@@ -30,6 +16,7 @@ public partial class Details : IDisposable
 
     [Parameter]
     public string AreaTitle { get; set; } = null!;
+
     [Inject]
     public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
@@ -66,6 +53,7 @@ public partial class Details : IDisposable
 
         await base.OnInitializedAsync();
     }
+
     private void ViewAction(Action action)
     {
         Navigation.NavigateTo("/actions/details/" + action.Id);

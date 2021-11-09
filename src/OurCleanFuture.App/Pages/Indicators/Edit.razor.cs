@@ -1,16 +1,11 @@
-﻿using OurCleanFuture.Data;
-using OurCleanFuture.Data.Entities;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Action = OurCleanFuture.Data.Entities.Action;
-using Microsoft.AspNetCore.Components.Authorization;
+using OurCleanFuture.Data;
+using OurCleanFuture.Data.Entities;
 using System.Security.Claims;
+using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Indicators;
 
@@ -27,7 +22,6 @@ public partial class Edit : IDisposable
     public string AuthorizedRoles { get; set; } = "Administrator, ENV-CCS.Writer";
     public string SelectedParentType { get; set; } = "";
     public IEnumerable<Lead> SelectedLeads { get; set; } = new List<Lead>();
-
 
     public List<Lead> Leads { get; set; } = new();
     public List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
@@ -90,48 +84,63 @@ public partial class Edit : IDisposable
                 case "CS":
                     authorizedRoles += ", CS.Writer";
                     break;
+
                 case "EcDev":
                     authorizedRoles += ", EcDev.Writer";
                     break;
+
                 case "EDU":
                     authorizedRoles += ", EDU.Writer";
                     break;
+
                 case "EMR":
                     authorizedRoles += ", EMR.Writer";
                     break;
+
                 case "ENV":
                     authorizedRoles += ", ENV.Writer";
                     break;
+
                 case "ECO":
                     authorizedRoles += ", ECO.Writer";
                     break;
+
                 case "FIN":
                     authorizedRoles += ", FIN.Writer";
                     break;
+
                 case "HSS":
                     authorizedRoles += ", HSS.Writer";
                     break;
+
                 case "HPW":
                     authorizedRoles += ", HPW.Writer";
                     break;
+
                 case "JUS":
                     authorizedRoles += ", JUS.Writer";
                     break;
+
                 case "PSC":
                     authorizedRoles += ", PSC.Writer";
                     break;
+
                 case "TC":
                     authorizedRoles += ", TC.Writer";
                     break;
+
                 case "YDC":
                     authorizedRoles += ", YDC.Writer";
                     break;
+
                 case "YEC":
                     authorizedRoles += ", YEC.Writer";
                     break;
+
                 case "YHC":
                     authorizedRoles += ", YHC.Writer";
                     break;
+
                 default:
                     break;
             }
@@ -165,14 +174,17 @@ public partial class Edit : IDisposable
                 Indicator.Objective = null;
                 Indicator.Action = null;
                 break;
+
             case "Objective":
                 Indicator.Goal = null;
                 Indicator.Action = null;
                 break;
+
             case "Action":
                 Indicator.Goal = null;
                 Indicator.Objective = null;
                 break;
+
             default:
                 Indicator.Goal = null;
                 Indicator.Objective = null;
@@ -214,7 +226,7 @@ public partial class Edit : IDisposable
 
     private void DeleteTarget()
     {
-        // This flag is used by the Update() method instead of checking EntityState, as we cannot check the EntityState of a null reference (Indicator.Target). 
+        // This flag is used by the Update() method instead of checking EntityState, as we cannot check the EntityState of a null reference (Indicator.Target).
         targetIsDeleted = true;
         Indicator.Target = null;
         StateHasChanged();

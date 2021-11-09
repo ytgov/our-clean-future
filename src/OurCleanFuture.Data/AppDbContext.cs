@@ -1,7 +1,6 @@
-﻿using OurCleanFuture.Data.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using OurCleanFuture.Data.Entities;
 using Action = OurCleanFuture.Data.Entities.Action;
-using System.Collections.Generic;
 
 namespace OurCleanFuture.Data;
 
@@ -36,7 +35,6 @@ public class AppDbContext : DbContext
     {
         this.connectionStrings = connectionStrings;
     }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

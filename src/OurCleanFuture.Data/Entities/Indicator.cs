@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace OurCleanFuture.Data.Entities;
 
@@ -15,9 +14,11 @@ public class Indicator
 
     [MinLength(1, ErrorMessage = "Description is required.")]
     public string Description { get; set; } = "";
+
     public int UnitOfMeasurementId { get; set; }
     public UnitOfMeasurement UnitOfMeasurement { get; set; } = null!;
     public DataType DataType { get; set; }
+
     [ValidateComplexType]
     public Target? Target { get; set; } = null!;
 

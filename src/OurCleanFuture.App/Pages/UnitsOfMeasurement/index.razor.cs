@@ -1,13 +1,8 @@
-﻿using OurCleanFuture.Data;
-using OurCleanFuture.Data.Entities;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OurCleanFuture.Data;
+using OurCleanFuture.Data.Entities;
 
 namespace OurCleanFuture.App.Pages.UnitsOfMeasurement;
 
@@ -59,7 +54,6 @@ public partial class Index : IDisposable
                 }
             }
             catch (DbUpdateException) {
-
                 Snackbar.Add($"Unable to add new unit {newUnitOfMeasurement.Symbol}. Does it already exist?", Severity.Error);
             }
         }
@@ -80,7 +74,6 @@ public partial class Index : IDisposable
                 }
             }
             catch (DbUpdateException) {
-
                 Snackbar.Add($"Unable to edit unit {unitOfMeasurement.Symbol}", Severity.Error);
             }
         }

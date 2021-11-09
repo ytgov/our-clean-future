@@ -84,25 +84,25 @@ public partial class Details : IDisposable
         else {
             return string.Empty;
         }
-    }
 
-    private async Task<DateTime> GetIndicatorLastUpdatedDate()
-    {
-        var targetUpdated = DateTime.MinValue;
-        if (Indicator?.Target != null) {
-            targetUpdated = context.Entry(Indicator.Target).Property<DateTime>("ValidFrom").CurrentValue;
+        async Task<DateTime> GetIndicatorLastUpdatedDate()
+        {
+            var targetUpdated = DateTime.MinValue;
+            if (Indicator?.Target != null) {
+                targetUpdated = context.Entry(Indicator.Target).Property<DateTime>("ValidFrom").CurrentValue;
+            }
+            else {
+                targetUpdated = await context.Targets
+                    .TemporalAll()
+                    .Where(t => t.IndicatorId == Indicator!.Id)
+                    .OrderBy(t => EF.Property<DateTime>(t, "ValidTo"))
+                    .Select(t => EF.Property<DateTime>(t, "ValidTo"))
+                    .LastOrDefaultAsync();
+            }
+            var indicatorUpdated = context.Entry(Indicator!).Property<DateTime>("ValidFrom").CurrentValue;
+            //An indicator might not have a target, in which case we return the indicatorUpdatedDate
+            return indicatorUpdated > targetUpdated ? indicatorUpdated : targetUpdated;
         }
-        else {
-            targetUpdated = await context.Targets
-                .TemporalAll()
-                .Where(t => t.IndicatorId == Indicator!.Id)
-                .OrderBy(t => EF.Property<DateTime>(t, "ValidTo"))
-                .Select(t => EF.Property<DateTime>(t, "ValidTo"))
-                .LastOrDefaultAsync();
-        }
-        var indicatorUpdated = context.Entry(Indicator!).Property<DateTime>("ValidFrom").CurrentValue;
-        //An indicator might not have a target, in which case we return the indicatorUpdatedDate
-        return indicatorUpdated > targetUpdated ? indicatorUpdated : targetUpdated;
     }
 
     private DateTime GetEntryLastUpdatedDate(Entry entry)

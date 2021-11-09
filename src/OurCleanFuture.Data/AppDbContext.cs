@@ -135,7 +135,7 @@ public class AppDbContext : DbContext
                         tb.HasPeriodEnd("ValidTo");
                     }));
 
-        //Generate bogus data for testing
+        //Generate seed data
         new DataSeeder(modelBuilder).Init();
     }
 }

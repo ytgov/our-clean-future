@@ -1,9 +1,7 @@
-﻿namespace OurCleanFuture.Data.Entities
+﻿namespace OurCleanFuture.Data.Entities;
+
+public enum DataType
 {
-    //Alternative name: TypeOfChange?
-    public enum DataType
-    {
-        Cumulative = 0,
-        Incremental = 1
-    }
+    Cumulative = 0,
+    Incremental = 1
 }

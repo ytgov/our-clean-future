@@ -1,9 +1,8 @@
-﻿namespace OurCleanFuture.Data.Entities
+﻿namespace OurCleanFuture.Data.Entities;
+
+public enum CollectionInterval
 {
-    public enum CollectionInterval
-    {
-        Annual = 0,
-        Biannual = 1,
-        Quarter = 2
-    }
+    Annual = 0,
+    Biannual = 1,
+    Quarter = 2
 }

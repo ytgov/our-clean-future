@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OurCleanFuture.Data.Entities
-{
-    public class Organization
-    {
-        public int Id { get; set; }
+namespace OurCleanFuture.Data.Entities;
 
-        public string Name { get; set; } = "";
-    }
+public class Organization
+{
+    public int Id { get; set; }
+
+    public string Name { get; set; } = "";
 }

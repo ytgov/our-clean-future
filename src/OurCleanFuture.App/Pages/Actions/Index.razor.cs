@@ -18,61 +18,60 @@ using Microsoft.EntityFrameworkCore;
 using OurCleanFuture.Data;
 using Action = OurCleanFuture.Data.Entities.Action;
 
-namespace OurCleanFuture.App.Pages.Actions
+namespace OurCleanFuture.App.Pages.Actions;
+
+public partial class Index : IDisposable
 {
-    public partial class Index : IDisposable
+    private bool isLoaded;
+    private Action selectedItem = null!;
+    private string searchString = "";
+
+    [Inject]
+    public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+
+    [Inject]
+    public NavigationManager Navigation { get; set; } = null!;
+    public AppDbContext Context { get; private set; } = null!;
+    public List<Action> Actions { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
     {
-        private bool isLoaded;
-        private Action selectedItem = null!;
-        private string searchString = "";
-
-        [Inject]
-        public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
-
-        [Inject]
-        public NavigationManager Navigation { get; set; } = null!;
-        public AppDbContext Context { get; private set; } = null!;
-        public List<Action> Actions { get; set; } = new();
-
-        protected override async Task OnInitializedAsync()
-        {
-            try {
-                Context = ContextFactory.CreateDbContext();
-                Actions = await Context.Actions
-                    .AsNoTracking()
-                    .AsSingleQuery()
-                    .ToListAsync();
-            }
-            catch (Exception ex) {
-                Console.WriteLine(ex);
-            }
-            finally {
-                isLoaded = true;
-            }
+        try {
+            Context = ContextFactory.CreateDbContext();
+            Actions = await Context.Actions
+                .AsNoTracking()
+                .AsSingleQuery()
+                .ToListAsync();
         }
-
-        private void Details(int actionId)
-        {
-            Navigation.NavigateTo("/actions/details/" + actionId);
+        catch (Exception ex) {
+            Console.WriteLine(ex);
         }
-
-        private void Edit(int actionId)
-        {
-            Navigation.NavigateTo("/actions/edit/" + actionId);
+        finally {
+            isLoaded = true;
         }
+    }
 
-        private bool FilterFunc(Action action)
-        {
-            if (string.IsNullOrWhiteSpace(searchString))
-                return true;
-            if (action.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            return false;
-        }
+    private void Details(int actionId)
+    {
+        Navigation.NavigateTo("/actions/details/" + actionId);
+    }
 
-        public void Dispose()
-        {
-            Context.DisposeAsync();
-        }
+    private void Edit(int actionId)
+    {
+        Navigation.NavigateTo("/actions/edit/" + actionId);
+    }
+
+    private bool FilterFunc(Action action)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (action.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+
+    public void Dispose()
+    {
+        Context.DisposeAsync();
     }
 }

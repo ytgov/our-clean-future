@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OurCleanFuture.Data
+namespace OurCleanFuture.Data;
+
+public sealed class ConnectionStrings
 {
-    public sealed class ConnectionStrings
-    {
-        public string AppContext { get; set; } = null!;
-    }
+    public string AppContext { get; set; } = null!;
 }

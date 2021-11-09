@@ -31,7 +31,7 @@ public partial class Details : IDisposable
 
     public Indicator Indicator { get; set; } = null!;
 
-    public DateTime IndicatorLastUpdated { get; set; }
+    public string IndicatorLastUpdatedBy { get; set; } = "";
 
     [Inject]
     public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
@@ -64,7 +64,7 @@ public partial class Details : IDisposable
                 .ThenInclude(o => o.Goals)
                 .AsSingleQuery()
                 .FirstAsync(i => i.Id == Id);
-            IndicatorLastUpdated = await GetIndicatorLastUpdatedDate();
+            IndicatorLastUpdatedBy = await GetIndicatorLastUpdatedBy();
         }
         catch (Exception ex) {
             Console.WriteLine(ex);
@@ -76,10 +76,10 @@ public partial class Details : IDisposable
         await base.OnInitializedAsync();
     }
 
-    private string GetIndicatorLastUpdatedBy()
+    private async Task<string> GetIndicatorLastUpdatedBy()
     {
         if (!string.IsNullOrWhiteSpace(Indicator.UpdatedBy)) {
-            return $"{Indicator.UpdatedBy} on {IndicatorLastUpdated.ToLocalTime():f}";
+            return $"{Indicator.UpdatedBy} on {(await GetIndicatorLastUpdatedDate()).ToLocalTime():f}";
         }
         else {
             return string.Empty;
@@ -88,22 +88,21 @@ public partial class Details : IDisposable
 
     private async Task<DateTime> GetIndicatorLastUpdatedDate()
     {
-        var targetUpdatedDate = DateTime.MinValue;
+        var targetUpdated = DateTime.MinValue;
         if (Indicator?.Target != null) {
-            targetUpdatedDate = context.Entry(Indicator.Target).Property<DateTime>("ValidFrom").CurrentValue;
+            targetUpdated = context.Entry(Indicator.Target).Property<DateTime>("ValidFrom").CurrentValue;
         }
         else {
-            targetUpdatedDate = await context.Targets
+            targetUpdated = await context.Targets
                 .TemporalAll()
                 .Where(t => t.IndicatorId == Indicator!.Id)
                 .OrderBy(t => EF.Property<DateTime>(t, "ValidTo"))
                 .Select(t => EF.Property<DateTime>(t, "ValidTo"))
-                .LastAsync();
+                .LastOrDefaultAsync();
         }
-
-        var indicatorUpdatedDate = context.Entry(Indicator!).Property<DateTime>("ValidFrom").CurrentValue;
+        var indicatorUpdated = context.Entry(Indicator!).Property<DateTime>("ValidFrom").CurrentValue;
         //An indicator might not have a target, in which case we return the indicatorUpdatedDate
-        return indicatorUpdatedDate > targetUpdatedDate ? indicatorUpdatedDate : targetUpdatedDate;
+        return indicatorUpdated > targetUpdated ? indicatorUpdated : targetUpdated;
     }
 
     private DateTime GetEntryLastUpdatedDate(Entry entry)

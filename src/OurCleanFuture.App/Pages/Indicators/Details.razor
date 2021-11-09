@@ -17,7 +17,7 @@ else
                     <MudField Label="Data Type">@Indicator.DataType</MudField>
                     <MudField Label="Collection Interval">@Indicator.CollectionInterval</MudField>
                     <MudField Label="Unit of Measurement">@Indicator.UnitOfMeasurement.Name</MudField>
-                    <MudField Label="Last Updated By">@GetIndicatorLastUpdatedBy()</MudField>
+                    <MudField Label="Last Updated By">@IndicatorLastUpdatedBy</MudField>
                 </MudPaper>
             </MudItem>
             @if (Indicator.Target != null)

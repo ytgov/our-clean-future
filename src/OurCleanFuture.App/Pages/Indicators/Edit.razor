@@ -101,9 +101,7 @@
                             @if (Indicator.Target != null)
                             {
                                 <MudNumericField Label="Value" @bind-Value="Indicator.Target.Value" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true"></MudNumericField>
-                                <MudTooltip Text="Use only if the OCF Description specifies a date range">
-                                    <MudDatePicker Label="Start Date" @bind-Date="Indicator.Target.StartDate" Editable="true"></MudDatePicker>
-                                </MudTooltip>
+                                <MudDatePicker Label="Start Date (use only if specifying a range)" @bind-Date="Indicator.Target.StartDate" Editable="true" />
                                 <MudDatePicker Label="Completion Date" @bind-Date="Indicator.Target.EndDate" Editable="true" For="@(() => Indicator.Target.EndDate)" />
                                 <MudTextField Label="OCF Description" @bind-Value="Indicator.Target.OcfDescription" Lines="2" For="@(() => Indicator.Target.OcfDescription)" />
                                 <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="(() => DeleteTarget())" Class="mt-4">Delete target</MudButton>

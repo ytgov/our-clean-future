@@ -57,14 +57,16 @@ public partial class Edit : IDisposable
             Actions = await context.Actions.ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.
             Indicator = await context.Indicators.Include(i => i.Target).Include(i => i.Leads).FirstOrDefaultAsync(i => i.Id == Id);
-            Target = Indicator!.Target;
 #pragma warning restore CS8601 // Possible null reference assignment.
-            foreach (var lead in Indicator!.Leads) {
-                SelectedLeads = SelectedLeads.Append(lead);
+            if (Indicator != null) {
+                Target = Indicator.Target!;
+                foreach (var lead in Indicator.Leads) {
+                    SelectedLeads = SelectedLeads.Append(lead);
+                }
+                GetSelectedParentType();
+                await GetUserPrincipal();
+                AuthorizedRoles += GetAuthorizedRoles();
             }
-            GetSelectedParentType();
-            await GetUserPrincipal();
-            AuthorizedRoles += GetAuthorizedRoles();
         }
         catch (Exception ex) {
             Console.WriteLine(ex);

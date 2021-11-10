@@ -1,12 +1,16 @@
 ﻿@page "/indicators/edit/{id:int}"
 
-@if (isLoaded == false)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+    @if (isLoaded == false)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else if (Indicator is null)
+    {
+        <MudAlert Severity="Severity.Error">There is no indicator with an id of @Id</MudAlert>
+    }
+    else
+    {
         <MudText Typo="Typo.h3" Class="mb-8"><b>Editing indicator:</b> @Indicator.Title</MudText>
         @*<MudAlert Icon="@Icons.Material.Filled.Lightbulb" Severity="Severity.Normal" Class="mb-6">
             If you need to modify a value within a dropdown menu, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
@@ -114,40 +118,40 @@ else
 
                 <AuthorizeView Roles="@AuthorizedRoles" Context="_">
                     <Authorized>
-                    <MudItem xs="12" sm="6">
-                        <MudPaper Class="pa-4" Elevation="2">
-                            <MudTable Items="Indicator.Entries.OrderBy(e => e.Date)" Elevation="0" Class="mt-n2" Dense="true">
-                                <ToolBarContent>
-                                    <MudText Typo="Typo.h6">Entries</MudText>
-                                    <MudSpacer />
-                                    <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => CreateEntry())">New Entry</MudButton>
-                                </ToolBarContent>
-                                <HeaderContent>
-                                    <MudTh>Date</MudTh>
-                                    <MudTh>Value</MudTh>
-                                    <MudTh>Note</MudTh>
-                                    <MudTh></MudTh>
-                                </HeaderContent>
-                                <RowTemplate Context="Entry">
-                                    <MudTd DataLabel="Date">@Entry.Date.ToLongDateString()</MudTd>
-                                    <MudTd DataLabel="Value">@Entry.Value @Indicator.UnitOfMeasurement.Symbol</MudTd>
-                                    <MudTd DataLabel="Note">@Entry.Note</MudTd>
-                                    <MudTd>
-                                        <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small">
-                                            <MudMenuItem OnClick="(() => EditEntry(Entry))">Edit</MudMenuItem>
-                                            <MudMenuItem OnClick="(() => DeleteEntry(Entry))">Delete</MudMenuItem>
-                                        </MudMenu>
-                                    </MudTd>
-                                </RowTemplate>
-                            </MudTable>
-                        </MudPaper>
-                    </MudItem>
+                        <MudItem xs="12" sm="6">
+                            <MudPaper Class="pa-4" Elevation="2">
+                                <MudTable Items="Indicator.Entries.OrderBy(e => e.Date)" Elevation="0" Class="mt-n2" Dense="true">
+                                    <ToolBarContent>
+                                        <MudText Typo="Typo.h6">Entries</MudText>
+                                        <MudSpacer />
+                                        <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => CreateEntry())">New Entry</MudButton>
+                                    </ToolBarContent>
+                                    <HeaderContent>
+                                        <MudTh>Date</MudTh>
+                                        <MudTh>Value</MudTh>
+                                        <MudTh>Note</MudTh>
+                                        <MudTh></MudTh>
+                                    </HeaderContent>
+                                    <RowTemplate Context="Entry">
+                                        <MudTd DataLabel="Date">@Entry.Date.ToLongDateString()</MudTd>
+                                        <MudTd DataLabel="Value">@Entry.Value @Indicator.UnitOfMeasurement.Symbol</MudTd>
+                                        <MudTd DataLabel="Note">@Entry.Note</MudTd>
+                                        <MudTd>
+                                            <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small">
+                                                <MudMenuItem OnClick="(() => EditEntry(Entry))">Edit</MudMenuItem>
+                                                <MudMenuItem OnClick="(() => DeleteEntry(Entry))">Delete</MudMenuItem>
+                                            </MudMenu>
+                                        </MudTd>
+                                    </RowTemplate>
+                                </MudTable>
+                            </MudPaper>
+                        </MudItem>
 
-                    <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
-                        <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/indicators">Cancel</MudButton>
-                        <MudButton ButtonType="ButtonType.Submit" Disabled="true" />
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
-                    </MudItem>
+                        <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
+                            <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/indicators">Cancel</MudButton>
+                            <MudButton ButtonType="ButtonType.Submit" Disabled="true" />
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
+                        </MudItem>
                     </Authorized>
                     <NotAuthorized>
                         <MudAlert Severity="Severity.Warning">You are not authorized to view this page.</MudAlert>
@@ -155,5 +159,5 @@ else
                 </AuthorizeView>
             </MudGrid>
         </EditForm>
-    </MudContainer>
-}
+    }
+</MudContainer>

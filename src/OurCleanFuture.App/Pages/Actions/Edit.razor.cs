@@ -53,8 +53,10 @@ public partial class Edit : IDisposable
 #pragma warning disable CS8601 // Possible null reference assignment.
             Action = await context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
-            foreach (var committee in Action!.DirectorsCommittees) {
-                SelectedDirectorsCommittees = SelectedDirectorsCommittees.Append(committee);
+            if (Action != null) {
+                foreach (var committee in Action!.DirectorsCommittees) {
+                    SelectedDirectorsCommittees = SelectedDirectorsCommittees.Append(committee);
+                }
             }
             await GetUserPrincipal();
         }

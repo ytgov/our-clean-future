@@ -1,13 +1,17 @@
 ﻿@page "/actions/edit/{id:int}"
 @using OurCleanFuture.App.Extensions;
 
-@if (isLoaded == false)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+    @if (isLoaded == false)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else if (Action is null)
+    {
+        <MudAlert Severity="Severity.Error">There is no action with an id of @Id</MudAlert>
+    }
+    else
+    {
         <MudText Typo="Typo.h3" Class="mb-8"><b>Editing action:</b> @Action.Number</MudText>
         @*<MudAlert Icon="@Icons.Material.Filled.Lightbulb" Severity="Severity.Normal" Class="mb-6">
             If you need to modify a value within a dropdown menu, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
@@ -70,6 +74,6 @@ else
                 </AuthorizeView>
             </MudGrid>
         </EditForm>
-    </MudContainer>
-}
+    }
+</MudContainer>
 

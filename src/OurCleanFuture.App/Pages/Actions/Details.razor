@@ -1,13 +1,17 @@
 ﻿@page "/actions/details/{id:int}"
 @using OurCleanFuture.App.Extensions;
 
-@if (isLoaded == false)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+    @if (isLoaded == false)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else if (Action is null)
+    {
+        <MudAlert Severity="Severity.Error">There is no action with an id of @Id</MudAlert>
+    }
+    else
+    {
         <MudText Typo="Typo.h3" Class="mb-8"><b>Action:</b> @Action.Number</MudText>
         <MudGrid>
             <MudItem xs="12" sm="6">
@@ -78,7 +82,8 @@ else
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
                     <MudText Typo="Typo.h6">Indicators</MudText>
-                    @if(Action.Indicators.Count == 0) {
+                    @if (Action.Indicators.Count == 0)
+                    {
                         <MudText Class="ml-2 mt-2 mb-n2">None</MudText>
                     }
                     <MudList Clickable="true">
@@ -94,5 +99,5 @@ else
                 <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Material.Filled.Edit" OnClick="(() => Edit())">Edit</MudButton>
             </MudItem>
         </MudGrid>
-    </MudContainer>
-}
+    }
+</MudContainer>

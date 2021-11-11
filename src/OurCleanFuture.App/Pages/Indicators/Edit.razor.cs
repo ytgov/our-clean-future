@@ -50,7 +50,7 @@ public partial class Edit : IDisposable
     {
         try {
             context = ContextFactory.CreateDbContext();
-            Leads = await context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Name).ToListAsync();
+            Leads = await context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Department.ShortName).ThenBy(l => l.Branch!.Name).ToListAsync();
             UnitsOfMeasurement = await context.UnitsOfMeasurement.ToListAsync();
             Goals = await context.Goals.OrderBy(g => g.Title).ToListAsync();
             Objectives = await context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();

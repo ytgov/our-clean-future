@@ -46,6 +46,8 @@ public class Startup
 #endif
         services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"))
             .AddSingleton(sp => sp.GetRequiredService<IOptions<ConnectionStrings>>().Value);
+
+        services.AddLocalization();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -64,6 +66,7 @@ public class Startup
         app.UseStaticFiles();
 
         app.UseRouting();
+        app.UseRequestLocalization("en-CA");
 
         app.UseAuthentication();
         app.UseAuthorization();

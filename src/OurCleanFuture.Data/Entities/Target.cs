@@ -7,8 +7,6 @@ public class Target
     public int Id { get; set; }
     public double? Value { get; set; }
     public DateTime? StartDate { get; set; }
-
-    [Required(ErrorMessage = "Completion Date is required.")]
     public DateTime? EndDate { get; set; }
 
     [MinLength(1, ErrorMessage = "OCF Description is required.")]

@@ -136,6 +136,6 @@ public class AppDbContext : DbContext
                     }));
 
         //Generate seed data
-        new DataSeeder(modelBuilder).Init();
+        //new DataSeeder(modelBuilder).Init();
     }
 }

@@ -1,4 +1,5 @@
 ﻿@using Data.Entities
+@using OurCleanFuture.App.Extensions;
 
 <MudDialog>
     <TitleContent>
@@ -7,40 +8,135 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudDatePicker Label="Date" @bind-Date="TempDate" Editable="true" />
-        <MudNumericField Label="Value" @bind-Value="TempValue" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true" />
-        <MudTextField @bind-Value="Entry.Note" Label="Note (optional)" />
+        <MudForm @bind-IsValid="isValid">
+            @if (Indicator.CollectionInterval == CollectionInterval.Biannual)
+            {
+                <MudSelect T="Data.Entities.BiannualInterval" Label="Period" @bind-Value="SelectedBiannualInterval">
+                    @foreach (Data.Entities.BiannualInterval interval in Enum.GetValues(typeof(Data.Entities.BiannualInterval)))
+                    {
+                        <MudSelectItem Value="interval">@interval.GetDisplayName()</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            else if (Indicator.CollectionInterval == CollectionInterval.Quarter)
+            {
+                <MudSelect T="Data.Entities.QuarterInterval" Label="Period" @bind-Value="SelectedQuarterInterval">
+                    @foreach (Data.Entities.QuarterInterval interval in Enum.GetValues(typeof(Data.Entities.QuarterInterval)))
+                    {
+                        <MudSelectItem Value="interval">@interval.GetDisplayName()</MudSelectItem>
+                    }
+                </MudSelect>
+            }
+            <MudAutocomplete T="int" SearchFunc="SearchYears" MaxItems="null" Label="Year" @bind-Value="SelectedYear" SelectValueOnTab="true" CoerceValue="true"
+                             Validation="@(new Func<int, IEnumerable<string>>(ValidateYear))" Required="true">
+                @foreach (var year in Years)
+                {
+                    <MudSelectItem T="int" Value="year">@year</MudSelectItem>
+                }
+            </MudAutocomplete>
+            <MudNumericField Label="Value" @bind-Value="TempValue" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true"
+                             Required="true" RequiredError="Value is required" />
+            <MudTextField @bind-Value="Entry.Note" Label="Note (optional)" />
+            <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
+                <MudButton OnClick="Cancel">Cancel</MudButton>
+                <MudButton Color="Color.Primary" Disabled="(!isValid)" OnClick="AddEntry">Add</MudButton>
+            </MudItem>
+        </MudForm>
     </DialogContent>
-    <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="AddEntry">Add</MudButton>
-    </DialogActions>
 </MudDialog>
 
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
+    public int[] Years { get; set; } = null!;
+
+    [Parameter]
     public Indicator Indicator { get; set; } = null!;
 
-    public DateTime? TempDate { get; set; }
+    private bool isValid = false;
+
+    public int SelectedYear { get; set; }
+    public BiannualInterval SelectedBiannualInterval { get; set; }
+    public QuarterInterval SelectedQuarterInterval { get; set; }
 
     public double? TempValue { get; set; }
 
     public Entry Entry { get; set; } = new();
+
+    protected override Task OnInitializedAsync()
+    {
+        return base.OnInitializedAsync();
+    }
 
     private void Cancel()
     {
         MudDialog.Cancel();
     }
 
+    private IEnumerable<string> ValidateYear(int year)
+    {
+        var currentYear = DateTime.Now.Year;
+        if (year < 2010 || year > (currentYear))
+        {
+            yield return $"Year must be between 2010 and {currentYear}";
+        }
+    }
+
     private void AddEntry()
     {
-        if (TempDate is not null && TempValue is not null)
+        if (TempValue is not null)
         {
-            Entry.Date = (DateTime)TempDate;
             Entry.Value = (double)TempValue;
+            if (Indicator.CollectionInterval == CollectionInterval.Annual)
+            {
+                Entry.StartDate = new DateTime(SelectedYear, 1, 1);
+                Entry.EndDate = new DateTime(SelectedYear, 12, 31);
+            }
+            else if (Indicator.CollectionInterval == CollectionInterval.Biannual)
+            {
+                switch (SelectedBiannualInterval)
+                {
+                    case BiannualInterval.JanuaryToJune:
+                        Entry.StartDate = new DateTime(SelectedYear, 1, 1);
+                        Entry.EndDate = new DateTime(SelectedYear, 6, 30);
+                        break;
+                    case BiannualInterval.JulyToDecember:
+                        Entry.StartDate = new DateTime(SelectedYear, 7, 1);
+                        Entry.EndDate = new DateTime(SelectedYear, 12, 31);
+                        break;
+                }
+            }
+            else
+            {
+                switch (SelectedQuarterInterval)
+                {
+                    case QuarterInterval.JanuaryToMarch:
+                        Entry.StartDate = new DateTime(SelectedYear, 1, 1);
+                        Entry.EndDate = new DateTime(SelectedYear, 3, 31);
+                        break;
+                    case QuarterInterval.AprilToJune:
+                        Entry.StartDate = new DateTime(SelectedYear, 4, 1);
+                        Entry.EndDate = new DateTime(SelectedYear, 6, 30);
+                        break;
+                    case QuarterInterval.JulyToSeptember:
+                        Entry.StartDate = new DateTime(SelectedYear, 7, 1);
+                        Entry.EndDate = new DateTime(SelectedYear, 9, 30);
+                        break;
+                    case QuarterInterval.OctoberToDecember:
+                        Entry.StartDate = new DateTime(SelectedYear, 10, 1);
+                        Entry.EndDate = new DateTime(SelectedYear, 12, 31);
+                        break;
+                }
+            }
             MudDialog.Close(DialogResult.Ok(Entry));
         }
+    }
+
+    private async Task<IEnumerable<int>> SearchYears(string value)
+    {
+        if (string.IsNullOrEmpty(value))
+            return Years;
+        return await Task.FromResult(Years.Where(y => Convert.ToString(y).Contains(value)));
     }
 }

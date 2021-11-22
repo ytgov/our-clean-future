@@ -126,9 +126,6 @@ public class AppDbContext : DbContext
                     }));
 
         modelBuilder.Entity<Target>()
-                    .Property(t => t.EndDate)
-                    .IsRequired();
-        modelBuilder.Entity<Target>()
                     .ToTable(tb => tb.IsTemporal(tb => {
                         tb.UseHistoryTable("TargetsHistory");
                         tb.HasPeriodStart("ValidFrom");

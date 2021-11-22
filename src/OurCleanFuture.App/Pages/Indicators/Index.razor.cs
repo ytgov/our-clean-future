@@ -49,7 +49,7 @@ public partial class Index : IDisposable
 
     private static DateTime? GetDateLastEntry(Indicator indicator)
     {
-        return indicator.Entries.OrderByDescending(e => e.Date).FirstOrDefault()?.Date;
+        return indicator.Entries.OrderByDescending(e => e.StartDate).FirstOrDefault()?.StartDate;
     }
 
     private void Create()

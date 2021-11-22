@@ -118,20 +118,20 @@
                     <Authorized>
                         <MudItem xs="12" sm="6">
                             <MudPaper Class="pa-4" Elevation="2">
-                                <MudTable Items="Indicator.Entries.OrderBy(e => e.Date)" Elevation="0" Class="mt-n2" Dense="true">
+                                <MudTable Items="Indicator.Entries.OrderBy(e => e.StartDate)" Elevation="0" Class="mt-n2" Dense="true">
                                     <ToolBarContent>
                                         <MudText Typo="Typo.h6">Entries</MudText>
                                         <MudSpacer />
                                         <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => CreateEntry())">New Entry</MudButton>
                                     </ToolBarContent>
                                     <HeaderContent>
-                                        <MudTh>Date</MudTh>
+                                        <MudTh>Period</MudTh>
                                         <MudTh>Value</MudTh>
                                         <MudTh>Note</MudTh>
                                         <MudTh></MudTh>
                                     </HeaderContent>
                                     <RowTemplate Context="Entry">
-                                        <MudTd DataLabel="Date">@Entry.Date.ToLongDateString()</MudTd>
+                                        <MudTd DataLabel="Period">@Entry.StartDate.ToString("MMMM d") - @Entry.EndDate.ToString("MMMM d, yyyy")</MudTd>
                                         <MudTd DataLabel="Value">@Entry.Value @Indicator.UnitOfMeasurement.Symbol</MudTd>
                                         <MudTd DataLabel="Note">@Entry.Note</MudTd>
                                         <MudTd>

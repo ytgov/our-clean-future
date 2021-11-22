@@ -32,7 +32,7 @@
 
     protected override void OnInitialized()
     {
-        TempDate = Entry.Date;
+        TempDate = Entry.StartDate;
         TempValue = Entry.Value;
     }
 
@@ -45,7 +45,7 @@
     {
         if (TempDate is not null && TempValue is not null)
         {
-            Entry.Date = (DateTime)TempDate;
+            Entry.StartDate = (DateTime)TempDate;
             Entry.Value = (double)TempValue;
             MudDialog.Close(DialogResult.Ok(Entry));
         }

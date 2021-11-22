@@ -16,6 +16,8 @@ public partial class Edit : IDisposable
     private ClaimsPrincipal user = null!;
     private bool targetIsDeleted = false;
 
+    public int[] Years { get; } = Enumerable.Range(2010, (DateTime.Now.Year - 2009)).ToArray();
+
     [Parameter]
     public int Id { get; set; }
 
@@ -236,7 +238,7 @@ public partial class Edit : IDisposable
 
     private async Task CreateEntry()
     {
-        var parameters = new DialogParameters { ["Indicator"] = Indicator };
+        var parameters = new DialogParameters { ["Indicator"] = Indicator, ["Years"] = Years };
 
         var dialog = DialogService.Show<CreateEntryDialog>("Add entry", parameters);
         var result = await dialog.Result;
@@ -245,7 +247,7 @@ public partial class Edit : IDisposable
             var newEntry = (Entry)result.Data;
             newEntry.UpdatedBy = user.FindFirst("name")?.Value ?? "";
             Indicator.Entries.Add(newEntry);
-            Snackbar.Add($"Click submit to confirm adding entry dated {newEntry.Date.ToLongDateString()}", Severity.Info);
+            Snackbar.Add($"Click submit to confirm adding entry dated {newEntry.StartDate.ToLongDateString()}", Severity.Info);
         }
     }
 
@@ -259,19 +261,19 @@ public partial class Edit : IDisposable
         if (!result.Cancelled) {
             var editedEntry = (Entry)result.Data;
             editedEntry.UpdatedBy = user.FindFirst("name")?.Value ?? "";
-            Snackbar.Add($"Click submit to confirm update of entry dated {editedEntry.Date.ToLongDateString()}", Severity.Info);
+            Snackbar.Add($"Click submit to confirm update of entry dated {editedEntry.StartDate.ToLongDateString()}", Severity.Info);
         }
     }
 
     private async Task DeleteEntry(Entry entry)
     {
         bool? result = await DialogService.ShowMessageBox(
-            $"Delete entry dated {entry.Date.ToLongDateString()}?",
+            $"Delete entry dated {entry.StartDate.ToLongDateString()}?",
             "",
             yesText: "Delete", cancelText: "Cancel");
         if (result == true) {
             Indicator.Entries.Remove(entry);
-            Snackbar.Add($"Click submit to confirm deletion of entry dated {entry.Date.ToLongDateString()}", Severity.Info);
+            Snackbar.Add($"Click submit to confirm deletion of entry dated {entry.StartDate.ToLongDateString()}", Severity.Info);
         }
     }
 

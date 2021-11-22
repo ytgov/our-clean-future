@@ -253,7 +253,7 @@ public partial class Edit : IDisposable
 
     private async Task EditEntry(Entry entry)
     {
-        var parameters = new DialogParameters { ["Indicator"] = Indicator, ["Entry"] = entry };
+        var parameters = new DialogParameters { ["Indicator"] = Indicator, ["Entry"] = entry, ["Years"] = Years };
 
         var dialog = DialogService.Show<EditEntryDialog>("Edit entry", parameters);
         var result = await dialog.Result;

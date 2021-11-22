@@ -17,6 +17,8 @@ public class Action
     public string PublicExplanation { get; set; } = "";
     public string Note { get; set; } = "";
 
+    public List<Lead> Leads { get; set; } = new();
+    public List<ActionLead> ActionLeads { get; set; } = new();
     public List<Indicator> Indicators { get; set; } = new();
     public Objective Objective { get; set; } = null!;
     public int ObjectiveId { get; set; }

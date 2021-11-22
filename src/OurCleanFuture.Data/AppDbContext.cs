@@ -72,6 +72,21 @@ public class AppDbContext : DbContext
                         tb.HasPeriodEnd("ValidTo");
                     }));
 
+        modelBuilder.Entity<Action>()
+                    .HasMany(a => a.Leads)
+                    .WithMany(l => l.Actions)
+                    .UsingEntity<ActionLead>(
+                        j => j
+                        .HasOne(al => al.Lead)
+                        .WithMany(l => l.ActionLeads)
+                        .HasForeignKey("LeadId")
+                        .OnDelete(DeleteBehavior.Restrict),
+                        j => j
+                        .HasOne(al => al.Action)
+                        .WithMany(i => i.ActionLeads)
+                        .HasForeignKey("ActionId")
+                        .OnDelete(DeleteBehavior.Restrict));
+
         modelBuilder.Entity<Indicator>()
                     .Property(i => i.DataType)
                     .HasConversion<string>();

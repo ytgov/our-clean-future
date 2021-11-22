@@ -19,6 +19,7 @@ public partial class Edit : IDisposable
     [Parameter]
     public int Id { get; set; }
 
+    public string AuthorizedRoles { get; set; } = "Administrator, ENV-CCS.Writer";
     public string SelectedParentType { get; set; } = "";
     public IEnumerable<Lead> SelectedLeads { get; set; } = new List<Lead>();
 
@@ -65,6 +66,7 @@ public partial class Edit : IDisposable
                 }
             }
             await GetUserPrincipal();
+            AuthorizedRoles += GetAuthorizedRoles();
         }
         catch (Exception ex) {
             Console.WriteLine(ex);
@@ -80,6 +82,78 @@ public partial class Edit : IDisposable
     {
         var authState = await AuthenticationStateTask;
         user = authState.User;
+    }
+
+    private string GetAuthorizedRoles()
+    {
+        var authorizedRoles = "";
+        foreach (var lead in Action.Leads) {
+            switch (lead.Branch?.Department.ShortName) {
+                case "CS":
+                    authorizedRoles += ", CS.Writer";
+                    break;
+
+                case "EcDev":
+                    authorizedRoles += ", EcDev.Writer";
+                    break;
+
+                case "EDU":
+                    authorizedRoles += ", EDU.Writer";
+                    break;
+
+                case "EMR":
+                    authorizedRoles += ", EMR.Writer";
+                    break;
+
+                case "ENV":
+                    authorizedRoles += ", ENV.Writer";
+                    break;
+
+                case "ECO":
+                    authorizedRoles += ", ECO.Writer";
+                    break;
+
+                case "FIN":
+                    authorizedRoles += ", FIN.Writer";
+                    break;
+
+                case "HSS":
+                    authorizedRoles += ", HSS.Writer";
+                    break;
+
+                case "HPW":
+                    authorizedRoles += ", HPW.Writer";
+                    break;
+
+                case "JUS":
+                    authorizedRoles += ", JUS.Writer";
+                    break;
+
+                case "PSC":
+                    authorizedRoles += ", PSC.Writer";
+                    break;
+
+                case "TC":
+                    authorizedRoles += ", TC.Writer";
+                    break;
+
+                case "YDC":
+                    authorizedRoles += ", YDC.Writer";
+                    break;
+
+                case "YEC":
+                    authorizedRoles += ", YEC.Writer";
+                    break;
+
+                case "YHC":
+                    authorizedRoles += ", YHC.Writer";
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        return authorizedRoles;
     }
 
     private async Task Update()

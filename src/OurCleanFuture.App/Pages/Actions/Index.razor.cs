@@ -25,6 +25,11 @@ public partial class Index : IDisposable
         try {
             Context = ContextFactory.CreateDbContext();
             Actions = await Context.Actions
+                .Include(i => i.Leads)
+                .ThenInclude(l => l.Organization)
+                .Include(i => i.Leads)
+                .ThenInclude(l => l.Branch)
+                .ThenInclude(b => b!.Department)
                 .AsNoTracking()
                 .AsSingleQuery()
                 .ToListAsync();

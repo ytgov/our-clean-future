@@ -39,7 +39,18 @@ public partial class Details : IDisposable
         try {
             context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.
-            Action = await context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).Include(a => a.Objective).ThenInclude(a => a.Area).Include(a => a.Objective).ThenInclude(a => a.Goals).FirstOrDefaultAsync(a => a.Id == Id);
+            Action = await context.Actions.Include(a => a.Indicators)
+                .Include(a => a.DirectorsCommittees)
+                .Include(i => i.Leads)
+                .ThenInclude(l => l.Branch)
+                .ThenInclude(b => b!.Department)
+                .Include(i => i.Leads)
+                .ThenInclude(l => l.Organization)
+                .Include(a => a.Objective)
+                .ThenInclude(a => a.Area)
+                .Include(a => a.Objective)
+                .ThenInclude(a => a.Goals)
+                .FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
         }
         catch (Exception ex) {

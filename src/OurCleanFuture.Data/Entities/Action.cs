@@ -44,4 +44,19 @@ public class Action
             return result;
         }
     }
+
+    public string LeadsToString()
+    {
+        var result = "";
+        if (Leads.Count != 0) {
+            foreach (var lead in Leads) {
+                result += $"{lead}, ";
+            }
+            //Trim the trailing comma and space
+            result = result.Remove(result.Length - 2, 2);
+        } else {
+            result = "None";
+        }
+        return result;
+    }
 }

@@ -20,9 +20,11 @@ public partial class Edit : IDisposable
     public int Id { get; set; }
 
     public string SelectedParentType { get; set; } = "";
+    public IEnumerable<Lead> SelectedLeads { get; set; } = new List<Lead>();
 
     public List<Goal> Goals { get; set; } = new();
     public List<Objective> Objectives { get; set; } = new();
+    public List<Lead> Leads { get; set; } = new();
     public Action Action { get; set; } = null!;
     public List<Indicator> Indicators { get; set; } = new();
     public IEnumerable<DirectorsCommittee> SelectedDirectorsCommittees { get; set; } = new List<DirectorsCommittee>();
@@ -47,15 +49,19 @@ public partial class Edit : IDisposable
     {
         try {
             context = ContextFactory.CreateDbContext();
+            Leads = await context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Department.ShortName).ThenBy(l => l.Branch!.Name).ToListAsync();
             Goals = await context.Goals.OrderBy(g => g.Title).ToListAsync();
             Objectives = await context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
             DirectorsCommittees = await context.DirectorsCommittees.OrderBy(dc => dc.Name).ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.
-            Action = await context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).FirstOrDefaultAsync(a => a.Id == Id);
+            Action = await context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).Include(a => a.Leads).FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
             if (Action != null) {
                 foreach (var committee in Action!.DirectorsCommittees) {
                     SelectedDirectorsCommittees = SelectedDirectorsCommittees.Append(committee);
+                }
+                foreach (var lead in Action.Leads) {
+                    SelectedLeads = SelectedLeads.Append(lead);
                 }
             }
             await GetUserPrincipal();
@@ -82,9 +88,15 @@ public partial class Edit : IDisposable
             Action.InternalStatusUpdatedBy = user.FindFirst("name")?.Value ?? "";
             Action.InternalStatusUpdatedDate = DateTimeOffset.Now;
         }
+
         Action.DirectorsCommittees.Clear();
         foreach (var committee in SelectedDirectorsCommittees) {
             Action.DirectorsCommittees.Add(committee);
+        }
+
+        Action.Leads.Clear();
+        foreach (var lead in SelectedLeads) {
+            Action.Leads.Add(lead);
         }
 
         await context.SaveChangesAsync();

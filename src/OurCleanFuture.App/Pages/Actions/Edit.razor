@@ -23,6 +23,12 @@
                     <Authorized>
                         <MudItem xs="12" sm="6">
                             <MudPaper Elevation="2" Class="pa-4">
+                                <MudSelect T="Data.Entities.Lead" Label="Lead(s)" MultiSelection="true" @bind-SelectedValues="SelectedLeads">
+                                    @foreach (var lead in Leads)
+                                    {
+                                        <MudSelectItem Value="lead">@lead.ToString()</MudSelectItem>
+                                    }
+                                </MudSelect>
                                 <MudTextField Label="Number" @bind-Value="Action.Number" />
                                 <MudTextField Label="Title" @bind-Value="Action.Title" Lines="3" />
                                 <MudItem Class="mb-6">

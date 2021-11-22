@@ -111,12 +111,15 @@ public class AppDbContext : DbContext
                     .OwnsMany(i => i.Entries,
                         ie => {
                             ie.ToTable("Entries");
+                            ie.Property<int>("IndicatorId")
+                                .HasColumnType("int");
+                            ie.HasKey("IndicatorId", "Id", "StartDate");
                             ie.ToTable(tb => tb.IsTemporal(tb => {
                                 tb.UseHistoryTable("EntriesHistory");
                                 tb.HasPeriodStart("ValidFrom");
                                 tb.HasPeriodEnd("ValidTo");
                             }))
-                              .WithOwner(e => e.Indicator);
+                              .WithOwner(e => e.Indicator).HasForeignKey("IndicatorId");
                         });
         modelBuilder.Entity<Indicator>()
                     .ToTable(tb => tb.IsTemporal(tb => {

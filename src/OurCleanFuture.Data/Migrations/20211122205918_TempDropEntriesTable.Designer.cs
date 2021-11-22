@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OurCleanFuture.Data;
 
@@ -11,9 +12,10 @@ using OurCleanFuture.Data;
 namespace OurCleanFuture.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211122205918_TempDropEntriesTable")]
+    partial class TempDropEntriesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -535,66 +537,7 @@ namespace OurCleanFuture.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsMany("OurCleanFuture.Data.Entities.Entry", "Entries", b1 =>
-                        {
-                            b1.Property<int>("IndicatorId")
-                                .HasColumnType("int");
-
-                            b1.Property<int>("Id")
-                                .HasColumnType("int");
-
-                            b1.Property<DateTime>("StartDate")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<DateTime>("EndDate")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<string>("Note")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("UpdatedBy")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<DateTime>("ValidFrom")
-                                .ValueGeneratedOnAddOrUpdate()
-                                .HasColumnType("datetime2")
-                                .HasColumnName("ValidFrom");
-
-                            b1.Property<DateTime>("ValidTo")
-                                .ValueGeneratedOnAddOrUpdate()
-                                .HasColumnType("datetime2")
-                                .HasColumnName("ValidTo");
-
-                            b1.Property<double>("Value")
-                                .HasColumnType("float");
-
-                            b1.HasKey("IndicatorId", "Id", "StartDate");
-
-                            b1.ToTable("Entries", (string)null);
-
-                            b1.ToTable(tb => tb.IsTemporal(ttb =>
-                                {
-                                    ttb.UseHistoryTable("EntriesHistory");
-                                    ttb
-                                        .HasPeriodStart("ValidFrom")
-                                        .HasColumnName("ValidFrom");
-                                    ttb
-                                        .HasPeriodEnd("ValidTo")
-                                        .HasColumnName("ValidTo");
-                                }
-                            ));
-
-                            b1.WithOwner("Indicator")
-                                .HasForeignKey("IndicatorId");
-
-                            b1.Navigation("Indicator");
-                        });
-
                     b.Navigation("Action");
-
-                    b.Navigation("Entries");
 
                     b.Navigation("Goal");
 

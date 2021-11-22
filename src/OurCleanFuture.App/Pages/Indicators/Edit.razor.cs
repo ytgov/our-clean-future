@@ -202,24 +202,39 @@ public partial class Edit : IDisposable
         }
 
         // Don't update Indicator.UpdatedBy if only the Entries were modified.
-
-        if (context.Entry(Indicator).State == EntityState.Modified) {
-            Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
-        }
-        else if (Indicator.Target is not null) {
-            Console.WriteLine($"Indicator.Target state is: {context.Entry(Indicator.Target).State}");
-            if (context.Entry(Indicator.Target).State == EntityState.Added
-            || context.Entry(Indicator.Target).State == EntityState.Modified) {
+        try {
+            if (context.Entry(Indicator).State == EntityState.Modified) {
                 Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
             }
-        }
-        else if (targetIsDeleted) {
-            Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
-        }
+            else if (Indicator.Target is not null) {
+                Console.WriteLine($"Indicator.Target state is: {context.Entry(Indicator.Target).State}");
+                if (context.Entry(Indicator.Target).State == EntityState.Added
+                || context.Entry(Indicator.Target).State == EntityState.Modified) {
+                    Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
+                }
+            }
+            else if (targetIsDeleted) {
+                Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
+            }
 
-        await context.SaveChangesAsync();
-        Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
+
+            await context.SaveChangesAsync();
+            Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
+        }
+        catch (Exception ex) {
+            switch (ex) {
+                case InvalidOperationException:
+                    Snackbar.Add("The entry changes were not saved. Two entries cannot have the same period.", Severity.Error);
+                    break;
+                case DbUpdateException:
+                    Snackbar.Add(ex.Message, Severity.Error);
+                    break;
+                default:
+                    throw;
+            }
+        }
         Navigation.NavigateTo($"/indicators/details/{Id}");
+
     }
 
     private void CreateTarget()

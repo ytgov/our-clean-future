@@ -163,6 +163,11 @@ public partial class Edit : IDisposable
             Action.InternalStatusUpdatedDate = DateTimeOffset.Now;
         }
 
+        if (context.Entry(Action).Property(a => a.ExternalStatus).IsModified) {
+            Action.ExternalStatusUpdatedBy = user.FindFirst("name")?.Value ?? "";
+            Action.ExternalStatusUpdatedDate = DateTimeOffset.Now;
+        }
+
         Action.DirectorsCommittees.Clear();
         foreach (var committee in SelectedDirectorsCommittees) {
             Action.DirectorsCommittees.Add(committee);

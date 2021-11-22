@@ -20,7 +20,7 @@
                     <MudField Label="Title">@Action.Title</MudField>
                     <MudField Label="Director's Committee(s)">@Action.DirectorsCommitteesToString()</MudField>
                     <MudField Label="Internal Status">@InternalStatusToString()</MudField>
-                    <MudField Label="External Status">@Action.ExternalStatus.GetDisplayName()</MudField>
+                    <MudField Label="External Status">@ExternalStatusToString()</MudField>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6">

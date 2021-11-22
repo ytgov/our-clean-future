@@ -8,11 +8,14 @@ public class Action
     public DateTime? StartDate { get; set; }
     public DateTime? TargetCompletionDate { get; set; }
     public DateTime? ActualCompletionDate { get; set; }
+
     public InternalStatus InternalStatus { get; set; }
     public string InternalStatusUpdatedBy { get; set; } = "";
-
     public DateTimeOffset? InternalStatusUpdatedDate { get; set; }
+
     public ExternalStatus ExternalStatus { get; set; }
+    public string ExternalStatusUpdatedBy { get; set; } = "";
+    public DateTimeOffset? ExternalStatusUpdatedDate { get; set; }
 
     public string PublicExplanation { get; set; } = "";
     public string Note { get; set; } = "";
@@ -54,7 +57,8 @@ public class Action
             }
             //Trim the trailing comma and space
             result = result.Remove(result.Length - 2, 2);
-        } else {
+        }
+        else {
             result = "None";
         }
         return result;

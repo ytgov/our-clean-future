@@ -73,6 +73,16 @@ public partial class Details : IDisposable
         return result;
     }
 
+    private string ExternalStatusToString()
+    {
+        var result = $"{Action.ExternalStatus.GetDisplayName()}";
+        // Only append updated by information if the ExternalStatus has been updated after database creation
+        if (!string.IsNullOrWhiteSpace(Action.ExternalStatusUpdatedBy)) {
+            result += $" (last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime.ToString("f")})";
+        }
+        return result;
+    }
+
     private void Edit()
     {
         Navigation.NavigateTo("/actions/edit/" + Action.Id);

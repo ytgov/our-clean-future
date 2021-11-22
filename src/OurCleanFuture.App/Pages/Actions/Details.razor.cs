@@ -65,22 +65,22 @@ public partial class Details : IDisposable
 
     private string InternalStatusToString()
     {
-        var result = $"{Action.InternalStatus.GetDisplayName()}";
         // Only append updated by information if the InternalStatus has been updated after database creation
         if (!string.IsNullOrWhiteSpace(Action.InternalStatusUpdatedBy)) {
-            result += $" (last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f")})";
+            return $"Last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
+        } else {
+            return "The internal status has not been updated.";
         }
-        return result;
     }
 
     private string ExternalStatusToString()
     {
-        var result = $"{Action.ExternalStatus.GetDisplayName()}";
         // Only append updated by information if the ExternalStatus has been updated after database creation
         if (!string.IsNullOrWhiteSpace(Action.ExternalStatusUpdatedBy)) {
-            result += $" (last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime.ToString("f")})";
+            return $"Last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
+        } else {
+            return "The external status has not been updated.";
         }
-        return result;
     }
 
     private void Edit()

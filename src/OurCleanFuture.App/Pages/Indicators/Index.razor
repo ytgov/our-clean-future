@@ -33,18 +33,20 @@ else
                 <MudTd DataLabel="Lead(s)">@context.LeadsToString()</MudTd>
                 <MudTd DataLabel="Description">@context.Description</MudTd>
                 <MudTd>@context.CollectionInterval</MudTd>
-                @if (context.Id % 2 == 0)
-                {
-                <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingUp" /></MudTd>
-                }
-                else if (context.Id == 3)
-                {
-                <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingFlat" /></MudTd>
-                }
-                else
-                {
-                <MudTd DataLabel="Trend"><MudIcon Icon="@Icons.Material.Filled.TrendingDown" /></MudTd>
-                }
+                <MudTd DataLabel="Trend">
+                    @if (GetTrend(context) == "TrendingUp")
+                    {
+                    <MudIcon Icon="@Icons.Material.Filled.TrendingUp" />
+                    }
+                    else if (GetTrend(context) == "TrendingDown")
+                    {
+                    <MudIcon Icon="@Icons.Material.Filled.TrendingDown" />
+                    }
+                    else if (GetTrend(context) == "TrendingFlat")
+                    {
+                    <MudIcon Icon="@Icons.Material.Filled.TrendingFlat" />
+                    }
+            </MudTd>
             <MudTd DataLabel="Last Entry">@GetDateLastEntry(context)?.ToLongDateString()</MudTd>
             <MudTd>
                 <MudMenu Icon="@Icons.Material.Filled.MoreVert">

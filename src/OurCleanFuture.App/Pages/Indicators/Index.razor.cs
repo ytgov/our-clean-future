@@ -86,6 +86,27 @@ public partial class Index : IDisposable
         return false;
     }
 
+    private static string GetTrend(Indicator indicator)
+    {
+        var entries = indicator.Entries.OrderByDescending(e => e.EndDate).ToList();
+        var count = entries.Count;
+        if (count >= 2) {
+            if (entries[0].Value > entries[1].Value) {
+                return "TrendingUp";
+            }
+            else if (entries[0].Value < entries[1].Value) {
+
+                return "TrendingDown";
+            }
+            else {
+                return "TrendingFlat";
+            }
+        }
+        else {
+            return "NoTrend";
+        }
+    }
+
     public void Dispose()
     {
         context.DisposeAsync();

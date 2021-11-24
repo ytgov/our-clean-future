@@ -31,23 +31,16 @@
                         <MudText Typo="Typo.h6">Target</MudText>
                         @if (Indicator.Target.Value is not null)
                         {
-                            if (Indicator.UnitOfMeasurement.Name == "Dollars")
-                            {
-                                <MudField Label="Value">@(((decimal)Indicator.Target.Value).ToString("C"))</MudField>
-                            }
-                            else
-                            {
-                                <MudField Label="Value">@Indicator.Target.Value @Indicator.UnitOfMeasurement.Symbol</MudField>
-                            }
+                            <MudField Label="Value">@Indicator.Target.ValueToString()</MudField>
                         }
                         @if (Indicator.Target.StartDate is not null)
                         {
-                            <MudField Label="Start Date">@Indicator.Target.StartDate?.ToLongDateString()</MudField>
+                            <MudField Label="Start Date">@Indicator.Target.StartDate?.ToString("yyyy")</MudField>
                         }
                         <MudField Label="Completion Date">@Indicator.Target.EndDate?.ToString("yyyy")</MudField>
                         @if (!string.IsNullOrWhiteSpace(Indicator.Target.OcfDescription))
                         {
-                            <MudField Label="OCF Description">@Indicator.Target.OcfDescription</MudField>
+                            <MudField Label="Description">@Indicator.Target.OcfDescription</MudField>
                         }
                     </MudPaper>
                 </MudItem>
@@ -183,10 +176,10 @@
                         </HeaderContent>
                         <RowTemplate Context="Entry">
                             <MudTd DataLabel="Period">@Entry.StartDate.ToString("MMMM d") - @Entry.EndDate.ToString("MMMM d, yyyy")</MudTd>
-                            <MudTd DataLabel="Value">@Entry.EntryValueToString()</MudTd>
-                        <MudTd DataLabel="Note">@Entry.Note</MudTd>
-                        <MudTd>
-                            @if (!string.IsNullOrWhiteSpace(Entry.UpdatedBy))
+                            <MudTd DataLabel="Value">@Entry.ValueToString()</MudTd>
+                            <MudTd DataLabel="Note">@Entry.Note</MudTd>
+                            <MudTd>
+                                @if (!string.IsNullOrWhiteSpace(Entry.UpdatedBy))
                                 {
                                 <MudTooltip>
                                     <ChildContent>

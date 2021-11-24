@@ -103,7 +103,7 @@
                                 <MudNumericField Label="Value" @bind-Value="Indicator.Target.Value" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true"></MudNumericField>
                                 <MudDatePicker Label="Start Date (use only if specifying a range)" @bind-Date="Indicator.Target.StartDate" Editable="true" />
                                 <MudDatePicker Label="Completion Date" @bind-Date="Indicator.Target.EndDate" Editable="true" For="@(() => Indicator.Target.EndDate)" />
-                                <MudTextField Label="OCF Description" @bind-Value="Indicator.Target.OcfDescription" Lines="2" For="@(() => Indicator.Target.OcfDescription)" />
+                                <MudTextField Label="Description" @bind-Value="Indicator.Target.OcfDescription" Lines="2" For="@(() => Indicator.Target.OcfDescription)" />
                                 <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="(() => DeleteTarget())" Class="mt-4">Delete target</MudButton>
                             }
                             else
@@ -132,7 +132,7 @@
                                     </HeaderContent>
                                     <RowTemplate Context="Entry">
                                         <MudTd DataLabel="Period">@Entry.StartDate.ToString("MMMM d") - @Entry.EndDate.ToString("MMMM d, yyyy")</MudTd>
-                                        <MudTd DataLabel="Value">@Entry.Value @Indicator.UnitOfMeasurement.Symbol</MudTd>
+                                        <MudTd DataLabel="Value">@Entry.ValueToString()</MudTd>
                                         <MudTd DataLabel="Note">@Entry.Note</MudTd>
                                         <MudTd>
                                             <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small">

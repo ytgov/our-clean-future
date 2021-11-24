@@ -10,17 +10,16 @@ public class Entry
 
     public Indicator Indicator { get; set; } = null!;
 
-    public string EntryValueToString()
+    public string ValueToString()
     {
-        var result = Value.ToString();
         // Switching on Id here, as end users have access to change the Name and Symbol.
-        result = Indicator.UnitOfMeasurement.Id switch {
+        var result = Indicator.UnitOfMeasurement.Id switch {
             // Count
             2 => Value.ToString(),
             // Dollars
             4 => Value.ToString("c"),
             // All other units
-            _ => $"{Value} {Indicator.UnitOfMeasurement.Symbol}",
+            _ => $"{Value:n} {Indicator.UnitOfMeasurement.Symbol}",
         };
         return result;
     }

@@ -137,7 +137,9 @@
                                         <MudTd>
                                             <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small">
                                                 <MudMenuItem OnClick="(() => EditEntry(Entry))">Edit</MudMenuItem>
-                                                <MudMenuItem OnClick="(() => DeleteEntry(Entry))">Delete</MudMenuItem>
+                                                <AuthorizeView Roles="Administrator, ENV-CCS.Writer" Context="Delete">
+                                                    <MudMenuItem OnClick="(() => DeleteEntry(Entry))">Delete</MudMenuItem>
+                                                </AuthorizeView>
                                             </MudMenu>
                                         </MudTd>
                                     </RowTemplate>

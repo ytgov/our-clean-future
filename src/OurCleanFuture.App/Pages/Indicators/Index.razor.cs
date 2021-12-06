@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 
@@ -65,6 +66,11 @@ public partial class Index : IDisposable
     private void Edit(int indicatorId)
     {
         Navigation.NavigateTo("/indicators/edit/" + indicatorId);
+    }
+
+    public void RowClicked(TableRowClickEventArgs<Indicator> p)
+    {
+        Navigation.NavigateTo("/indicators/edit/" + p.Item.Id);
     }
 
     private bool FilterFunc(Indicator indicator)

@@ -9,7 +9,8 @@
 else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <MudTable Items="@indicators" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem" Filter="new Func<Data.Entities.Indicator,bool>(FilterFunc)">
+        <MudTable Items="@indicators" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem" Filter="new Func<Data.Entities.Indicator,bool>(FilterFunc)"
+            T="Data.Entities.Indicator" OnRowClick="@RowClicked">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Indicators</MudText>
                 <MudSpacer />

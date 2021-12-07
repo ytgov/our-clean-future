@@ -40,40 +40,35 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<Organization>()
                     .ToTable("Organizations");
-        modelBuilder.Entity<Branch>()
-                    .ToTable("Branches");
-        modelBuilder.Entity<Branch>()
-                    .HasOne(b => b.Lead)
+
+        modelBuilder.Entity<Branch>(b => {
+            b.ToTable("Branches");
+            b.HasOne(b => b.Lead)
                     .WithOne(l => l.Branch)
                     .IsRequired(false);
+        });
+
         modelBuilder.Entity<Department>()
                     .ToTable("Departments");
+
         modelBuilder.Entity<UnitOfMeasurement>()
                     .ToTable("UnitsOfMeasurement")
                     .HasIndex(u => u.Symbol)
                     .IsUnique();
+
         modelBuilder.Entity<Lead>()
                     .HasOne(l => l.Organization)
                     .WithMany()
                     .IsRequired()
                     .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<Action>()
-                    .Property(a => a.InternalStatus)
-                    .HasConversion<string>();
-        modelBuilder.Entity<Action>()
-                    .Property(a => a.ExternalStatus)
-                    .HasConversion<string>();
-        modelBuilder.Entity<Action>()
-                    .ToTable("Actions")
-                    .ToTable(tb => tb.IsTemporal(tb => {
-                        tb.UseHistoryTable("ActionsHistory");
-                        tb.HasPeriodStart("ValidFrom");
-                        tb.HasPeriodEnd("ValidTo");
-                    }));
-
-        modelBuilder.Entity<Action>()
-                    .HasMany(a => a.Leads)
+        modelBuilder.Entity<Action>(a => {
+            a.ToTable(tb => tb.IsTemporal(tb => {
+                tb.UseHistoryTable("ActionsHistory");
+                tb.HasPeriodStart("ValidFrom");
+                tb.HasPeriodEnd("ValidTo");
+            }));
+            a.HasMany(a => a.Leads)
                     .WithMany(l => l.Actions)
                     .UsingEntity<ActionLead>(
                         j => j
@@ -86,6 +81,12 @@ public class AppDbContext : DbContext
                         .WithMany(i => i.ActionLeads)
                         .HasForeignKey("ActionId")
                         .OnDelete(DeleteBehavior.Restrict));
+            a.Property(a => a.StartDate).HasColumnType("date");
+            a.Property(a => a.TargetCompletionDate).HasColumnType("date");
+            a.Property(a => a.ActualCompletionDate).HasColumnType("date");
+            a.Property(a => a.InternalStatus).HasConversion<string>();
+            a.Property(a => a.ExternalStatus).HasConversion<string>();
+        });
 
         modelBuilder.Entity<Indicator>()
                     .Property(i => i.DataType)
@@ -93,7 +94,6 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Indicator>()
                     .Property(i => i.CollectionInterval)
                     .HasConversion<string>();
-
         modelBuilder.Entity<Indicator>()
                     .HasMany(i => i.Leads)
                     .WithMany(l => l.Indicators)
@@ -108,7 +108,6 @@ public class AppDbContext : DbContext
                         .WithMany(i => i.IndicatorLeads)
                         .HasForeignKey("IndicatorId")
                         .OnDelete(DeleteBehavior.Restrict));
-
         modelBuilder.Entity<Indicator>()
                     .HasOne(i => i.UnitOfMeasurement)
                     .WithMany()
@@ -126,6 +125,8 @@ public class AppDbContext : DbContext
                     .OwnsMany(i => i.Entries,
                         ie => {
                             ie.ToTable("Entries");
+                            ie.Property(e => e.StartDate).HasColumnType("date");
+                            ie.Property(e => e.EndDate).HasColumnType("date");
                             ie.Property<int>("IndicatorId")
                                 .HasColumnType("int");
                             ie.HasKey("IndicatorId", "StartDate");
@@ -143,12 +144,15 @@ public class AppDbContext : DbContext
                         tb.HasPeriodEnd("ValidTo");
                     }));
 
-        modelBuilder.Entity<Target>()
-                    .ToTable(tb => tb.IsTemporal(tb => {
-                        tb.UseHistoryTable("TargetsHistory");
-                        tb.HasPeriodStart("ValidFrom");
-                        tb.HasPeriodEnd("ValidTo");
-                    }));
+        modelBuilder.Entity<Target>(t => {
+            t.ToTable(tb => tb.IsTemporal(tb => {
+                tb.UseHistoryTable("TargetsHistory");
+                tb.HasPeriodStart("ValidFrom");
+                tb.HasPeriodEnd("ValidTo");
+            }));
+            t.Property(t => t.StartDate).HasColumnType("date");
+            t.Property(t => t.EndDate).HasColumnType("date");
+        });
 
         //Generate seed data
         //new DataSeeder(modelBuilder).Init();

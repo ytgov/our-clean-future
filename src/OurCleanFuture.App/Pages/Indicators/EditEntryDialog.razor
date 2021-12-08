@@ -18,10 +18,10 @@
                     }
                 </MudSelect>
             }
-            else if (Indicator.CollectionInterval == CollectionInterval.Quarter)
+            else if (Indicator.CollectionInterval == CollectionInterval.Quarterly)
             {
-                <MudSelect T="Data.Entities.QuarterInterval" Label="Period" @bind-Value="SelectedQuarterInterval">
-                    @foreach (Data.Entities.QuarterInterval interval in Enum.GetValues(typeof(Data.Entities.QuarterInterval)))
+                <MudSelect T="Data.Entities.QuarterlyInterval" Label="Period" @bind-Value="SelectedQuarterlyInterval">
+                    @foreach (Data.Entities.QuarterlyInterval interval in Enum.GetValues(typeof(Data.Entities.QuarterlyInterval)))
                     {
                         <MudSelectItem Value="interval">@interval.GetDisplayName()</MudSelectItem>
                     }
@@ -61,7 +61,7 @@
 
     public int SelectedYear { get; set; }
     public BiannualInterval SelectedBiannualInterval { get; set; }
-    public QuarterInterval SelectedQuarterInterval { get; set; }
+    public QuarterlyInterval SelectedQuarterlyInterval { get; set; }
 
     public double? TempValue { get; set; }
 
@@ -98,7 +98,7 @@
                     break;
             }
         }
-        else if (Indicator.CollectionInterval == CollectionInterval.Quarter)
+        else if (Indicator.CollectionInterval == CollectionInterval.Quarterly)
         {
             if (periodLength != 3)
             {
@@ -108,16 +108,16 @@
             switch (Entry.EndDate.Month)
             {
                 case 3:
-                    SelectedQuarterInterval = QuarterInterval.JanuaryToMarch;
+                    SelectedQuarterlyInterval = QuarterlyInterval.JanuaryToMarch;
                     break;
                 case 6:
-                    SelectedQuarterInterval = QuarterInterval.AprilToJune;
+                    SelectedQuarterlyInterval = QuarterlyInterval.AprilToJune;
                     break;
                 case 9:
-                    SelectedQuarterInterval = QuarterInterval.JulyToSeptember;
+                    SelectedQuarterlyInterval = QuarterlyInterval.JulyToSeptember;
                     break;
                 case 12:
-                    SelectedQuarterInterval = QuarterInterval.OctoberToDecember;
+                    SelectedQuarterlyInterval = QuarterlyInterval.OctoberToDecember;
                     break;
             }
         }
@@ -173,21 +173,21 @@
             }
             else
             {
-                switch (SelectedQuarterInterval)
+                switch (SelectedQuarterlyInterval)
                 {
-                    case QuarterInterval.JanuaryToMarch:
+                    case QuarterlyInterval.JanuaryToMarch:
                         Entry.StartDate = new DateTime(SelectedYear, 1, 1);
                         Entry.EndDate = new DateTime(SelectedYear, 3, 31);
                         break;
-                    case QuarterInterval.AprilToJune:
+                    case QuarterlyInterval.AprilToJune:
                         Entry.StartDate = new DateTime(SelectedYear, 4, 1);
                         Entry.EndDate = new DateTime(SelectedYear, 6, 30);
                         break;
-                    case QuarterInterval.JulyToSeptember:
+                    case QuarterlyInterval.JulyToSeptember:
                         Entry.StartDate = new DateTime(SelectedYear, 7, 1);
                         Entry.EndDate = new DateTime(SelectedYear, 9, 30);
                         break;
-                    case QuarterInterval.OctoberToDecember:
+                    case QuarterlyInterval.OctoberToDecember:
                         Entry.StartDate = new DateTime(SelectedYear, 10, 1);
                         Entry.EndDate = new DateTime(SelectedYear, 12, 31);
                         break;

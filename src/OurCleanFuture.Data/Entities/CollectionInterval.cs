@@ -4,5 +4,5 @@ public enum CollectionInterval
 {
     Annual = 0,
     Biannual = 1,
-    Quarter = 2
+    Quarterly = 2
 }

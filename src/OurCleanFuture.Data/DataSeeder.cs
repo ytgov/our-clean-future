@@ -1480,245 +1480,245 @@ internal class DataSeeder
             },
             new Indicator {
                 Id = 156,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Electricity produced on residential, commercial and institutional buildings through the Micro-generation Program during the reporting period.",
                 UnitOfMeasurementId = 18
             },
             new Indicator {
                 Id = 157,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Cumulative,
                 Description = "Installed renewable electricity capacity on residential, commercial and institutional buildings through the Micro-generation Program.",
                 UnitOfMeasurementId = 3
             },
             new Indicator {
                 Id = 158,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of energy efficiency retrofits (envelope improvements and/or heating system upgrades) to residential, commercial and non-YG institutional buildings during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 159,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of First Nations housing units retrofitted during the reporting year.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 160,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of major energy retrofits to First Nations and municipal buildings completed during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 161,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of private sector high performance thermal enclosure upgrades supported through Energy Branch prgrams during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 162,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of residential high performance thermal enclosure upgrades supported through Energy Branch programs during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 163,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of commercial high performance thermal enclosure upgrades supported through Energy Branch programs during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 164,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of Government of Yukon community housing buildings retrofitted during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 165,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of Government of Yukon community housing units retrofitted during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 166,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of energy efficient insulation and equipment rebates issued during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 167,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of residential energy efficient insulation and equipment rebates issued during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 168,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of commercial energy efficient insulation and equipment rebates issued during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 169,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of new home rebates issued during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 170,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of electric bicycle rebates issued during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 171,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Dollars of electric bicycle rebates issued during the reporting period",
                 UnitOfMeasurementId = 4
             },
             new Indicator {
                 Id = 172,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of heat pump installations during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 173,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of heat pumps supported through the Energy Branch's rebate program during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 174,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of heat pumps installed through the industry partnership during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 175,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of electric thermal storage systems installed through the Yukon Conservation Society's electric thermal storage demonstration project.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 176,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of heat pumps installed through the Better Buildings Loan during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 177,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of commercial and non-YG institutional biomass energy systems in Yukon installed during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 178,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number rebates provided for commercial and institutional biomass systems during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 179,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Dollars of rebates provided for residential, commercial and institutional biomass heating systems and smart electric heating devices during the reporting period.",
                 UnitOfMeasurementId = 4
             },
             new Indicator {
                 Id = 180,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of rebates issued for battery electric vehicles, plug-in hybrid electric vehicles and hydrogen fuel cell vehicles during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 181,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of rebates issued for battery electric vehicles during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 182,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of rebates issued for plugin hybrid electric vehicles during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 183,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Cumulative,
                 Description = "Number of rebates isssued for",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 184,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of rebates issued for shipping of used electric vehicles during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 185,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of rebates issued for e-motorcycles during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 186,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of rebates issued for e-snowmobiles during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 187,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Dollars of zero emission vehicle rebates issued during the reporting period.",
                 UnitOfMeasurementId = 4
             },
             new Indicator {
                 Id = 188,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Number of smart electric vehicle charging station rebates issued during the reporting period.",
                 UnitOfMeasurementId = 2
             },
             new Indicator {
                 Id = 189,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Incremental,
                 Description = "Dollars of smart electric charging station rebates issued during the reporting period.",
                 UnitOfMeasurementId = 4
             },
             new Indicator {
                 Id = 190,
-                CollectionInterval = CollectionInterval.Quarter,
+                CollectionInterval = CollectionInterval.Quarterly,
                 DataType = DataType.Cumulative,
                 Description = "Number of Yukon communities with air quality monitoring.",
                 UnitOfMeasurementId = 6

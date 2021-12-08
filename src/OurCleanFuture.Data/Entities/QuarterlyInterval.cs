@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OurCleanFuture.Data.Entities
 {
-    public enum QuarterInterval
+    public enum QuarterlyInterval
     {
         [Display(Name = "January 1st to March 31st")]
         JanuaryToMarch = 0,

@@ -36,7 +36,7 @@
             </MudAutocomplete>
             <MudNumericField Label="Value" @bind-Value="TempValue" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true"
                              Required="true" RequiredError="Value is required" />
-            <MudTextField @bind-Value="Entry.Note" Label="Note (optional)" />
+            <MudTextField @bind-Value="Entry.Note" Label="Note (optional)" For="@(() => Entry.Note)" />
             <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
                 <MudButton OnClick="Cancel">Cancel</MudButton>
                 <MudButton Color="Color.Primary" Disabled="(!isValid)" OnClick="AddEntry">Add</MudButton>

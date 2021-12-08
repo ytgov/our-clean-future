@@ -29,8 +29,8 @@
                                         <MudSelectItem Value="lead">@lead.ToString()</MudSelectItem>
                                     }
                                 </MudSelect>
-                                <MudTextField Label="Number" @bind-Value="Action.Number" />
-                                <MudTextField Label="Title" @bind-Value="Action.Title" Lines="3" />
+                                <MudTextField Label="Number" @bind-Value="Action.Number" For=@(() => Action.Number) />
+                                <MudTextField Label="Title" @bind-Value="Action.Title" Lines="3" For=@(() => Action.Title) />
                                 <MudItem Class="mb-6">
                                     <MudSelect Label="Objective" T="Data.Entities.Objective" @bind-Value="Action.Objective" DisableUnderLine="true">
                                         @foreach (var objective in Objectives)
@@ -77,8 +77,8 @@
                         <MudItem xs="12" sm="6">
                             <MudPaper Elevation="2" Class="pa-4">
                                 <MudDatePicker Label="Actual/Anticipated Completion Date" @bind-Date="Action.ActualCompletionDate" Editable="true" />
-                                <MudTextField Label="Internal Notes" @bind-Value="Action.Note" Lines="2" />
-                                <MudTextField Label="Public Explanation" @bind-Value="Action.PublicExplanation" Lines="2" />
+                                <MudTextField Label="Internal Notes" @bind-Value="Action.Note" Lines="2" For=@(() => Action.Note) />
+                                <MudTextField Label="Public Explanation" @bind-Value="Action.PublicExplanation" Lines="2" For=@(() => Action.PublicExplanation) />
                             </MudPaper>
                         </MudItem>
                         <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">

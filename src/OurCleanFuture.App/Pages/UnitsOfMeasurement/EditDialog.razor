@@ -7,8 +7,8 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudTextField Label="Symbol" @bind-Value="UnitOfMeasurement.Symbol" />
-        <MudTextField Label="Name" @bind-Value="UnitOfMeasurement.Name" />
+        <MudTextField Label="Symbol" @bind-Value="UnitOfMeasurement.Symbol" For="@(() => UnitOfMeasurement.Symbol)" />
+        <MudTextField Label="Name" @bind-Value="UnitOfMeasurement.Name" For="@(() => UnitOfMeasurement.Name)" />
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>

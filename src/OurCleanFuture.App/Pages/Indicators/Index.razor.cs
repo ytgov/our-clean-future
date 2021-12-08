@@ -63,14 +63,14 @@ public partial class Index : IDisposable
         Navigation.NavigateTo("/indicators/details/" + indicatorId);
     }
 
+    public void RowClicked(TableRowClickEventArgs<Indicator> p)
+    {
+        Details(p.Item.Id);
+    }
+
     private void Edit(int indicatorId)
     {
         Navigation.NavigateTo("/indicators/edit/" + indicatorId);
-    }
-
-    public void RowClicked(TableRowClickEventArgs<Indicator> p)
-    {
-        Navigation.NavigateTo("/indicators/edit/" + p.Item.Id);
     }
 
     private bool FilterFunc(Indicator indicator)

@@ -48,13 +48,9 @@ else
                     <MudIcon Icon="@Icons.Material.Filled.TrendingFlat" />
                     }
             </MudTd>
-            <MudTd DataLabel="Last Entry">@GetDateLastEntry(context)?.ToLongDateString()</MudTd>
+            <MudTd DataLabel="Last Entry">@GetDateLastEntry(context)?.ToString("MMM yyyy")</MudTd>
             <MudTd>
-                <MudMenu Icon="@Icons.Material.Filled.MoreVert">
-                    <MudMenuItem OnClick="(() => Details(context.Id))">View</MudMenuItem>
-                    <MudMenuItem OnClick="(() => Edit(context.Id))">Edit</MudMenuItem>
-                    <MudMenuItem>Delete</MudMenuItem>
-                </MudMenu>
+                <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))"></MudIconButton>
             </MudTd>
         </RowTemplate>
         <PagerContent>

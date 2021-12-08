@@ -38,9 +38,9 @@
                             <MudField Label="Start Date">@Indicator.Target.StartDate?.ToString("yyyy")</MudField>
                         }
                         <MudField Label="Completion Date">@Indicator.Target.EndDate?.ToString("yyyy")</MudField>
-                        @if (!string.IsNullOrWhiteSpace(Indicator.Target.OcfDescription))
+                        @if (!string.IsNullOrWhiteSpace(Indicator.Target.Description))
                         {
-                            <MudField Label="Description">@Indicator.Target.OcfDescription</MudField>
+                            <MudField Label="Description">@Indicator.Target.Description</MudField>
                         }
                     </MudPaper>
                 </MudItem>

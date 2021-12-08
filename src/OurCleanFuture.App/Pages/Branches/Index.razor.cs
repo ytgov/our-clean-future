@@ -7,7 +7,7 @@ using OurCleanFuture.Data.Entities;
 
 namespace OurCleanFuture.App.Pages.Branches;
 
-[Authorize(Roles = "Administrator")]
+[Authorize(Roles = "Administrator, ENV-CCS.Writer")]
 public partial class Index : IDisposable
 {
     private bool isLoaded;

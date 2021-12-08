@@ -10,12 +10,14 @@
         </TitleContent>
         <DialogContent>
             <MudTextField Label="Name" @bind-Value="Branch.Name" For="(() => Branch.Name)" />
-            <MudSelect Label="Department" @bind-Value="Branch.Department" DisableUnderLine="true">
-                @foreach (var department in Departments)
-                {
-                    <MudSelectItem Value="department">@department.Name</MudSelectItem>
-                }
-            </MudSelect>
+            <AuthorizeView Roles="Administrator" Context="_">
+                <MudSelect Label="Department" @bind-Value="Branch.Department" DisableUnderLine="true">
+                    @foreach (var department in Departments)
+                    {
+                        <MudSelectItem Value="department">@department.Name</MudSelectItem>
+                    }
+                </MudSelect>
+            </AuthorizeView>
         </DialogContent>
         <DialogActions>
             <MudButton OnClick="Cancel">Cancel</MudButton>

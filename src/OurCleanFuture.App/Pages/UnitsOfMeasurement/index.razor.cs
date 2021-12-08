@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
 using OurCleanFuture.Data;
@@ -6,6 +7,7 @@ using OurCleanFuture.Data.Entities;
 
 namespace OurCleanFuture.App.Pages.UnitsOfMeasurement;
 
+[Authorize(Roles = "Administrator, ENV-CCS.Writer")]
 public partial class Index : IDisposable
 {
     private bool isLoaded;

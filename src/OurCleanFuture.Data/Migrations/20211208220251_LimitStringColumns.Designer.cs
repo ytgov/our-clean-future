@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OurCleanFuture.Data;
 
@@ -11,9 +12,10 @@ using OurCleanFuture.Data;
 namespace OurCleanFuture.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211208220251_LimitStringColumns")]
+    partial class LimitStringColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("DirectorsCommitteesId");
 
-                    b.ToTable("ActionDirectorsCommittee", (string)null);
+                    b.ToTable("ActionDirectorsCommittee");
                 });
 
             modelBuilder.Entity("GoalObjective", b =>
@@ -49,7 +51,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("ObjectivesId");
 
-                    b.ToTable("GoalObjective", (string)null);
+                    b.ToTable("GoalObjective");
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Action", b =>
@@ -129,7 +131,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("ObjectiveId");
 
-                    b.ToTable("Actions", (string)null);
+                    b.ToTable("Actions");
 
                     b.ToTable(tb => tb.IsTemporal(ttb =>
                         {
@@ -156,7 +158,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("LeadId");
 
-                    b.ToTable("ActionLead", (string)null);
+                    b.ToTable("ActionLead");
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Area", b =>
@@ -174,7 +176,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Areas", (string)null);
+                    b.ToTable("Areas");
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Branch", b =>
@@ -238,7 +240,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DirectorsCommittees", (string)null);
+                    b.ToTable("DirectorsCommittees");
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Goal", b =>
@@ -256,7 +258,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Goals", (string)null);
+                    b.ToTable("Goals");
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Indicator", b =>
@@ -327,7 +329,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("UnitOfMeasurementId");
 
-                    b.ToTable("Indicators", (string)null);
+                    b.ToTable("Indicators");
 
                     b.ToTable(tb => tb.IsTemporal(ttb =>
                         {
@@ -354,7 +356,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("LeadId");
 
-                    b.ToTable("IndicatorLead", (string)null);
+                    b.ToTable("IndicatorLead");
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Lead", b =>
@@ -379,7 +381,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("Leads", (string)null);
+                    b.ToTable("Leads");
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Objective", b =>
@@ -402,7 +404,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("AreaId");
 
-                    b.ToTable("Objectives", (string)null);
+                    b.ToTable("Objectives");
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Organization", b =>
@@ -463,7 +465,7 @@ namespace OurCleanFuture.Data.Migrations
                     b.HasIndex("IndicatorId")
                         .IsUnique();
 
-                    b.ToTable("Targets", (string)null);
+                    b.ToTable("Targets");
 
                     b.ToTable(tb => tb.IsTemporal(ttb =>
                         {
@@ -596,7 +598,7 @@ namespace OurCleanFuture.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsMany("OurCleanFuture.Data.Entities.Indicator.Entries#OurCleanFuture.Data.Entities.Entry", "Entries", b1 =>
+                    b.OwnsMany("OurCleanFuture.Data.Entities.Entry", "Entries", b1 =>
                         {
                             b1.Property<int>("IndicatorId")
                                 .HasColumnType("int");

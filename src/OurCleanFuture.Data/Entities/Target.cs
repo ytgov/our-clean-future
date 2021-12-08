@@ -9,8 +9,8 @@ public class Target
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
 
-    [MinLength(1, ErrorMessage = "OCF Description is required.")]
-    public string OcfDescription { get; set; } = "";
+    [StringLength(500, MinimumLength = 1, ErrorMessage = "{0} must be between {2} and {1} characters.")]
+    public string Description { get; set; } = "";
 
     public int IndicatorId { get; set; }
     public Indicator Indicator { get; set; } = null!;

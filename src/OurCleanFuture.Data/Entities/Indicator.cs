@@ -6,13 +6,13 @@ public class Indicator
 {
     public int Id { get; set; }
 
-    [MinLength(1, ErrorMessage = "Title is required.")]
+    [StringLength(100, MinimumLength = 5, ErrorMessage = "{0} must be between {2} and {1} characters.")]
     public string Title { get; set; } = "";
 
     public List<Lead> Leads { get; set; } = new();
     public List<IndicatorLead> IndicatorLeads { get; set; } = new();
 
-    [MinLength(1, ErrorMessage = "Description is required.")]
+    [StringLength(500, MinimumLength = 1, ErrorMessage = "{0} must be between {2} and {1} characters.")]
     public string Description { get; set; } = "";
 
     public int UnitOfMeasurementId { get; set; }
@@ -34,8 +34,10 @@ public class Indicator
     public CollectionInterval CollectionInterval { get; set; }
     public List<Entry> Entries { get; set; } = new();
 
+    [StringLength(2000, ErrorMessage = "{0} has a maximum length of {1} characters.")]
     public string Note { get; set; } = "";
 
+    [StringLength(100)]
     public string UpdatedBy { get; set; } = "";
 
     public string LeadsToString()

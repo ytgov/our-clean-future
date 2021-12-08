@@ -6,7 +6,7 @@ public class Branch
 {
     public int Id { get; set; }
 
-    [MinLength(3, ErrorMessage = "Branch name is required.")]
+    [StringLength(100, MinimumLength = 1, ErrorMessage = "{0} must be between {2} and {1} characters.")]
     public string Name { get; set; } = "";
 
     public Lead Lead { get; set; } = null!;

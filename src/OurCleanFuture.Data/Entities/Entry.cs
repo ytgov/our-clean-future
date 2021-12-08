@@ -1,11 +1,15 @@
-﻿namespace OurCleanFuture.Data.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OurCleanFuture.Data.Entities;
 
 public class Entry
 {
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public double Value { get; set; }
+    [StringLength(500, ErrorMessage = "{0} has a maximum length of {1} characters.")]
     public string Note { get; set; } = "";
+    [StringLength(100)]
     public string UpdatedBy { get; set; } = "";
 
     public Indicator Indicator { get; set; } = null!;

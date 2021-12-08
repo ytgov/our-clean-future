@@ -87,6 +87,8 @@ public partial class Index : IDisposable
             if (lead.Branch?.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
                 return true;
         }
+        if (indicator.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
         if (indicator.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         return false;

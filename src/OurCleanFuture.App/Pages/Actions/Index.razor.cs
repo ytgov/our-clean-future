@@ -56,6 +56,16 @@ public partial class Index : IDisposable
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
+        foreach (var lead in action.Leads) {
+            if (lead.Organization.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (lead.Branch?.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
+                return true;
+            if (lead.Branch?.Department.ShortName.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
+                return true;
+            if (lead.Branch?.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
+                return true;
+        }
         if (action.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         return false;

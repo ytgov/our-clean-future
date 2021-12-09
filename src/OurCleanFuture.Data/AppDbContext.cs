@@ -83,6 +83,7 @@ public class AppDbContext : DbContext
             a.Property(a => a.ActualCompletionDate).HasColumnType("date");
             a.Property(a => a.InternalStatus).HasConversion<string>().HasMaxLength(25);
             a.Property(a => a.ExternalStatus).HasConversion<string>().HasMaxLength(25);
+            a.HasIndex(a => a.Number).IsUnique();
         });
 
         modelBuilder.Entity<Indicator>()

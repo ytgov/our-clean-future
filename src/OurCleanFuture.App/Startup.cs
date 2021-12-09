@@ -44,8 +44,6 @@ public class Startup
             services.AddDbContextFactory<AppDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AppContext"), options => options.EnableRetryOnFailure()));
 #endif
-        services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"))
-            .AddSingleton(sp => sp.GetRequiredService<IOptions<ConnectionStrings>>().Value);
 
         services.AddLocalization();
     }

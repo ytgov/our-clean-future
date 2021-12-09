@@ -18,8 +18,6 @@ public class AppDbContext : DbContext
     public DbSet<Objective> Objectives => Set<Objective>();
     public DbSet<Area> Areas => Set<Area>();
 
-    private readonly ConnectionStrings connectionStrings;
-
     //Uncomment to allow EF Core Power Tools to generate a diagram
     //public AppDbContext()
     //{
@@ -31,9 +29,8 @@ public class AppDbContext : DbContext
     //    optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=EnvOurCleanFuture; Integrated Security=True");
     //}
 
-    public AppDbContext(DbContextOptions options, ConnectionStrings connectionStrings) : base(options)
+    public AppDbContext(DbContextOptions options) : base(options)
     {
-        this.connectionStrings = connectionStrings;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

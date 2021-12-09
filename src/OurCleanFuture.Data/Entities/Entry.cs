@@ -18,12 +18,9 @@ public class Entry
 
     public string ValueToString()
     {
-        // Switching on Id here, as end users have access to change the Name and Symbol.
-        var result = Indicator.UnitOfMeasurement.Id switch {
-            // Count
-            2 => Value.ToString("n0"),
-            // Dollars
-            4 => Value.ToString("c"),
+        var result = Indicator.UnitOfMeasurement.Name switch {
+            "Count" => Value.ToString("n0"),
+            "Dollars" => Value.ToString("c"),
             // All other units
             _ => $"{Value:n} {Indicator.UnitOfMeasurement.Symbol}",
         };

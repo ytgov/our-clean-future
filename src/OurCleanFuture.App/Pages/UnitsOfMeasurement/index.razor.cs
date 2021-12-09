@@ -11,7 +11,6 @@ namespace OurCleanFuture.App.Pages.UnitsOfMeasurement;
 public partial class Index : IDisposable
 {
     private bool isLoaded;
-    private bool mayRender = true;
     private AppDbContext context = null!;
 
     public List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
@@ -88,8 +87,6 @@ public partial class Index : IDisposable
             "This action cannot not be undone.",
             yesText: "Delete", cancelText: "Cancel");
         if (result == true) {
-            //Prevents mid-method rerendering of the component, which avoids overlapping threads
-            mayRender = false;
             try {
                 context.Remove(unitOfMeasurement);
                 await context.SaveChangesAsync();
@@ -99,14 +96,11 @@ public partial class Index : IDisposable
             catch (DbUpdateException) {
                 Snackbar.Add($"Unable to delete unit {unitOfMeasurement.Symbol}, as it is associated with an indicator", Severity.Error);
             }
-            finally {
-                mayRender = true;
-            }
         }
     }
 
     public void Dispose()
     {
-        context.DisposeAsync();
+        context.Dispose();
     }
 }

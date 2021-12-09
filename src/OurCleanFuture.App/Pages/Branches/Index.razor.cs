@@ -11,7 +11,6 @@ namespace OurCleanFuture.App.Pages.Branches;
 public partial class Index : IDisposable
 {
     private bool isLoaded;
-    private bool mayRender = true;
     private AppDbContext context = null!;
 
     public List<Branch> Branches { get; set; } = new();
@@ -95,7 +94,6 @@ public partial class Index : IDisposable
             yesText: "Delete", cancelText: "Cancel");
         if (result == true) {
             //Prevents mid-method rerendering of the component, which avoids overlapping threads
-            mayRender = false;
             try {
                 context.Remove(branch.Lead);
                 context.Remove(branch);
@@ -106,14 +104,11 @@ public partial class Index : IDisposable
             catch (DbUpdateException) {
                 Snackbar.Add($"Unable to delete branch {branch.Name}, as it is associated with an indicator or action", Severity.Error);
             }
-            finally {
-                mayRender = true;
-            }
         }
     }
 
     public void Dispose()
     {
-        context.DisposeAsync();
+        context.Dispose();
     }
 }

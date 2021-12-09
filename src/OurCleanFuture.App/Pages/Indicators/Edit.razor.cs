@@ -294,6 +294,6 @@ public partial class Edit : IDisposable
 
     public void Dispose()
     {
-        context.DisposeAsync();
+        context.Dispose();
     }
 }

@@ -79,6 +79,6 @@ public partial class Index : IDisposable
 
     public void Dispose()
     {
-        Context.DisposeAsync();
+        Context.Dispose();
     }
 }

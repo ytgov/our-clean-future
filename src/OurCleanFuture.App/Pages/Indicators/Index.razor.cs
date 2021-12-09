@@ -9,7 +9,6 @@ namespace OurCleanFuture.App.Pages.Indicators;
 public partial class Index : IDisposable
 {
     private bool isLoaded;
-    private bool mayRender = true;
     private AppDbContext context = null!;
     private List<Indicator> indicators = null!;
     private string searchString = "";
@@ -45,8 +44,6 @@ public partial class Index : IDisposable
 
         await base.OnInitializedAsync();
     }
-
-    protected override bool ShouldRender() => mayRender;
 
     private static DateTime? GetDateLastEntry(Indicator indicator)
     {
@@ -117,6 +114,6 @@ public partial class Index : IDisposable
 
     public void Dispose()
     {
-        context.DisposeAsync();
+        context.Dispose();
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor;
 using OurCleanFuture.Data;
 using Action = OurCleanFuture.Data.Entities.Action;
 
@@ -45,6 +46,11 @@ public partial class Index : IDisposable
     private void Details(int actionId)
     {
         Navigation.NavigateTo("/actions/details/" + actionId);
+    }
+
+    public void RowClicked(TableRowClickEventArgs<Action> p)
+    {
+        Details(p.Item.Id);
     }
 
     private void Edit(int actionId)

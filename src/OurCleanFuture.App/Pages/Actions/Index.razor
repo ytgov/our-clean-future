@@ -12,7 +12,8 @@ else
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
         <MudTable Items="@Actions.OrderBy(a => a.Number[0]).ThenBy(a => a.Number.Length).ThenBy(a => a.Number)"
               Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem"
-              Filter="new Func<Data.Entities.Action,bool>(FilterFunc)">
+              Filter="new Func<Data.Entities.Action,bool>(FilterFunc)"
+              T="Data.Entities.Action" OnRowClick="@RowClicked">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Actions</MudText>
                 <MudSpacer />
@@ -34,11 +35,7 @@ else
                 <MudTd DataLabel="Internal Status">@context.InternalStatus.GetDisplayName()</MudTd>
                 <MudTd DataLabel="External Status">@context.ExternalStatus.GetDisplayName()</MudTd>
                 <MudTd>
-                    <MudMenu Icon="@Icons.Material.Filled.MoreVert">
-                        <MudMenuItem OnClick="(() => Details(context.Id))">View</MudMenuItem>
-                        <MudMenuItem OnClick="(() => Edit(context.Id))">Edit</MudMenuItem>
-                        <MudMenuItem>Delete</MudMenuItem>
-                    </MudMenu>
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))"></MudIconButton>
                 </MudTd>
             </RowTemplate>
             <PagerContent>

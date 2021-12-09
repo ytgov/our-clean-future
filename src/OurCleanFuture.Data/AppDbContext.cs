@@ -84,16 +84,18 @@ public class AppDbContext : DbContext
             a.Property(a => a.StartDate).HasColumnType("date");
             a.Property(a => a.TargetCompletionDate).HasColumnType("date");
             a.Property(a => a.ActualCompletionDate).HasColumnType("date");
-            a.Property(a => a.InternalStatus).HasConversion<string>();
-            a.Property(a => a.ExternalStatus).HasConversion<string>();
+            a.Property(a => a.InternalStatus).HasConversion<string>().HasMaxLength(25);
+            a.Property(a => a.ExternalStatus).HasConversion<string>().HasMaxLength(25);
         });
 
         modelBuilder.Entity<Indicator>()
                     .Property(i => i.DataType)
-                    .HasConversion<string>();
+                    .HasConversion<string>()
+                    .HasMaxLength(25);
         modelBuilder.Entity<Indicator>()
                     .Property(i => i.CollectionInterval)
-                    .HasConversion<string>();
+                    .HasConversion<string>()
+                    .HasMaxLength(25);
         modelBuilder.Entity<Indicator>()
                     .HasMany(i => i.Leads)
                     .WithMany(l => l.Indicators)

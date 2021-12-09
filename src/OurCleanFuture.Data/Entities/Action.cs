@@ -14,6 +14,7 @@ public class Action
     public DateTime? ActualCompletionDate { get; set; }
 
     public InternalStatus InternalStatus { get; set; }
+    [StringLength(100)]
     public string InternalStatusUpdatedBy { get; set; } = "";
     public DateTimeOffset? InternalStatusUpdatedDate { get; set; }
 

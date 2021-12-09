@@ -93,6 +93,7 @@
                                     <MudSelectItem Value="unit">@unit.ToString()</MudSelectItem>
                                 }
                             </MudSelect>
+                            <MudTextField Label="Internal Notes" @bind-Value="Indicator.Note" Lines="2" For=@(() => Indicator.Note) />
                         </MudPaper>
                     </MudItem>
                     <MudItem xs="12" sm="6" md="3">

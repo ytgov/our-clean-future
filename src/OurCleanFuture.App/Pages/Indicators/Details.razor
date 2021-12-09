@@ -18,34 +18,26 @@
                 <MudPaper Elevation="2" Class="pa-4">
                     <MudField Label="Lead(s)">@Indicator.LeadsToString()</MudField>
                     <MudField Label="Description">@Indicator.Description</MudField>
-                    <MudField Label="Data Type">@Indicator.DataType</MudField>
-                    <MudField Label="Collection Interval">@Indicator.CollectionInterval</MudField>
-                    <MudField Label="Unit of Measurement">@Indicator.UnitOfMeasurement.Name</MudField>
+                    @if (Indicator.Target is null || string.IsNullOrWhiteSpace(Indicator.Target.Description))
+                    {
+                        <MudField Label="Target">None</MudField>
+                    }
+                    else
+                    {
+                        <MudField Label="Target">@Indicator.Target.Description</MudField>
+                    }
                     <MudField Label="Internal Notes">@Indicator.Note</MudField>
                     <MudField Label="Last Updated By">@IndicatorLastUpdatedBy</MudField>
                 </MudPaper>
             </MudItem>
-            @if (Indicator.Target != null)
-            {
-                <MudItem xs="12" sm="6" md="6">
-                    <MudPaper Elevation="2" Class="pa-4">
-                        <MudText Typo="Typo.h6">Target</MudText>
-                        @if (Indicator.Target.Value is not null)
-                        {
-                            <MudField Label="Value">@Indicator.Target.ValueToString()</MudField>
-                        }
-                        @if (Indicator.Target.StartDate is not null)
-                        {
-                            <MudField Label="Start Date">@Indicator.Target.StartDate?.ToString("yyyy")</MudField>
-                        }
-                        <MudField Label="Completion Date">@Indicator.Target.EndDate?.ToString("yyyy")</MudField>
-                        @if (!string.IsNullOrWhiteSpace(Indicator.Target.Description))
-                        {
-                            <MudField Label="Description">@Indicator.Target.Description</MudField>
-                        }
-                    </MudPaper>
-                </MudItem>
-            }
+
+            <MudItem xs="12" sm="6" md="6">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudField Label="Data Type">@Indicator.DataType</MudField>
+                    <MudField Label="Collection Interval">@Indicator.CollectionInterval</MudField>
+                    <MudField Label="Unit of Measurement">@Indicator.UnitOfMeasurement.Name</MudField>
+                </MudPaper>
+            </MudItem>
 
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
@@ -176,7 +168,7 @@
                             <MudTh></MudTh>
                         </HeaderContent>
                         <RowTemplate Context="Entry">
-                            <MudTd DataLabel="Period">@Entry.StartDate.ToString("MMMM d") - @Entry.EndDate.ToString("MMMM d, yyyy")</MudTd>
+                            <MudTd DataLabel="Period">@Entry.PeriodToString()</MudTd>
                             <MudTd DataLabel="Value">@Entry.ValueToString()</MudTd>
                             <MudTd DataLabel="Note">@Entry.Note</MudTd>
                             <MudTd>

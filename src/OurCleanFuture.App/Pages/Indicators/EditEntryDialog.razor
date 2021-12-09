@@ -63,7 +63,7 @@
     public BiannualInterval SelectedBiannualInterval { get; set; }
     public QuarterlyInterval SelectedQuarterlyInterval { get; set; }
 
-    public double? TempValue { get; set; }
+    public decimal? TempValue { get; set; }
 
     public MudAutocomplete<int> YearAutocomplete { get; set; } = new();
 
@@ -151,7 +151,7 @@
     {
         if (TempValue is not null)
         {
-            Entry.Value = (double)TempValue;
+            Entry.Value = (decimal)TempValue;
             if (Indicator.CollectionInterval == CollectionInterval.Annual)
             {
                 Entry.StartDate = new DateTime(SelectedYear, 1, 1);

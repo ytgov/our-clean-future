@@ -88,7 +88,7 @@
     {
         if (TempValue is not null)
         {
-            Entry.Value = (double)TempValue;
+            Entry.Value = (decimal)TempValue;
             if (Indicator.CollectionInterval == CollectionInterval.Annual)
             {
                 Entry.StartDate = new DateTime(SelectedYear, 1, 1);

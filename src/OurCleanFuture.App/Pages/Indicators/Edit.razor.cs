@@ -16,37 +16,36 @@ public partial class Edit : IDisposable
     private ClaimsPrincipal user = null!;
     private bool targetIsDeleted = false;
 
-    public int[] Years { get; } = Enumerable.Range(2009, (DateTime.Now.Year - 2008)).ToArray();
+    private int[] Years { get; } = Enumerable.Range(2009, (DateTime.Now.Year - 2008)).ToArray();
 
     [Parameter]
     public int Id { get; set; }
 
-    public string AuthorizedRoles { get; set; } = "Administrator, ENV-CCS.Writer";
-    public string SelectedParentType { get; set; } = "";
-    public IEnumerable<Lead> SelectedLeads { get; set; } = new List<Lead>();
+    private string AuthorizedRoles { get; set; } = "Administrator, ENV-CCS.Writer";
+    private string SelectedParentType { get; set; } = "";
+    private IEnumerable<Lead> SelectedLeads { get; set; } = new List<Lead>();
 
-    public List<Lead> Leads { get; set; } = new();
-    public List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
-    public List<Goal> Goals { get; set; } = new();
-    public List<Objective> Objectives { get; set; } = new();
-    public List<Action> Actions { get; set; } = new();
-    public Indicator Indicator { get; set; } = null!;
-    public Target Target { get; set; } = null!;
+    private List<Lead> Leads { get; set; } = new();
+    private List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
+    private List<Goal> Goals { get; set; } = new();
+    private List<Objective> Objectives { get; set; } = new();
+    private List<Action> Actions { get; set; } = new();
+    private Indicator Indicator { get; set; } = null!;
 
     [CascadingParameter]
     private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
 
     [Inject]
-    public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
     [Inject]
-    public IDialogService DialogService { get; set; } = null!;
+    private IDialogService DialogService { get; set; } = null!;
 
     [Inject]
-    public NavigationManager Navigation { get; set; } = null!;
+    private NavigationManager Navigation { get; set; } = null!;
 
     [Inject]
-    public ISnackbar Snackbar { get; set; } = null!;
+    private ISnackbar Snackbar { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -61,7 +60,6 @@ public partial class Edit : IDisposable
             Indicator = await context.Indicators.Include(i => i.Target).Include(i => i.Leads).FirstOrDefaultAsync(i => i.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
             if (Indicator != null) {
-                Target = Indicator.Target!;
                 foreach (var lead in Indicator.Leads) {
                     SelectedLeads = SelectedLeads.Append(lead);
                 }

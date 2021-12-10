@@ -12,22 +12,22 @@ public partial class Details : IDisposable
     private bool isLoaded;
     private AppDbContext context = null!;
 
-    public Area Area { get; set; } = null!;
+    private Area Area { get; set; } = null!;
 
     [Parameter]
     public string AreaTitle { get; set; } = null!;
 
     [Inject]
-    public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
     [Inject]
-    public IDialogService DialogService { get; set; } = null!;
+    private IDialogService DialogService { get; set; } = null!;
 
     [Inject]
-    public NavigationManager Navigation { get; set; } = null!;
+    private NavigationManager Navigation { get; set; } = null!;
 
     [Inject]
-    public ISnackbar Snackbar { get; set; } = null!;
+    private ISnackbar Snackbar { get; set; } = null!;
 
     // Required to force the app to re-render when navigating between Areas.
     // OnInitializedAsync is not called by default in this situation, as the user is merely changing the parameter, while staying on the same page.
@@ -61,6 +61,6 @@ public partial class Details : IDisposable
 
     public void Dispose()
     {
-        context.DisposeAsync();
+        context.Dispose();
     }
 }

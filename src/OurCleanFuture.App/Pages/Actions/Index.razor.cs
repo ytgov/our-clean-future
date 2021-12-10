@@ -13,13 +13,13 @@ public partial class Index : IDisposable
     private string searchString = "";
 
     [Inject]
-    public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
     [Inject]
-    public NavigationManager Navigation { get; set; } = null!;
+    private NavigationManager Navigation { get; set; } = null!;
 
-    public AppDbContext Context { get; private set; } = null!;
-    public List<Action> Actions { get; set; } = new();
+    private AppDbContext Context { get; set; } = null!;
+    private List<Action> Actions { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -48,7 +48,7 @@ public partial class Index : IDisposable
         Navigation.NavigateTo("/actions/details/" + actionId);
     }
 
-    public void RowClicked(TableRowClickEventArgs<Action> p)
+    private void RowClicked(TableRowClickEventArgs<Action> p)
     {
         Details(p.Item.Id);
     }

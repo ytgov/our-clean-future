@@ -13,16 +13,16 @@ public partial class Index : IDisposable
     private bool isLoaded;
     private AppDbContext context = null!;
 
-    public List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
+    private List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
 
     [Inject]
-    public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
     [Inject]
-    public IDialogService DialogService { get; set; } = null!;
+    private IDialogService DialogService { get; set; } = null!;
 
     [Inject]
-    public ISnackbar Snackbar { get; set; } = null!;
+    private ISnackbar Snackbar { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {

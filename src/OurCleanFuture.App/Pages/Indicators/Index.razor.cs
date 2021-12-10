@@ -15,10 +15,10 @@ public partial class Index : IDisposable
     private Indicator selectedItem = null!;
 
     [Inject]
-    public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
     [Inject]
-    public NavigationManager Navigation { get; set; } = null!;
+    private NavigationManager Navigation { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {

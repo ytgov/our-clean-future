@@ -19,32 +19,30 @@ public partial class Edit : IDisposable
     [Parameter]
     public int Id { get; set; }
 
-    public string AuthorizedRoles { get; set; } = "Administrator, ENV-CCS.Writer";
-    public string SelectedParentType { get; set; } = "";
-    public IEnumerable<Lead> SelectedLeads { get; set; } = new List<Lead>();
+    private string AuthorizedRoles { get; set; } = "Administrator, ENV-CCS.Writer";
+    private IEnumerable<Lead> SelectedLeads { get; set; } = new List<Lead>();
 
-    public List<Goal> Goals { get; set; } = new();
-    public List<Objective> Objectives { get; set; } = new();
-    public List<Lead> Leads { get; set; } = new();
-    public Action Action { get; set; } = null!;
-    public List<Indicator> Indicators { get; set; } = new();
-    public IEnumerable<DirectorsCommittee> SelectedDirectorsCommittees { get; set; } = new List<DirectorsCommittee>();
-    public List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();
+    private List<Goal> Goals { get; set; } = new();
+    private List<Objective> Objectives { get; set; } = new();
+    private List<Lead> Leads { get; set; } = new();
+    private Action Action { get; set; } = null!;
+    private IEnumerable<DirectorsCommittee> SelectedDirectorsCommittees { get; set; } = new List<DirectorsCommittee>();
+    private List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();
 
     [CascadingParameter]
     private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
 
     [Inject]
-    public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
     [Inject]
-    public IDialogService DialogService { get; set; } = null!;
+    private IDialogService DialogService { get; set; } = null!;
 
     [Inject]
-    public NavigationManager Navigation { get; set; } = null!;
+    private NavigationManager Navigation { get; set; } = null!;
 
     [Inject]
-    public ISnackbar Snackbar { get; set; } = null!;
+    private ISnackbar Snackbar { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -185,6 +183,6 @@ public partial class Edit : IDisposable
 
     public void Dispose()
     {
-        context.DisposeAsync();
+        context.Dispose();
     }
 }

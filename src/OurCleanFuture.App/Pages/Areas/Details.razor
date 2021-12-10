@@ -19,18 +19,20 @@ else
             {
                 <MudItem md="12" lg="6">
                     <MudPaper Elevation="2" Class="pa-4">
-                        <MudText Typo="Typo.h5">@objective.Title</MudText>
-                        <MudList Clickable="true" Dense="true" DisableGutters="true">
-                            @foreach (var action in objective.Actions)
-                            {
-                                <MudListItem Class="px-2" OnClick="(() => ViewAction(action))">
-                                    <div class="d-flex">
-                                        <MudText Class="mr-2">@(action.Number).</MudText>
-                                        <MudText>@action.Title</MudText>
-                                    </div>
-                                </MudListItem>
-                            }
-                        </MudList>
+                        <MudText Typo="Typo.h5">Objective: @objective.Title</MudText>
+                        <MudPaper Elevation="0">
+                            <MudList Clickable="true" Dense="true" DisableGutters="true">
+                                @foreach (var action in objective.Actions)
+                                {
+                                    <MudListItem Class="px-2" OnClick="(() => ViewAction(action))">
+                                        <div class="d-flex">
+                                            <MudText Class="mr-2">@(action.Number).</MudText>
+                                            <MudText>@action.Title</MudText>
+                                        </div>
+                                    </MudListItem>
+                                }
+                            </MudList>
+                        </MudPaper>
                     </MudPaper>
                 </MudItem>
             }

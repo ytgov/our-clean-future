@@ -14,15 +14,15 @@ public partial class Details : IDisposable
     [Parameter]
     public int Id { get; set; }
 
-    public Indicator Indicator { get; set; } = null!;
+    private Indicator Indicator { get; set; } = null!;
 
-    public string IndicatorLastUpdatedBy { get; set; } = "";
-
-    [Inject]
-    public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    private string IndicatorLastUpdatedBy { get; set; } = "";
 
     [Inject]
-    public NavigationManager Navigation { get; set; } = null!;
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+
+    [Inject]
+    private NavigationManager Navigation { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -112,6 +112,6 @@ public partial class Details : IDisposable
 
     public void Dispose()
     {
-        context.DisposeAsync();
+        context.Dispose();
     }
 }

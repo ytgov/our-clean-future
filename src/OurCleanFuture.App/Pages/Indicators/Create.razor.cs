@@ -10,12 +10,12 @@ public partial class Create : IDisposable
     private bool isLoaded;
     private AppDbContext context = null!;
 
-    public List<Lead> Leads { get; set; } = new();
+    private List<Lead> Leads { get; set; } = new();
 
     private readonly CollectionInterval[] collectionIntervals = (CollectionInterval[])Enum.GetValues(typeof(CollectionInterval));
 
     [Inject]
-    public IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -40,6 +40,6 @@ public partial class Create : IDisposable
 
     public void Dispose()
     {
-        context.DisposeAsync();
+        context.Dispose();
     }
 }

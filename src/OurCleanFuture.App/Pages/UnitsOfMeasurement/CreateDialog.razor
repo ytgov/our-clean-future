@@ -19,7 +19,7 @@
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
 
-    public UnitOfMeasurement UnitOfMeasurement { get; set; } = new();
+    private UnitOfMeasurement UnitOfMeasurement { get; set; } = new();
 
     private void Cancel()
     {

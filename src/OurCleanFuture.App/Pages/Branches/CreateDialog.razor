@@ -27,7 +27,7 @@
 @code {
     [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
 
-    public Branch Branch { get; set; } = new();
+    private Branch Branch { get; set; } = new();
 
     [Parameter]
     public List<Department> Departments { get; set; } = new();

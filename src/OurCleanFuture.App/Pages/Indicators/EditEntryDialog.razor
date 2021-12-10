@@ -59,16 +59,16 @@
 
     private bool isValid = true;
 
-    public int SelectedYear { get; set; }
-    public BiannualInterval SelectedBiannualInterval { get; set; }
-    public QuarterlyInterval SelectedQuarterlyInterval { get; set; }
+    private int SelectedYear { get; set; }
+    private BiannualInterval SelectedBiannualInterval { get; set; }
+    private QuarterlyInterval SelectedQuarterlyInterval { get; set; }
 
-    public decimal? TempValue { get; set; }
+    private decimal? TempValue { get; set; }
 
-    public MudAutocomplete<int> YearAutocomplete { get; set; } = new();
+    private MudAutocomplete<int> YearAutocomplete { get; set; } = new();
 
     [Inject]
-    public ISnackbar Snackbar { get; set; } = null!;
+    private ISnackbar Snackbar { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {

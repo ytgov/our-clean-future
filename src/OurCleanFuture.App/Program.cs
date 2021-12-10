@@ -37,6 +37,11 @@ public static class Program
                 .ConfigureWebHostDefaults(webBuilder => {
                     webBuilder.UseStaticWebAssets();
                     webBuilder.UseStartup<Startup>();
-                });
+                    webBuilder.UseKestrel(opts => {
+                        opts.ListenAnyIP(5000);
+                        opts.ListenAnyIP(5001, opts => opts.UseHttps());
+                    });
+                })
+                .UseWindowsService();
     }
 }

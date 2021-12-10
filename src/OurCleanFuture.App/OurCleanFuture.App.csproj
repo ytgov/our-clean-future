@@ -9,7 +9,23 @@
 		<DockerfileFile>..\..\Dockerfile</DockerfileFile>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<OutputType>Exe</OutputType>
 	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <NoWarn>1701;1702;CA1816</NoWarn>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <NoWarn>1701;1702;CA1816</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="Pages\Leads\**" />
+	  <Content Remove="Pages\Leads\**" />
+	  <EmbeddedResource Remove="Pages\Leads\**" />
+	  <None Remove="Pages\Leads\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" NoWarn="NU1605" />
@@ -19,8 +35,9 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Identity.Web" Version="1.20.0" />
-		<PackageReference Include="Microsoft.Identity.Web.UI" Version="1.20.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Identity.Web" Version="1.21.1" />
+		<PackageReference Include="Microsoft.Identity.Web.UI" Version="1.21.1" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
 		<PackageReference Include="MudBlazor" Version="6.0.2" />
 		<PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
@@ -28,10 +45,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\OurCleanFuture.Data\OurCleanFuture.Data.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Folder Include="Pages\Leads\" />
 	</ItemGroup>
 
 </Project>

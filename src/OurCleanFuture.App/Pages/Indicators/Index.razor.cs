@@ -100,7 +100,6 @@ public partial class Index : IDisposable
                 return "TrendingUp";
             }
             else if (entries[0].Value < entries[1].Value) {
-
                 return "TrendingDown";
             }
             else {

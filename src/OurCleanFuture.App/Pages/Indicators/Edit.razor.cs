@@ -215,7 +215,6 @@ public partial class Edit : IDisposable
                 Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
             }
 
-
             await context.SaveChangesAsync();
             Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
         }
@@ -224,15 +223,16 @@ public partial class Edit : IDisposable
                 case InvalidOperationException:
                     Snackbar.Add("The entry changes were not saved. Two entries cannot have the same period.", Severity.Error);
                     break;
+
                 case DbUpdateException:
                     Snackbar.Add(ex.Message, Severity.Error);
                     break;
+
                 default:
                     throw;
             }
         }
         Navigation.NavigateTo($"/indicators/details/{Id}");
-
     }
 
     private void CreateTarget()

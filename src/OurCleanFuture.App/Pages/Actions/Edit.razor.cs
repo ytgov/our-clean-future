@@ -22,7 +22,6 @@ public partial class Edit : IDisposable
     private string AuthorizedRoles { get; set; } = "Administrator, ENV-CCS.Writer";
     private IEnumerable<Lead> SelectedLeads { get; set; } = new List<Lead>();
 
-    private List<Goal> Goals { get; set; } = new();
     private List<Objective> Objectives { get; set; } = new();
     private List<Lead> Leads { get; set; } = new();
     private Action Action { get; set; } = null!;
@@ -49,7 +48,6 @@ public partial class Edit : IDisposable
         try {
             context = ContextFactory.CreateDbContext();
             Leads = await context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Department.ShortName).ThenBy(l => l.Branch!.Name).ToListAsync();
-            Goals = await context.Goals.OrderBy(g => g.Title).ToListAsync();
             Objectives = await context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
             DirectorsCommittees = await context.DirectorsCommittees.OrderBy(dc => dc.Name).ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.

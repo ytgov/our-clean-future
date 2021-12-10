@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace OurCleanFuture.Data.Entities
 {
@@ -11,6 +6,7 @@ namespace OurCleanFuture.Data.Entities
     {
         [Display(Name = "January 1st to June 30th")]
         JanuaryToJune = 0,
+
         [Display(Name = "July 1st to December 31st")]
         JulyToDecember = 1
     }

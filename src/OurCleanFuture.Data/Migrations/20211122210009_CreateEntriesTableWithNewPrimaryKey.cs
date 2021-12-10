@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -11,8 +10,7 @@ namespace OurCleanFuture.Data.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "Entries",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IndicatorId = table.Column<int>(type: "int", nullable: false),
@@ -29,8 +27,7 @@ namespace OurCleanFuture.Data.Migrations
                         .Annotation("SqlServer:TemporalPeriodEndColumnName", "ValidTo")
                         .Annotation("SqlServer:TemporalPeriodStartColumnName", "ValidFrom")
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Entries", x => new { x.IndicatorId, x.Id, x.StartDate });
                     table.ForeignKey(
                         name: "FK_Entries_Indicators_IndicatorId",

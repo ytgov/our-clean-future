@@ -7,10 +7,13 @@ public class Entry
 {
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+
     [Precision(22, 6)]
     public decimal Value { get; set; }
+
     [StringLength(500, ErrorMessage = "{0} has a maximum length of {1} characters.")]
     public string Note { get; set; } = "";
+
     [StringLength(100)]
     public string UpdatedBy { get; set; } = "";
 
@@ -29,7 +32,7 @@ public class Entry
 
     public string PeriodToString()
     {
-        if(StartDate.Month == 1 && EndDate.Month == 12) {
+        if (StartDate.Month == 1 && EndDate.Month == 12) {
             return StartDate.Year.ToString();
         }
         return $"{StartDate:MMMM d} - {EndDate:MMMM d, yyyy}";

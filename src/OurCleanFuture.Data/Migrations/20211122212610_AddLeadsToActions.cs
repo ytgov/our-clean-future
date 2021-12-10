@@ -10,13 +10,11 @@ namespace OurCleanFuture.Data.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "ActionLead",
-                columns: table => new
-                {
+                columns: table => new {
                     ActionId = table.Column<int>(type: "int", nullable: false),
                     LeadId = table.Column<int>(type: "int", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_ActionLead", x => new { x.ActionId, x.LeadId });
                     table.ForeignKey(
                         name: "FK_ActionLead_Actions_ActionId",

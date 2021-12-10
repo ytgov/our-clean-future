@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
-using OurCleanFuture.App.Extensions;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using Action = OurCleanFuture.Data.Entities.Action;
@@ -64,7 +63,8 @@ public partial class Details : IDisposable
         // Only append updated by information if the InternalStatus has been updated after database creation
         if (!string.IsNullOrWhiteSpace(Action.InternalStatusUpdatedBy)) {
             return $"Last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
-        } else {
+        }
+        else {
             return "The internal status has not been updated.";
         }
     }
@@ -74,7 +74,8 @@ public partial class Details : IDisposable
         // Only append updated by information if the ExternalStatus has been updated after database creation
         if (!string.IsNullOrWhiteSpace(Action.ExternalStatusUpdatedBy)) {
             return $"Last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
-        } else {
+        }
+        else {
             return "The external status has not been updated.";
         }
     }

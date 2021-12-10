@@ -1,6 +1,6 @@
 # Our Clean Future
 
-This app is used by 10 departments in Yukon Government to record data on ~230 indicators for the [Our Clean Future](https://yukon.ca/our-clean-future) initiative.
+This app enables Yukon Government to record and analyze data on ~230 indicators for the [Our Clean Future](https://yukon.ca/our-clean-future) initiative.
 
 >We live in a world that’s rapidly changing. Climate change is threatening ecosystems, subsistence harvesting, infrastructure, leisure activities, and many other aspects of our lives.
 >
@@ -14,6 +14,7 @@ This app is used by 10 departments in Yukon Government to record data on ~230 in
 
 * UI Component Library: [MudBlazor](https://github.com/Garderoben/MudBlazor)
 * Web Framework: [ASP.NET Core 6](https://github.com/dotnet/aspnetcore) and [Blazor Server](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
+* Authentication & Authorization: [Microsoft Identity Platform](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-overview) (OIDC & OAuth2)
 * Data Access: [Entity Framework Core](https://github.com/dotnet/efcore)
 * Data Store: SQL Server
 * Logging: [Serilog](https://github.com/serilog/serilog)

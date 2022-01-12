@@ -1,7 +1,6 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Web;
-using Microsoft.Identity.Web.UI;
 using MudBlazor.Services;
 using OurCleanFuture.Data;
 
@@ -20,19 +19,69 @@ public class Startup
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-            .AddMicrosoftIdentityWebApp(Configuration.GetSection("AzureAd"));
-        services.AddControllersWithViews()
-            .AddMicrosoftIdentityUI();
-
-        services.AddAuthorization(options => {
-            // By default, all incoming requests will be authorized according to the default policy
-            options.FallbackPolicy = options.DefaultPolicy;
-        });
+        services.AddSingleton(Configuration);
 
         services.AddRazorPages();
-        services.AddServerSideBlazor()
-            .AddMicrosoftIdentityConsentHandler();
+        services.AddServerSideBlazor();
+
+        services.Configure<CookiePolicyOptions>(options => {
+            options.CheckConsentNeeded = context => true;
+            options.MinimumSameSitePolicy = SameSiteMode.None;
+        });
+
+        // Add authentication services
+        services.AddAuthentication(options => {
+            options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        })
+        .AddCookie(options => {
+            options.LoginPath = $"/{Configuration["Auth0:LoginPath"]}";
+            options.LogoutPath = $"/{Configuration["Auth0:LogoutPath"]}";
+        })
+        .AddOpenIdConnect("Auth0", options => {
+            options.Authority = $"https://{Configuration["Auth0:Domain"]}";
+            options.ClientId = Configuration["Auth0:ClientId"];
+            options.ClientSecret = Configuration["Auth0:ClientSecret"];
+            options.ResponseType = "code";
+
+            options.Scope.Clear();
+            options.Scope.Add("openid");
+            options.Scope.Add("profile");
+            options.Scope.Add("email");
+
+            options.CallbackPath = new PathString("/signin-oidc");
+            options.ClaimsIssuer = "Auth0";
+
+            options.Events = new OpenIdConnectEvents {
+                OnRedirectToIdentityProviderForSignOut = (context) => {
+                    var logoutUri = $"https://{Configuration["Auth0:Domain"]}/v2/logout?client_id={Configuration["Auth0:ClientId"]}";
+
+                    var postLogoutUri = context.Properties.RedirectUri;
+                    if (!string.IsNullOrEmpty(postLogoutUri)) {
+                        if (postLogoutUri.StartsWith("/")) {
+                            var request = context.Request;
+                            postLogoutUri = request.Scheme + "://" + request.Host + request.PathBase + postLogoutUri;
+                        }
+                        logoutUri += $"&returnTo={ Uri.EscapeDataString(postLogoutUri)}";
+                    }
+
+                    context.Response.Redirect(logoutUri);
+                    context.HandleResponse();
+
+                    return Task.CompletedTask;
+                }
+            };
+        });
+
+        // TODO: Adding the authz fallback policy is resulting in an infinite loop of login redirects.
+        //services.AddAuthorization(options => {
+        //    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        //        .RequireAuthenticatedUser()
+        //        .Build();
+        //});
+
+        services.AddHttpContextAccessor();
 
         services.AddMudServices();
 #if DEBUG
@@ -65,6 +114,7 @@ public class Startup
         app.UseRouting();
         app.UseRequestLocalization("en-CA");
 
+        app.UseCookiePolicy();
         app.UseAuthentication();
         app.UseAuthorization();
 

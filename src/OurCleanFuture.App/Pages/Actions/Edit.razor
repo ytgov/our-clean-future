@@ -1,5 +1,7 @@
 ﻿@page "/actions/edit/{id:int}"
+@attribute [Authorize]
 @using OurCleanFuture.App.Extensions;
+
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
     @if (isLoaded == false)

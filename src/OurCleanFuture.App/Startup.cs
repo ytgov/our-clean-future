@@ -36,13 +36,13 @@ public class Startup
             options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         })
         .AddCookie(options => {
-            options.LoginPath = $"/{Configuration["Auth0:LoginPath"]}";
-            options.LogoutPath = $"/{Configuration["Auth0:LogoutPath"]}";
+            options.LoginPath = $"/{Configuration["AuthNProvider:LoginPath"]}";
+            options.LogoutPath = $"/{Configuration["AuthNProvider:LogoutPath"]}";
         })
-        .AddOpenIdConnect("Auth0", options => {
-            options.Authority = $"https://{Configuration["Auth0:Domain"]}";
-            options.ClientId = Configuration["Auth0:ClientId"];
-            options.ClientSecret = Configuration["Auth0:ClientSecret"];
+        .AddOpenIdConnect(Configuration["AuthNProvider:Name"], options => {
+            options.Authority = $"https://{Configuration["AuthNProvider:Domain"]}";
+            options.ClientId = Configuration["AuthNProvider:ClientId"];
+            options.ClientSecret = Configuration["AuthNProvider:ClientSecret"];
             options.ResponseType = "code";
 
             options.Scope.Clear();
@@ -50,12 +50,14 @@ public class Startup
             options.Scope.Add("profile");
             options.Scope.Add("email");
 
-            options.CallbackPath = new PathString("/signin-oidc");
-            options.ClaimsIssuer = "Auth0";
+            options.CallbackPath = Configuration["AuthNProvider:CallbackPath"];
+            options.SignedOutCallbackPath = Configuration["AuthNProvider:SignedOutCallbackPath"];
+            options.SignedOutRedirectUri = Configuration["AuthNProvider:SignedOutRedirectUri"];
+            options.ClaimsIssuer = Configuration["AuthNProvider:Name"];
 
             options.Events = new OpenIdConnectEvents {
                 OnRedirectToIdentityProviderForSignOut = (context) => {
-                    var logoutUri = $"https://{Configuration["Auth0:Domain"]}/v2/logout?client_id={Configuration["Auth0:ClientId"]}";
+                    var logoutUri = $"https://{Configuration["AuthNProvider:Domain"]}/v2/logout?client_id={Configuration["AuthNProvider:ClientId"]}";
 
                     var postLogoutUri = context.Properties.RedirectUri;
                     if (!string.IsNullOrEmpty(postLogoutUri)) {

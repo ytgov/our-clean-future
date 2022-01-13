@@ -7,9 +7,16 @@ namespace OurCleanFuture.App.Pages
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
+        private IConfiguration Configuration { get; set; }
+
+        public LoginModel(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public async Task OnGet(string redirectUri)
         {
-            await HttpContext.ChallengeAsync("Auth0", new AuthenticationProperties {
+            await HttpContext.ChallengeAsync(Configuration["AuthNProvider:Name"], new AuthenticationProperties {
                 RedirectUri = redirectUri
             });
         }

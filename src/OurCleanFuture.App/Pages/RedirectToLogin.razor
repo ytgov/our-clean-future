@@ -4,6 +4,6 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
-        NavigationManager.NavigateTo($"/{Configuration["Auth0:LoginPath"]}", forceLoad: true);
+        NavigationManager.NavigateTo($"/{Configuration["AuthNProvider:LoginPath"]}", forceLoad: true);
     }
 }

@@ -1,44 +1,118 @@
 ﻿@page "/indicators/create"
 @attribute [Authorize]
 
-@if (isLoaded == false)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <MudText Typo="Typo.h3" GutterBottom="true">New indicator</MudText>
-        <MudGrid>
-            <AuthorizeView Roles="Administrator, ENV-CCS.Writer">
-                <Authorized>
-                    <MudItem xs="12" sm="6">
-                        <MudPaper Elevation="2" Class="pa-4">
-                            <MudSelect T="Data.Entities.Lead" Label="Lead(s)">
-                                @foreach (var lead in Leads)
-                                {
-                                    <MudSelectItem Value="@lead">@(lead.Branch?.Name ?? lead.Organization.Name)</MudSelectItem>
-                                }
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+    @if (isLoaded == false)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <MudText Typo="Typo.h3" Class="mb-8">New Indicator</MudText>
+        <EditForm Model="@Indicator" OnValidSubmit="Update">
+            <ObjectGraphDataAnnotationsValidator />
+            <MudGrid>
+                <MudItem xs="12" sm="6">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudSelect T="Data.Entities.Lead" Label="Lead(s)" MultiSelection="true" @bind-SelectedValues="SelectedLeads">
+                            @foreach (var lead in Leads)
+                            {
+                                <MudSelectItem Value="lead">@lead.ToString()</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudTextField Label="Title" T="string" @bind-Value="Indicator.Title" For="@(() => Indicator.Title)" />
+                        <MudTextField Label="Description" T="string" @bind-Value="Indicator.Description" Lines="2" For="@(() => Indicator.Description)" />
+
+                        <MudItem>
+                            <MudSelect Label="Parent Type" @bind-Value="SelectedParentType">
+                                <MudSelectItem Value='"Goal"'>Goal</MudSelectItem>
+                                <MudSelectItem Value='"Objective"'>Objective</MudSelectItem>
+                                <MudSelectItem Value='"Action"'>Action</MudSelectItem>
                             </MudSelect>
-                            <MudTextField Label="Title" T="string" />
-                            <MudTextField Label="Description" T="string" />
-                            <MudAutocomplete Label="Collection Interval" T="Data.Entities.CollectionInterval" SearchFunc="@SearchCollectionIntervals"
-                                         CoerceText="true" SelectValueOnTab="true" ResetValueOnEmptyText="true">
+                        </MudItem>
 
-                            </MudAutocomplete>
-                        </MudPaper>
-                    </MudItem>
+                        @if (SelectedParentType == "Goal")
+                        {
+                            <MudItem Class="mb-4">
+                                <MudSelect Label="Goal" T="Data.Entities.Goal" @bind-Value="Indicator.Goal" DisableUnderLine="true">
+                                    @foreach (var goal in Goals)
+                                    {
+                                        <MudSelectItem Value="goal">@goal.Title</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                        }
+                        else if (SelectedParentType == "Objective")
+                        {
+                            <MudItem Class="mb-6">
+                                <MudSelect Label="Objective" T="Data.Entities.Objective" @bind-Value="Indicator.Objective" DisableUnderLine="true">
+                                    @foreach (var objective in Objectives)
+                                    {
+                                        <MudSelectItem Value="objective">@objective.Area.Title | @objective.Title</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                        }
+                        else if (SelectedParentType == "Action")
+                        {
+                            <MudItem Class="mb-12">
+                                <MudSelect Label="Action" T="Data.Entities.Action" @bind-Value="Indicator.Action" DisableUnderLine="true">
+                                    @foreach (var action in Actions.OrderBy(a => a.Number[0]).ThenBy(a => a.Number.Length).ThenBy(a => a.Number))
+                                    {
+                                        <MudSelectItem Value="action">@action.ToString()</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </MudItem>
+                        }
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudSelect T="Data.Entities.DataType" Label="Data Type" @bind-Value="Indicator.DataType">
+                            @foreach (Data.Entities.DataType dataType in Enum.GetValues(typeof(Data.Entities.DataType)))
+                            {
+                                <MudSelectItem Value="dataType">@dataType</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudSelect Label="Collection Interval" T="Data.Entities.CollectionInterval" @bind-Value="Indicator.CollectionInterval">
+                            @foreach (Data.Entities.CollectionInterval interval in Enum.GetValues(typeof(Data.Entities.CollectionInterval)))
+                            {
+                                <MudSelectItem Value="interval">@interval</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudSelect T="Data.Entities.UnitOfMeasurement" Label="Unit of Measurement" @bind-Value="Indicator.UnitOfMeasurement">
+                            @foreach (var unit in UnitsOfMeasurement.OrderBy(u => u.Symbol))
+                            {
+                                <MudSelectItem Value="unit">@unit.ToString()</MudSelectItem>
+                            }
+                        </MudSelect>
+                        <MudTextField Label="Internal Notes" @bind-Value="Indicator.Note" Lines="2" For=@(() => Indicator.Note) />
+                    </MudPaper>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudPaper Elevation="2" Class="pa-4">
+                        <MudText Typo="Typo.h6">Target</MudText>
+                        @if (Indicator.Target != null)
+                        {
+                            <MudNumericField Label="Value" @bind-Value="Indicator.Target.Value" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true"></MudNumericField>
+                            <MudDatePicker Label="Start Date (use only if specifying a range)" @bind-Date="Indicator.Target.StartDate" Editable="true" />
+                            <MudDatePicker Label="Completion Date" @bind-Date="Indicator.Target.EndDate" Editable="true" For="@(() => Indicator.Target.EndDate)" />
+                            <MudTextField Label="Description" @bind-Value="Indicator.Target.Description" Lines="2" For="@(() => Indicator.Target.Description)" />
+                            <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="(() => DeleteTarget())" Class="mt-4">Delete target</MudButton>
+                        }
+                        else
+                        {
+                            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="(() => CreateTarget())" Class="mt-4">Add target</MudButton>
+                        }
+                    </MudPaper>
+                </MudItem>
 
-                    <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
-                        <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/indicators">Cancel</MudButton>
-                        <MudButton ButtonType="ButtonType.Submit" Disabled="true" />
-                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Create</MudButton>
-                    </MudItem>
-                </Authorized>
-                <NotAuthorized>
-                    <MudAlert Severity="Severity.Warning">You are not authorized to view this page.</MudAlert>
-                </NotAuthorized>
-            </AuthorizeView>
-        </MudGrid>
-    </MudContainer>
-}
+                <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
+                    <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/indicators">Cancel</MudButton>
+                    <MudButton ButtonType="ButtonType.Submit" Disabled="true" />
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
+                </MudItem>
+            </MudGrid>
+        </EditForm>
+    }
+</MudContainer>

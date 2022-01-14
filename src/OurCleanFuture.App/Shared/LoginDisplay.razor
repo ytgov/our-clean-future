@@ -1,8 +1,9 @@
 ﻿@inject IConfiguration Configuration;
+@using OurCleanFuture.App.Extensions;
 
 <AuthorizeView>
     <Authorized>
-        <MudText Class="mr-4">Hello, @context.User.FindFirst("name")?.Value!.Replace('.', ' ')</MudText>
+        <MudText Class="mr-4">Hello, @context.User.GetFormattedName()</MudText>
         <MudTooltip Text="Sign out">
             <MudIconButton Class="mr-3" Link="@Configuration["AuthNProvider:LogoutPath"]" Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" />
         </MudTooltip>

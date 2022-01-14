@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
+using OurCleanFuture.App.Extensions;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using System.Security.Claims;
@@ -155,12 +156,12 @@ public partial class Edit : IDisposable
     private async Task Update()
     {
         if (context.Entry(Action).Property(a => a.InternalStatus).IsModified) {
-            Action.InternalStatusUpdatedBy = user.FindFirst("name")?.Value ?? "";
+            Action.InternalStatusUpdatedBy = user.GetFormattedName();
             Action.InternalStatusUpdatedDate = DateTimeOffset.Now;
         }
 
         if (context.Entry(Action).Property(a => a.ExternalStatus).IsModified) {
-            Action.ExternalStatusUpdatedBy = user.FindFirst("name")?.Value ?? "";
+            Action.ExternalStatusUpdatedBy = user.GetFormattedName();
             Action.ExternalStatusUpdatedDate = DateTimeOffset.Now;
         }
 

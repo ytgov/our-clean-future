@@ -5,6 +5,7 @@ using MudBlazor;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using System.Security.Claims;
+using OurCleanFuture.App.Extensions;
 using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Indicators;
@@ -202,17 +203,17 @@ public partial class Edit : IDisposable
         // Don't update Indicator.UpdatedBy if only the Entries were modified.
         try {
             if (context.Entry(Indicator).State == EntityState.Modified) {
-                Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
+                Indicator.UpdatedBy = user.GetFormattedName();
             }
             else if (Indicator.Target is not null) {
                 Console.WriteLine($"Indicator.Target state is: {context.Entry(Indicator.Target).State}");
                 if (context.Entry(Indicator.Target).State == EntityState.Added
                 || context.Entry(Indicator.Target).State == EntityState.Modified) {
-                    Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
+                    Indicator.UpdatedBy = user.GetFormattedName();
                 }
             }
             else if (targetIsDeleted) {
-                Indicator.UpdatedBy = user.FindFirst("name")?.Value ?? "";
+                Indicator.UpdatedBy = user.GetFormattedName();
             }
 
             await context.SaveChangesAsync();
@@ -258,7 +259,7 @@ public partial class Edit : IDisposable
 
         if (!result.Cancelled) {
             var newEntry = (Entry)result.Data;
-            newEntry.UpdatedBy = user.FindFirst("name")?.Value ?? "";
+            newEntry.UpdatedBy = user.GetFormattedName();
             Indicator.Entries.Add(newEntry);
             Snackbar.Add($"Click submit to confirm adding entry dated {newEntry.StartDate.ToLongDateString()}", Severity.Info);
         }
@@ -273,7 +274,7 @@ public partial class Edit : IDisposable
 
         if (!result.Cancelled) {
             var editedEntry = (Entry)result.Data;
-            editedEntry.UpdatedBy = user.FindFirst("name")?.Value ?? "";
+            editedEntry.UpdatedBy = user.GetFormattedName();
             Snackbar.Add($"Click submit to confirm update of entry dated {editedEntry.StartDate.ToLongDateString()}", Severity.Info);
         }
     }

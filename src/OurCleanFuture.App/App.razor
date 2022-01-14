@@ -8,7 +8,16 @@
                     <p>Determining session state, please wait...</p>
                 </Authorizing>
                 <NotAuthorized>
-                    <RedirectToLogin />
+                    @if (@context.User.Identity is not null && @context.User.Identity.IsAuthenticated)
+                    {
+                        <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+                            <MudAlert Severity="Severity.Error">You are not authorized to view this page.</MudAlert>
+                        </MudContainer>
+                    }
+                    else
+                    {
+                        <RedirectToLogin />
+                    }
                 </NotAuthorized>
             </AuthorizeRouteView>
         </Found>

@@ -21,6 +21,14 @@ else
                 <MudTextField @bind-Value="searchString" Placeholder="Search by lead or title" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                 <MudSpacer />
             </ToolBarContent>
+            <ColGroup>
+                <col style="width: 5%"/>
+                <col style="width: 45%"/>
+                <col style="width: 25%"/>
+                <col style="width: 10%"/>
+                <col style="width: 10%"/>
+                <col style="width: 5%"/>
+            </ColGroup>
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, object>(a => a.Number[0])">#</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, string>(a => a.Title)">Title</MudTableSortLabel></MudTh>

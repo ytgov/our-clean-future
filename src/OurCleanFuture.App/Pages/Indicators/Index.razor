@@ -21,6 +21,15 @@ else
                     <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Create())" Class="flex-shrink-0">New Indicator</MudButton>
                 </AuthorizeView>
             </ToolBarContent>
+            <ColGroup>
+                <col style="width: 25%"/>
+                <col style="width: 15%"/>
+                <col style="width: 35%"/>
+                <col style="width: 5%"/>
+                <col style="width: 5%"/>
+                <col style="width: 10%"/>
+                <col style="width: 5%"/>
+            </ColGroup>
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, string>(i => i.Title)">Title</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Indicator, object>(i => i.LeadsToString())">Lead(s)</MudTableSortLabel></MudTh>

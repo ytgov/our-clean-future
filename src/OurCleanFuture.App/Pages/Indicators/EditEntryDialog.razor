@@ -141,10 +141,9 @@
 
     private IEnumerable<string> ValidateYear(int year)
     {
-        var currentYear = DateTime.Now.Year;
-        if (year < 2010 || year > (currentYear))
+        if (!Years.Contains(year))
         {
-            yield return $"Year must be between 2010 and {currentYear}";
+            yield return $"Year must be between {Years[0]} and {Years[Years.Length - 1]}";
         }
     }
 

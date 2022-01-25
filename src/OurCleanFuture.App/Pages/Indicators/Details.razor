@@ -163,14 +163,18 @@
                     <MudText Typo="Typo.h6" Class="mb-2">Entries</MudText>
                     <MudTable Items="Indicator.Entries.OrderBy(e => e.StartDate)" Elevation="0" Class="mt-n2" Dense="true">
                         <HeaderContent>
-                            <MudTh>Period</MudTh>
-                            <MudTh>Value</MudTh>
+                            <MudTh Style="text-align:right">Period</MudTh>
+                            <MudTh Style="text-align:right">Value</MudTh>
                             <MudTh>Note</MudTh>
                             <MudTh></MudTh>
                         </HeaderContent>
+                        <ColGroup>
+                            <col style="width: 30%"/>
+                            <col style="width: 25%"/>
+                        </ColGroup>
                         <RowTemplate Context="Entry">
-                            <MudTd DataLabel="Period">@Entry.PeriodToString()</MudTd>
-                            <MudTd DataLabel="Value">@Entry.ValueToString()</MudTd>
+                            <MudTd DataLabel="Period" Style="text-align:right">@Entry.PeriodToString()</MudTd>
+                            <MudTd DataLabel="Value" Style="text-align:right">@Entry.ValueToString()</MudTd>
                             <MudTd DataLabel="Note">@Entry.Note</MudTd>
                             <MudTd>
                                 @if (!string.IsNullOrWhiteSpace(Entry.UpdatedBy))

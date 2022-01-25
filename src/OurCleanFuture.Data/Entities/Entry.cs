@@ -32,9 +32,6 @@ public class Entry
 
     public string PeriodToString()
     {
-        if (StartDate.Month == 1 && EndDate.Month == 12) {
-            return StartDate.Year.ToString();
-        }
         return $"{StartDate:MMMM d} - {EndDate:MMMM d, yyyy}";
     }
 }

@@ -169,8 +169,10 @@
                             <MudTh></MudTh>
                         </HeaderContent>
                         <ColGroup>
-                            <col style="width: 30%"/>
-                            <col style="width: 25%"/>
+                            <MudHidden Breakpoint="Breakpoint.Xs">
+                                <col style="width: 30%" />
+                                <col style="width: 25%" />
+                            </MudHidden>
                         </ColGroup>
                         <RowTemplate Context="Entry">
                             <MudTd DataLabel="Period" Style="text-align:right">@Entry.PeriodToString()</MudTd>

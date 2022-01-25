@@ -22,12 +22,14 @@ else
                 <MudSpacer />
             </ToolBarContent>
             <ColGroup>
-                <col style="width: 5%"/>
-                <col style="width: 45%"/>
-                <col style="width: 25%"/>
-                <col style="width: 10%"/>
-                <col style="width: 10%"/>
-                <col style="width: 5%"/>
+                <MudHidden Breakpoint="Breakpoint.Xs">
+                    <col style="width: 5%" />
+                    <col style="width: 45%" />
+                    <col style="width: 25%" />
+                    <col style="width: 10%" />
+                    <col style="width: 10%" />
+                    <col style="width: 5%" />
+                </MudHidden>
             </ColGroup>
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, object>(a => a.Number[0])">#</MudTableSortLabel></MudTh>

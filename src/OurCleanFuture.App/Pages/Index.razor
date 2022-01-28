@@ -3,12 +3,13 @@
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
     <MudText Typo="Typo.h3" GutterBottom="true">Home</MudText>
-    <MudText Typo="Typo.h5" Class="mb-4">Welcome to the Our Clean Future app!</MudText>
+    <MudText Typo="Typo.h5" Class="mb-4 mt-n2">Welcome to the Our Clean Future app!</MudText>
     <MudGrid>
         <MudItem xs="12" sm="6">
             <MudAlert Severity="Severity.Normal">Feedback/Questions? Contact: <MudLink Href="mailto:jon.hodgins@yukon.ca;emma.seward@yukon.ca?subject=OurCleanFuture App - <your title here>" Typo="Typo.body2" Color="Color.Inherit"><b>Emma Seward & Jon Hodgins</b></MudLink></MudAlert>
         </MudItem>
-        <MudItem xs="12" Class="mt-n4">
+        <MudItem xs="12" Class="mt-n3">
+            <MudDivider />
             <div class="pl-1 my-2">
                 <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
                     We live in a world that’s rapidly changing. Climate change is threatening ecosystems, subsistence harvesting, infrastructure, leisure activities, and many other aspects of our lives.
@@ -32,30 +33,30 @@
         </MudItem>
         @*<MudItem xs="12">
             <MudExpansionPanels>
-                <MudExpansionPanel Text="User Claims (debug information)">
-                    <MudSimpleTable Style="overflow-x: auto;">
-                        <thead>
-                            <tr>
-                                <th>Type</th>
-                                <th>Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (AuthState is not null)
-                            {
-                                @foreach (var claim in AuthState.User.Claims)
-                                {
-                                    <tr>
-                                        <td>@claim.Type</td>
-                                        <td>@claim.Value</td>
-                                    </tr>
-                                }
-                            }
-                        </tbody>
-                    </MudSimpleTable>
-                </MudExpansionPanel>
+            <MudExpansionPanel Text="User Claims (debug information)">
+            <MudSimpleTable Style="overflow-x: auto;">
+            <thead>
+            <tr>
+            <th>Type</th>
+            <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (AuthState is not null)
+            {
+            @foreach (var claim in AuthState.User.Claims)
+            {
+            <tr>
+            <td>@claim.Type</td>
+            <td>@claim.Value</td>
+            </tr>
+            }
+            }
+            </tbody>
+            </MudSimpleTable>
+            </MudExpansionPanel>
             </MudExpansionPanels>
-        </MudItem>*@
+            </MudItem>*@
     </MudGrid>
 
 </MudContainer>

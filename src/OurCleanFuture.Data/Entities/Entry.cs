@@ -32,6 +32,6 @@ public class Entry
 
     public string PeriodToString()
     {
-        return $"{StartDate:MMMM d} - {EndDate:MMMM d, yyyy}";
+        return $"{StartDate:MMM d} - {EndDate:MMM d, yyyy}";
     }
 }

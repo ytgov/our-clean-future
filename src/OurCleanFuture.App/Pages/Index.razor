@@ -4,48 +4,58 @@
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
     <MudText Typo="Typo.h3" GutterBottom="true">Home</MudText>
     <MudText Typo="Typo.h5" Class="mb-4">Welcome to the Our Clean Future app!</MudText>
-    <MudText Typo="Typo.h6" GutterBottom="true" Class="ml-8 mb-2">
-        <MudIcon Class="mb-n2" Icon="@Icons.Material.Filled.Warning" Color="Color.Warning" Size="Size.Large" /> Development Preview <MudIcon Class="mb-n2" Icon="@Icons.Material.Filled.Warning" Color="Color.Warning" Size="Size.Large" />
-    </MudText>
     <MudGrid>
         <MudItem xs="12" sm="6">
-            <MudAlert Severity="Severity.Normal" Class="mb-4">Feedback/Questions? Contact: <MudLink Href="mailto:jon.hodgins@yukon.ca?subject=OurCleanFuture - " Typo="Typo.body2" Color="Color.Inherit"><b>jon.hodgins@yukon.ca</b></MudLink></MudAlert>
-            <MudPaper Elevation="2" Class="pa-4">
-                <MudList>
-                    <MudListItem Text="Release Notes">
-                        <NestedList>
-                            <MudListSubheader Class="mb-n4">November 5th, 2021</MudListSubheader>
-                            <MudListItem Class="ml-3 mt-n4">- Migrated existing data for Actions and Indicators (excluding entries)</MudListItem>
-                            <MudListSubheader Class="mb-n4">November 24th, 2021</MudListSubheader>
-                            <MudListItem Class="ml-3 mt-n4">- Migrated all entries data</MudListItem>
-                            <MudListItem Class="ml-3 mt-n4">- Added conditional formatting for values based on unit of measurement (e.g. "$50,000.00" or "50,000 Kg")</MudListItem>
-                            <MudListItem Class="ml-3 mt-n4">- Added auditing for changes to indicator entries</MudListItem>
-                            <MudListItem Class="ml-3 mt-n4">- Added auditing for changes to action external status</MudListItem>
-                        </NestedList>
-                    </MudListItem>
-                </MudList>
-            </MudPaper>
+            <MudAlert Severity="Severity.Normal">Feedback/Questions? Contact: <MudLink Href="mailto:jon.hodgins@yukon.ca;emma.seward@yukon.ca?subject=OurCleanFuture App - <your title here>" Typo="Typo.body2" Color="Color.Inherit"><b>Emma Seward & Jon Hodgins</b></MudLink></MudAlert>
         </MudItem>
-        <MudItem xs="12">
-            <MudText Typo="Typo.h5">Claims</MudText>
-            <MudSimpleTable Style="overflow-x: auto;">
-                <thead>
-                    <tr>
-                        <th>Type</th>
-                        <th>Value</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var claim in AuthState.User.Claims)
-                    {
-                        <tr>
-                            <td>@claim.Type</td>
-                            <td>@claim.Value</td>
-                        </tr>
-                    }
-                </tbody>
-            </MudSimpleTable>
+        <MudItem xs="12" Class="mt-n4">
+            <div class="pl-1 my-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    We live in a world that’s rapidly changing. Climate change is threatening ecosystems, subsistence harvesting, infrastructure, leisure activities, and many other aspects of our lives.
+                </MudText>
+            </div>
+            <div class="pl-1 my-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    Yukon’s population is growing, along with our need for reliable, affordable and renewable energy to continue to power our lives, our work and our economy. New economic opportunities are emerging in the sustainable, green economy.
+                </MudText>
+            </div>
+            <div class="pl-1 my-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    Our Clean Future is our answer to the climate emergency.
+                </MudText>
+            </div>
+            <div class="pl-1 my-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    The Government of Yukon developed Our Clean Future in partnership with Yukon First Nations, transboundary Indigenous groups and Yukon municipalities over the course of 3 years. During this time, the partner group gathered 4 times to establish a vision and values for Our Clean Future and to prioritize the areas we should focus on over the next 10 years to respond to the climate emergency. As a result of this collaborative process, the strategy reflects multiple perspectives, worldviews and ideas.
+                </MudText>
+            </div>
         </MudItem>
+        @*<MudItem xs="12">
+            <MudExpansionPanels>
+                <MudExpansionPanel Text="User Claims (debug information)">
+                    <MudSimpleTable Style="overflow-x: auto;">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (AuthState is not null)
+                            {
+                                @foreach (var claim in AuthState.User.Claims)
+                                {
+                                    <tr>
+                                        <td>@claim.Type</td>
+                                        <td>@claim.Value</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </MudSimpleTable>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudItem>*@
     </MudGrid>
 
 </MudContainer>

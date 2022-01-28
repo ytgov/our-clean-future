@@ -21,19 +21,19 @@ else
                 <MudItem md="12" lg="6">
                     <MudPaper Elevation="2" Class="pa-4">
                         <MudText Typo="Typo.h5"><b>Objective:</b> @objective.Title</MudText>
-                        <MudPaper Elevation="0">
-                            <MudList Clickable="true" Dense="true" DisableGutters="true">
-                                @foreach (var action in objective.Actions)
-                                {
-                                    <MudListItem Class="px-2" OnClick="(() => ViewAction(action))">
-                                        <div class="d-flex">
-                                            <MudText Class="mr-2">@(action.Number).</MudText>
-                                            <MudText>@action.Title</MudText>
-                                        </div>
-                                    </MudListItem>
-                                }
-                            </MudList>
-                        </MudPaper>
+                        <MudList Clickable="true" Dense="true" DisableGutters="true">
+                            @foreach (var action in objective.Actions)
+                            {
+                                // This is a workaround for: "Blazor RZ9986 — Component attributes do not support complex content (mixed C# and markup)"
+                                var classText = $"{Area.GetCssClass()} px-2 my-1";
+                                <MudListItem Class="@classText" OnClick="(() => ViewAction(action))">
+                                    <div class="d-flex">
+                                        <MudText Class="mr-2">@(action.Number).</MudText>
+                                        <MudText>@action.Title</MudText>
+                                    </div>
+                                </MudListItem>
+                            }
+                        </MudList>
                     </MudPaper>
                 </MudItem>
             }

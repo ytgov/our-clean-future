@@ -1,0 +1,39 @@
+﻿.goal {
+    background-color: hsla(0deg 0% 34% / 0.05);
+    border-radius: 4px
+}
+
+.transportation {
+    background-color: hsla(187deg 67% 43% / 0.15);
+    border-radius: 4px
+}
+
+.homes-and-buildings {
+    background-color: hsla(39deg 92% 80% / 0.20);
+    border-radius: 4px
+}
+
+.energy-production {
+    background-color: hsla(195deg 18% 43% / 0.15);
+    border-radius: 4px
+}
+
+.people-and-the-environment {
+    background-color: hsla(82deg 43% 43% / 0.15);
+    border-radius: 4px
+}
+
+.communities {
+    background-color: hsla(320deg 33% 25% / 0.15);
+    border-radius: 4px
+}
+
+.innovation {
+    background-color: hsla(73deg 38% 58% / 0.15);
+    border-radius: 4px
+}
+
+.leadership {
+    background-color: hsla(196deg 43% 25% / 0.15);
+    border-radius: 4px
+}

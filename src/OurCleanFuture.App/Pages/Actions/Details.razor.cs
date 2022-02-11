@@ -65,7 +65,7 @@ public partial class Details : IDisposable
             return $"Last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
         }
         else {
-            return "The internal status has not been updated.";
+            return String.Empty;
         }
     }
 
@@ -76,7 +76,7 @@ public partial class Details : IDisposable
             return $"Last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
         }
         else {
-            return "The external status has not been updated.";
+            return String.Empty;
         }
     }
 

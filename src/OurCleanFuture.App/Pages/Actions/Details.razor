@@ -22,25 +22,31 @@
                     <MudField Label="Director's Committee(s)">@Action.DirectorsCommitteesToString()</MudField>
                     <div class="d-flex">
                         <MudField Label="Internal Status">@Action.InternalStatus.GetDisplayName()</MudField>
-                        <MudTooltip>
-                            <ChildContent>
-                                <MudIcon Class="mt-5 ml-2" Icon="@Icons.Material.Outlined.Info"></MudIcon>
-                            </ChildContent>
-                            <TooltipContent>
-                                <MudText>@InternalStatusToString()</MudText>
-                            </TooltipContent>
-                        </MudTooltip>
+                        @if (InternalStatusToString() != string.Empty)
+                        {
+                            <MudTooltip>
+                                <ChildContent>
+                                    <MudIcon Class="mt-5 ml-2" Icon="@Icons.Material.Outlined.Info"></MudIcon>
+                                </ChildContent>
+                                <TooltipContent>
+                                    <MudText>@InternalStatusToString()</MudText>
+                                </TooltipContent>
+                            </MudTooltip>
+                        }
                     </div>
                     <div class="d-flex">
                         <MudField Label="External Status">@Action.ExternalStatus.GetDisplayName()</MudField>
-                        <MudTooltip>
-                            <ChildContent>
-                                <MudIcon Class="mt-5 ml-2" Icon="@Icons.Material.Outlined.Info"></MudIcon>
-                            </ChildContent>
-                            <TooltipContent>
-                                <MudText>@ExternalStatusToString()</MudText>
-                            </TooltipContent>
-                        </MudTooltip>
+                        @if (ExternalStatusToString() != string.Empty)
+                        {
+                            <MudTooltip>
+                                <ChildContent>
+                                    <MudIcon Class="mt-5 ml-2" Icon="@Icons.Material.Outlined.Info"></MudIcon>
+                                </ChildContent>
+                                <TooltipContent>
+                                    <MudText>@ExternalStatusToString()</MudText>
+                                </TooltipContent>
+                            </MudTooltip>
+                        }
                     </div>
                 </MudPaper>
             </MudItem>

@@ -7,7 +7,7 @@ using OurCleanFuture.Data.Entities;
 
 namespace OurCleanFuture.App.Pages.UnitsOfMeasurement;
 
-[Authorize(Roles = "Administrator, ENV-CCS.Writer")]
+[Authorize(Roles = "Administrator")]
 public partial class Index : IDisposable
 {
     private bool isLoaded;

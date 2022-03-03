@@ -155,6 +155,12 @@ public partial class Edit : IDisposable
 
     private async Task Update()
     {
+        if (Action.TargetCompletionDate < Action.ActualCompletionDate && Action.InternalStatus == InternalStatus.OnTrack) {
+            Snackbar.Add($"The <b>Internal Status</b> cannot be set to <b>On track</b>, as the <b>Actual/Anticipated Completion Date</b> occurs after the <b>Target Completion Date</b>." +
+                $" Either revise the <b>Actual/Anticipated Completion Date</b>, or change the <b>Internal Status</b> to <b>Delayed</b>.", Severity.Error);
+            return;
+        }
+
         if (context.Entry(Action).Property(a => a.InternalStatus).IsModified) {
             Action.InternalStatusUpdatedBy = user.GetFormattedName();
             Action.InternalStatusUpdatedDate = DateTimeOffset.Now;

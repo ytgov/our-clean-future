@@ -34,7 +34,7 @@ else
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, object>(a => a.Number[0])">#</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, string>(a => a.Title)">Title</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, object>(a => a.LeadsToString())">Lead(s)</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, object>(a => a.Leads.ToFriendlyName())">Lead(s)</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, string>(a => a.InternalStatus.GetDisplayName())">Internal Status</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Action, string>(a => a.ExternalStatus.GetDisplayName())">External Status</MudTableSortLabel></MudTh>
                 <MudTh></MudTh>
@@ -42,7 +42,7 @@ else
             <RowTemplate>
                 <MudTd DataLabel="#">@context.Number</MudTd>
                 <MudTd DataLabel="Title">@context.Title</MudTd>
-                <MudTd DataLabel="Lead(s)">@context.LeadsToString()</MudTd>
+                <MudTd DataLabel="Lead(s)">@context.Leads.ToFriendlyName()</MudTd>
                 <MudTd DataLabel="Internal Status">@context.InternalStatus.GetDisplayName()</MudTd>
                 <MudTd DataLabel="External Status">@context.ExternalStatus.GetDisplayName()</MudTd>
                 <MudTd>

@@ -47,36 +47,4 @@ public class Action
     {
         return $"{Number}. {Title}";
     }
-
-    public string DirectorsCommitteesToString()
-    {
-        if (DirectorsCommittees.Count == 0) {
-            return "None";
-        }
-        else {
-            var result = "";
-            foreach (var directorsCommittee in DirectorsCommittees) {
-                result += $"{directorsCommittee.Name}, ";
-            }
-            //Trim the trailing comma and space
-            result = result.Remove(result.Length - 2, 2);
-            return result;
-        }
-    }
-
-    public string LeadsToString()
-    {
-        var result = "";
-        if (Leads.Count != 0) {
-            foreach (var lead in Leads) {
-                result += $"{lead}, ";
-            }
-            //Trim the trailing comma and space
-            result = result.Remove(result.Length - 2, 2);
-        }
-        else {
-            result = "None";
-        }
-        return result;
-    }
 }

@@ -17,9 +17,9 @@
         <MudGrid>
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
-                    <MudField Label="Lead(s)">@Action.LeadsToString()</MudField>
+                    <MudField Label="Lead(s)">@Action.Leads.ToFriendlyName()</MudField>
                     <MudField Label="Title">@Action.Title</MudField>
-                    <MudField Label="Director's Committee(s)">@Action.DirectorsCommitteesToString()</MudField>
+                    <MudField Label="Director's Committee(s)">@Action.DirectorsCommittees.ToFriendlyName()</MudField>
                     <div class="d-flex">
                         <MudField Label="Internal Status">@Action.InternalStatus.GetDisplayName()</MudField>
                         @if (InternalStatusToString() != string.Empty)

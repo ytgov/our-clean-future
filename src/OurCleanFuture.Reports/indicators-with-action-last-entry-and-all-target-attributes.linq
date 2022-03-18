@@ -26,6 +26,7 @@ Indicators.Select(i => new IndicatorLastEntryViewModel
 {
 	IndicatorId = i.Id,
 	IndicatorTitle = i.Title,
+	IndicatorDescription = i.Description,
 	Organization = i.Leads.FirstOrDefault().Organization.Name,
 	Department = i.Leads.FirstOrDefault().Branch.Department.ShortName,
 	Branch = i.Leads.FirstOrDefault().Branch.Name,
@@ -43,8 +44,10 @@ Indicators.Select(i => new IndicatorLastEntryViewModel
 	LastEntryDate = i.Entries.OrderBy(e => e.EndDate).LastOrDefault().EndDate.Date.ToString(),
 	LastEntryBy = i.Entries.OrderBy(e => e.EndDate).LastOrDefault().UpdatedBy,
 	LastEntryValue = (i.Entries.OrderBy(e => e.EndDate).LastOrDefault().Value as double?),
+	TargetDescription = (i.Target == null ? default : i.Target.Description),
 	TargetValue = (i.Target == null ? default : i.Target.Value as double?),
-	TargetDate = (i.Target == null ? default : i.Target.EndDate.ToString()),
+	TargetStartDate = (i.Target == null ? default : i.Target.StartDate.ToString()),
+	TargetEndDate = (i.Target == null ? default : i.Target.EndDate.ToString()),
 	UnitOfMeasurement = i.UnitOfMeasurement.Symbol,
 	Link = $"https://ourcleanfuture.ynet.gov.yk.ca/indicators/details/{i.Id}"
 }).AsNoTracking().OrderBy(i => i.IndicatorId).Dump();
@@ -53,6 +56,7 @@ public class IndicatorLastEntryViewModel
 {
 	public int IndicatorId { get; set; }
 	public string IndicatorTitle { get; set; } = null!;
+	public string IndicatorDescription {get; set; } = null!;
 	public string? Organization { get; set; }
 	public string? Department { get; set; }
 	public string? Branch { get; set; }
@@ -70,8 +74,10 @@ public class IndicatorLastEntryViewModel
 	public string? LastEntryDate { get; set; }
 	public string? LastEntryBy { get; set; }
 	public double? LastEntryValue { get; set; }
+	public string? TargetDescription { get; set; }
 	public double? TargetValue { get; set; }
-	public string? TargetDate { get; set; }
+	public string? TargetStartDate { get; set; }
+	public string? TargetEndDate { get; set; }
 	public string UnitOfMeasurement { get; set; } = null!;
 	public string Link { get; set; } = null!;
 }

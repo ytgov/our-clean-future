@@ -97,11 +97,11 @@ public class Startup
         services.AddMudServices();
 #if DEBUG
         services.AddDbContextFactory<AppDbContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AppContext"), options => options.EnableRetryOnFailure())
+            options.UseSqlServer(Configuration.GetConnectionString("AppDbContext"), options => options.EnableRetryOnFailure())
                    .EnableSensitiveDataLogging());
 #else
             services.AddDbContextFactory<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("AppContext"), options => options.EnableRetryOnFailure()));
+                options.UseSqlServer(Configuration.GetConnectionString("AppDbContext"), options => options.EnableRetryOnFailure()));
 #endif
 
         services.AddLocalization();

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton(Configuration);
+        services.AddScoped<IClaimsTransformation, AddRoleClaimsTransformation>();
 
         services.AddRazorPages();
         services.AddServerSideBlazor();

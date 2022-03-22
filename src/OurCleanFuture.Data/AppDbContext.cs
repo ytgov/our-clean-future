@@ -153,8 +153,5 @@ public class AppDbContext : DbContext
             t.Property(t => t.StartDate).HasColumnType("date");
             t.Property(t => t.EndDate).HasColumnType("date");
         });
-
-        //Generate seed data
-        //new DataSeeder(modelBuilder).Init();
     }
 }

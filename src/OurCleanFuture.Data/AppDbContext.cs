@@ -17,6 +17,8 @@ public class AppDbContext : DbContext
     public DbSet<Goal> Goals => Set<Goal>();
     public DbSet<Objective> Objectives => Set<Objective>();
     public DbSet<Area> Areas => Set<Area>();
+    public DbSet<User> Users => Set<User>();
+    public DbSet<Role> Roles => Set<Role>();
 
     //Uncomment to allow EF Core Power Tools to generate a diagram
     //public AppDbContext()

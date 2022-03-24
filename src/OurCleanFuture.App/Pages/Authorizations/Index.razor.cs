@@ -27,11 +27,15 @@ namespace OurCleanFuture.App.Pages.Authorizations
         private AppDbContext _context = null!;
         private List<User> Users { get; set; } = new();
         public List<Lead> Leads { get; set; } = new();
+
         [Inject]
         private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
         [Inject]
-        private NavigationManager Navigation { get; set; } = null!;
+        private IDialogService DialogService { get; set; } = null!;
+
+        [Inject]
+        private ISnackbar Snackbar { get; set; } = null!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -42,6 +46,57 @@ namespace OurCleanFuture.App.Pages.Authorizations
             }
             finally {
                 isLoaded = true;
+            }
+        }
+
+        private async Task Add(Lead lead)
+        {
+            var parameters = new DialogParameters { ["Lead"] = lead };
+
+            var dialog = DialogService.Show<AddUserDialog>("Add", parameters);
+            var result = await dialog.Result;
+            if (!result.Cancelled) {
+                var newUser = (User)result.Data;
+                try {
+                    var existingUser = _context.Users.SingleOrDefault(u => u.Email == newUser.Email);
+                    if (existingUser is not null) {
+                        existingUser.Leads.Add(lead);
+                    }
+                    else {
+                        newUser.Leads.Add(lead);
+                        _context.Users.Add(newUser);
+                        // Required for the page to re-render
+                        Users.Add(newUser);
+                    }
+                    var entriesSaved = await _context.SaveChangesAsync();
+                    if (entriesSaved == 2) {
+                        Snackbar.Add($"Successfully added user {newUser.Email} to {lead}", Severity.Success);
+                    }
+                }
+                catch (DbUpdateException) {
+                    Snackbar.Add($"Unable to add user {newUser.Email} to {lead}", Severity.Error);
+                }
+            }
+        }
+
+        private async Task Remove(User user, Lead lead)
+        {
+            bool? result = await DialogService.ShowMessageBox(
+            $"Remove {user.Email} from {lead}?",
+            "This action cannot not be undone.",
+            yesText: "Remove", cancelText: "Cancel");
+            if (result == true) {
+                try {
+                    if (user.Leads.Count == 1) {
+                        _context.Users.Remove(user);
+                    }
+                    lead.Users.Remove(user);
+                    await _context.SaveChangesAsync();
+                    Snackbar.Add($"Removed {user.Email} from {lead}", Severity.Success);
+                }
+                catch (DbUpdateException) {
+                    Snackbar.Add($"Unable to remove {user.Email} from {lead}", Severity.Error);
+                }
             }
         }
     }

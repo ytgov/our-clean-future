@@ -16,6 +16,13 @@ else
                 <MudSpacer />
                 <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Create(Departments))">New Branch</MudButton>
             </ToolBarContent>
+            <ColGroup>
+                <MudHidden Breakpoint="Breakpoint.Xs">
+                    <col style="width: 43%" />
+                    <col style="width: 43%" />
+                    <col style="width: 14%" />
+                </MudHidden>
+            </ColGroup>
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Branch, object>(b => b.Name)">Name</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Branch, object>(b => b.Department.Name)">Department</MudTableSortLabel></MudTh>

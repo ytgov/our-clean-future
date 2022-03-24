@@ -25,6 +25,12 @@ else
                                 <MudSpacer />
                                 <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Add(lead))"></MudIconButton>
                             </ToolBarContent>
+                            <ColGroup>
+                                <MudHidden Breakpoint="Breakpoint.Xs">
+                                    <col style="width: 90%" />
+                                    <col style="width: 10%" />
+                                </MudHidden>
+                            </ColGroup>
                             <HeaderContent>
                                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.User, object>(u => u.Email)">Users</MudTableSortLabel></MudTh>
                                 <MudTh />

@@ -16,6 +16,13 @@ else
                 <MudSpacer />
                 <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Create())">New Unit</MudButton>
             </ToolBarContent>
+            <ColGroup>
+                <MudHidden Breakpoint="Breakpoint.Xs">
+                    <col style="width: 43%" />
+                    <col style="width: 43%" />
+                    <col style="width: 14%" />
+                </MudHidden>
+            </ColGroup>
             <HeaderContent>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.UnitOfMeasurement, object>(u => u.Symbol)">Symbol</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.UnitOfMeasurement, object>(u => u.Name)">Name</MudTableSortLabel></MudTh>

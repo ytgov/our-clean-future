@@ -19,7 +19,7 @@
         <EditForm Model="@Indicator" OnValidSubmit="Update">
             <ObjectGraphDataAnnotationsValidator />
             <MudGrid>
-                <AuthorizeView Roles="Administrator, ENV-CCS.Writer" Context="_">
+                <AuthorizeView Roles="Administrator, 1" Context="_">
                     <MudItem xs="12" sm="6">
                         <MudPaper Elevation="2" Class="pa-4">
                             <MudSelect T="Data.Entities.Lead" Label="Lead(s)" MultiSelection="true" @bind-SelectedValues="SelectedLeads">
@@ -139,7 +139,7 @@
                                         <MudTd>
                                             <MudMenu Icon="@Icons.Material.Filled.MoreVert" Size="Size.Small">
                                                 <MudMenuItem OnClick="(() => EditEntry(Entry))">Edit</MudMenuItem>
-                                                <AuthorizeView Roles="Administrator, ENV-CCS.Writer" Context="Delete">
+                                                <AuthorizeView Roles="Administrator, 1" Context="Delete">
                                                     <MudMenuItem OnClick="(() => DeleteEntry(Entry))">Delete</MudMenuItem>
                                                 </AuthorizeView>
                                             </MudMenu>

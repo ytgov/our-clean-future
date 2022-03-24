@@ -21,7 +21,7 @@
         <EditForm Model="Action" OnValidSubmit="Update">
             <ObjectGraphDataAnnotationsValidator />
             <MudGrid>
-                <AuthorizeView Roles="Administrator, ENV-CCS.Writer" Context="_">
+                <AuthorizeView Roles="Administrator, 1" Context="_">
                     <Authorized>
                         <MudItem xs="12" sm="6">
                             <MudPaper Elevation="2" Class="pa-4">

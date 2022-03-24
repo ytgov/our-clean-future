@@ -8,6 +8,6 @@ namespace OurCleanFuture.Data.Entities;
 public class User
 {
     public int Id { get; set; }
-    public string PrincipalName { get; set; } = "";
+    public string Email { get; set; } = "";
     public List<Lead> Leads { get; set; } = new();
 }

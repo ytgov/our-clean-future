@@ -11,7 +11,7 @@ using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Indicators;
 
-[Authorize(Roles = "Administrator, ENV-CCS.Writer")]
+[Authorize(Roles = "Administrator, 1")]
 public partial class Create : IDisposable
 {
     private bool isLoaded;

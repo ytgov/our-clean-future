@@ -1,0 +1,37 @@
+﻿@page "/admin/authorizations"
+@using OurCleanFuture.App.Extensions
+
+@if (isLoaded == false)
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudText Typo="Typo.h6">Loading...</MudText>
+    </MudContainer>
+}
+else
+{
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudText Typo="Typo.h3" Class="mb-8">User Authorizations</MudText>
+        <MudGrid>
+            @foreach (var lead in Leads.OrderBy(l => l.ToString()))
+            {
+                <MudItem xs="12" md="6" lg="4">
+                    <MudPaper Elevation="2" Class="ma-5">
+                        <MudTable Items="Users.Where(u => u.Leads.Contains(lead))" Dense="true" Striped="true" Hover="true" Elevation="0">
+                            <ToolBarContent>
+                                <MudText Typo="Typo.h6">@lead.ToString()</MudText>
+                                <MudSpacer />
+                                <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Tertiary" Variant="Variant.Outlined"></MudIconButton>
+                            </ToolBarContent>
+                            <HeaderContent>
+                                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.User, object>(u => u.Email)">Users</MudTableSortLabel></MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="User Name">@context.Email</MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    </MudPaper>
+                </MudItem>
+            }
+        </MudGrid>
+    </MudContainer>
+}

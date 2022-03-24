@@ -11,8 +11,9 @@ else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
         <MudText Typo="Typo.h3" Class="mb-4">User Authorizations</MudText>
-        <MudItem md="12" lg="8" Class="mb-4">
-            <MudAlert Severity="Severity.Warning">Users added to ENV | Climate Change Secretariat can edit all data, including this page.</MudAlert>
+        <MudItem md="12"  Class="mb-4">
+            <MudAlert Severity="Severity.Info" Class="mb-2">All YNET users can view all indicator and actions data by default. Adding a user to a lead will allow them to edit indicators and actions associated with that lead.</MudAlert>
+            <MudAlert Severity="Severity.Warning">Caution: Users added to ENV | Climate Change Secretariat can edit all data, including this page.</MudAlert>
         </MudItem>
         <MudGrid>
             @foreach (var lead in Leads.OrderBy(l => l.ToString()))

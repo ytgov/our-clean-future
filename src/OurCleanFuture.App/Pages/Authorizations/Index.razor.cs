@@ -42,7 +42,10 @@ namespace OurCleanFuture.App.Pages.Authorizations
             try {
                 _context = ContextFactory.CreateDbContext();
                 Users = await _context.Users.Include(u => u.Leads).ToListAsync();
-                Leads = await _context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).ToListAsync();
+                Leads = await _context.Leads.Include(l => l.Organization)
+                                            .Include(l => l.Branch)
+                                            .ThenInclude(b => b!.Department)
+                                            .ToListAsync();
             }
             finally {
                 isLoaded = true;

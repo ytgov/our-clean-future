@@ -9,5 +9,5 @@ public class User
 {
     public int Id { get; set; }
     public string PrincipalName { get; set; } = "";
-    public List<Role> Roles { get; set; } = new();
+    public List<Lead> Leads { get; set; } = new();
 }

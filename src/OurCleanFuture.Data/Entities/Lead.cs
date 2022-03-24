@@ -11,6 +11,7 @@ public class Lead
     public List<IndicatorLead> IndicatorLeads { get; set; } = new();
     public List<Action> Actions { get; set; } = new();
     public List<ActionLead> ActionLeads { get; set; } = new();
+    public List<User> Users { get; set; } = new();
 
     public override string ToString()
     {

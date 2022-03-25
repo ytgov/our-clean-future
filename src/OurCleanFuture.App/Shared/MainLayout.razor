@@ -52,6 +52,9 @@
             StateContainer.UserPrincipal = userPrincipalName;
             Log.Warning("{User} is missing an email claim", userPrincipalName);
         }
+
+        StateContainer.ClaimsPrincipal = AuthenticationState.User;
+
         Log.Information("{User} has established a connection.", StateContainer.UserPrincipal);
 
         currentTheme = defaultTheme;

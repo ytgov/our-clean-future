@@ -46,7 +46,17 @@ else
                 <MudTd DataLabel="Internal Status">@context.InternalStatus.GetDisplayName()</MudTd>
                 <MudTd DataLabel="External Status">@context.ExternalStatus.GetDisplayName()</MudTd>
                 <MudTd>
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))"></MudIconButton>
+                    @if (StateContainer.ClaimsPrincipal.IsInRole(context.Leads.FirstOrDefault()?.Id.ToString() ?? "") ||
+                           StateContainer.ClaimsPrincipal.IsInRole(context.Leads.LastOrDefault()?.Id.ToString() ?? "") ||
+                           StateContainer.ClaimsPrincipal.IsInRole("Administrator") ||
+                           StateContainer.ClaimsPrincipal.IsInRole("1"))
+                    {
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))" />
+                    }
+                    else
+                    {
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Disabled="true" />
+                    }
                 </MudTd>
             </RowTemplate>
             <PagerContent>

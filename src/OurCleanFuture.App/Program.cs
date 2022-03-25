@@ -109,8 +109,8 @@ try {
         options.UseSqlServer(configuration.GetConnectionString("AppDbContext"), options => options.EnableRetryOnFailure())
                .EnableSensitiveDataLogging());
 #else
-                services.AddDbContextFactory<AppDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("AppDbContext"), options => options.EnableRetryOnFailure()));
+    builder.Services.AddDbContextFactory<AppDbContext>(options =>
+        options.UseSqlServer(configuration.GetConnectionString("AppDbContext"), options => options.EnableRetryOnFailure()));
 #endif
 
     builder.Services.AddLocalization();
@@ -138,7 +138,13 @@ try {
     app.MapFallbackToPage("/_Host");
 
     Log.Logger = new LoggerConfiguration()
+        .MinimumLevel.Override("Default", LogEventLevel.Information)
+        .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+        .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+#if DEBUG
+        .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
         .WriteTo.Console()
+#endif
         .WriteTo.Seq("http://localhost:5341")
         .CreateLogger();
 

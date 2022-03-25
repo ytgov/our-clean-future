@@ -7,7 +7,7 @@ using OurCleanFuture.Data.Entities;
 
 namespace OurCleanFuture.App.Pages.UnitsOfMeasurement;
 
-[Authorize(Roles = "Administrator")]
+[Authorize(Roles = "Administrator, 1")]
 public partial class Index : IDisposable
 {
     private bool isLoaded;
@@ -23,6 +23,9 @@ public partial class Index : IDisposable
 
     [Inject]
     private ISnackbar Snackbar { get; set; } = null!;
+
+    [Inject]
+    private StateContainer StateContainer { get; init; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -51,6 +54,11 @@ public partial class Index : IDisposable
                 var entriesSaved = await context.SaveChangesAsync();
                 if (entriesSaved == 1) {
                     UnitsOfMeasurement.Add(newUnitOfMeasurement);
+                    Log.Information("{User} created unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
+                                    StateContainer.UserPrincipal,
+                                    newUnitOfMeasurement.Id,
+                                    newUnitOfMeasurement.Name,
+                                    newUnitOfMeasurement.Symbol);
                     Snackbar.Add($"Created unit {newUnitOfMeasurement.Symbol}", Severity.Success);
                 }
             }
@@ -72,6 +80,9 @@ public partial class Index : IDisposable
                 var entriesSaved = await context.SaveChangesAsync();
                 if (entriesSaved == 1) {
                     Snackbar.Add($"Updated unit {updatedUnitOfMeasurement.Symbol}", Severity.Success);
+                    Log.Information("{User} updated unit of measurement: {UnitOfMeasurementId}",
+                                    StateContainer.UserPrincipal,
+                                    unitOfMeasurement.Id);
                 }
             }
             catch (DbUpdateException) {
@@ -92,6 +103,11 @@ public partial class Index : IDisposable
                 await context.SaveChangesAsync();
                 UnitsOfMeasurement.Remove(unitOfMeasurement);
                 Snackbar.Add($"Deleted unit {unitOfMeasurement.Symbol}", Severity.Success);
+                Log.Information("{User} deleted unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
+                                StateContainer.UserPrincipal,
+                                unitOfMeasurement.Id,
+                                unitOfMeasurement.Name,
+                                unitOfMeasurement.Symbol);
             }
             catch (DbUpdateException) {
                 Snackbar.Add($"Unable to delete unit {unitOfMeasurement.Symbol}, as it is associated with an indicator", Severity.Error);

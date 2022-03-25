@@ -48,6 +48,9 @@ public partial class Edit : IDisposable
     [Inject]
     private ISnackbar Snackbar { get; set; } = null!;
 
+    [Inject]
+    private StateContainer StateContainer { get; init; } = null!;
+
     protected override async Task OnInitializedAsync()
     {
         try {
@@ -155,6 +158,7 @@ public partial class Edit : IDisposable
 
             await context.SaveChangesAsync();
             Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
+            Log.Information("{User} updated indicator {IndicatorId}", StateContainer.UserPrincipal, Id);
         }
         catch (Exception ex) {
             switch (ex) {

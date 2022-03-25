@@ -29,8 +29,12 @@ public partial class Details : IDisposable
     [Inject]
     private ISnackbar Snackbar { get; set; } = null!;
 
+    [Inject]
+    private StateContainer StateContainer { get; init; } = null!;
+
     protected override async Task OnInitializedAsync()
     {
+        Log.Information("{User} is viewing action {ActionId}", StateContainer.UserPrincipal, Id);
         try {
             context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.

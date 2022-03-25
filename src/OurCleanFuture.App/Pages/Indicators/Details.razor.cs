@@ -24,8 +24,12 @@ public partial class Details : IDisposable
     [Inject]
     private NavigationManager Navigation { get; set; } = null!;
 
+    [Inject]
+    private StateContainer StateContainer { get; init; } = null!;
+
     protected override async Task OnInitializedAsync()
     {
+        Log.Information("{User} is viewing indicator {IndicatorId}", StateContainer.UserPrincipal, Id);
         try {
             context = ContextFactory.CreateDbContext();
             Indicator = await context.Indicators

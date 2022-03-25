@@ -45,6 +45,9 @@ public partial class Edit : IDisposable
     [Inject]
     private ISnackbar Snackbar { get; set; } = null!;
 
+    [Inject]
+    private StateContainer StateContainer { get; init; } = null!;
+
     protected override async Task OnInitializedAsync()
     {
         try {
@@ -121,6 +124,7 @@ public partial class Edit : IDisposable
 
         await context.SaveChangesAsync();
         Snackbar.Add($"Successfully updated action: {Action.Number}", Severity.Success);
+        Log.Information("{User} updated action {ActionId}", StateContainer.UserPrincipal, Id);
         Navigation.NavigateTo($"/actions/details/{Id}");
     }
 

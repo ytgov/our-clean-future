@@ -32,10 +32,15 @@ else
                 <MudTd DataLabel="Symbol">@context.Symbol</MudTd>
                 <MudTd DataLabel="Name">@context.Name</MudTd>
                 <MudTd>
-                    @if (@context.Name != "Dollars" && @context.Name != "Count")
+                    @if (@context.Name == "Dollars" || @context.Name == "Count")
                     {
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context))"></MudIconButton>
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Disabled="true" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Disabled="true" />
+                    }
+                    else
+                    {
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context))" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))" />
                     }
             </MudTd>
         </RowTemplate>

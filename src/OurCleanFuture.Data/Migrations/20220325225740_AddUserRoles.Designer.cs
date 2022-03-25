@@ -12,8 +12,8 @@ using OurCleanFuture.Data;
 namespace OurCleanFuture.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220322155826_AddUsersAndRoles")]
-    partial class AddUsersAndRoles
+    [Migration("20220325225740_AddUserRoles")]
+    partial class AddUserRoles
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -52,6 +52,21 @@ namespace OurCleanFuture.Data.Migrations
                     b.HasIndex("ObjectivesId");
 
                     b.ToTable("GoalObjective");
+                });
+
+            modelBuilder.Entity("LeadUser", b =>
+                {
+                    b.Property<int>("LeadsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LeadsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("LeadUser");
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Action", b =>
@@ -433,23 +448,6 @@ namespace OurCleanFuture.Data.Migrations
                     b.ToTable("Organizations", (string)null);
                 });
 
-            modelBuilder.Entity("OurCleanFuture.Data.Entities.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Target", b =>
                 {
                     b.Property<int>("Id")
@@ -539,28 +537,13 @@ namespace OurCleanFuture.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("PrincipalName")
+                    b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.Property<int>("RolesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("RoleUser");
                 });
 
             modelBuilder.Entity("ActionDirectorsCommittee", b =>
@@ -589,6 +572,21 @@ namespace OurCleanFuture.Data.Migrations
                     b.HasOne("OurCleanFuture.Data.Entities.Objective", null)
                         .WithMany()
                         .HasForeignKey("ObjectivesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LeadUser", b =>
+                {
+                    b.HasOne("OurCleanFuture.Data.Entities.Lead", null)
+                        .WithMany()
+                        .HasForeignKey("LeadsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OurCleanFuture.Data.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -779,21 +777,6 @@ namespace OurCleanFuture.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Indicator");
-                });
-
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.HasOne("OurCleanFuture.Data.Entities.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OurCleanFuture.Data.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Action", b =>

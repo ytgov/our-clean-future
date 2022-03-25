@@ -25,6 +25,9 @@ public partial class Index : IDisposable
     [Inject]
     private ISnackbar Snackbar { get; set; } = null!;
 
+    [Inject]
+    private StateContainer StateContainer { get; init; } = null!;
+
     protected override async Task OnInitializedAsync()
     {
         try {
@@ -58,6 +61,12 @@ public partial class Index : IDisposable
                 if (entriesSaved == 2) {
                     Branches.Add(newBranch);
                     Snackbar.Add($"Created branch {newBranch.Name}", Severity.Success);
+                    Log.Information("{User} created branch: {BranchId}, {BranchName}, {DepartmentName}",
+                                    StateContainer.UserPrincipal,
+                                    newBranch.Id,
+                                    newBranch.Name,
+                                    newBranch.Department.Name);
+
                 }
             }
             catch (DbUpdateException) {
@@ -78,6 +87,10 @@ public partial class Index : IDisposable
                 var entriesSaved = await context.SaveChangesAsync();
                 if (entriesSaved == 1) {
                     Snackbar.Add($"Updated branch {updatedBranch.Name}", Severity.Success);
+                    Log.Information("{User} updated branch: {BranchId}, {BranchName}",
+                                    StateContainer.UserPrincipal,
+                                    branch.Id,
+                                    updatedBranch.Name);
                 }
             }
             catch (DbUpdateException) {
@@ -100,6 +113,11 @@ public partial class Index : IDisposable
                 await context.SaveChangesAsync();
                 Branches.Remove(branch);
                 Snackbar.Add($"Deleted branch {branch.Name}", Severity.Success);
+                Log.Information("{User} deleted branch: {BranchId}, {BranchName}, {DepartmentName}",
+                                StateContainer.UserPrincipal,
+                                branch.Id,
+                                branch.Name,
+                                branch.Department.Name);
             }
             catch (DbUpdateException) {
                 Snackbar.Add($"Unable to delete branch {branch.Name}, as it is associated with an indicator or action", Severity.Error);

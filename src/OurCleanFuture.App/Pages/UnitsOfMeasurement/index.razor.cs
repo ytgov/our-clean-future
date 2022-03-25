@@ -80,9 +80,11 @@ public partial class Index : IDisposable
                 var entriesSaved = await context.SaveChangesAsync();
                 if (entriesSaved == 1) {
                     Snackbar.Add($"Updated unit {updatedUnitOfMeasurement.Symbol}", Severity.Success);
-                    Log.Information("{User} updated unit of measurement: {UnitOfMeasurementId}",
+                    Log.Information("{User} updated unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
                                     StateContainer.UserPrincipal,
-                                    unitOfMeasurement.Id);
+                                    updatedUnitOfMeasurement.Id,
+                                    updatedUnitOfMeasurement.Name,
+                                    updatedUnitOfMeasurement.Symbol);
                 }
             }
             catch (DbUpdateException) {

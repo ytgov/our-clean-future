@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 using OurCleanFuture.App;
 using OurCleanFuture.Data;
-using Serilog;
 using Serilog.Events;
 
 Log.Logger = new LoggerConfiguration()
@@ -28,6 +27,7 @@ try {
 
     // Add services to the container.
     builder.Services.AddSingleton(configuration);
+    builder.Services.AddScoped<StateContainer>();
     builder.Services.AddScoped<IClaimsTransformation, AddRoleClaimsTransformation>();
 
     builder.Services.AddRazorPages();

@@ -66,7 +66,6 @@ public partial class Index : IDisposable
                                     newBranch.Id,
                                     newBranch.Name,
                                     newBranch.Department.Name);
-
                 }
             }
             catch (DbUpdateException) {

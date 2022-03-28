@@ -85,13 +85,11 @@ try {
         };
 
         options.Events.OnSignedOutCallbackRedirect = (context) => {
-
             context.Response.Redirect(options.SignedOutRedirectUri);
             context.HandleResponse();
 
             return Task.CompletedTask;
         };
-
     });
 
     // TODO: Adding the authz fallback policy is resulting in an infinite loop of login redirects.
@@ -159,4 +157,3 @@ catch (Exception ex) {
 finally {
     Log.CloseAndFlush();
 }
-

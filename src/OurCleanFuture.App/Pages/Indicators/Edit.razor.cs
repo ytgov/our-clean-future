@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
+using OurCleanFuture.App.Extensions;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using System.Security.Claims;
-using OurCleanFuture.App.Extensions;
 using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Indicators;

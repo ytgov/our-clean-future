@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@using System.Security.Claims
 
 <MudThemeProvider Theme="currentTheme" />
 <MudDialogProvider />
@@ -27,13 +28,35 @@
 @code {
     bool _drawerOpen = true;
 
+    [Inject]
+    public StateContainer StateContainer { get; set; } = null!;
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
+
+    public AuthenticationState AuthenticationState { get; set; } = null!;
+
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
     }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        AuthenticationState = await AuthenticationStateTask;
+        StateContainer.ClaimsPrincipal = AuthenticationState.User;
+
+        var userPrincipalEmail = AuthenticationState.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value.ToLower();
+        if (userPrincipalEmail is not null)
+        {
+            StateContainer.UserPrincipal = userPrincipalEmail;
+        }
+
+        if (StateContainer.UserPrincipal != string.Empty)
+        {
+            Log.Information("{User} has established a connection.", StateContainer.UserPrincipal);
+        }
+
         currentTheme = defaultTheme;
     }
 
@@ -51,37 +74,37 @@
 
     MudTheme currentTheme = new MudTheme();
     MudTheme defaultTheme = new MudTheme()
-    {
-        Palette = new Palette()
         {
-            Black = "#272c34"
-        }
-    };
+            Palette = new Palette()
+            {
+                Black = "#272c34"
+            }
+        };
 
     MudTheme darkTheme = new MudTheme()
-    {
-        Palette = new Palette()
         {
-            Black = "#27272f",
-            Background = "#32333d",
-            BackgroundGrey = "#27272f",
-            Surface = "#373740",
-            DrawerBackground = "#27272f",
-            DrawerText = "rgba(255,255,255, 0.50)",
-            DrawerIcon = "rgba(255,255,255, 0.50)",
-            AppbarBackground = "#27272f",
-            AppbarText = "rgba(255,255,255, 0.70)",
-            TextPrimary = "rgba(255,255,255, 0.70)",
-            TextSecondary = "rgba(255,255,255, 0.50)",
-            ActionDefault = "#adadb1",
-            ActionDisabled = "rgba(255,255,255, 0.26)",
-            ActionDisabledBackground = "rgba(255,255,255, 0.12)",
-            Divider = "rgba(255,255,255, 0.12)",
-            DividerLight = "rgba(255,255,255, 0.06)",
-            TableLines = "rgba(255,255,255, 0.12)",
-            LinesDefault = "rgba(255,255,255, 0.12)",
-            LinesInputs = "rgba(255,255,255, 0.3)",
-            TextDisabled = "rgba(255,255,255, 0.2)"
-        }
-    };
+            Palette = new Palette()
+            {
+                Black = "#27272f",
+                Background = "#32333d",
+                BackgroundGrey = "#27272f",
+                Surface = "#373740",
+                DrawerBackground = "#27272f",
+                DrawerText = "rgba(255,255,255, 0.50)",
+                DrawerIcon = "rgba(255,255,255, 0.50)",
+                AppbarBackground = "#27272f",
+                AppbarText = "rgba(255,255,255, 0.70)",
+                TextPrimary = "rgba(255,255,255, 0.70)",
+                TextSecondary = "rgba(255,255,255, 0.50)",
+                ActionDefault = "#adadb1",
+                ActionDisabled = "rgba(255,255,255, 0.26)",
+                ActionDisabledBackground = "rgba(255,255,255, 0.12)",
+                Divider = "rgba(255,255,255, 0.12)",
+                DividerLight = "rgba(255,255,255, 0.06)",
+                TableLines = "rgba(255,255,255, 0.12)",
+                LinesDefault = "rgba(255,255,255, 0.12)",
+                LinesInputs = "rgba(255,255,255, 0.3)",
+                TextDisabled = "rgba(255,255,255, 0.2)"
+            }
+        };
 }

@@ -20,6 +20,9 @@ public partial class Index : IDisposable
     [Inject]
     private NavigationManager Navigation { get; set; } = null!;
 
+    [Inject]
+    private StateContainer StateContainer { get; init; } = null!;
+
     protected override async Task OnInitializedAsync()
     {
         try {

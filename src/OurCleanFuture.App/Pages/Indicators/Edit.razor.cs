@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
+using OurCleanFuture.App.Extensions;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using System.Security.Claims;
-using OurCleanFuture.App.Extensions;
 using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Indicators;
@@ -47,6 +47,9 @@ public partial class Edit : IDisposable
 
     [Inject]
     private ISnackbar Snackbar { get; set; } = null!;
+
+    [Inject]
+    private StateContainer StateContainer { get; init; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -155,6 +158,7 @@ public partial class Edit : IDisposable
 
             await context.SaveChangesAsync();
             Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
+            Log.Information("{User} updated indicator {IndicatorId}", StateContainer.UserPrincipal, Id);
         }
         catch (Exception ex) {
             switch (ex) {

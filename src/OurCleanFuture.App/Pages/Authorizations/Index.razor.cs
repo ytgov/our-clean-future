@@ -1,20 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using System.Net.Http;
+
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Routing;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web.Virtualization;
-using Microsoft.JSInterop;
-using OurCleanFuture.App;
-using OurCleanFuture.App.Shared;
-using MudBlazor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 
@@ -37,12 +25,18 @@ namespace OurCleanFuture.App.Pages.Authorizations
         [Inject]
         private ISnackbar Snackbar { get; set; } = null!;
 
+        [Inject]
+        private StateContainer StateContainer { get; init; } = null!;
+
         protected override async Task OnInitializedAsync()
         {
             try {
                 _context = ContextFactory.CreateDbContext();
                 Users = await _context.Users.Include(u => u.Leads).ToListAsync();
-                Leads = await _context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).ToListAsync();
+                Leads = await _context.Leads.Include(l => l.Organization)
+                                            .Include(l => l.Branch)
+                                            .ThenInclude(b => b!.Department)
+                                            .ToListAsync();
             }
             finally {
                 isLoaded = true;
@@ -71,6 +65,9 @@ namespace OurCleanFuture.App.Pages.Authorizations
                     var entriesSaved = await _context.SaveChangesAsync();
                     if (entriesSaved == 2) {
                         Snackbar.Add($"Successfully added user {newUser.Email} to {lead}", Severity.Success);
+
+                        Log.Information("{User} added user {AddedUser} to {Lead}", StateContainer.UserPrincipal, newUser.Email, lead);
+
                     }
                 }
                 catch (DbUpdateException) {
@@ -93,6 +90,7 @@ namespace OurCleanFuture.App.Pages.Authorizations
                     lead.Users.Remove(user);
                     await _context.SaveChangesAsync();
                     Snackbar.Add($"Removed {user.Email} from {lead}", Severity.Success);
+                    Log.Information("{User} removed user {RemovedUser} from {Lead}", StateContainer.UserPrincipal, user.Email, lead);
                 }
                 catch (DbUpdateException) {
                     Snackbar.Add($"Unable to remove {user.Email} from {lead}", Severity.Error);

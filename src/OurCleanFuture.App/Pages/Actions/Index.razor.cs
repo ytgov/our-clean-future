@@ -18,6 +18,9 @@ public partial class Index : IDisposable
     [Inject]
     private NavigationManager Navigation { get; set; } = null!;
 
+    [Inject]
+    private StateContainer StateContainer { get; init; } = null!;
+
     private AppDbContext Context { get; set; } = null!;
     private List<Action> Actions { get; set; } = new();
 

@@ -29,8 +29,12 @@ public partial class Details : IDisposable
     [Inject]
     private ISnackbar Snackbar { get; set; } = null!;
 
+    [Inject]
+    private StateContainer StateContainer { get; init; } = null!;
+
     protected override async Task OnInitializedAsync()
     {
+        Log.Information("{User} is viewing action {ActionId}", StateContainer.UserPrincipal, Id);
         try {
             context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.
@@ -45,6 +49,7 @@ public partial class Details : IDisposable
                 .ThenInclude(a => a.Area)
                 .Include(a => a.Objective)
                 .ThenInclude(a => a.Goals)
+                .AsSingleQuery()
                 .FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
         }

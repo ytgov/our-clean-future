@@ -1,4 +1,6 @@
+
 ﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace OurCleanFuture.Data.Entities;
 

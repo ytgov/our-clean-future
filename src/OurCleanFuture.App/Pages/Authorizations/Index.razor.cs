@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
@@ -64,7 +65,9 @@ namespace OurCleanFuture.App.Pages.Authorizations
                     var entriesSaved = await _context.SaveChangesAsync();
                     if (entriesSaved == 2) {
                         Snackbar.Add($"Successfully added user {newUser.Email} to {lead}", Severity.Success);
+
                         Log.Information("{User} added user {AddedUser} to {Lead}", StateContainer.UserPrincipal, newUser.Email, lead);
+
                     }
                 }
                 catch (DbUpdateException) {

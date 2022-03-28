@@ -34,7 +34,6 @@ public partial class Details : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        Log.Information("{User} is viewing action {ActionId}", StateContainer.UserPrincipal, Id);
         try {
             context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.
@@ -59,6 +58,7 @@ public partial class Details : IDisposable
         finally {
             isLoaded = true;
         }
+        Log.Information("{User} is viewing action {ActionId}: {ActionTitle}", StateContainer.UserPrincipal, Action?.Id, Action?.Title);
 
         await base.OnInitializedAsync();
     }

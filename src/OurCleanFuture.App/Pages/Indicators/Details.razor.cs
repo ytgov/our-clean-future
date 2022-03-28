@@ -29,7 +29,6 @@ public partial class Details : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        Log.Information("{User} is viewing indicator {IndicatorId}", StateContainer.UserPrincipal, Id);
         try {
             context = ContextFactory.CreateDbContext();
             Indicator = await context.Indicators
@@ -61,6 +60,7 @@ public partial class Details : IDisposable
         finally {
             isLoaded = true;
         }
+        Log.Information("{User} is viewing indicator {IndicatorId}: {IndicatorTitle}", StateContainer.UserPrincipal, Indicator.Id, Indicator.Title);
 
         await base.OnInitializedAsync();
     }

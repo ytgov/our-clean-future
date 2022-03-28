@@ -49,6 +49,7 @@ public partial class Details : IDisposable
                 .ThenInclude(a => a.Area)
                 .Include(a => a.Objective)
                 .ThenInclude(a => a.Goals)
+                .AsSingleQuery()
                 .FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
         }

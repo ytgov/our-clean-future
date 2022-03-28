@@ -151,8 +151,7 @@ public class AppDbContext : DbContext
                 tb.HasPeriodStart("ValidFrom");
                 tb.HasPeriodEnd("ValidTo");
             }));
-            t.Property(t => t.StartDate).HasColumnType("date");
-            t.Property(t => t.EndDate).HasColumnType("date");
+            t.Property(t => t.CompletionDate).HasColumnType("date");
         });
     }
 }

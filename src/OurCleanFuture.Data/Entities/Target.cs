@@ -6,8 +6,7 @@ public class Target
 {
     public int Id { get; set; }
     public double? Value { get; set; }
-    public DateTime? StartDate { get; set; }
-    public DateTime? EndDate { get; set; }
+    public DateTime? CompletionDate { get; set; }
 
     [StringLength(500, MinimumLength = 1, ErrorMessage = "{0} must be between {2} and {1} characters.")]
     public string Description { get; set; } = "";

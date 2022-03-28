@@ -158,7 +158,7 @@ public partial class Edit : IDisposable
 
             await context.SaveChangesAsync();
             Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
-            Log.Information("{User} updated indicator {IndicatorId}", StateContainer.UserPrincipal, Id);
+            Log.Information("{User} updated indicator {IndicatorId}: {IndicatorTitle}", StateContainer.UserPrincipal, Indicator.Id, Indicator.Title);
         }
         catch (Exception ex) {
             switch (ex) {

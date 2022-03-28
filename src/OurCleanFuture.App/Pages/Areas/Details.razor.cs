@@ -29,6 +29,9 @@ public partial class Details : IDisposable
     [Inject]
     private ISnackbar Snackbar { get; set; } = null!;
 
+    [Inject]
+    private StateContainer StateContainer { get; init; } = null!;
+
     // Required to force the app to re-render when navigating between Areas.
     // OnInitializedAsync is not called by default in this situation, as the user is merely changing the parameter, while staying on the same page.
     protected override async Task OnParametersSetAsync()
@@ -50,6 +53,7 @@ public partial class Details : IDisposable
         finally {
             isLoaded = true;
         }
+        Log.Information("{User} is viewing area {AreaId}: {AreaTitle}", StateContainer.UserPrincipal, Area?.Id, Area?.Title);
 
         await base.OnInitializedAsync();
     }

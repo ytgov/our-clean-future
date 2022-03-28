@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting.WindowsServices;
 using MudBlazor.Services;
 using OurCleanFuture.App;
 using OurCleanFuture.Data;
@@ -11,19 +12,25 @@ Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
     .Enrich.FromLogContext()
     .WriteTo.Console()
+    .WriteTo.Seq("http://localhost:5341")
     .CreateBootstrapLogger();
 
 try {
     Log.Information("Starting web host");
-    var builder = WebApplication.CreateBuilder(args);
+
+    var options = new WebApplicationOptions {
+        Args = args,
+        ContentRootPath = WindowsServiceHelpers.IsWindowsService() ? AppContext.BaseDirectory : default
+    };
+    var builder = WebApplication.CreateBuilder(options);
+    builder.Host.UseWindowsService();
 
     var configuration = builder.Configuration;
 
     builder.Host.UseSerilog((context, services, configuration) => configuration
                     .ReadFrom.Configuration(context.Configuration)
                     .ReadFrom.Services(services)
-                    .Enrich.FromLogContext())
-                .UseWindowsService();
+                    .Enrich.FromLogContext());
 
     // Add services to the container.
     builder.Services.AddSingleton(configuration);

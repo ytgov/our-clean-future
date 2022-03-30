@@ -129,6 +129,21 @@ public partial class Index : IDisposable
         }
     }
 
+    private bool IsAuthorizedToEdit(Indicator indicator)
+    {
+        var claimsPrincipal = StateContainer.ClaimsPrincipal;
+        foreach (var lead in indicator.Leads) {
+            if (claimsPrincipal.IsInRole(lead.Id.ToString())) {
+                return true;
+            }
+        }
+        if (claimsPrincipal.IsInRole("Administrator")
+            || claimsPrincipal.IsInRole("1")) {
+            return true;
+        }
+        return false;
+    }
+
     public void Dispose()
     {
         context.Dispose();

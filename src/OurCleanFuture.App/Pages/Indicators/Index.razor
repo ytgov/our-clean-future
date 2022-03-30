@@ -51,36 +51,33 @@ else
                 <MudTd>@context.CollectionInterval</MudTd>
                 <MudTd DataLabel="Trend">
                     @if (GetTrend(context) == "TrendingUp")
-                    {
-                        <MudIcon Icon="@Icons.Material.Filled.TrendingUp" />
-                    }
-                    else if (GetTrend(context) == "TrendingDown")
-                    {
-                        <MudIcon Icon="@Icons.Material.Filled.TrendingDown" />
-                    }
-                    else if (GetTrend(context) == "TrendingFlat")
-                    {
-                        <MudIcon Icon="@Icons.Material.Filled.TrendingFlat" />
-                    }
-                </MudTd>
-                <MudTd DataLabel="Last Entry">@GetDateLastEntry(context)?.ToString("MMM yyyy")</MudTd>
-                <MudTd>
-                    @if (StateContainer.ClaimsPrincipal.IsInRole(context.Leads.FirstOrDefault()?.Id.ToString() ?? "") ||
-                           StateContainer.ClaimsPrincipal.IsInRole(context.Leads.LastOrDefault()?.Id.ToString() ?? "") ||
-                           StateContainer.ClaimsPrincipal.IsInRole("Administrator") ||
-                           StateContainer.ClaimsPrincipal.IsInRole("1"))
-                    {
-                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))" />
-                    }
-                    else
-                    {
-                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Disabled="true" />
-                    }
-                </MudTd>
-            </RowTemplate>
-            <PagerContent>
-                <MudTablePager />
-            </PagerContent>
-        </MudTable>
-    </MudContainer>
-}
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.TrendingUp" />
+                }
+                else if (GetTrend(context) == "TrendingDown")
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.TrendingDown" />
+                }
+                else if (GetTrend(context) == "TrendingFlat")
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.TrendingFlat" />
+                }
+            </MudTd>
+            <MudTd DataLabel="Last Entry">@GetDateLastEntry(context)?.ToString("MMM yyyy")</MudTd>
+            <MudTd>
+                @if (IsAuthorizedToEdit(context))
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))" />
+                }
+                else
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Disabled="true" />
+                }
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager />
+        </PagerContent>
+    </MudTable>
+</MudContainer>
+        }

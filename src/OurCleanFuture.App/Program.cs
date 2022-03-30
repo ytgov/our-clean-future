@@ -34,9 +34,6 @@ try {
 
     // Add services to the container.
     builder.Services.AddSingleton(configuration);
-    builder.Services.AddScoped<StateContainer>();
-    builder.Services.AddScoped<IClaimsTransformation, AddRoleClaimsTransformation>();
-
     builder.Services.AddRazorPages();
     builder.Services.AddServerSideBlazor();
 
@@ -118,6 +115,8 @@ try {
         options.UseSqlServer(configuration.GetConnectionString("AppDbContext"), options => options.EnableRetryOnFailure()));
 #endif
 
+    builder.Services.AddScoped<StateContainer>(s => new StateContainer(s.GetRequiredService<IDbContextFactory<AppDbContext>>()));
+    builder.Services.AddScoped<IClaimsTransformation, AddRoleClaimsTransformation>();
     builder.Services.AddLocalization();
 
     var app = builder.Build();

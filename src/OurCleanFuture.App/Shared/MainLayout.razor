@@ -29,12 +29,12 @@
     bool _drawerOpen = true;
 
     [Inject]
-    public StateContainer StateContainer { get; set; } = null!;
+    private StateContainer StateContainer { get; set; } = null!;
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
 
-    public AuthenticationState AuthenticationState { get; set; } = null!;
+    private AuthenticationState AuthenticationState { get; set; } = null!;
 
     void DrawerToggle()
     {
@@ -45,17 +45,6 @@
     {
         AuthenticationState = await AuthenticationStateTask;
         StateContainer.ClaimsPrincipal = AuthenticationState.User;
-
-        var userPrincipalEmail = AuthenticationState.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value.ToLower();
-        if (userPrincipalEmail is not null)
-        {
-            StateContainer.UserPrincipal = userPrincipalEmail;
-        }
-
-        if (StateContainer.UserPrincipal != string.Empty)
-        {
-            Log.Information("{User} has established a connection.", StateContainer.UserPrincipal);
-        }
 
         currentTheme = defaultTheme;
     }

@@ -8,9 +8,8 @@ namespace OurCleanFuture.App;
 public class StateContainer
 {
     private readonly IDbContextFactory<AppDbContext> _dbContextFactory;
-    private AppDbContext _context;
-
-    private ClaimsPrincipal _claimsPrincipal;
+    private AppDbContext _context = null!;
+    private ClaimsPrincipal _claimsPrincipal = null!;
 
     public StateContainer(IDbContextFactory<AppDbContext> dbContextFactory)
     {
@@ -28,10 +27,9 @@ public class StateContainer
         }
     }
 
-    public string UserPrincipal { get; private set; }
+    public string UserPrincipal { get; private set; } = "";
     public bool UserHasARole { get; private set; }
 
-    public event Action? OnChange;
-
-    private void NotifyStateChanged() => OnChange?.Invoke();
+    //public event Action? OnChange;
+    //private void NotifyStateChanged() => OnChange?.Invoke();
 }

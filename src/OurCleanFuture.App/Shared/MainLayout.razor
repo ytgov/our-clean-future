@@ -44,8 +44,10 @@
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState = await AuthenticationStateTask;
-        StateContainer.ClaimsPrincipal = AuthenticationState.User;
-
+        if (AuthenticationState.User.Identity?.IsAuthenticated ?? false)
+        {
+            StateContainer.ClaimsPrincipal = AuthenticationState.User;
+        }
         currentTheme = defaultTheme;
     }
 

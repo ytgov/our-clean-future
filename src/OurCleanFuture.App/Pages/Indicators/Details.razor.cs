@@ -55,7 +55,8 @@ public partial class Details : IDisposable
             IndicatorLastUpdatedBy = await GetIndicatorLastUpdatedBy();
         }
         catch (Exception ex) {
-            Console.WriteLine(ex);
+            Log.Error("{Exception}", ex);
+            throw;
         }
         finally {
             isLoaded = true;

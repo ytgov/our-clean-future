@@ -43,7 +43,8 @@ public partial class Index : IDisposable
                 .ToListAsync();
         }
         catch (Exception ex) {
-            Console.WriteLine(ex);
+            Log.Error("{Exception}", ex);
+            throw;
         }
         finally {
             isLoaded = true;
@@ -53,6 +54,11 @@ public partial class Index : IDisposable
     private void Details(int actionId)
     {
         Navigation.NavigateTo("/actions/details/" + actionId);
+    }
+
+    private void Edit(int actionId)
+    {
+        Navigation.NavigateTo("/actions/edit/" + actionId);
     }
 
     public async void RowClicked(TableRowClickEventArgs<Action> p)
@@ -66,11 +72,6 @@ public partial class Index : IDisposable
         else {
             Details(p.Item.Id);
         }
-    }
-
-    private void Edit(int actionId)
-    {
-        Navigation.NavigateTo("/actions/edit/" + actionId);
     }
 
     private bool FilterFunc(Action action)

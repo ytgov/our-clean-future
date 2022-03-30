@@ -34,7 +34,8 @@ public partial class Index : IDisposable
             UnitsOfMeasurement = await context.UnitsOfMeasurement.OrderBy(u => u.Symbol).ToListAsync();
         }
         catch (Exception ex) {
-            Console.WriteLine(ex);
+            Log.Error("{Exception}", ex);
+            throw;
         }
         finally {
             isLoaded = true;

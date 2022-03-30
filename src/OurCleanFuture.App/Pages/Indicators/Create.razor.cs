@@ -56,7 +56,8 @@ public partial class Create : IDisposable
             await GetUserPrincipal();
         }
         catch (Exception ex) {
-            Console.WriteLine(ex);
+            Log.Error("{Exception}", ex);
+            throw;
         }
         finally {
             isLoaded = true;

@@ -36,7 +36,8 @@ public partial class Index : IDisposable
             Departments = await context.Departments.OrderBy(d => d.Name).ToListAsync();
         }
         catch (Exception ex) {
-            Console.WriteLine(ex);
+            Log.Error("{Exception}", ex);
+            throw;
         }
         finally {
             isLoaded = true;

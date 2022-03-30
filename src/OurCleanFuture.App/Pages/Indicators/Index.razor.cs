@@ -43,7 +43,8 @@ public partial class Index : IDisposable
             .ToListAsync();
         }
         catch (Exception ex) {
-            Console.WriteLine(ex);
+            Log.Error("{Exception}", ex);
+            throw;
         }
         finally {
             isLoaded = true;
@@ -67,6 +68,11 @@ public partial class Index : IDisposable
         Navigation.NavigateTo("/indicators/details/" + indicatorId);
     }
 
+    private void Edit(int indicatorId)
+    {
+        Navigation.NavigateTo("/indicators/edit/" + indicatorId);
+    }
+
     public async void RowClicked(TableRowClickEventArgs<Indicator> p)
     {
         if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey) {
@@ -78,11 +84,6 @@ public partial class Index : IDisposable
         else {
             Details(p.Item.Id);
         }
-    }
-
-    private void Edit(int indicatorId)
-    {
-        Navigation.NavigateTo("/indicators/edit/" + indicatorId);
     }
 
     private bool FilterFunc(Indicator indicator)

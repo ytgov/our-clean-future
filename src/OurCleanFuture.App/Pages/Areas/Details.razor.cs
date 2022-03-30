@@ -48,7 +48,8 @@ public partial class Details : IDisposable
 #pragma warning restore CS8601 // Possible null reference assignment.
         }
         catch (Exception ex) {
-            Console.WriteLine(ex);
+            Log.Error("{Exception}", ex);
+            throw;
         }
         finally {
             isLoaded = true;

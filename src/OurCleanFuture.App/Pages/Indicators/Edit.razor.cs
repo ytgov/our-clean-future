@@ -73,7 +73,8 @@ public partial class Edit : IDisposable
             }
         }
         catch (Exception ex) {
-            Console.WriteLine(ex);
+            Log.Error("{Exception}", ex);
+            throw;
         }
         finally {
             isLoaded = true;

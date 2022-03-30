@@ -59,7 +59,7 @@ public partial class Details : IDisposable
         finally {
             isLoaded = true;
         }
-        Log.Information("{User} is viewing action {ActionId}: {ActionTitle}", StateContainer.UserPrincipal, Action?.Id, Action?.Title);
+        Log.Information("{User} is viewing action {ActionId}: {ActionTitle}", StateContainer.ClaimsPrincipalEmail, Action?.Id, Action?.Title);
 
         await base.OnInitializedAsync();
     }

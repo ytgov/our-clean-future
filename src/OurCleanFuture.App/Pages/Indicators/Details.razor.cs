@@ -61,7 +61,7 @@ public partial class Details : IDisposable
         finally {
             isLoaded = true;
         }
-        Log.Information("{User} is viewing indicator {IndicatorId}: {IndicatorTitle}", StateContainer.UserPrincipal, Indicator.Id, Indicator.Title);
+        Log.Information("{User} is viewing indicator {IndicatorId}: {IndicatorTitle}", StateContainer.ClaimsPrincipalEmail, Indicator.Id, Indicator.Title);
 
         await base.OnInitializedAsync();
     }

@@ -66,7 +66,7 @@ namespace OurCleanFuture.App.Pages.Authorizations
                     if (entriesSaved == 2) {
                         Snackbar.Add($"Successfully added user {newUser.Email} to {lead}", Severity.Success);
 
-                        Log.Information("{User} added user {AddedUser} to {Lead}", StateContainer.UserPrincipal, newUser.Email, lead);
+                        Log.Information("{User} added user {AddedUser} to {Lead}", StateContainer.ClaimsPrincipalEmail, newUser.Email, lead);
 
                     }
                 }
@@ -90,7 +90,7 @@ namespace OurCleanFuture.App.Pages.Authorizations
                     lead.Users.Remove(user);
                     await _context.SaveChangesAsync();
                     Snackbar.Add($"Removed {user.Email} from {lead}", Severity.Success);
-                    Log.Information("{User} removed user {RemovedUser} from {Lead}", StateContainer.UserPrincipal, user.Email, lead);
+                    Log.Information("{User} removed user {RemovedUser} from {Lead}", StateContainer.ClaimsPrincipalEmail, user.Email, lead);
                 }
                 catch (DbUpdateException) {
                     Snackbar.Add($"Unable to remove {user.Email} from {lead}", Severity.Error);

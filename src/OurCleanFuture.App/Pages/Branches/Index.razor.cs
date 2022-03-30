@@ -63,7 +63,7 @@ public partial class Index : IDisposable
                     Branches.Add(newBranch);
                     Snackbar.Add($"Created branch {newBranch.Name}", Severity.Success);
                     Log.Information("{User} created branch: {BranchId}, {BranchName}, {DepartmentName}",
-                                    StateContainer.UserPrincipal,
+                                    StateContainer.ClaimsPrincipalEmail,
                                     newBranch.Id,
                                     newBranch.Name,
                                     newBranch.Department.Name);
@@ -88,7 +88,7 @@ public partial class Index : IDisposable
                 if (entriesSaved == 1) {
                     Snackbar.Add($"Updated branch {updatedBranch.Name}", Severity.Success);
                     Log.Information("{User} updated branch: {BranchId}, {BranchName}",
-                                    StateContainer.UserPrincipal,
+                                    StateContainer.ClaimsPrincipalEmail,
                                     branch.Id,
                                     updatedBranch.Name);
                 }
@@ -114,7 +114,7 @@ public partial class Index : IDisposable
                 Branches.Remove(branch);
                 Snackbar.Add($"Deleted branch {branch.Name}", Severity.Success);
                 Log.Information("{User} deleted branch: {BranchId}, {BranchName}, {DepartmentName}",
-                                StateContainer.UserPrincipal,
+                                StateContainer.ClaimsPrincipalEmail,
                                 branch.Id,
                                 branch.Name,
                                 branch.Department.Name);

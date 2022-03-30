@@ -56,7 +56,7 @@ public partial class Index : IDisposable
                 if (entriesSaved == 1) {
                     UnitsOfMeasurement.Add(newUnitOfMeasurement);
                     Log.Information("{User} created unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
-                                    StateContainer.UserPrincipal,
+                                    StateContainer.ClaimsPrincipalEmail,
                                     newUnitOfMeasurement.Id,
                                     newUnitOfMeasurement.Name,
                                     newUnitOfMeasurement.Symbol);
@@ -82,7 +82,7 @@ public partial class Index : IDisposable
                 if (entriesSaved == 1) {
                     Snackbar.Add($"Updated unit {updatedUnitOfMeasurement.Symbol}", Severity.Success);
                     Log.Information("{User} updated unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
-                                    StateContainer.UserPrincipal,
+                                    StateContainer.ClaimsPrincipalEmail,
                                     updatedUnitOfMeasurement.Id,
                                     updatedUnitOfMeasurement.Name,
                                     updatedUnitOfMeasurement.Symbol);
@@ -107,7 +107,7 @@ public partial class Index : IDisposable
                 UnitsOfMeasurement.Remove(unitOfMeasurement);
                 Snackbar.Add($"Deleted unit {unitOfMeasurement.Symbol}", Severity.Success);
                 Log.Information("{User} deleted unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
-                                StateContainer.UserPrincipal,
+                                StateContainer.ClaimsPrincipalEmail,
                                 unitOfMeasurement.Id,
                                 unitOfMeasurement.Name,
                                 unitOfMeasurement.Symbol);

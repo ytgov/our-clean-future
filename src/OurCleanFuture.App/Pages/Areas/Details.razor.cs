@@ -54,7 +54,7 @@ public partial class Details : IDisposable
         finally {
             isLoaded = true;
         }
-        Log.Information("{User} is viewing area {AreaId}: {AreaTitle}", StateContainer.UserPrincipal, Area?.Id, Area?.Title);
+        Log.Information("{User} is viewing area {AreaId}: {AreaTitle}", StateContainer.ClaimsPrincipalEmail, Area?.Id, Area?.Title);
 
         await base.OnInitializedAsync();
     }

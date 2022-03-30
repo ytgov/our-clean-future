@@ -125,7 +125,7 @@ public partial class Edit : IDisposable
 
         await context.SaveChangesAsync();
         Snackbar.Add($"Successfully updated action: {Action.Number}", Severity.Success);
-        Log.Information("{User} updated action {ActionId}: {ActionTitle}", StateContainer.UserPrincipal, Action.Id, Action.Title);
+        Log.Information("{User} updated action {ActionId}: {ActionTitle}", StateContainer.ClaimsPrincipalEmail, Action.Id, Action.Title);
         Navigation.NavigateTo($"/actions/details/{Id}");
     }
 

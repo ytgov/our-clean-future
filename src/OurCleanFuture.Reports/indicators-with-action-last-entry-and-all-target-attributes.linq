@@ -74,7 +74,6 @@ public class IndicatorLastEntryViewModel
 	public double? LastEntryValue { get; set; }
 	public string? TargetDescription { get; set; }
 	public double? TargetValue { get; set; }
-	public string? TargetStartDate { get; set; }
 	public string? TargetCompletionDate { get; set; }
 	public string UnitOfMeasurement { get; set; } = null!;
 	public string Link { get; set; } = null!;

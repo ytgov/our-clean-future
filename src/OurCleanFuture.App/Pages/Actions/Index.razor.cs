@@ -9,15 +9,15 @@ namespace OurCleanFuture.App.Pages.Actions;
 
 public partial class Index : IDisposable
 {
-    private bool isLoaded;
-    private AppDbContext context = null!;
+    private bool _isLoaded;
+    private AppDbContext _context = null!;
 
-    private IOrderedEnumerable<Action> orderedActions = null!;
-    private List<Action> filteredActions = new();
-    private MudSwitch<bool> filterActionsSwitch = null!;
+    private IOrderedEnumerable<Action> _orderedActions = null!;
+    private List<Action> _filteredActions = new();
+    private MudSwitch<bool> _filterActionsSwitch = null!;
 
-    private Action selectedItem = null!;
-    private string searchString = "";
+    private Action _selectedItem = null!;
+    private string _searchString = "";
 
     [Inject]
     private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
@@ -35,8 +35,8 @@ public partial class Index : IDisposable
     protected override async Task OnInitializedAsync()
     {
         try {
-            context = ContextFactory.CreateDbContext();
-            var actions = await context.Actions
+            _context = ContextFactory.CreateDbContext();
+            var actions = await _context.Actions
                 .Include(i => i.Leads)
                 .ThenInclude(l => l.Organization)
                 .Include(i => i.Leads)
@@ -45,17 +45,17 @@ public partial class Index : IDisposable
                 .AsNoTracking()
                 .AsSingleQuery()
                 .ToListAsync();
-            orderedActions = actions.OrderBy(a => a.Number[0])
+            _orderedActions = actions.OrderBy(a => a.Number[0])
                                             .ThenBy(a => a.Number.Length)
                                             .ThenBy(a => a.Number);
-            filteredActions.AddRange(orderedActions);
+            _filteredActions.AddRange(_orderedActions);
         }
         catch (Exception ex) {
             Log.Error("{Exception}", ex);
             throw;
         }
         finally {
-            isLoaded = true;
+            _isLoaded = true;
         }
     }
 
@@ -84,28 +84,35 @@ public partial class Index : IDisposable
 
     private bool FilterFunc(Action action)
     {
-        if (string.IsNullOrWhiteSpace(searchString))
+        if (string.IsNullOrWhiteSpace(_searchString)) {
             return true;
-        foreach (var lead in action.Leads) {
-            if (lead.Organization.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (lead.Branch?.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
-                return true;
-            if (lead.Branch?.Department.ShortName.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
-                return true;
-            if (lead.Branch?.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
-                return true;
-            if (lead.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
         }
-        if (action.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        foreach (var lead in action.Leads) {
+            if (lead.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase)) {
+                return true;
+            }
+            if (lead.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true) {
+                return true;
+            }
+            if (lead.Branch?.Department.ShortName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true) {
+                return true;
+            }
+            if (lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true) {
+                return true;
+            }
+            if (lead.ToString().Contains(_searchString, StringComparison.OrdinalIgnoreCase)) {
+                return true;
+            }
+        }
+        if (action.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase)) {
             return true;
+        }
         return false;
     }
 
     private string FilterActionsText()
     {
-        if (filterActionsSwitch.Checked) {
+        if (_filterActionsSwitch.Checked) {
             return "My actions";
         }
         else {
@@ -115,12 +122,12 @@ public partial class Index : IDisposable
 
     private void FilterActions()
     {
-        filteredActions.Clear();
-        if (filterActionsSwitch.Checked) {
-            filteredActions = orderedActions.Where(i => IsUserAMemberOfLeads(i)).ToList();
+        _filteredActions.Clear();
+        if (_filterActionsSwitch.Checked) {
+            _filteredActions = _orderedActions.Where(i => IsUserAMemberOfLeads(i)).ToList();
         }
         else {
-            filteredActions.AddRange(orderedActions);
+            _filteredActions.AddRange(_orderedActions);
         }
     }
 
@@ -141,6 +148,6 @@ public partial class Index : IDisposable
 
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
     }
 }

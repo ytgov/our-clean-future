@@ -12,10 +12,10 @@ namespace OurCleanFuture.App.Pages.Actions;
 
 public partial class Edit : IDisposable
 {
-    private bool isLoaded;
-    private AppDbContext context = null!;
-    private ClaimsPrincipal user = null!;
-    private Func<DirectorsCommittee, string> committeeConverter = d => d.Name;
+    private bool _isLoaded;
+    private AppDbContext _context = null!;
+    private ClaimsPrincipal _user = null!;
+    private readonly Func<DirectorsCommittee, string> _committeeConverter = d => d.Name;
 
     [Parameter]
     public int Id { get; set; }
@@ -37,9 +37,6 @@ public partial class Edit : IDisposable
     private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
     [Inject]
-    private IDialogService DialogService { get; set; } = null!;
-
-    [Inject]
     private NavigationManager Navigation { get; set; } = null!;
 
     [Inject]
@@ -51,12 +48,12 @@ public partial class Edit : IDisposable
     protected override async Task OnInitializedAsync()
     {
         try {
-            context = ContextFactory.CreateDbContext();
-            Leads = await context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Department.ShortName).ThenBy(l => l.Branch!.Name).ToListAsync();
-            Objectives = await context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
-            DirectorsCommittees = await context.DirectorsCommittees.OrderBy(dc => dc.Name).ToListAsync();
+            _context = ContextFactory.CreateDbContext();
+            Leads = await _context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Department.ShortName).ThenBy(l => l.Branch!.Name).ToListAsync();
+            Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
+            DirectorsCommittees = await _context.DirectorsCommittees.OrderBy(dc => dc.Name).ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.
-            Action = await context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).Include(a => a.Leads).FirstOrDefaultAsync(a => a.Id == Id);
+            Action = await _context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).Include(a => a.Leads).FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
             if (Action != null) {
                 foreach (var committee in Action!.DirectorsCommittees) {
@@ -74,7 +71,7 @@ public partial class Edit : IDisposable
             throw;
         }
         finally {
-            isLoaded = true;
+            _isLoaded = true;
         }
 
         await base.OnInitializedAsync();
@@ -83,7 +80,7 @@ public partial class Edit : IDisposable
     private async Task GetUserPrincipal()
     {
         var authState = await AuthenticationStateTask;
-        user = authState.User;
+        _user = authState.User;
     }
 
     private string GetAuthorizedRoles()
@@ -103,13 +100,13 @@ public partial class Edit : IDisposable
             return;
         }
 
-        if (context.Entry(Action).Property(a => a.InternalStatus).IsModified) {
-            Action.InternalStatusUpdatedBy = user.GetFormattedName();
+        if (_context.Entry(Action).Property(a => a.InternalStatus).IsModified) {
+            Action.InternalStatusUpdatedBy = _user.GetFormattedName();
             Action.InternalStatusUpdatedDate = DateTimeOffset.Now;
         }
 
-        if (context.Entry(Action).Property(a => a.ExternalStatus).IsModified) {
-            Action.ExternalStatusUpdatedBy = user.GetFormattedName();
+        if (_context.Entry(Action).Property(a => a.ExternalStatus).IsModified) {
+            Action.ExternalStatusUpdatedBy = _user.GetFormattedName();
             Action.ExternalStatusUpdatedDate = DateTimeOffset.Now;
         }
 
@@ -123,7 +120,7 @@ public partial class Edit : IDisposable
             Action.Leads.Add(lead);
         }
 
-        await context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
         Snackbar.Add($"Successfully updated action: {Action.Number}", Severity.Success);
         Log.Information("{User} updated action {ActionId}: {ActionTitle}", StateContainer.ClaimsPrincipalEmail, Action.Id, Action.Title);
         Navigation.NavigateTo($"/actions/details/{Id}");
@@ -131,6 +128,6 @@ public partial class Edit : IDisposable
 
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
     }
 }

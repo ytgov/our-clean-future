@@ -10,8 +10,8 @@ namespace OurCleanFuture.App.Pages.UnitsOfMeasurement;
 [Authorize(Roles = "Administrator, 1")]
 public partial class Index : IDisposable
 {
-    private bool isLoaded;
-    private AppDbContext context = null!;
+    private bool _isLoaded;
+    private AppDbContext _context = null!;
 
     private List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
 
@@ -30,15 +30,15 @@ public partial class Index : IDisposable
     protected override async Task OnInitializedAsync()
     {
         try {
-            context = ContextFactory.CreateDbContext();
-            UnitsOfMeasurement = await context.UnitsOfMeasurement.OrderBy(u => u.Symbol).ToListAsync();
+            _context = ContextFactory.CreateDbContext();
+            UnitsOfMeasurement = await _context.UnitsOfMeasurement.OrderBy(u => u.Symbol).ToListAsync();
         }
         catch (Exception ex) {
             Log.Error("{Exception}", ex);
             throw;
         }
         finally {
-            isLoaded = true;
+            _isLoaded = true;
         }
 
         await base.OnInitializedAsync();
@@ -51,8 +51,8 @@ public partial class Index : IDisposable
         if (!result.Cancelled) {
             var newUnitOfMeasurement = (UnitOfMeasurement)result.Data;
             try {
-                context.Add(newUnitOfMeasurement);
-                var entriesSaved = await context.SaveChangesAsync();
+                _context.Add(newUnitOfMeasurement);
+                var entriesSaved = await _context.SaveChangesAsync();
                 if (entriesSaved == 1) {
                     UnitsOfMeasurement.Add(newUnitOfMeasurement);
                     Log.Information("{User} created unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
@@ -78,7 +78,7 @@ public partial class Index : IDisposable
         if (!result.Cancelled) {
             var updatedUnitOfMeasurement = (UnitOfMeasurement)result.Data;
             try {
-                var entriesSaved = await context.SaveChangesAsync();
+                var entriesSaved = await _context.SaveChangesAsync();
                 if (entriesSaved == 1) {
                     Snackbar.Add($"Updated unit {updatedUnitOfMeasurement.Symbol}", Severity.Success);
                     Log.Information("{User} updated unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
@@ -96,14 +96,14 @@ public partial class Index : IDisposable
 
     private async Task Delete(UnitOfMeasurement unitOfMeasurement)
     {
-        bool? result = await DialogService.ShowMessageBox(
+        var result = await DialogService.ShowMessageBox(
             $"Delete {unitOfMeasurement.Symbol}?",
             "This action cannot not be undone.",
             yesText: "Delete", cancelText: "Cancel");
         if (result == true) {
             try {
-                context.Remove(unitOfMeasurement);
-                await context.SaveChangesAsync();
+                _context.Remove(unitOfMeasurement);
+                await _context.SaveChangesAsync();
                 UnitsOfMeasurement.Remove(unitOfMeasurement);
                 Snackbar.Add($"Deleted unit {unitOfMeasurement.Symbol}", Severity.Success);
                 Log.Information("{User} deleted unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
@@ -120,6 +120,6 @@ public partial class Index : IDisposable
 
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
     }
 }

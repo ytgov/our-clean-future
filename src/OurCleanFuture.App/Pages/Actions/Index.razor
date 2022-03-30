@@ -2,7 +2,7 @@
 @attribute [Authorize]
 @using Extensions
 
-@if (isLoaded == false)
+@if (_isLoaded == false)
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
         <MudText Typo="Typo.h6">Loading...</MudText>
@@ -14,13 +14,13 @@ else
         <MudAlert Severity="Severity.Info" Class="mb-2">
             Tip: Don't want to lose your page/sort/filter? Use <b>Ctrl+Left Click</b> to view the action in a new tab, or <b>Ctrl+Alt+Left Click</b> to edit the action in a new tab.
         </MudAlert>
-        <MudTable Items="@filteredActions" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem"
+        <MudTable Items="@_filteredActions" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="_selectedItem"
               Filter="new Func<Data.Entities.Action,bool>(FilterFunc)"
               T="Data.Entities.Action" OnRowClick="@RowClicked" RowClass="cursor-pointer">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Actions</MudText>
                 <MudSpacer />
-                <MudTextField @bind-Value="searchString" Placeholder="Search by lead or title" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                <MudTextField @bind-Value="_searchString" Placeholder="Search by lead or title" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                 <MudSpacer />
             </ToolBarContent>
             <ColGroup>
@@ -64,7 +64,7 @@ else
         </MudTable>
         @if (StateContainer.UserHasARole)
         {
-            <MudSwitch Class="ma-1" Color="Color.Success" T="bool" @ref="filterActionsSwitch" CheckedChanged="FilterActions">@FilterActionsText()</MudSwitch>
+            <MudSwitch Class="ma-1" Color="Color.Success" T="bool" @ref="_filterActionsSwitch" CheckedChanged="FilterActions">@FilterActionsText()</MudSwitch>
         }
     </MudContainer>
 }

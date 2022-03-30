@@ -14,9 +14,9 @@ namespace OurCleanFuture.App.Pages.Indicators;
 [Authorize(Roles = "Administrator, 1")]
 public partial class Create : IDisposable
 {
-    private bool isLoaded;
-    private AppDbContext context = null!;
-    private ClaimsPrincipal user = null!;
+    private bool _isLoaded;
+    private AppDbContext _context = null!;
+    private ClaimsPrincipal _user = null!;
 
     private string SelectedParentType { get; set; } = "";
     private IEnumerable<Lead> SelectedLeads { get; set; } = new List<Lead>();
@@ -43,12 +43,12 @@ public partial class Create : IDisposable
     protected override async Task OnInitializedAsync()
     {
         try {
-            context = ContextFactory.CreateDbContext();
-            Leads = await context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Department.ShortName).ThenBy(l => l.Branch!.Name).ToListAsync();
-            UnitsOfMeasurement = await context.UnitsOfMeasurement.ToListAsync();
-            Goals = await context.Goals.OrderBy(g => g.Title).ToListAsync();
-            Objectives = await context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
-            Actions = await context.Actions.ToListAsync();
+            _context = ContextFactory.CreateDbContext();
+            Leads = await _context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Department.ShortName).ThenBy(l => l.Branch!.Name).ToListAsync();
+            UnitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
+            Goals = await _context.Goals.OrderBy(g => g.Title).ToListAsync();
+            Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
+            Actions = await _context.Actions.ToListAsync();
             Indicator = new Indicator {
                 UnitOfMeasurement = UnitsOfMeasurement.OrderBy(u => u.Symbol).First()
             };
@@ -60,7 +60,7 @@ public partial class Create : IDisposable
             throw;
         }
         finally {
-            isLoaded = true;
+            _isLoaded = true;
         }
 
         await base.OnInitializedAsync();
@@ -69,7 +69,7 @@ public partial class Create : IDisposable
     private async Task GetUserPrincipal()
     {
         var authState = await AuthenticationStateTask;
-        user = authState.User;
+        _user = authState.User;
     }
 
     private void GetSelectedParentType()
@@ -115,9 +115,9 @@ public partial class Create : IDisposable
             Indicator.Leads.Add(lead);
         }
 
-        Indicator.UpdatedBy = user.GetFormattedName();
-        context.Indicators.Add(Indicator);
-        await context.SaveChangesAsync();
+        Indicator.UpdatedBy = _user.GetFormattedName();
+        _context.Indicators.Add(Indicator);
+        await _context.SaveChangesAsync();
         Snackbar.Add($"Successfully created indicator: {Indicator.Title}", Severity.Success);
         Navigation.NavigateTo($"/indicators/details/{Indicator.Id}");
     }
@@ -125,7 +125,7 @@ public partial class Create : IDisposable
     private void CreateTarget()
     {
         Indicator.Target = new Target();
-        context.Attach(Indicator.Target);
+        _context.Attach(Indicator.Target);
     }
 
     private void DeleteTarget()
@@ -136,6 +136,6 @@ public partial class Create : IDisposable
 
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
     }
 }

@@ -10,8 +10,8 @@ namespace OurCleanFuture.App.Pages.Branches;
 [Authorize(Roles = "Administrator, 1")]
 public partial class Index : IDisposable
 {
-    private bool isLoaded;
-    private AppDbContext context = null!;
+    private bool _isLoaded;
+    private AppDbContext _context = null!;
 
     private List<Branch> Branches { get; set; } = new();
     private List<Department> Departments { get; set; } = new();
@@ -31,16 +31,16 @@ public partial class Index : IDisposable
     protected override async Task OnInitializedAsync()
     {
         try {
-            context = ContextFactory.CreateDbContext();
-            Branches = await context.Branches.OrderBy(b => b.Name).Include(b => b.Department).Include(b => b.Lead).ToListAsync();
-            Departments = await context.Departments.OrderBy(d => d.Name).ToListAsync();
+            _context = ContextFactory.CreateDbContext();
+            Branches = await _context.Branches.OrderBy(b => b.Name).Include(b => b.Department).Include(b => b.Lead).ToListAsync();
+            Departments = await _context.Departments.OrderBy(d => d.Name).ToListAsync();
         }
         catch (Exception ex) {
             Log.Error("{Exception}", ex);
             throw;
         }
         finally {
-            isLoaded = true;
+            _isLoaded = true;
         }
 
         await base.OnInitializedAsync();
@@ -55,10 +55,10 @@ public partial class Index : IDisposable
         if (!result.Cancelled) {
             var newBranch = (Branch)result.Data;
             try {
-                context.Add(newBranch);
+                _context.Add(newBranch);
                 // Also create a Lead with Organization=YG for the new branch
-                context.Add(new Lead { Branch = newBranch, OrganizationId = 1 });
-                var entriesSaved = await context.SaveChangesAsync();
+                _context.Add(new Lead { Branch = newBranch, OrganizationId = 1 });
+                var entriesSaved = await _context.SaveChangesAsync();
                 if (entriesSaved == 2) {
                     Branches.Add(newBranch);
                     Snackbar.Add($"Created branch {newBranch.Name}", Severity.Success);
@@ -84,7 +84,7 @@ public partial class Index : IDisposable
         if (!result.Cancelled) {
             var updatedBranch = (Branch)result.Data;
             try {
-                var entriesSaved = await context.SaveChangesAsync();
+                var entriesSaved = await _context.SaveChangesAsync();
                 if (entriesSaved == 1) {
                     Snackbar.Add($"Updated branch {updatedBranch.Name}", Severity.Success);
                     Log.Information("{User} updated branch: {BranchId}, {BranchName}",
@@ -101,16 +101,16 @@ public partial class Index : IDisposable
 
     private async Task Delete(Branch branch)
     {
-        bool? result = await DialogService.ShowMessageBox(
+        var result = await DialogService.ShowMessageBox(
             $"Delete {branch.Name}?",
             "This action cannot not be undone.",
             yesText: "Delete", cancelText: "Cancel");
         if (result == true) {
             //Prevents mid-method rerendering of the component, which avoids overlapping threads
             try {
-                context.Remove(branch.Lead);
-                context.Remove(branch);
-                await context.SaveChangesAsync();
+                _context.Remove(branch.Lead);
+                _context.Remove(branch);
+                await _context.SaveChangesAsync();
                 Branches.Remove(branch);
                 Snackbar.Add($"Deleted branch {branch.Name}", Severity.Success);
                 Log.Information("{User} deleted branch: {BranchId}, {BranchName}, {DepartmentName}",
@@ -127,6 +127,6 @@ public partial class Index : IDisposable
 
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
     }
 }

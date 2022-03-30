@@ -8,8 +8,8 @@ namespace OurCleanFuture.App.Pages.Indicators;
 
 public partial class Details : IDisposable
 {
-    private bool isLoaded;
-    private AppDbContext context = null!;
+    private bool _isLoaded;
+    private AppDbContext _context = null!;
 
     [Parameter]
     public int Id { get; set; }
@@ -30,8 +30,8 @@ public partial class Details : IDisposable
     protected override async Task OnInitializedAsync()
     {
         try {
-            context = ContextFactory.CreateDbContext();
-            Indicator = await context.Indicators
+            _context = ContextFactory.CreateDbContext();
+            Indicator = await _context.Indicators
                 .Include(i => i.Target)
                 .Include(i => i.UnitOfMeasurement)
                 .Include(i => i.Leads)
@@ -59,7 +59,7 @@ public partial class Details : IDisposable
             throw;
         }
         finally {
-            isLoaded = true;
+            _isLoaded = true;
         }
         Log.Information("{User} is viewing indicator {IndicatorId}: {IndicatorTitle}", StateContainer.ClaimsPrincipalEmail, Indicator.Id, Indicator.Title);
 
@@ -79,17 +79,17 @@ public partial class Details : IDisposable
         {
             var targetUpdated = DateTime.MinValue;
             if (Indicator?.Target != null) {
-                targetUpdated = context.Entry(Indicator.Target).Property<DateTime>("ValidFrom").CurrentValue;
+                targetUpdated = _context.Entry(Indicator.Target).Property<DateTime>("ValidFrom").CurrentValue;
             }
             else {
-                targetUpdated = await context.Targets
+                targetUpdated = await _context.Targets
                     .TemporalAll()
                     .Where(t => t.IndicatorId == Indicator!.Id)
                     .OrderBy(t => EF.Property<DateTime>(t, "ValidTo"))
                     .Select(t => EF.Property<DateTime>(t, "ValidTo"))
                     .LastOrDefaultAsync();
             }
-            var indicatorUpdated = context.Entry(Indicator!).Property<DateTime>("ValidFrom").CurrentValue;
+            var indicatorUpdated = _context.Entry(Indicator!).Property<DateTime>("ValidFrom").CurrentValue;
             //An indicator might not have a target, in which case we return the indicatorUpdatedDate
             return indicatorUpdated > targetUpdated ? indicatorUpdated : targetUpdated;
         }
@@ -97,7 +97,7 @@ public partial class Details : IDisposable
 
     private DateTime GetEntryLastUpdatedDate(Entry entry)
     {
-        return context.Entry(entry).Property<DateTime>("ValidFrom").CurrentValue;
+        return _context.Entry(entry).Property<DateTime>("ValidFrom").CurrentValue;
     }
 
     private void Edit()
@@ -117,6 +117,6 @@ public partial class Details : IDisposable
 
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
     }
 }

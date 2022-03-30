@@ -9,8 +9,8 @@ namespace OurCleanFuture.App.Pages.Actions;
 
 public partial class Details : IDisposable
 {
-    private bool isLoaded;
-    private AppDbContext context = null!;
+    private bool _isLoaded;
+    private AppDbContext _context = null!;
 
     [Parameter]
     public int Id { get; set; }
@@ -21,13 +21,7 @@ public partial class Details : IDisposable
     private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
     [Inject]
-    private IDialogService DialogService { get; set; } = null!;
-
-    [Inject]
     private NavigationManager Navigation { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
 
     [Inject]
     private StateContainer StateContainer { get; init; } = null!;
@@ -35,9 +29,9 @@ public partial class Details : IDisposable
     protected override async Task OnInitializedAsync()
     {
         try {
-            context = ContextFactory.CreateDbContext();
+            _context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.
-            Action = await context.Actions.Include(a => a.Indicators)
+            Action = await _context.Actions.Include(a => a.Indicators)
                 .Include(a => a.DirectorsCommittees)
                 .Include(i => i.Leads)
                 .ThenInclude(l => l.Branch)
@@ -57,7 +51,7 @@ public partial class Details : IDisposable
             throw;
         }
         finally {
-            isLoaded = true;
+            _isLoaded = true;
         }
         Log.Information("{User} is viewing action {ActionId}: {ActionTitle}", StateContainer.ClaimsPrincipalEmail, Action?.Id, Action?.Title);
 
@@ -71,7 +65,7 @@ public partial class Details : IDisposable
             return $"Last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
         }
         else {
-            return String.Empty;
+            return string.Empty;
         }
     }
 
@@ -82,7 +76,7 @@ public partial class Details : IDisposable
             return $"Last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
         }
         else {
-            return String.Empty;
+            return string.Empty;
         }
     }
 
@@ -103,6 +97,6 @@ public partial class Details : IDisposable
 
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
     }
 }

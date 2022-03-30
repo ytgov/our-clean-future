@@ -22,6 +22,10 @@ else
                 <MudSpacer />
                 <MudTextField @bind-Value="_searchString" Placeholder="Search by lead or title" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                 <MudSpacer />
+                @if (StateContainer.UserHasARole && !StateContainer.ClaimsPrincipal.IsInRole("Administrator") && !StateContainer.ClaimsPrincipal.IsInRole("1"))
+                {
+                    <MudSwitch Class="ma-1" Color="Color.Success" T="bool" @ref="_filterActionsSwitch" CheckedChanged="FilterActions">@FilterActionsText()</MudSwitch>
+                }
             </ToolBarContent>
             <ColGroup>
                 <MudHidden Breakpoint="Breakpoint.Xs">
@@ -62,9 +66,5 @@ else
                 <MudTablePager />
             </PagerContent>
         </MudTable>
-        @if (StateContainer.UserHasARole)
-        {
-            <MudSwitch Class="ma-1" Color="Color.Success" T="bool" @ref="_filterActionsSwitch" CheckedChanged="FilterActions">@FilterActionsText()</MudSwitch>
-        }
     </MudContainer>
 }

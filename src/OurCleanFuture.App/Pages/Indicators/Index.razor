@@ -23,6 +23,10 @@ else
                 <AuthorizeView Roles="Administrator, 1">
                     <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Create())" Class="flex-shrink-0">New Indicator</MudButton>
                 </AuthorizeView>
+                @if (StateContainer.UserHasARole && !StateContainer.ClaimsPrincipal.IsInRole("Administrator") && !StateContainer.ClaimsPrincipal.IsInRole("1"))
+                {
+                    <MudSwitch Class="ma-1" Color="Color.Success" T="bool" @ref="_filterIndicatorsSwitch" CheckedChanged="FilterIndicators">@FilterIndicatorsText()</MudSwitch>
+                }
             </ToolBarContent>
             <ColGroup>
                 <MudHidden Breakpoint="Breakpoint.Xs">
@@ -79,9 +83,5 @@ else
                 <MudTablePager />
             </PagerContent>
         </MudTable>
-        @if (StateContainer.UserHasARole)
-        {
-            <MudSwitch Class="ma-1" Color="Color.Success" T="bool" @ref="_filterIndicatorsSwitch" CheckedChanged="FilterIndicators">@FilterIndicatorsText()</MudSwitch>
-        }
     </MudContainer>
 }

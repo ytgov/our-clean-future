@@ -16,7 +16,8 @@ namespace OurCleanFuture.App.Pages
 
         public async Task OnGet(string redirectUri = "/")
         {
-            await HttpContext.ChallengeAsync(Configuration["AuthNProvider:Name"], new AuthenticationProperties {
+            await HttpContext.ChallengeAsync(Configuration["AuthNProvider:Name"], new AuthenticationProperties
+            {
                 RedirectUri = redirectUri
             });
         }

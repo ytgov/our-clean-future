@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
-using MudBlazor;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using Action = OurCleanFuture.Data.Entities.Action;
@@ -9,8 +8,8 @@ namespace OurCleanFuture.App.Pages.Actions;
 
 public partial class Details : IDisposable
 {
-    private bool isLoaded;
-    private AppDbContext context = null!;
+    private bool _isLoaded;
+    private AppDbContext _context = null!;
 
     [Parameter]
     public int Id { get; set; }
@@ -21,23 +20,18 @@ public partial class Details : IDisposable
     private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
     [Inject]
-    private IDialogService DialogService { get; set; } = null!;
-
-    [Inject]
     private NavigationManager Navigation { get; set; } = null!;
-
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
 
     [Inject]
     private StateContainer StateContainer { get; init; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
-        try {
-            context = ContextFactory.CreateDbContext();
+        try
+        {
+            _context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.
-            Action = await context.Actions.Include(a => a.Indicators)
+            Action = await _context.Actions.Include(a => a.Indicators)
                 .Include(a => a.DirectorsCommittees)
                 .Include(i => i.Leads)
                 .ThenInclude(l => l.Branch)
@@ -52,13 +46,16 @@ public partial class Details : IDisposable
                 .FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
         }
-        catch (Exception ex) {
-            Console.WriteLine(ex);
+        catch (Exception ex)
+        {
+            Log.Error("{Exception}", ex);
+            throw;
         }
-        finally {
-            isLoaded = true;
+        finally
+        {
+            _isLoaded = true;
         }
-        Log.Information("{User} is viewing action {ActionId}: {ActionTitle}", StateContainer.UserPrincipal, Action?.Id, Action?.Title);
+        Log.Information("{User} is viewing action {ActionId}: {ActionTitle}", StateContainer.ClaimsPrincipalEmail, Action?.Id, Action?.Title);
 
         await base.OnInitializedAsync();
     }
@@ -66,22 +63,26 @@ public partial class Details : IDisposable
     private string InternalStatusToString()
     {
         // Only append updated by information if the InternalStatus has been updated after database creation
-        if (!string.IsNullOrWhiteSpace(Action.InternalStatusUpdatedBy)) {
+        if (!string.IsNullOrWhiteSpace(Action.InternalStatusUpdatedBy))
+        {
             return $"Last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
         }
-        else {
-            return String.Empty;
+        else
+        {
+            return string.Empty;
         }
     }
 
     private string ExternalStatusToString()
     {
         // Only append updated by information if the ExternalStatus has been updated after database creation
-        if (!string.IsNullOrWhiteSpace(Action.ExternalStatusUpdatedBy)) {
+        if (!string.IsNullOrWhiteSpace(Action.ExternalStatusUpdatedBy))
+        {
             return $"Last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
         }
-        else {
-            return String.Empty;
+        else
+        {
+            return string.Empty;
         }
     }
 
@@ -102,6 +103,6 @@ public partial class Details : IDisposable
 
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
     }
 }

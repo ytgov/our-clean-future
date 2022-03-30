@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.JSInterop;
 using MudBlazor;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
@@ -8,11 +9,15 @@ namespace OurCleanFuture.App.Pages.Indicators;
 
 public partial class Index : IDisposable
 {
-    private bool isLoaded;
-    private AppDbContext context = null!;
-    private List<Indicator> indicators = null!;
-    private string searchString = "";
-    private Indicator selectedItem = null!;
+    private bool _isLoaded;
+    private AppDbContext _context = null!;
+
+    private List<Indicator> _indicators = new();
+    private List<Indicator> _filteredIndicators = new();
+    private MudSwitch<bool> _filterIndicatorsSwitch = null!;
+
+    private Indicator _selectedItem = null!;
+    private string _searchString = "";
 
     [Inject]
     private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
@@ -23,11 +28,15 @@ public partial class Index : IDisposable
     [Inject]
     private StateContainer StateContainer { get; init; } = null!;
 
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; } = null!;
+
     protected override async Task OnInitializedAsync()
     {
-        try {
-            context = ContextFactory.CreateDbContext();
-            indicators = await context.Indicators
+        try
+        {
+            _context = ContextFactory.CreateDbContext();
+            _indicators = await _context.Indicators
             .Include(i => i.Action)
             .Include(i => i.Leads)
             .ThenInclude(l => l.Organization)
@@ -37,12 +46,16 @@ public partial class Index : IDisposable
             .AsNoTracking()
             .AsSingleQuery()
             .ToListAsync();
+            _filteredIndicators.AddRange(_indicators);
         }
-        catch (Exception ex) {
-            Console.WriteLine(ex);
+        catch (Exception ex)
+        {
+            Log.Error("{Exception}", ex);
+            throw;
         }
-        finally {
-            isLoaded = true;
+        finally
+        {
+            _isLoaded = true;
         }
 
         await base.OnInitializedAsync();
@@ -63,61 +76,137 @@ public partial class Index : IDisposable
         Navigation.NavigateTo("/indicators/details/" + indicatorId);
     }
 
-    public void RowClicked(TableRowClickEventArgs<Indicator> p)
-    {
-        Details(p.Item.Id);
-    }
-
     private void Edit(int indicatorId)
     {
         Navigation.NavigateTo("/indicators/edit/" + indicatorId);
     }
 
+    public async void RowClicked(TableRowClickEventArgs<Indicator> p)
+    {
+        if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey)
+        {
+            await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/edit/{p.Item.Id}", "_blank");
+        }
+        else if (p.MouseEventArgs.CtrlKey)
+        {
+            await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/details/{p.Item.Id}", "_blank");
+        }
+        else
+        {
+            Details(p.Item.Id);
+        }
+    }
+
     private bool FilterFunc(Indicator indicator)
     {
-        if (string.IsNullOrWhiteSpace(searchString))
+        if (string.IsNullOrWhiteSpace(_searchString))
+        {
             return true;
-        foreach (var lead in indicator.Leads) {
-            if (lead.Organization.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
-            if (lead.Branch?.Department.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
-                return true;
-            if (lead.Branch?.Department.ShortName.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
-                return true;
-            if (lead.Branch?.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) == true)
-                return true;
-            if (lead.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
-                return true;
         }
-        if (indicator.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        foreach (var lead in indicator.Leads)
+        {
+            if (lead.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+            if (lead.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            {
+                return true;
+            }
+            if (lead.Branch?.Department.ShortName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            {
+                return true;
+            }
+            if (lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            {
+                return true;
+            }
+            if (lead.ToString().Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+        if (indicator.Description.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+        {
             return true;
-        if (indicator.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        }
+        if (indicator.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+        {
             return true;
+        }
         return false;
+    }
+
+    private string FilterIndicatorsText()
+    {
+        if (_filterIndicatorsSwitch.Checked)
+        {
+            return "My indicators";
+        }
+        else
+        {
+            return "All indicators";
+        }
+    }
+
+    private void FilterIndicators()
+    {
+        _filteredIndicators.Clear();
+        if (_filterIndicatorsSwitch.Checked)
+        {
+            _filteredIndicators = _indicators.Where(i => IsUserAMemberOfLeads(i)).ToList();
+        }
+        else
+        {
+            _filteredIndicators.AddRange(_indicators);
+        }
     }
 
     private static string GetTrend(Indicator indicator)
     {
         var entries = indicator.Entries.OrderByDescending(e => e.EndDate).ToList();
         var count = entries.Count;
-        if (count >= 2) {
-            if (entries[0].Value > entries[1].Value) {
+        if (count >= 2)
+        {
+            if (entries[0].Value > entries[1].Value)
+            {
                 return "TrendingUp";
             }
-            else if (entries[0].Value < entries[1].Value) {
+            else if (entries[0].Value < entries[1].Value)
+            {
                 return "TrendingDown";
             }
-            else {
+            else
+            {
                 return "TrendingFlat";
             }
         }
-        else {
+        else
+        {
             return "NoTrend";
         }
     }
 
+    private bool IsUserAMemberOfLeads(Indicator indicator)
+    {
+        var claimsPrincipal = StateContainer.ClaimsPrincipal;
+        foreach (var lead in indicator.Leads)
+        {
+            if (claimsPrincipal.IsInRole(lead.Id.ToString()))
+            {
+                return true;
+            }
+        }
+        if (claimsPrincipal.IsInRole("Administrator")
+            || claimsPrincipal.IsInRole("1"))
+        {
+            return true;
+        }
+        return false;
+    }
+
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
     }
 }

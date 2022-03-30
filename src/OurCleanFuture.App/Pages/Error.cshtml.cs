@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Diagnostics;
 
 namespace OurCleanFuture.App.Pages;
 
@@ -12,11 +12,11 @@ public class ErrorModel : PageModel
 
     public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
-    private readonly ILogger<ErrorModel> logger;
+    private readonly ILogger<ErrorModel> _logger;
 
     public ErrorModel(ILogger<ErrorModel> logger)
     {
-        this.logger = logger;
+        _logger = logger;
     }
 
     public void OnGet()

@@ -1,7 +1,7 @@
 ﻿@page "/admin/leads/branches"
 @attribute [Authorize]
 
-@if (isLoaded == false)
+@if (_isLoaded == false)
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
         <MudText Typo="Typo.h6">Loading...</MudText>

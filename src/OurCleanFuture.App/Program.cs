@@ -15,10 +15,12 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.Seq("http://localhost:5341")
     .CreateBootstrapLogger();
 
-try {
+try
+{
     Log.Information("Starting web host");
 
-    var options = new WebApplicationOptions {
+    var options = new WebApplicationOptions
+    {
         Args = args,
         ContentRootPath = WindowsServiceHelpers.IsWindowsService() ? AppContext.BaseDirectory : default
     };
@@ -34,28 +36,29 @@ try {
 
     // Add services to the container.
     builder.Services.AddSingleton(configuration);
-    builder.Services.AddScoped<StateContainer>();
-    builder.Services.AddScoped<IClaimsTransformation, AddRoleClaimsTransformation>();
-
     builder.Services.AddRazorPages();
     builder.Services.AddServerSideBlazor();
 
-    builder.Services.Configure<CookiePolicyOptions>(options => {
+    builder.Services.Configure<CookiePolicyOptions>(options =>
+    {
         options.CheckConsentNeeded = context => true;
         options.MinimumSameSitePolicy = SameSiteMode.None;
     });
 
     // Add authentication services
-    builder.Services.AddAuthentication(options => {
+    builder.Services.AddAuthentication(options =>
+    {
         options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     })
-    .AddCookie(options => {
+    .AddCookie(options =>
+    {
         options.LoginPath = $"/{configuration["AuthNProvider:LoginPath"]}";
         options.LogoutPath = $"/{configuration["AuthNProvider:LogoutPath"]}";
     })
-    .AddOpenIdConnect(configuration["AuthNProvider:Name"], options => {
+    .AddOpenIdConnect(configuration["AuthNProvider:Name"], options =>
+    {
         options.Authority = $"https://{configuration["AuthNProvider:Domain"]}";
         options.ClientId = configuration["AuthNProvider:ClientId"];
         options.ClientSecret = configuration["AuthNProvider:ClientSecret"];
@@ -71,13 +74,17 @@ try {
         options.SignedOutRedirectUri = configuration["AuthNProvider:SignedOutRedirectUri"];
         options.ClaimsIssuer = configuration["AuthNProvider:Name"];
 
-        options.Events = new OpenIdConnectEvents {
-            OnRedirectToIdentityProviderForSignOut = (context) => {
+        options.Events = new OpenIdConnectEvents
+        {
+            OnRedirectToIdentityProviderForSignOut = (context) =>
+            {
                 var logoutUri = $"https://{configuration["AuthNProvider:Domain"]}/v2/logout?client_id={configuration["AuthNProvider:ClientId"]}";
 
                 var postLogoutUri = context.Properties.RedirectUri;
-                if (!string.IsNullOrEmpty(postLogoutUri)) {
-                    if (postLogoutUri.StartsWith("/")) {
+                if (!string.IsNullOrEmpty(postLogoutUri))
+                {
+                    if (postLogoutUri.StartsWith("/"))
+                    {
                         var request = context.Request;
                         postLogoutUri = request.Scheme + "://" + request.Host + request.PathBase + postLogoutUri;
                     }
@@ -91,7 +98,8 @@ try {
             }
         };
 
-        options.Events.OnSignedOutCallbackRedirect = (context) => {
+        options.Events.OnSignedOutCallbackRedirect = (context) =>
+        {
             context.Response.Redirect(options.SignedOutRedirectUri);
             context.HandleResponse();
 
@@ -118,12 +126,15 @@ try {
         options.UseSqlServer(configuration.GetConnectionString("AppDbContext"), options => options.EnableRetryOnFailure()));
 #endif
 
+    builder.Services.AddScoped<StateContainer>(s => new StateContainer(s.GetRequiredService<IDbContextFactory<AppDbContext>>()));
+    builder.Services.AddScoped<IClaimsTransformation, AddRoleClaimsTransformation>();
     builder.Services.AddLocalization();
 
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
-    if (!app.Environment.IsDevelopment()) {
+    if (!app.Environment.IsDevelopment())
+    {
         app.UseExceptionHandler("/Error");
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
@@ -156,11 +167,13 @@ try {
     app.Run();
     return 0;
 }
-catch (Exception ex) {
+catch (Exception ex)
+{
     Log.Fatal(ex, "Host terminated unexpectedly");
     Console.WriteLine(ex.Message);
     return 1;
 }
-finally {
+finally
+{
     Log.CloseAndFlush();
 }

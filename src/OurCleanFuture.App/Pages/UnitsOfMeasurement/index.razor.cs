@@ -10,8 +10,8 @@ namespace OurCleanFuture.App.Pages.UnitsOfMeasurement;
 [Authorize(Roles = "Administrator, 1")]
 public partial class Index : IDisposable
 {
-    private bool isLoaded;
-    private AppDbContext context = null!;
+    private bool _isLoaded;
+    private AppDbContext _context = null!;
 
     private List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
 
@@ -29,15 +29,19 @@ public partial class Index : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        try {
-            context = ContextFactory.CreateDbContext();
-            UnitsOfMeasurement = await context.UnitsOfMeasurement.OrderBy(u => u.Symbol).ToListAsync();
+        try
+        {
+            _context = ContextFactory.CreateDbContext();
+            UnitsOfMeasurement = await _context.UnitsOfMeasurement.OrderBy(u => u.Symbol).ToListAsync();
         }
-        catch (Exception ex) {
-            Console.WriteLine(ex);
+        catch (Exception ex)
+        {
+            Log.Error("{Exception}", ex);
+            throw;
         }
-        finally {
-            isLoaded = true;
+        finally
+        {
+            _isLoaded = true;
         }
 
         await base.OnInitializedAsync();
@@ -47,22 +51,26 @@ public partial class Index : IDisposable
     {
         var dialog = DialogService.Show<CreateDialog>("Create");
         var result = await dialog.Result;
-        if (!result.Cancelled) {
+        if (!result.Cancelled)
+        {
             var newUnitOfMeasurement = (UnitOfMeasurement)result.Data;
-            try {
-                context.Add(newUnitOfMeasurement);
-                var entriesSaved = await context.SaveChangesAsync();
-                if (entriesSaved == 1) {
+            try
+            {
+                _context.Add(newUnitOfMeasurement);
+                var entriesSaved = await _context.SaveChangesAsync();
+                if (entriesSaved == 1)
+                {
                     UnitsOfMeasurement.Add(newUnitOfMeasurement);
                     Log.Information("{User} created unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
-                                    StateContainer.UserPrincipal,
+                                    StateContainer.ClaimsPrincipalEmail,
                                     newUnitOfMeasurement.Id,
                                     newUnitOfMeasurement.Name,
                                     newUnitOfMeasurement.Symbol);
                     Snackbar.Add($"Created unit {newUnitOfMeasurement.Symbol}", Severity.Success);
                 }
             }
-            catch (DbUpdateException) {
+            catch (DbUpdateException)
+            {
                 Snackbar.Add($"Unable to add new unit {newUnitOfMeasurement.Symbol}. Does it already exist?", Severity.Error);
             }
         }
@@ -74,20 +82,24 @@ public partial class Index : IDisposable
 
         var dialog = DialogService.Show<EditDialog>("Edit", parameters);
         var result = await dialog.Result;
-        if (!result.Cancelled) {
+        if (!result.Cancelled)
+        {
             var updatedUnitOfMeasurement = (UnitOfMeasurement)result.Data;
-            try {
-                var entriesSaved = await context.SaveChangesAsync();
-                if (entriesSaved == 1) {
+            try
+            {
+                var entriesSaved = await _context.SaveChangesAsync();
+                if (entriesSaved == 1)
+                {
                     Snackbar.Add($"Updated unit {updatedUnitOfMeasurement.Symbol}", Severity.Success);
                     Log.Information("{User} updated unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
-                                    StateContainer.UserPrincipal,
+                                    StateContainer.ClaimsPrincipalEmail,
                                     updatedUnitOfMeasurement.Id,
                                     updatedUnitOfMeasurement.Name,
                                     updatedUnitOfMeasurement.Symbol);
                 }
             }
-            catch (DbUpdateException) {
+            catch (DbUpdateException)
+            {
                 Snackbar.Add($"Unable to edit unit {unitOfMeasurement.Symbol}", Severity.Error);
             }
         }
@@ -95,23 +107,26 @@ public partial class Index : IDisposable
 
     private async Task Delete(UnitOfMeasurement unitOfMeasurement)
     {
-        bool? result = await DialogService.ShowMessageBox(
+        var result = await DialogService.ShowMessageBox(
             $"Delete {unitOfMeasurement.Symbol}?",
             "This action cannot not be undone.",
             yesText: "Delete", cancelText: "Cancel");
-        if (result == true) {
-            try {
-                context.Remove(unitOfMeasurement);
-                await context.SaveChangesAsync();
+        if (result == true)
+        {
+            try
+            {
+                _context.Remove(unitOfMeasurement);
+                await _context.SaveChangesAsync();
                 UnitsOfMeasurement.Remove(unitOfMeasurement);
                 Snackbar.Add($"Deleted unit {unitOfMeasurement.Symbol}", Severity.Success);
                 Log.Information("{User} deleted unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
-                                StateContainer.UserPrincipal,
+                                StateContainer.ClaimsPrincipalEmail,
                                 unitOfMeasurement.Id,
                                 unitOfMeasurement.Name,
                                 unitOfMeasurement.Symbol);
             }
-            catch (DbUpdateException) {
+            catch (DbUpdateException)
+            {
                 Snackbar.Add($"Unable to delete unit {unitOfMeasurement.Symbol}, as it is associated with an indicator", Severity.Error);
             }
         }
@@ -119,6 +134,6 @@ public partial class Index : IDisposable
 
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
     }
 }

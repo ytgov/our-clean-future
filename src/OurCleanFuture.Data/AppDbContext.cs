@@ -39,7 +39,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Organization>()
                     .ToTable("Organizations");
 
-        modelBuilder.Entity<Branch>(b => {
+        modelBuilder.Entity<Branch>(b =>
+        {
             b.ToTable("Branches");
             b.HasOne(b => b.Lead)
                     .WithOne(l => l.Branch)
@@ -60,8 +61,10 @@ public class AppDbContext : DbContext
                     .IsRequired()
                     .OnDelete(DeleteBehavior.Restrict);
 
-        modelBuilder.Entity<Action>(a => {
-            a.ToTable(tb => tb.IsTemporal(tb => {
+        modelBuilder.Entity<Action>(a =>
+        {
+            a.ToTable(tb => tb.IsTemporal(tb =>
+            {
                 tb.UseHistoryTable("ActionsHistory");
                 tb.HasPeriodStart("ValidFrom");
                 tb.HasPeriodEnd("ValidTo");
@@ -124,14 +127,16 @@ public class AppDbContext : DbContext
                     .OnDelete(DeleteBehavior.Cascade);
         modelBuilder.Entity<Indicator>()
                     .OwnsMany(i => i.Entries,
-                        ie => {
+                        ie =>
+                        {
                             ie.ToTable("Entries");
                             ie.Property(e => e.StartDate).HasColumnType("date");
                             ie.Property(e => e.EndDate).HasColumnType("date");
                             ie.Property<int>("IndicatorId")
                                 .HasColumnType("int");
                             ie.HasKey("IndicatorId", "StartDate");
-                            ie.ToTable(tb => tb.IsTemporal(tb => {
+                            ie.ToTable(tb => tb.IsTemporal(tb =>
+                            {
                                 tb.UseHistoryTable("EntriesHistory");
                                 tb.HasPeriodStart("ValidFrom");
                                 tb.HasPeriodEnd("ValidTo");
@@ -139,14 +144,17 @@ public class AppDbContext : DbContext
                               .WithOwner(e => e.Indicator).HasForeignKey("IndicatorId");
                         });
         modelBuilder.Entity<Indicator>()
-                    .ToTable(tb => tb.IsTemporal(tb => {
+                    .ToTable(tb => tb.IsTemporal(tb =>
+                    {
                         tb.UseHistoryTable("IndicatorsHistory");
                         tb.HasPeriodStart("ValidFrom");
                         tb.HasPeriodEnd("ValidTo");
                     }));
 
-        modelBuilder.Entity<Target>(t => {
-            t.ToTable(tb => tb.IsTemporal(tb => {
+        modelBuilder.Entity<Target>(t =>
+        {
+            t.ToTable(tb => tb.IsTemporal(tb =>
+            {
                 tb.UseHistoryTable("TargetsHistory");
                 tb.HasPeriodStart("ValidFrom");
                 tb.HasPeriodEnd("ValidTo");

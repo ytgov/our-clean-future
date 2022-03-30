@@ -15,10 +15,12 @@ public class Lead
 
     public override string ToString()
     {
-        if (string.IsNullOrWhiteSpace(Branch?.Name)) {
+        if (string.IsNullOrWhiteSpace(Branch?.Name))
+        {
             return $"{Organization.Name}";
         }
-        else {
+        else
+        {
             return $"{Branch.Department.ShortName} | {Branch.Name}";
         }
     }

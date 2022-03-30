@@ -10,81 +10,95 @@ namespace OurCleanFuture.Data.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "Areas",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Areas", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Departments",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ShortName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Departments", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "DirectorsCommittees",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_DirectorsCommittees", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Goals",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Goals", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Organizations",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Organizations", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "UnitsOfMeasurement",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Symbol = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_UnitsOfMeasurement", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Objectives",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AreaId = table.Column<int>(type: "int", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Objectives", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Objectives_Areas_AreaId",
@@ -96,13 +110,15 @@ namespace OurCleanFuture.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Branches",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DepartmentId = table.Column<int>(type: "int", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Branches", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Branches_Departments_DepartmentId",
@@ -114,7 +130,8 @@ namespace OurCleanFuture.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Actions",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -138,7 +155,8 @@ namespace OurCleanFuture.Data.Migrations
                         .Annotation("SqlServer:TemporalPeriodEndColumnName", "ValidTo")
                         .Annotation("SqlServer:TemporalPeriodStartColumnName", "ValidFrom")
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Actions", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Actions_Objectives_ObjectiveId",
@@ -155,11 +173,13 @@ namespace OurCleanFuture.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "GoalObjective",
-                columns: table => new {
+                columns: table => new
+                {
                     GoalsId = table.Column<int>(type: "int", nullable: false),
                     ObjectivesId = table.Column<int>(type: "int", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_GoalObjective", x => new { x.GoalsId, x.ObjectivesId });
                     table.ForeignKey(
                         name: "FK_GoalObjective_Goals_GoalsId",
@@ -177,13 +197,15 @@ namespace OurCleanFuture.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Leads",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrganizationId = table.Column<int>(type: "int", nullable: false),
                     BranchId = table.Column<int>(type: "int", nullable: true)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Leads", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Leads_Branches_BranchId",
@@ -200,11 +222,13 @@ namespace OurCleanFuture.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ActionDirectorsCommittee",
-                columns: table => new {
+                columns: table => new
+                {
                     ActionsId = table.Column<int>(type: "int", nullable: false),
                     DirectorsCommitteesId = table.Column<int>(type: "int", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_ActionDirectorsCommittee", x => new { x.ActionsId, x.DirectorsCommitteesId });
                     table.ForeignKey(
                         name: "FK_ActionDirectorsCommittee_Actions_ActionsId",
@@ -222,7 +246,8 @@ namespace OurCleanFuture.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Indicators",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -244,7 +269,8 @@ namespace OurCleanFuture.Data.Migrations
                         .Annotation("SqlServer:TemporalPeriodEndColumnName", "ValidTo")
                         .Annotation("SqlServer:TemporalPeriodStartColumnName", "ValidFrom")
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Indicators", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Indicators_Actions_ActionId",
@@ -277,7 +303,8 @@ namespace OurCleanFuture.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Entries",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IndicatorId = table.Column<int>(type: "int", nullable: false),
@@ -294,7 +321,8 @@ namespace OurCleanFuture.Data.Migrations
                         .Annotation("SqlServer:TemporalPeriodEndColumnName", "ValidTo")
                         .Annotation("SqlServer:TemporalPeriodStartColumnName", "ValidFrom")
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Entries", x => new { x.IndicatorId, x.Id });
                     table.ForeignKey(
                         name: "FK_Entries_Indicators_IndicatorId",
@@ -311,11 +339,13 @@ namespace OurCleanFuture.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "IndicatorLead",
-                columns: table => new {
+                columns: table => new
+                {
                     IndicatorId = table.Column<int>(type: "int", nullable: false),
                     LeadId = table.Column<int>(type: "int", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_IndicatorLead", x => new { x.IndicatorId, x.LeadId });
                     table.ForeignKey(
                         name: "FK_IndicatorLead_Indicators_IndicatorId",
@@ -333,7 +363,8 @@ namespace OurCleanFuture.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Targets",
-                columns: table => new {
+                columns: table => new
+                {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Value = table.Column<double>(type: "float", nullable: true),
@@ -350,7 +381,8 @@ namespace OurCleanFuture.Data.Migrations
                         .Annotation("SqlServer:TemporalPeriodEndColumnName", "ValidTo")
                         .Annotation("SqlServer:TemporalPeriodStartColumnName", "ValidFrom")
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Targets", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Targets_Indicators_IndicatorId",

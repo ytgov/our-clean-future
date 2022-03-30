@@ -8,8 +8,8 @@ namespace OurCleanFuture.App.Pages.Indicators;
 
 public partial class Details : IDisposable
 {
-    private bool isLoaded;
-    private AppDbContext context = null!;
+    private bool _isLoaded;
+    private AppDbContext _context = null!;
 
     [Parameter]
     public int Id { get; set; }
@@ -29,9 +29,10 @@ public partial class Details : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        try {
-            context = ContextFactory.CreateDbContext();
-            Indicator = await context.Indicators
+        try
+        {
+            _context = ContextFactory.CreateDbContext();
+            Indicator = await _context.Indicators
                 .Include(i => i.Target)
                 .Include(i => i.UnitOfMeasurement)
                 .Include(i => i.Leads)
@@ -54,41 +55,48 @@ public partial class Details : IDisposable
                 .FirstAsync(i => i.Id == Id);
             IndicatorLastUpdatedBy = await GetIndicatorLastUpdatedBy();
         }
-        catch (Exception ex) {
-            Console.WriteLine(ex);
+        catch (Exception ex)
+        {
+            Log.Error("{Exception}", ex);
+            throw;
         }
-        finally {
-            isLoaded = true;
+        finally
+        {
+            _isLoaded = true;
         }
-        Log.Information("{User} is viewing indicator {IndicatorId}: {IndicatorTitle}", StateContainer.UserPrincipal, Indicator.Id, Indicator.Title);
+        Log.Information("{User} is viewing indicator {IndicatorId}: {IndicatorTitle}", StateContainer.ClaimsPrincipalEmail, Indicator.Id, Indicator.Title);
 
         await base.OnInitializedAsync();
     }
 
     private async Task<string> GetIndicatorLastUpdatedBy()
     {
-        if (!string.IsNullOrWhiteSpace(Indicator.UpdatedBy)) {
+        if (!string.IsNullOrWhiteSpace(Indicator.UpdatedBy))
+        {
             return $"{Indicator.UpdatedBy} on {(await GetIndicatorLastUpdatedDate()).ToLocalTime():f}";
         }
-        else {
+        else
+        {
             return string.Empty;
         }
 
         async Task<DateTime> GetIndicatorLastUpdatedDate()
         {
             var targetUpdated = DateTime.MinValue;
-            if (Indicator?.Target != null) {
-                targetUpdated = context.Entry(Indicator.Target).Property<DateTime>("ValidFrom").CurrentValue;
+            if (Indicator?.Target != null)
+            {
+                targetUpdated = _context.Entry(Indicator.Target).Property<DateTime>("ValidFrom").CurrentValue;
             }
-            else {
-                targetUpdated = await context.Targets
+            else
+            {
+                targetUpdated = await _context.Targets
                     .TemporalAll()
                     .Where(t => t.IndicatorId == Indicator!.Id)
                     .OrderBy(t => EF.Property<DateTime>(t, "ValidTo"))
                     .Select(t => EF.Property<DateTime>(t, "ValidTo"))
                     .LastOrDefaultAsync();
             }
-            var indicatorUpdated = context.Entry(Indicator!).Property<DateTime>("ValidFrom").CurrentValue;
+            var indicatorUpdated = _context.Entry(Indicator!).Property<DateTime>("ValidFrom").CurrentValue;
             //An indicator might not have a target, in which case we return the indicatorUpdatedDate
             return indicatorUpdated > targetUpdated ? indicatorUpdated : targetUpdated;
         }
@@ -96,7 +104,7 @@ public partial class Details : IDisposable
 
     private DateTime GetEntryLastUpdatedDate(Entry entry)
     {
-        return context.Entry(entry).Property<DateTime>("ValidFrom").CurrentValue;
+        return _context.Entry(entry).Property<DateTime>("ValidFrom").CurrentValue;
     }
 
     private void Edit()
@@ -116,6 +124,6 @@ public partial class Details : IDisposable
 
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
     }
 }

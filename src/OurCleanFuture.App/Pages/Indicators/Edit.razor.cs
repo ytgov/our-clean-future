@@ -1,21 +1,21 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
 using OurCleanFuture.App.Extensions;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
-using System.Security.Claims;
 using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Indicators;
 
 public partial class Edit : IDisposable
 {
-    private bool isLoaded;
-    private AppDbContext context = null!;
-    private ClaimsPrincipal user = null!;
-    private bool targetIsDeleted = false;
+    private bool _isLoaded;
+    private AppDbContext _context = null!;
+    private ClaimsPrincipal _user = null!;
+    private bool _targetIsDeleted = false;
 
     private int[] Years { get; } = Enumerable.Range(2009, (DateTime.Now.Year - 2008)).Reverse().ToArray();
 
@@ -53,18 +53,21 @@ public partial class Edit : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        try {
-            context = ContextFactory.CreateDbContext();
-            Leads = await context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Department.ShortName).ThenBy(l => l.Branch!.Name).ToListAsync();
-            UnitsOfMeasurement = await context.UnitsOfMeasurement.ToListAsync();
-            Goals = await context.Goals.OrderBy(g => g.Title).ToListAsync();
-            Objectives = await context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
-            Actions = await context.Actions.ToListAsync();
+        try
+        {
+            _context = ContextFactory.CreateDbContext();
+            Leads = await _context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Department.ShortName).ThenBy(l => l.Branch!.Name).ToListAsync();
+            UnitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
+            Goals = await _context.Goals.OrderBy(g => g.Title).ToListAsync();
+            Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
+            Actions = await _context.Actions.ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.
-            Indicator = await context.Indicators.Include(i => i.Target).Include(i => i.Leads).FirstOrDefaultAsync(i => i.Id == Id);
+            Indicator = await _context.Indicators.Include(i => i.Target).Include(i => i.Leads).FirstOrDefaultAsync(i => i.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
-            if (Indicator != null) {
-                foreach (var lead in Indicator.Leads) {
+            if (Indicator != null)
+            {
+                foreach (var lead in Indicator.Leads)
+                {
                     SelectedLeads = SelectedLeads.Append(lead);
                 }
                 GetSelectedParentType();
@@ -72,11 +75,14 @@ public partial class Edit : IDisposable
                 AuthorizedRoles += GetAuthorizedRoles();
             }
         }
-        catch (Exception ex) {
-            Console.WriteLine(ex);
+        catch (Exception ex)
+        {
+            Log.Error("{Exception}", ex);
+            throw;
         }
-        finally {
-            isLoaded = true;
+        finally
+        {
+            _isLoaded = true;
         }
 
         await base.OnInitializedAsync();
@@ -85,7 +91,8 @@ public partial class Edit : IDisposable
     private string GetAuthorizedRoles()
     {
         var authorizedRoles = "";
-        foreach (var lead in Indicator.Leads) {
+        foreach (var lead in Indicator.Leads)
+        {
             authorizedRoles += $", {lead.Id}";
         }
         return authorizedRoles;
@@ -94,25 +101,29 @@ public partial class Edit : IDisposable
     private async Task GetUserPrincipal()
     {
         var authState = await AuthenticationStateTask;
-        user = authState.User;
+        _user = authState.User;
     }
 
     private void GetSelectedParentType()
     {
-        if (Indicator.Goal is not null) {
+        if (Indicator.Goal is not null)
+        {
             SelectedParentType = "Goal";
         }
-        else if (Indicator.Objective is not null) {
+        else if (Indicator.Objective is not null)
+        {
             SelectedParentType = "Objective";
         }
-        else if (Indicator.Action is not null) {
+        else if (Indicator.Action is not null)
+        {
             SelectedParentType = "Action";
         }
     }
 
     private async Task Update()
     {
-        switch (SelectedParentType) {
+        switch (SelectedParentType)
+        {
             case "Goal":
                 Indicator.Objective = null;
                 Indicator.Action = null;
@@ -136,32 +147,40 @@ public partial class Edit : IDisposable
         }
 
         Indicator.Leads.Clear();
-        foreach (var lead in SelectedLeads) {
+        foreach (var lead in SelectedLeads)
+        {
             Indicator.Leads.Add(lead);
         }
 
         // Don't update Indicator.UpdatedBy if only the Entries were modified.
-        try {
-            if (context.Entry(Indicator).State == EntityState.Modified) {
-                Indicator.UpdatedBy = user.GetFormattedName();
+        try
+        {
+            if (_context.Entry(Indicator).State == EntityState.Modified)
+            {
+                Indicator.UpdatedBy = _user.GetFormattedName();
             }
-            else if (Indicator.Target is not null) {
-                Console.WriteLine($"Indicator.Target state is: {context.Entry(Indicator.Target).State}");
-                if (context.Entry(Indicator.Target).State == EntityState.Added
-                || context.Entry(Indicator.Target).State == EntityState.Modified) {
-                    Indicator.UpdatedBy = user.GetFormattedName();
+            else if (Indicator.Target is not null)
+            {
+                Console.WriteLine($"Indicator.Target state is: {_context.Entry(Indicator.Target).State}");
+                if (_context.Entry(Indicator.Target).State == EntityState.Added
+                || _context.Entry(Indicator.Target).State == EntityState.Modified)
+                {
+                    Indicator.UpdatedBy = _user.GetFormattedName();
                 }
             }
-            else if (targetIsDeleted) {
-                Indicator.UpdatedBy = user.GetFormattedName();
+            else if (_targetIsDeleted)
+            {
+                Indicator.UpdatedBy = _user.GetFormattedName();
             }
 
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
-            Log.Information("{User} updated indicator {IndicatorId}: {IndicatorTitle}", StateContainer.UserPrincipal, Indicator.Id, Indicator.Title);
+            Log.Information("{User} updated indicator {IndicatorId}: {IndicatorTitle}", StateContainer.ClaimsPrincipalEmail, Indicator.Id, Indicator.Title);
         }
-        catch (Exception ex) {
-            switch (ex) {
+        catch (Exception ex)
+        {
+            switch (ex)
+            {
                 case InvalidOperationException:
                     Snackbar.Add("The entry changes were not saved. Two entries cannot have the same period.", Severity.Error);
                     break;
@@ -180,13 +199,13 @@ public partial class Edit : IDisposable
     private void CreateTarget()
     {
         Indicator.Target = new Target();
-        context.Attach(Indicator.Target);
+        _context.Attach(Indicator.Target);
     }
 
     private void DeleteTarget()
     {
         // This flag is used by the Update() method instead of checking EntityState, as we cannot check the EntityState of a null reference (Indicator.Target).
-        targetIsDeleted = true;
+        _targetIsDeleted = true;
         Indicator.Target = null;
         StateHasChanged();
     }
@@ -198,9 +217,10 @@ public partial class Edit : IDisposable
         var dialog = DialogService.Show<CreateEntryDialog>("Add entry", parameters);
         var result = await dialog.Result;
 
-        if (!result.Cancelled) {
+        if (!result.Cancelled)
+        {
             var newEntry = (Entry)result.Data;
-            newEntry.UpdatedBy = user.GetFormattedName();
+            newEntry.UpdatedBy = _user.GetFormattedName();
             Indicator.Entries.Add(newEntry);
             Snackbar.Add($"Click submit to confirm adding entry dated {newEntry.StartDate.ToLongDateString()}", Severity.Info);
         }
@@ -213,20 +233,22 @@ public partial class Edit : IDisposable
         var dialog = DialogService.Show<EditEntryDialog>("Edit entry", parameters);
         var result = await dialog.Result;
 
-        if (!result.Cancelled) {
+        if (!result.Cancelled)
+        {
             var editedEntry = (Entry)result.Data;
-            editedEntry.UpdatedBy = user.GetFormattedName();
+            editedEntry.UpdatedBy = _user.GetFormattedName();
             Snackbar.Add($"Click submit to confirm update of entry dated {editedEntry.StartDate.ToLongDateString()}", Severity.Info);
         }
     }
 
     private async Task DeleteEntry(Entry entry)
     {
-        bool? result = await DialogService.ShowMessageBox(
+        var result = await DialogService.ShowMessageBox(
             $"Delete entry dated {entry.StartDate.ToLongDateString()}?",
             "",
             yesText: "Delete", cancelText: "Cancel");
-        if (result == true) {
+        if (result == true)
+        {
             Indicator.Entries.Remove(entry);
             Snackbar.Add($"Click submit to confirm deletion of entry dated {entry.StartDate.ToLongDateString()}", Severity.Info);
         }
@@ -234,6 +256,6 @@ public partial class Edit : IDisposable
 
     public void Dispose()
     {
-        context.Dispose();
+        _context.Dispose();
     }
 }

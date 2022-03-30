@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace OurCleanFuture.Data.Entities;
 
@@ -21,7 +21,8 @@ public class Entry
 
     public string ValueToString()
     {
-        var result = Indicator.UnitOfMeasurement.Name switch {
+        var result = Indicator.UnitOfMeasurement.Name switch
+        {
             "Count" => Value.ToString("n0"),
             "Dollars" => Value.ToString("c"),
             // All other units

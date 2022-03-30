@@ -21,7 +21,8 @@ namespace OurCleanFuture.Data.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "Entries",
-                columns: table => new {
+                columns: table => new
+                {
                     IndicatorId = table.Column<int>(type: "int", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
@@ -39,7 +40,8 @@ namespace OurCleanFuture.Data.Migrations
                         .Annotation("SqlServer:TemporalPeriodStartColumnName", "ValidFrom"),
                     Value = table.Column<double>(type: "float", nullable: false)
                 },
-                constraints: table => {
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Entries", x => new { x.IndicatorId, x.Id });
                     table.ForeignKey(
                         name: "FK_Entries_Indicators_IndicatorId",

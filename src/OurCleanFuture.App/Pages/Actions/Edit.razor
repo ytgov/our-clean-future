@@ -4,7 +4,7 @@
 
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-    @if (isLoaded == false)
+    @if (_isLoaded == false)
     {
         <p><em>Loading...</em></p>
     }
@@ -41,7 +41,7 @@
                                         }
                                     </MudSelect>
                                 </MudItem>
-                                <MudSelect Label="Director's Committee(s)" MultiSelection="true" ToStringFunc="@committeeConverter" @bind-SelectedValues="SelectedDirectorsCommittees">
+                                <MudSelect Label="Director's Committee(s)" MultiSelection="true" ToStringFunc="@_committeeConverter" @bind-SelectedValues="SelectedDirectorsCommittees">
                                     @foreach (var committee in DirectorsCommittees)
                                     {
                                     <MudSelectItem Value="committee">@committee.Name</MudSelectItem>

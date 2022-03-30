@@ -6,8 +6,10 @@ public static class AreaExtensions
 {
     public static string GetIconPath(this Area area)
     {
-        if (area is not null) {
-            return area.Id switch {
+        if (area is not null)
+        {
+            return area.Id switch
+            {
                 1 => "/images/transportation.png",
                 2 => "/images/homes-and-buildings.png",
                 3 => "/images/energy-production.png",
@@ -18,15 +20,18 @@ public static class AreaExtensions
                 _ => ""
             };
         }
-        else {
+        else
+        {
             return string.Empty;
         }
     }
 
     public static string GetCssClass(this Area area)
     {
-        if (area is not null) {
-            return area.Id switch {
+        if (area is not null)
+        {
+            return area.Id switch
+            {
                 1 => "transportation",
                 2 => "homes-and-buildings",
                 3 => "energy-production",
@@ -37,7 +42,8 @@ public static class AreaExtensions
                 _ => ""
             };
         }
-        else {
+        else
+        {
             return string.Empty;
         }
     }

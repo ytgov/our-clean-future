@@ -14,10 +14,12 @@ public class UnitOfMeasurement
 
     public override string ToString()
     {
-        if (string.IsNullOrWhiteSpace(Symbol)) {
+        if (string.IsNullOrWhiteSpace(Symbol))
+        {
             return Name;
         }
-        else {
+        else
+        {
             return Symbol;
         }
     }

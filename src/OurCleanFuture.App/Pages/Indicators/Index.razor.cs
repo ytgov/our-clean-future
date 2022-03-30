@@ -33,7 +33,8 @@ public partial class Index : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        try {
+        try
+        {
             _context = ContextFactory.CreateDbContext();
             _indicators = await _context.Indicators
             .Include(i => i.Action)
@@ -47,11 +48,13 @@ public partial class Index : IDisposable
             .ToListAsync();
             _filteredIndicators.AddRange(_indicators);
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             Log.Error("{Exception}", ex);
             throw;
         }
-        finally {
+        finally
+        {
             _isLoaded = true;
         }
 
@@ -80,43 +83,55 @@ public partial class Index : IDisposable
 
     public async void RowClicked(TableRowClickEventArgs<Indicator> p)
     {
-        if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey) {
+        if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey)
+        {
             await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/edit/{p.Item.Id}", "_blank");
         }
-        else if (p.MouseEventArgs.CtrlKey) {
+        else if (p.MouseEventArgs.CtrlKey)
+        {
             await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/details/{p.Item.Id}", "_blank");
         }
-        else {
+        else
+        {
             Details(p.Item.Id);
         }
     }
 
     private bool FilterFunc(Indicator indicator)
     {
-        if (string.IsNullOrWhiteSpace(_searchString)) {
+        if (string.IsNullOrWhiteSpace(_searchString))
+        {
             return true;
         }
-        foreach (var lead in indicator.Leads) {
-            if (lead.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase)) {
+        foreach (var lead in indicator.Leads)
+        {
+            if (lead.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            {
                 return true;
             }
-            if (lead.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true) {
+            if (lead.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            {
                 return true;
             }
-            if (lead.Branch?.Department.ShortName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true) {
+            if (lead.Branch?.Department.ShortName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            {
                 return true;
             }
-            if (lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true) {
+            if (lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            {
                 return true;
             }
-            if (lead.ToString().Contains(_searchString, StringComparison.OrdinalIgnoreCase)) {
+            if (lead.ToString().Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            {
                 return true;
             }
         }
-        if (indicator.Description.Contains(_searchString, StringComparison.OrdinalIgnoreCase)) {
+        if (indicator.Description.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+        {
             return true;
         }
-        if (indicator.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase)) {
+        if (indicator.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+        {
             return true;
         }
         return false;
@@ -124,9 +139,12 @@ public partial class Index : IDisposable
 
     private string FilterIndicatorsText()
     {
-        if (_filterIndicatorsSwitch.Checked) {
+        if (_filterIndicatorsSwitch.Checked)
+        {
             return "My indicators";
-        } else {
+        }
+        else
+        {
             return "All indicators";
         }
     }
@@ -134,9 +152,12 @@ public partial class Index : IDisposable
     private void FilterIndicators()
     {
         _filteredIndicators.Clear();
-        if(_filterIndicatorsSwitch.Checked) {
+        if (_filterIndicatorsSwitch.Checked)
+        {
             _filteredIndicators = _indicators.Where(i => IsUserAMemberOfLeads(i)).ToList();
-        } else {
+        }
+        else
+        {
             _filteredIndicators.AddRange(_indicators);
         }
     }
@@ -145,18 +166,23 @@ public partial class Index : IDisposable
     {
         var entries = indicator.Entries.OrderByDescending(e => e.EndDate).ToList();
         var count = entries.Count;
-        if (count >= 2) {
-            if (entries[0].Value > entries[1].Value) {
+        if (count >= 2)
+        {
+            if (entries[0].Value > entries[1].Value)
+            {
                 return "TrendingUp";
             }
-            else if (entries[0].Value < entries[1].Value) {
+            else if (entries[0].Value < entries[1].Value)
+            {
                 return "TrendingDown";
             }
-            else {
+            else
+            {
                 return "TrendingFlat";
             }
         }
-        else {
+        else
+        {
             return "NoTrend";
         }
     }
@@ -164,13 +190,16 @@ public partial class Index : IDisposable
     private bool IsUserAMemberOfLeads(Indicator indicator)
     {
         var claimsPrincipal = StateContainer.ClaimsPrincipal;
-        foreach (var lead in indicator.Leads) {
-            if (claimsPrincipal.IsInRole(lead.Id.ToString())) {
+        foreach (var lead in indicator.Leads)
+        {
+            if (claimsPrincipal.IsInRole(lead.Id.ToString()))
+            {
                 return true;
             }
         }
         if (claimsPrincipal.IsInRole("Administrator")
-            || claimsPrincipal.IsInRole("1")) {
+            || claimsPrincipal.IsInRole("1"))
+        {
             return true;
         }
         return false;

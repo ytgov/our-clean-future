@@ -31,10 +31,10 @@ public partial class Index : IDisposable
     [Inject]
     private IJSRuntime JSRuntime { get; set; } = null!;
 
-
     protected override async Task OnInitializedAsync()
     {
-        try {
+        try
+        {
             _context = ContextFactory.CreateDbContext();
             var actions = await _context.Actions
                 .Include(i => i.Leads)
@@ -50,11 +50,13 @@ public partial class Index : IDisposable
                                             .ThenBy(a => a.Number);
             _filteredActions.AddRange(_orderedActions);
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             Log.Error("{Exception}", ex);
             throw;
         }
-        finally {
+        finally
+        {
             _isLoaded = true;
         }
     }
@@ -71,40 +73,51 @@ public partial class Index : IDisposable
 
     public async void RowClicked(TableRowClickEventArgs<Action> p)
     {
-        if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey) {
+        if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey)
+        {
             await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/actions/edit/{p.Item.Id}", "_blank");
         }
-        else if (p.MouseEventArgs.CtrlKey) {
+        else if (p.MouseEventArgs.CtrlKey)
+        {
             await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/actions/details/{p.Item.Id}", "_blank");
         }
-        else {
+        else
+        {
             Details(p.Item.Id);
         }
     }
 
     private bool FilterFunc(Action action)
     {
-        if (string.IsNullOrWhiteSpace(_searchString)) {
+        if (string.IsNullOrWhiteSpace(_searchString))
+        {
             return true;
         }
-        foreach (var lead in action.Leads) {
-            if (lead.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase)) {
+        foreach (var lead in action.Leads)
+        {
+            if (lead.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            {
                 return true;
             }
-            if (lead.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true) {
+            if (lead.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            {
                 return true;
             }
-            if (lead.Branch?.Department.ShortName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true) {
+            if (lead.Branch?.Department.ShortName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            {
                 return true;
             }
-            if (lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true) {
+            if (lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            {
                 return true;
             }
-            if (lead.ToString().Contains(_searchString, StringComparison.OrdinalIgnoreCase)) {
+            if (lead.ToString().Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            {
                 return true;
             }
         }
-        if (action.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase)) {
+        if (action.Title.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+        {
             return true;
         }
         return false;
@@ -112,10 +125,12 @@ public partial class Index : IDisposable
 
     private string FilterActionsText()
     {
-        if (_filterActionsSwitch.Checked) {
+        if (_filterActionsSwitch.Checked)
+        {
             return "My actions";
         }
-        else {
+        else
+        {
             return "All actions";
         }
     }
@@ -123,10 +138,12 @@ public partial class Index : IDisposable
     private void FilterActions()
     {
         _filteredActions.Clear();
-        if (_filterActionsSwitch.Checked) {
+        if (_filterActionsSwitch.Checked)
+        {
             _filteredActions = _orderedActions.Where(i => IsUserAMemberOfLeads(i)).ToList();
         }
-        else {
+        else
+        {
             _filteredActions.AddRange(_orderedActions);
         }
     }
@@ -134,13 +151,16 @@ public partial class Index : IDisposable
     private bool IsUserAMemberOfLeads(Action action)
     {
         var claimsPrincipal = StateContainer.ClaimsPrincipal;
-        foreach (var lead in action.Leads) {
-            if (claimsPrincipal.IsInRole(lead.Id.ToString())) {
+        foreach (var lead in action.Leads)
+        {
+            if (claimsPrincipal.IsInRole(lead.Id.ToString()))
+            {
                 return true;
             }
         }
         if (claimsPrincipal.IsInRole("Administrator")
-            || claimsPrincipal.IsInRole("1")) {
+            || claimsPrincipal.IsInRole("1"))
+        {
             return true;
         }
         return false;

@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
-using MudBlazor;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using Action = OurCleanFuture.Data.Entities.Action;
@@ -28,7 +27,8 @@ public partial class Details : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        try {
+        try
+        {
             _context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.
             Action = await _context.Actions.Include(a => a.Indicators)
@@ -46,11 +46,13 @@ public partial class Details : IDisposable
                 .FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             Log.Error("{Exception}", ex);
             throw;
         }
-        finally {
+        finally
+        {
             _isLoaded = true;
         }
         Log.Information("{User} is viewing action {ActionId}: {ActionTitle}", StateContainer.ClaimsPrincipalEmail, Action?.Id, Action?.Title);
@@ -61,10 +63,12 @@ public partial class Details : IDisposable
     private string InternalStatusToString()
     {
         // Only append updated by information if the InternalStatus has been updated after database creation
-        if (!string.IsNullOrWhiteSpace(Action.InternalStatusUpdatedBy)) {
+        if (!string.IsNullOrWhiteSpace(Action.InternalStatusUpdatedBy))
+        {
             return $"Last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
         }
-        else {
+        else
+        {
             return string.Empty;
         }
     }
@@ -72,10 +76,12 @@ public partial class Details : IDisposable
     private string ExternalStatusToString()
     {
         // Only append updated by information if the ExternalStatus has been updated after database creation
-        if (!string.IsNullOrWhiteSpace(Action.ExternalStatusUpdatedBy)) {
+        if (!string.IsNullOrWhiteSpace(Action.ExternalStatusUpdatedBy))
+        {
             return $"Last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
         }
-        else {
+        else
+        {
             return string.Empty;
         }
     }

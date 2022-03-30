@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
-using MudBlazor;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using Action = OurCleanFuture.Data.Entities.Action;
@@ -35,17 +34,20 @@ public partial class Details : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        try {
+        try
+        {
             _context = ContextFactory.CreateDbContext();
 #pragma warning disable CS8601 // Possible null reference assignment.
             Area = await _context.Areas.Include(a => a.Objectives).ThenInclude(o => o.Actions).AsSingleQuery().AsNoTracking().FirstOrDefaultAsync(a => a.Title == AreaTitle.Replace('-', ' '));
 #pragma warning restore CS8601 // Possible null reference assignment.
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             Log.Error("{Exception}", ex);
             throw;
         }
-        finally {
+        finally
+        {
             _isLoaded = true;
         }
         Log.Information("{User} is viewing area {AreaId}: {AreaTitle}", StateContainer.ClaimsPrincipalEmail, Area?.Id, Area?.Title);

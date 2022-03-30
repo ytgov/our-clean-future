@@ -6,8 +6,10 @@ public static class GoalExtensions
 {
     public static string GetIconPath(this Goal goal)
     {
-        if (goal is not null) {
-            return goal.Id switch {
+        if (goal is not null)
+        {
+            return goal.Id switch
+            {
                 1 => "/images/reduce-greenhouse-gas-emissions.png",
                 2 => "/images/ensure-yukoners-have-access-to-reliable-affordable-and-renewable-energy.png",
                 3 => "/images/adapt-to-the-impacts-of-climate-change.png",
@@ -15,7 +17,8 @@ public static class GoalExtensions
                 _ => ""
             };
         }
-        else {
+        else
+        {
             return string.Empty;
         }
     }

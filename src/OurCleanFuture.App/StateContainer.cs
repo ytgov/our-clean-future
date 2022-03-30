@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using OurCleanFuture.Data;
-using System.Security.Claims;
 
 namespace OurCleanFuture.App;
 
@@ -16,9 +15,11 @@ public class StateContainer
         _dbContextFactory = dbContextFactory;
     }
 
-    public ClaimsPrincipal ClaimsPrincipal {
+    public ClaimsPrincipal ClaimsPrincipal
+    {
         get => _claimsPrincipal;
-        set {
+        set
+        {
             _claimsPrincipal = value ?? throw new ArgumentNullException(nameof(ClaimsPrincipal));
             ClaimsPrincipalEmail = _claimsPrincipal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value.ToLower()
                 ?? throw new InvalidOperationException("User is missing an email claim");

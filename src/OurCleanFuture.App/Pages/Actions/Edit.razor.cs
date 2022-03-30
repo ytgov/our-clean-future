@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -5,7 +6,6 @@ using MudBlazor;
 using OurCleanFuture.App.Extensions;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
-using System.Security.Claims;
 using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Actions;
@@ -47,7 +47,8 @@ public partial class Edit : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        try {
+        try
+        {
             _context = ContextFactory.CreateDbContext();
             Leads = await _context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Department.ShortName).ThenBy(l => l.Branch!.Name).ToListAsync();
             Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
@@ -55,22 +56,27 @@ public partial class Edit : IDisposable
 #pragma warning disable CS8601 // Possible null reference assignment.
             Action = await _context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).Include(a => a.Leads).FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
-            if (Action != null) {
-                foreach (var committee in Action!.DirectorsCommittees) {
+            if (Action != null)
+            {
+                foreach (var committee in Action!.DirectorsCommittees)
+                {
                     SelectedDirectorsCommittees = SelectedDirectorsCommittees.Append(committee);
                 }
-                foreach (var lead in Action.Leads) {
+                foreach (var lead in Action.Leads)
+                {
                     SelectedLeads = SelectedLeads.Append(lead);
                 }
             }
             await GetUserPrincipal();
             AuthorizedRoles += GetAuthorizedRoles();
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             Log.Error("{Exception}", ex);
             throw;
         }
-        finally {
+        finally
+        {
             _isLoaded = true;
         }
 
@@ -86,7 +92,8 @@ public partial class Edit : IDisposable
     private string GetAuthorizedRoles()
     {
         var authorizedRoles = "";
-        foreach (var lead in Action.Leads) {
+        foreach (var lead in Action.Leads)
+        {
             authorizedRoles += $", {lead.Id}";
         }
         return authorizedRoles;
@@ -94,29 +101,34 @@ public partial class Edit : IDisposable
 
     private async Task Update()
     {
-        if (Action.TargetCompletionDate < Action.ActualCompletionDate && Action.InternalStatus == InternalStatus.OnTrack) {
+        if (Action.TargetCompletionDate < Action.ActualCompletionDate && Action.InternalStatus == InternalStatus.OnTrack)
+        {
             Snackbar.Add($"The <b>Internal Status</b> cannot be set to <b>On track</b>, as the <b>Actual/Anticipated Completion Date</b> occurs after the <b>Target Completion Date</b>." +
                 $" Either revise the <b>Actual/Anticipated Completion Date</b>, or change the <b>Internal Status</b> to <b>Delayed</b>.", Severity.Error);
             return;
         }
 
-        if (_context.Entry(Action).Property(a => a.InternalStatus).IsModified) {
+        if (_context.Entry(Action).Property(a => a.InternalStatus).IsModified)
+        {
             Action.InternalStatusUpdatedBy = _user.GetFormattedName();
             Action.InternalStatusUpdatedDate = DateTimeOffset.Now;
         }
 
-        if (_context.Entry(Action).Property(a => a.ExternalStatus).IsModified) {
+        if (_context.Entry(Action).Property(a => a.ExternalStatus).IsModified)
+        {
             Action.ExternalStatusUpdatedBy = _user.GetFormattedName();
             Action.ExternalStatusUpdatedDate = DateTimeOffset.Now;
         }
 
         Action.DirectorsCommittees.Clear();
-        foreach (var committee in SelectedDirectorsCommittees) {
+        foreach (var committee in SelectedDirectorsCommittees)
+        {
             Action.DirectorsCommittees.Add(committee);
         }
 
         Action.Leads.Clear();
-        foreach (var lead in SelectedLeads) {
+        foreach (var lead in SelectedLeads)
+        {
             Action.Leads.Add(lead);
         }
 

@@ -29,15 +29,18 @@ public partial class Index : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        try {
+        try
+        {
             _context = ContextFactory.CreateDbContext();
             UnitsOfMeasurement = await _context.UnitsOfMeasurement.OrderBy(u => u.Symbol).ToListAsync();
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             Log.Error("{Exception}", ex);
             throw;
         }
-        finally {
+        finally
+        {
             _isLoaded = true;
         }
 
@@ -48,12 +51,15 @@ public partial class Index : IDisposable
     {
         var dialog = DialogService.Show<CreateDialog>("Create");
         var result = await dialog.Result;
-        if (!result.Cancelled) {
+        if (!result.Cancelled)
+        {
             var newUnitOfMeasurement = (UnitOfMeasurement)result.Data;
-            try {
+            try
+            {
                 _context.Add(newUnitOfMeasurement);
                 var entriesSaved = await _context.SaveChangesAsync();
-                if (entriesSaved == 1) {
+                if (entriesSaved == 1)
+                {
                     UnitsOfMeasurement.Add(newUnitOfMeasurement);
                     Log.Information("{User} created unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
                                     StateContainer.ClaimsPrincipalEmail,
@@ -63,7 +69,8 @@ public partial class Index : IDisposable
                     Snackbar.Add($"Created unit {newUnitOfMeasurement.Symbol}", Severity.Success);
                 }
             }
-            catch (DbUpdateException) {
+            catch (DbUpdateException)
+            {
                 Snackbar.Add($"Unable to add new unit {newUnitOfMeasurement.Symbol}. Does it already exist?", Severity.Error);
             }
         }
@@ -75,11 +82,14 @@ public partial class Index : IDisposable
 
         var dialog = DialogService.Show<EditDialog>("Edit", parameters);
         var result = await dialog.Result;
-        if (!result.Cancelled) {
+        if (!result.Cancelled)
+        {
             var updatedUnitOfMeasurement = (UnitOfMeasurement)result.Data;
-            try {
+            try
+            {
                 var entriesSaved = await _context.SaveChangesAsync();
-                if (entriesSaved == 1) {
+                if (entriesSaved == 1)
+                {
                     Snackbar.Add($"Updated unit {updatedUnitOfMeasurement.Symbol}", Severity.Success);
                     Log.Information("{User} updated unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
                                     StateContainer.ClaimsPrincipalEmail,
@@ -88,7 +98,8 @@ public partial class Index : IDisposable
                                     updatedUnitOfMeasurement.Symbol);
                 }
             }
-            catch (DbUpdateException) {
+            catch (DbUpdateException)
+            {
                 Snackbar.Add($"Unable to edit unit {unitOfMeasurement.Symbol}", Severity.Error);
             }
         }
@@ -100,8 +111,10 @@ public partial class Index : IDisposable
             $"Delete {unitOfMeasurement.Symbol}?",
             "This action cannot not be undone.",
             yesText: "Delete", cancelText: "Cancel");
-        if (result == true) {
-            try {
+        if (result == true)
+        {
+            try
+            {
                 _context.Remove(unitOfMeasurement);
                 await _context.SaveChangesAsync();
                 UnitsOfMeasurement.Remove(unitOfMeasurement);
@@ -112,7 +125,8 @@ public partial class Index : IDisposable
                                 unitOfMeasurement.Name,
                                 unitOfMeasurement.Symbol);
             }
-            catch (DbUpdateException) {
+            catch (DbUpdateException)
+            {
                 Snackbar.Add($"Unable to delete unit {unitOfMeasurement.Symbol}, as it is associated with an indicator", Severity.Error);
             }
         }

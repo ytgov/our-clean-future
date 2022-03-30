@@ -29,7 +29,8 @@ public partial class Details : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        try {
+        try
+        {
             _context = ContextFactory.CreateDbContext();
             Indicator = await _context.Indicators
                 .Include(i => i.Target)
@@ -54,11 +55,13 @@ public partial class Details : IDisposable
                 .FirstAsync(i => i.Id == Id);
             IndicatorLastUpdatedBy = await GetIndicatorLastUpdatedBy();
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             Log.Error("{Exception}", ex);
             throw;
         }
-        finally {
+        finally
+        {
             _isLoaded = true;
         }
         Log.Information("{User} is viewing indicator {IndicatorId}: {IndicatorTitle}", StateContainer.ClaimsPrincipalEmail, Indicator.Id, Indicator.Title);
@@ -68,20 +71,24 @@ public partial class Details : IDisposable
 
     private async Task<string> GetIndicatorLastUpdatedBy()
     {
-        if (!string.IsNullOrWhiteSpace(Indicator.UpdatedBy)) {
+        if (!string.IsNullOrWhiteSpace(Indicator.UpdatedBy))
+        {
             return $"{Indicator.UpdatedBy} on {(await GetIndicatorLastUpdatedDate()).ToLocalTime():f}";
         }
-        else {
+        else
+        {
             return string.Empty;
         }
 
         async Task<DateTime> GetIndicatorLastUpdatedDate()
         {
             var targetUpdated = DateTime.MinValue;
-            if (Indicator?.Target != null) {
+            if (Indicator?.Target != null)
+            {
                 targetUpdated = _context.Entry(Indicator.Target).Property<DateTime>("ValidFrom").CurrentValue;
             }
-            else {
+            else
+            {
                 targetUpdated = await _context.Targets
                     .TemporalAll()
                     .Where(t => t.IndicatorId == Indicator!.Id)

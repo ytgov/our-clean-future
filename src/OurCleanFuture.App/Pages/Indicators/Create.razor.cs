@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,6 @@ using MudBlazor;
 using OurCleanFuture.App.Extensions;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
-using System.Security.Claims;
 using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Indicators;
@@ -42,24 +42,28 @@ public partial class Create : IDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        try {
+        try
+        {
             _context = ContextFactory.CreateDbContext();
             Leads = await _context.Leads.Include(l => l.Organization).Include(l => l.Branch).ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Department.ShortName).ThenBy(l => l.Branch!.Name).ToListAsync();
             UnitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
             Goals = await _context.Goals.OrderBy(g => g.Title).ToListAsync();
             Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
             Actions = await _context.Actions.ToListAsync();
-            Indicator = new Indicator {
+            Indicator = new Indicator
+            {
                 UnitOfMeasurement = UnitsOfMeasurement.OrderBy(u => u.Symbol).First()
             };
             GetSelectedParentType();
             await GetUserPrincipal();
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             Log.Error("{Exception}", ex);
             throw;
         }
-        finally {
+        finally
+        {
             _isLoaded = true;
         }
 
@@ -74,20 +78,24 @@ public partial class Create : IDisposable
 
     private void GetSelectedParentType()
     {
-        if (Indicator.Goal is not null) {
+        if (Indicator.Goal is not null)
+        {
             SelectedParentType = "Goal";
         }
-        else if (Indicator.Objective is not null) {
+        else if (Indicator.Objective is not null)
+        {
             SelectedParentType = "Objective";
         }
-        else if (Indicator.Action is not null) {
+        else if (Indicator.Action is not null)
+        {
             SelectedParentType = "Action";
         }
     }
 
     private async Task Update()
     {
-        switch (SelectedParentType) {
+        switch (SelectedParentType)
+        {
             case "Goal":
                 Indicator.Objective = null;
                 Indicator.Action = null;
@@ -111,7 +119,8 @@ public partial class Create : IDisposable
         }
 
         Indicator.Leads.Clear();
-        foreach (var lead in SelectedLeads) {
+        foreach (var lead in SelectedLeads)
+        {
             Indicator.Leads.Add(lead);
         }
 

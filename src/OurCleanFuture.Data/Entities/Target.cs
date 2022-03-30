@@ -16,9 +16,11 @@ public class Target
 
     public string ValueToString()
     {
-        if (Value is not null) {
+        if (Value is not null)
+        {
             var value = (double)Value;
-            var result = Indicator.UnitOfMeasurement.Name switch {
+            var result = Indicator.UnitOfMeasurement.Name switch
+            {
                 "Count" => value.ToString(),
                 "Dollars" => value.ToString("c"),
                 // All other units
@@ -26,7 +28,8 @@ public class Target
             };
             return result;
         }
-        else {
+        else
+        {
             return "";
         }
     }

@@ -14,8 +14,7 @@ else
         <MudAlert Severity="Severity.Info" Class="mb-2">
             Tip: Don't want to lose your page/sort/filter? Use <b>Ctrl+Left Click</b> to view the action in a new tab, or <b>Ctrl+Alt+Left Click</b> to edit the action in a new tab.
         </MudAlert>
-        <MudTable Items="@Actions.OrderBy(a => a.Number[0]).ThenBy(a => a.Number.Length).ThenBy(a => a.Number)"
-              Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem"
+        <MudTable Items="@filteredActions" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem"
               Filter="new Func<Data.Entities.Action,bool>(FilterFunc)"
               T="Data.Entities.Action" OnRowClick="@RowClicked" RowClass="cursor-pointer">
             <ToolBarContent>
@@ -49,7 +48,7 @@ else
                 <MudTd DataLabel="Internal Status">@context.InternalStatus.GetDisplayName()</MudTd>
                 <MudTd DataLabel="External Status">@context.ExternalStatus.GetDisplayName()</MudTd>
                 <MudTd>
-                    @if (IsAuthorizedToEdit(context))
+                    @if (IsUserAMemberOfLeads(context))
                     {
                         <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))" />
                     }
@@ -63,5 +62,9 @@ else
                 <MudTablePager />
             </PagerContent>
         </MudTable>
+        @if (StateContainer.UserHasARole)
+        {
+            <MudSwitch Class="ma-1" Color="Color.Success" T="bool" @ref="filterActionsSwitch" CheckedChanged="FilterActions">@FilterActionsText()</MudSwitch>
+        }
     </MudContainer>
 }

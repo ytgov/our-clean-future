@@ -11,9 +11,13 @@ public partial class Index : IDisposable
 {
     private bool isLoaded;
     private AppDbContext context = null!;
-    private List<Indicator> indicators = null!;
-    private string searchString = "";
+
+    private List<Indicator> indicators = new();
+    private List<Indicator> filteredIndicators = new();
+    private MudSwitch<bool> filterIndicatorsSwitch = null!;
+
     private Indicator selectedItem = null!;
+    private string searchString = "";
 
     [Inject]
     private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
@@ -41,6 +45,7 @@ public partial class Index : IDisposable
             .AsNoTracking()
             .AsSingleQuery()
             .ToListAsync();
+            filteredIndicators.AddRange(indicators);
         }
         catch (Exception ex) {
             Log.Error("{Exception}", ex);
@@ -109,6 +114,25 @@ public partial class Index : IDisposable
         return false;
     }
 
+    private string FilterIndicatorsText()
+    {
+        if (filterIndicatorsSwitch.Checked) {
+            return "My indicators";
+        } else {
+            return "All indicators";
+        }
+    }
+
+    private void FilterIndicators()
+    {
+        filteredIndicators.Clear();
+        if(filterIndicatorsSwitch.Checked) {
+            filteredIndicators = indicators.Where(i => IsUserAMemberOfLeads(i)).ToList();
+        } else {
+            filteredIndicators.AddRange(indicators);
+        }
+    }
+
     private static string GetTrend(Indicator indicator)
     {
         var entries = indicator.Entries.OrderByDescending(e => e.EndDate).ToList();
@@ -129,7 +153,7 @@ public partial class Index : IDisposable
         }
     }
 
-    private bool IsAuthorizedToEdit(Indicator indicator)
+    private bool IsUserAMemberOfLeads(Indicator indicator)
     {
         var claimsPrincipal = StateContainer.ClaimsPrincipal;
         foreach (var lead in indicator.Leads) {

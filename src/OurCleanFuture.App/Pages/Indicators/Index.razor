@@ -13,7 +13,7 @@ else
         <MudAlert Severity="Severity.Info" Class="mb-2">
             Tip: Don't want to lose your page/sort/filter? Use <b>Ctrl+Left Click</b> to view the indicator in a new tab, or <b>Ctrl+Alt+Left Click</b> to edit the indicator in a new tab.
         </MudAlert>
-        <MudTable Items="@indicators" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem" Filter="new Func<Data.Entities.Indicator,bool>(FilterFunc)"
+        <MudTable Items="@filteredIndicators" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem" Filter="new Func<Data.Entities.Indicator,bool>(FilterFunc)"
               T="Data.Entities.Indicator" OnRowClick="@RowClicked" RowClass="cursor-pointer">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Indicators</MudText>
@@ -51,33 +51,37 @@ else
                 <MudTd>@context.CollectionInterval</MudTd>
                 <MudTd DataLabel="Trend">
                     @if (GetTrend(context) == "TrendingUp")
-                {
-                    <MudIcon Icon="@Icons.Material.Filled.TrendingUp" />
-                }
-                else if (GetTrend(context) == "TrendingDown")
-                {
-                    <MudIcon Icon="@Icons.Material.Filled.TrendingDown" />
-                }
-                else if (GetTrend(context) == "TrendingFlat")
-                {
-                    <MudIcon Icon="@Icons.Material.Filled.TrendingFlat" />
-                }
-            </MudTd>
-            <MudTd DataLabel="Last Entry">@GetDateLastEntry(context)?.ToString("MMM yyyy")</MudTd>
-            <MudTd>
-                @if (IsAuthorizedToEdit(context))
-                {
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))" />
-                }
-                else
-                {
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Disabled="true" />
-                }
-            </MudTd>
-        </RowTemplate>
-        <PagerContent>
-            <MudTablePager />
-        </PagerContent>
-    </MudTable>
-</MudContainer>
+                    {
+                        <MudIcon Icon="@Icons.Material.Filled.TrendingUp" />
+                    }
+                    else if (GetTrend(context) == "TrendingDown")
+                    {
+                        <MudIcon Icon="@Icons.Material.Filled.TrendingDown" />
+                    }
+                    else if (GetTrend(context) == "TrendingFlat")
+                    {
+                        <MudIcon Icon="@Icons.Material.Filled.TrendingFlat" />
+                    }
+                </MudTd>
+                <MudTd DataLabel="Last Entry">@GetDateLastEntry(context)?.ToString("MMM yyyy")</MudTd>
+                <MudTd>
+                    @if (IsUserAMemberOfLeads(context))
+                    {
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))" />
+                    }
+                    else
+                    {
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Disabled="true" />
+                    }
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+        @if (StateContainer.UserHasARole)
+        {
+            <MudSwitch Class="ma-1" Color="Color.Success" T="bool" @ref="filterIndicatorsSwitch" CheckedChanged="FilterIndicators">@FilterIndicatorsText()</MudSwitch>
         }
+    </MudContainer>
+}

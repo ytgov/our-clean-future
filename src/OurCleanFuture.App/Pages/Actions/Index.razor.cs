@@ -10,6 +10,12 @@ namespace OurCleanFuture.App.Pages.Actions;
 public partial class Index : IDisposable
 {
     private bool isLoaded;
+    private AppDbContext context = null!;
+
+    private IOrderedEnumerable<Action> orderedActions = null!;
+    private List<Action> filteredActions = new();
+    private MudSwitch<bool> filterActionsSwitch = null!;
+
     private Action selectedItem = null!;
     private string searchString = "";
 
@@ -25,14 +31,12 @@ public partial class Index : IDisposable
     [Inject]
     private IJSRuntime JSRuntime { get; set; } = null!;
 
-    private AppDbContext Context { get; set; } = null!;
-    private List<Action> Actions { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
         try {
-            Context = ContextFactory.CreateDbContext();
-            Actions = await Context.Actions
+            context = ContextFactory.CreateDbContext();
+            var actions = await context.Actions
                 .Include(i => i.Leads)
                 .ThenInclude(l => l.Organization)
                 .Include(i => i.Leads)
@@ -41,6 +45,10 @@ public partial class Index : IDisposable
                 .AsNoTracking()
                 .AsSingleQuery()
                 .ToListAsync();
+            orderedActions = actions.OrderBy(a => a.Number[0])
+                                            .ThenBy(a => a.Number.Length)
+                                            .ThenBy(a => a.Number);
+            filteredActions.AddRange(orderedActions);
         }
         catch (Exception ex) {
             Log.Error("{Exception}", ex);
@@ -95,7 +103,28 @@ public partial class Index : IDisposable
         return false;
     }
 
-    private bool IsAuthorizedToEdit(Action action)
+    private string FilterActionsText()
+    {
+        if (filterActionsSwitch.Checked) {
+            return "My actions";
+        }
+        else {
+            return "All actions";
+        }
+    }
+
+    private void FilterActions()
+    {
+        filteredActions.Clear();
+        if (filterActionsSwitch.Checked) {
+            filteredActions = orderedActions.Where(i => IsUserAMemberOfLeads(i)).ToList();
+        }
+        else {
+            filteredActions.AddRange(orderedActions);
+        }
+    }
+
+    private bool IsUserAMemberOfLeads(Action action)
     {
         var claimsPrincipal = StateContainer.ClaimsPrincipal;
         foreach (var lead in action.Leads) {
@@ -112,6 +141,6 @@ public partial class Index : IDisposable
 
     public void Dispose()
     {
-        Context.Dispose();
+        context.Dispose();
     }
 }

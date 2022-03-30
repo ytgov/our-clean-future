@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.JSInterop;
 using MudBlazor;
 using OurCleanFuture.Data;
 using Action = OurCleanFuture.Data.Entities.Action;
@@ -20,6 +21,9 @@ public partial class Index : IDisposable
 
     [Inject]
     private StateContainer StateContainer { get; init; } = null!;
+
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; } = null!;
 
     private AppDbContext Context { get; set; } = null!;
     private List<Action> Actions { get; set; } = new();
@@ -51,9 +55,17 @@ public partial class Index : IDisposable
         Navigation.NavigateTo("/actions/details/" + actionId);
     }
 
-    private void RowClicked(TableRowClickEventArgs<Action> p)
+    public async void RowClicked(TableRowClickEventArgs<Action> p)
     {
-        Details(p.Item.Id);
+        if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey) {
+            await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/actions/edit/{p.Item.Id}", "_blank");
+        }
+        else if (p.MouseEventArgs.CtrlKey) {
+            await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/actions/details/{p.Item.Id}", "_blank");
+        }
+        else {
+            Details(p.Item.Id);
+        }
     }
 
     private void Edit(int actionId)
@@ -79,6 +91,21 @@ public partial class Index : IDisposable
         }
         if (action.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
+        return false;
+    }
+
+    private bool IsAuthorizedToEdit(Action action)
+    {
+        var claimsPrincipal = StateContainer.ClaimsPrincipal;
+        foreach (var lead in action.Leads) {
+            if (claimsPrincipal.IsInRole(lead.Id.ToString())) {
+                return true;
+            }
+        }
+        if (claimsPrincipal.IsInRole("Administrator")
+            || claimsPrincipal.IsInRole("1")) {
+            return true;
+        }
         return false;
     }
 

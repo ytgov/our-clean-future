@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.JSInterop;
 using MudBlazor;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
@@ -22,6 +23,9 @@ public partial class Index : IDisposable
 
     [Inject]
     private StateContainer StateContainer { get; init; } = null!;
+
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -63,9 +67,17 @@ public partial class Index : IDisposable
         Navigation.NavigateTo("/indicators/details/" + indicatorId);
     }
 
-    public void RowClicked(TableRowClickEventArgs<Indicator> p)
+    public async void RowClicked(TableRowClickEventArgs<Indicator> p)
     {
-        Details(p.Item.Id);
+        if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey) {
+            await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/edit/{p.Item.Id}", "_blank");
+        }
+        else if (p.MouseEventArgs.CtrlKey) {
+            await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/details/{p.Item.Id}", "_blank");
+        }
+        else {
+            Details(p.Item.Id);
+        }
     }
 
     private void Edit(int indicatorId)

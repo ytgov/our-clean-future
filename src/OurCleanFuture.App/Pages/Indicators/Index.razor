@@ -10,6 +10,9 @@
 else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+        <MudAlert Severity="Severity.Info" Class="mb-2">
+            Tip: Don't want to lose your page/sort/filter? Use <b>Ctrl+Left Click</b> to view the indicator in a new tab, or <b>Ctrl+Alt+Left Click</b> to edit the indicator in a new tab.
+        </MudAlert>
         <MudTable Items="@indicators" Dense="true" Hover="true" Bordered="false" Striped="true" @bind-SelectedItem="selectedItem" Filter="new Func<Data.Entities.Indicator,bool>(FilterFunc)"
               T="Data.Entities.Indicator" OnRowClick="@RowClicked" RowClass="cursor-pointer">
             <ToolBarContent>

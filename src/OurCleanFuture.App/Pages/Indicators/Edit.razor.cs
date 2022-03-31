@@ -62,7 +62,7 @@ public partial class Edit : IDisposable
             Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
             Actions = await _context.Actions.ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.
-            Indicator = await _context.Indicators.Include(i => i.Target).Include(i => i.Leads).FirstOrDefaultAsync(i => i.Id == Id);
+            Indicator = await _context.Indicators.Include(i => i.Target).Include(i => i.Leads).AsSingleQuery().FirstOrDefaultAsync(i => i.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
             if (Indicator != null)
             {

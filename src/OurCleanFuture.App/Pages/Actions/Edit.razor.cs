@@ -54,7 +54,7 @@ public partial class Edit : IDisposable
             Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title).ToListAsync();
             DirectorsCommittees = await _context.DirectorsCommittees.OrderBy(dc => dc.Name).ToListAsync();
 #pragma warning disable CS8601 // Possible null reference assignment.
-            Action = await _context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).Include(a => a.Leads).FirstOrDefaultAsync(a => a.Id == Id);
+            Action = await _context.Actions.Include(a => a.Indicators).Include(a => a.DirectorsCommittees).Include(a => a.Leads).AsSingleQuery().FirstOrDefaultAsync(a => a.Id == Id);
 #pragma warning restore CS8601 // Possible null reference assignment.
             if (Action != null)
             {

@@ -24,6 +24,7 @@ public class StateContainer
             ClaimsPrincipalEmail = _claimsPrincipal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value.ToLower();
             if (ClaimsPrincipalEmail is not null)
             {
+                Log.Information("{User} has established a connection.", ClaimsPrincipalEmail);
                 _context = _dbContextFactory.CreateDbContext();
                 UserHasARole = _context.Users.Any(u => u.Email == ClaimsPrincipalEmail);
             }

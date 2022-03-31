@@ -21,7 +21,6 @@ using OurCleanFuture.App.Extensions;
 
 #nullable enable
 
-
 Indicators.Select(i => new IndicatorLastEntryViewModel
 {
 	IndicatorId = i.Id,
@@ -46,8 +45,7 @@ Indicators.Select(i => new IndicatorLastEntryViewModel
 	LastEntryValue = (i.Entries.OrderBy(e => e.EndDate).LastOrDefault().Value as double?),
 	TargetDescription = (i.Target == null ? default : i.Target.Description),
 	TargetValue = (i.Target == null ? default : i.Target.Value as double?),
-	TargetStartDate = (i.Target == null ? default : i.Target.StartDate.ToString()),
-	TargetEndDate = (i.Target == null ? default : i.Target.EndDate.ToString()),
+	TargetCompletionDate = (i.Target == null ? default : i.Target.CompletionDate.ToString()),
 	UnitOfMeasurement = i.UnitOfMeasurement.Symbol,
 	Link = $"https://ourcleanfuture.ynet.gov.yk.ca/indicators/details/{i.Id}"
 }).AsNoTracking().OrderBy(i => i.IndicatorId).Dump();
@@ -76,8 +74,7 @@ public class IndicatorLastEntryViewModel
 	public double? LastEntryValue { get; set; }
 	public string? TargetDescription { get; set; }
 	public double? TargetValue { get; set; }
-	public string? TargetStartDate { get; set; }
-	public string? TargetEndDate { get; set; }
+	public string? TargetCompletionDate { get; set; }
 	public string UnitOfMeasurement { get; set; } = null!;
 	public string Link { get; set; } = null!;
 }

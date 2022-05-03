@@ -8,7 +8,7 @@ public static class MinimalApiEndpoints
 {
     public static void MapIndicatorEndpoints(this WebApplication app)
     {
-        app.MapGet("/indicators", async (AppDbContext context, int? page, int? pageSize) =>
+        app.MapGet("api/v1/indicators", async (AppDbContext context, int? page, int? pageSize) =>
         {
             var pagerTake = pageSize ?? 50;
             int pagerSkip;
@@ -66,12 +66,12 @@ public static class MinimalApiEndpoints
             }).Skip(pagerSkip).Take(pagerTake).AsNoTracking().ToListAsync();
 
             return indicators;
-        }).WithTags("Indicators");
+        }).WithTags("Indicators").WithName("GetIndicators");
     }
 
     public static void MapActionEndpoints(this WebApplication app)
     {
-        app.MapGet("/actions", async (AppDbContext context) =>
+        app.MapGet("api/v1/actions", async (AppDbContext context) =>
         {
             var actions = await context.Actions.Select(a => new ActionDTO()
             {
@@ -91,8 +91,9 @@ public static class MinimalApiEndpoints
                 TargetCompletionDate = a.TargetCompletionDate,
                 IndicatorCount = a.Indicators.Count,
             }).AsNoTracking().ToListAsync();
+
             return actions;
-        }).WithTags("Actions");
+        }).WithTags("Actions").WithName("GetActions");
     }
 
     private record IndicatorDTO

@@ -111,7 +111,7 @@ public class AppDbContext : DbContext
                         .HasOne(il => il.Indicator)
                         .WithMany(i => i.IndicatorLeads)
                         .HasForeignKey("IndicatorId")
-                        .OnDelete(DeleteBehavior.Restrict));
+                        .OnDelete(DeleteBehavior.Cascade));
         modelBuilder.Entity<Indicator>()
                     .HasOne(i => i.UnitOfMeasurement)
                     .WithMany()

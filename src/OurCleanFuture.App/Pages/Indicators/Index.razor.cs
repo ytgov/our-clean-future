@@ -43,7 +43,7 @@ public partial class Index : IDisposable
             .Include(i => i.Leads)
             .ThenInclude(l => l.Branch)
             .ThenInclude(b => b!.Department)
-            .AsNoTracking()
+            //.AsNoTracking()
             .AsSingleQuery()
             .ToListAsync();
             _filteredIndicators.AddRange(_indicators);
@@ -79,6 +79,17 @@ public partial class Index : IDisposable
     private void Edit(int indicatorId)
     {
         Navigation.NavigateTo("/indicators/edit/" + indicatorId);
+    }
+
+    private void Delete(int indicatorId)
+    {
+        var indicator = _context.Indicators.Find(indicatorId);
+        if (indicator != null)
+        {
+            _indicators.Remove(indicator);
+            _context.Remove(indicator);
+            _context.SaveChangesAsync();
+        }
     }
 
     public async void RowClicked(TableRowClickEventArgs<Indicator> p)
@@ -197,12 +208,8 @@ public partial class Index : IDisposable
                 return true;
             }
         }
-        if (claimsPrincipal.IsInRole("Administrator")
-            || claimsPrincipal.IsInRole("1"))
-        {
-            return true;
-        }
-        return false;
+        return claimsPrincipal.IsInRole("Administrator")
+            || claimsPrincipal.IsInRole("1");
     }
 
     public void Dispose()

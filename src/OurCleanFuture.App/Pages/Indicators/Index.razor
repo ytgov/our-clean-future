@@ -72,6 +72,7 @@ else
                     @if (IsUserAMemberOfLeads(context))
                     {
                         <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context.Id))" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context.Id))" />
                     }
                     else
                     {

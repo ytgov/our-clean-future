@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.WindowsServices;
 using MudBlazor.Services;
 using OurCleanFuture.App;
+using OurCleanFuture.App.Endpoints;
 using OurCleanFuture.Data;
 using Serilog.Events;
 
@@ -130,6 +131,9 @@ try
     builder.Services.AddScoped<IClaimsTransformation, AddRoleClaimsTransformation>();
     builder.Services.AddLocalization();
 
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
@@ -139,6 +143,9 @@ try
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
     }
+
+    app.UseSwagger();
+    app.UseSwaggerUI();
 
     app.UseHttpsRedirection();
     app.UseStaticFiles();
@@ -163,6 +170,9 @@ try
 #endif
         .WriteTo.Seq("http://localhost:5341")
         .CreateLogger();
+
+    app.IndicatorsEndpoints();
+    app.ActionsEndpoints();
 
     app.Run();
     return 0;

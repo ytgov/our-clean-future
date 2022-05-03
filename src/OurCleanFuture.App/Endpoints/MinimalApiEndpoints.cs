@@ -25,7 +25,15 @@ public static class MinimalApiEndpoints
                     Department = l.Branch.Department.Name,
                     Branch = l.Branch.Name
                 }).ToList(),
-                GoalTitle = i.Goal == null ? null : i.Goal.Title,
+                Goals = i.Action != null ? i.Action.Objective.Goals.Select(g => new GoalDTO()
+                {
+                    Id = g.Id,
+                    Title = g.Title
+                }).ToList() : (i.Objective != null ? i.Objective.Goals.Select(g => new GoalDTO()
+                {
+                    Id = g.Id,
+                    Title = g.Title
+                }).ToList() : new List<GoalDTO>() { new GoalDTO() { Id = i.Id, Title = i.Title } }),
                 AreaTitle = i.Action == null ? i.Objective!.Area.Title : i.Action.Objective.Area.Title,
                 ObjectiveTitle = i.Objective == null ? i.Action!.Objective.Title : i.Objective.Title,
                 ActionId = i.Action == null ? null : i.Action.Id,
@@ -38,6 +46,7 @@ public static class MinimalApiEndpoints
                 TargetValue = i.Target == null ? default : i.Target.Value,
                 TargetCompletionDate = i.Target == null ? default : i.Target.CompletionDate.ToString()
             }).AsNoTracking().ToListAsync();
+
             return indicators;
         });
     }
@@ -74,7 +83,7 @@ public static class MinimalApiEndpoints
         public string? CollectionInterval { get; set; }
         public string UnitOfMeasurement { get; set; } = null!;
         public List<LeadDTO> Leads { get; set; }
-        public string? GoalTitle { get; set; }
+        public List<GoalDTO> Goals { get; set; }
         public string? AreaTitle { get; set; }
         public string? ObjectiveTitle { get; set; }
         public int? ActionId { get; set; }
@@ -87,6 +96,12 @@ public static class MinimalApiEndpoints
         public double? TargetValue { get; set; }
         public string? TargetCompletionDate { get; set; }
     };
+
+    private record GoalDTO
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+    }
 
     private record ActionDTO
     {

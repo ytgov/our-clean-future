@@ -132,7 +132,20 @@ try
     builder.Services.AddLocalization();
 
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddOpenApiDocument(config =>
+    {
+        config.PostProcess = document =>
+        {
+            document.Info.Version = "v1";
+            document.Info.Title = "Our Clean Future API";
+            document.Info.Contact = new NSwag.OpenApiContact
+            {
+                Name = "Jon Hodgins",
+                Email = "jon.hodgins@yukon.ca",
+                Url = "https://github.com/JonHodgins"
+            };
+        };
+    });
 
     var app = builder.Build();
 
@@ -144,8 +157,13 @@ try
         app.UseHsts();
     }
 
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseOpenApi();
+    app.UseSwaggerUi3();
+    app.UseReDoc(config =>
+    {
+        config.Path = "/redoc";
+        config.DocumentPath = "/swagger/v1/swagger.json";
+    });
 
     app.UseHttpsRedirection();
     app.UseStaticFiles();

@@ -7,7 +7,7 @@ using OurCleanFuture.Data.Entities;
 namespace OurCleanFuture.App.Endpoints;
 public static class MinimalApiEndpoints
 {
-    public static void IndicatorsEndpoints(this WebApplication app)
+    public static void MapIndicatorEndpoints(this WebApplication app)
     {
         app.MapGet("/indicators", async (AppDbContext context) =>
         {
@@ -17,7 +17,8 @@ public static class MinimalApiEndpoints
                 Title = i.Title,
                 Description = i.Description,
                 CollectionInterval = i.CollectionInterval.ToString(),
-                UnitOfMeasurement = i.UnitOfMeasurement.Symbol,
+                UnitOfMeasurementName = i.UnitOfMeasurement.Name,
+                UnitOfMeasurementSymbol = i.UnitOfMeasurement.Symbol,
                 Leads = i.Leads.Select(l => new LeadDTO()
                 {
                     Id = l.Id,
@@ -81,7 +82,8 @@ public static class MinimalApiEndpoints
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
         public string? CollectionInterval { get; set; }
-        public string UnitOfMeasurement { get; set; } = null!;
+        public string UnitOfMeasurementName { get; set; } = null!;
+        public string UnitOfMeasurementSymbol { get; set; } = null!;
         public List<LeadDTO> Leads { get; set; }
         public List<GoalDTO> Goals { get; set; }
         public string? AreaTitle { get; set; }

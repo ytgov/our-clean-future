@@ -17,7 +17,7 @@ public partial class Edit : IDisposable
     private ClaimsPrincipal _user = null!;
     private bool _targetIsDeleted = false;
 
-    private int[] Years { get; } = Enumerable.Range(2009, (DateTime.Now.Year - 2008)).Reverse().ToArray();
+    private int[] Years { get; } = Enumerable.Range(2009, DateTime.Now.Year - 2008).Reverse().ToArray();
 
     [Parameter]
     public int Id { get; set; }
@@ -147,10 +147,7 @@ public partial class Edit : IDisposable
         }
 
         Indicator.Leads.Clear();
-        foreach (var lead in SelectedLeads)
-        {
-            Indicator.Leads.Add(lead);
-        }
+        Indicator.Leads.AddRange(SelectedLeads);
 
         // Don't update Indicator.UpdatedBy if only the Entries were modified.
         try

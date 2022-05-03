@@ -20,16 +20,16 @@ public class Indicator
     public DataType DataType { get; set; }
 
     [ValidateComplexType]
-    public Target? Target { get; set; } = null!;
+    public Target? Target { get; set; }
 
     public int? ActionId { get; set; }
-    public Action? Action { get; set; } = null!;
+    public Action? Action { get; set; }
 
     public int? ObjectiveId { get; set; }
-    public Objective? Objective { get; set; } = null!;
+    public Objective? Objective { get; set; }
 
     public int? GoalId { get; set; }
-    public Goal? Goal { get; set; } = null!;
+    public Goal? Goal { get; set; }
 
     public CollectionInterval CollectionInterval { get; set; }
     public List<Entry> Entries { get; set; } = new();

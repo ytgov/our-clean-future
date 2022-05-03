@@ -1,16 +1,25 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using OurCleanFuture.App.Extensions;
 using OurCleanFuture.Data;
-using OurCleanFuture.Data.Entities;
 
 namespace OurCleanFuture.App.Endpoints;
+
 public static class MinimalApiEndpoints
 {
     public static void MapIndicatorEndpoints(this WebApplication app)
     {
-        app.MapGet("/indicators", async (AppDbContext context) =>
+        app.MapGet("/indicators", async (AppDbContext context, int? page, int? pageSize) =>
         {
+            var pagerTake = pageSize ?? 50;
+            int pagerSkip;
+            if (page is not null && page > 1)
+            {
+                pagerSkip = (int)((page - 1) * pagerTake);
+            }
+            else
+            {
+                pagerSkip = 0;
+            }
             var indicators = await context.Indicators.Select(i => new IndicatorDTO()
             {
                 Id = i.Id,
@@ -40,19 +49,27 @@ public static class MinimalApiEndpoints
                 ActionId = i.Action == null ? null : i.Action.Id,
                 ActionNumber = i.Action == null ? default : i.Action.Number,
                 ActionTitle = i.Action == null ? default : i.Action.Title,
-                LastEntryDate = i.Entries.OrderBy(e => e.EndDate).LastOrDefault().EndDate.Date.ToString(),
+                Entries = i.Entries.Select(e => new EntryDTO()
+                {
+                    StartDate = e.StartDate,
+                    EndDate = e.EndDate,
+                    Value = e.Value,
+                    Note = e.Note,
+                    LastUpdatedBy = e.UpdatedBy
+                }).ToList(),
+                LastEntryDate = i.Entries.OrderBy(e => e.EndDate).LastOrDefault().EndDate,
                 LastEntryBy = i.Entries.OrderBy(e => e.EndDate).LastOrDefault().UpdatedBy,
                 LastEntryValue = i.Entries.OrderBy(e => e.EndDate).LastOrDefault().Value,
                 TargetDescription = i.Target == null ? default : i.Target.Description,
                 TargetValue = i.Target == null ? default : i.Target.Value,
-                TargetCompletionDate = i.Target == null ? default : i.Target.CompletionDate.ToString()
-            }).AsNoTracking().ToListAsync();
+                TargetCompletionDate = i.Target == null ? default : i.Target.CompletionDate
+            }).Skip(pagerSkip).Take(pagerTake).AsNoTracking().ToListAsync();
 
             return indicators;
-        });
+        }).WithTags("Indicators");
     }
 
-    public static void ActionsEndpoints(this WebApplication app)
+    public static void MapActionEndpoints(this WebApplication app)
     {
         app.MapGet("/actions", async (AppDbContext context) =>
         {
@@ -72,10 +89,12 @@ public static class MinimalApiEndpoints
                 ExternalStatus = a.ExternalStatus.GetDisplayName(),
                 ActualOrAnticipatedCompletionDate = a.ActualCompletionDate,
                 TargetCompletionDate = a.TargetCompletionDate,
+                IndicatorCount = a.Indicators.Count,
             }).AsNoTracking().ToListAsync();
             return actions;
-        });
+        }).WithTags("Actions");
     }
+
     private record IndicatorDTO
     {
         public int Id { get; set; }
@@ -91,13 +110,23 @@ public static class MinimalApiEndpoints
         public int? ActionId { get; set; }
         public string? ActionNumber { get; set; }
         public string? ActionTitle { get; set; }
-        public string? LastEntryDate { get; set; }
+        public List<EntryDTO> Entries { get; set; }
+        public DateTime? LastEntryDate { get; set; }
         public string? LastEntryBy { get; set; }
         public decimal? LastEntryValue { get; set; }
         public string? TargetDescription { get; set; }
         public double? TargetValue { get; set; }
-        public string? TargetCompletionDate { get; set; }
+        public DateTime? TargetCompletionDate { get; set; }
     };
+
+    private record EntryDTO
+    {
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public decimal Value { get; set; }
+        public string Note { get; set; }
+        public string LastUpdatedBy { get; set; }
+    }
 
     private record GoalDTO
     {
@@ -115,7 +144,7 @@ public static class MinimalApiEndpoints
         public string ExternalStatus { get; set; }
         public DateTime? ActualOrAnticipatedCompletionDate { get; set; }
         public DateTime? TargetCompletionDate { get; set; }
-
+        public int IndicatorCount { get; set; }
     }
 
     private record LeadDTO

@@ -189,8 +189,8 @@ try
         .WriteTo.Seq("http://localhost:5341")
         .CreateLogger();
 
-    app.IndicatorsEndpoints();
-    app.ActionsEndpoints();
+    app.MapIndicatorEndpoints();
+    app.MapActionEndpoints();
 
     app.Run();
     return 0;

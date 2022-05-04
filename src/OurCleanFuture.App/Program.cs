@@ -142,7 +142,7 @@ try
             {
                 Name = "Jon Hodgins",
                 Email = "jon.hodgins@yukon.ca",
-                Url = "https://github.com/JonHodgins"
+                Url = "https://github.com/ytgov-env/our-clean-future"
             };
         };
     });

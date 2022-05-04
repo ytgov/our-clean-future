@@ -44,7 +44,9 @@ public static class MinimalApiEndpoints
                     Id = g.Id,
                     Title = g.Title
                 }).ToList() : new List<GoalDTO>() { new GoalDTO() { Id = i.Id, Title = i.Title } }),
+                AreaId = i.Action == null ? i.Objective!.Area.Id : i.Action.Objective.Area.Id,
                 AreaTitle = i.Action == null ? i.Objective!.Area.Title : i.Action.Objective.Area.Title,
+                ObjectiveId = i.Objective == null ? i.Action!.Objective.Id : i.Objective.Id,
                 ObjectiveTitle = i.Objective == null ? i.Action!.Objective.Title : i.Objective.Title,
                 ActionId = i.Action == null ? null : i.Action.Id,
                 ActionNumber = i.Action == null ? default : i.Action.Number,
@@ -57,9 +59,6 @@ public static class MinimalApiEndpoints
                     Note = e.Note,
                     LastUpdatedBy = e.UpdatedBy
                 }).ToList(),
-                LastEntryDate = i.Entries.OrderBy(e => e.EndDate).LastOrDefault().EndDate,
-                LastEntryBy = i.Entries.OrderBy(e => e.EndDate).LastOrDefault().UpdatedBy,
-                LastEntryValue = i.Entries.OrderBy(e => e.EndDate).LastOrDefault().Value,
                 TargetDescription = i.Target == null ? default : i.Target.Description,
                 TargetValue = i.Target == null ? default : i.Target.Value,
                 TargetCompletionDate = i.Target == null ? default : i.Target.CompletionDate
@@ -106,15 +105,14 @@ public static class MinimalApiEndpoints
         public string UnitOfMeasurementSymbol { get; set; } = null!;
         public List<LeadDTO> Leads { get; set; }
         public List<GoalDTO> Goals { get; set; }
+        public int? AreaId { get; set; }
         public string? AreaTitle { get; set; }
+        public int? ObjectiveId { get; set; }
         public string? ObjectiveTitle { get; set; }
         public int? ActionId { get; set; }
         public string? ActionNumber { get; set; }
         public string? ActionTitle { get; set; }
         public List<EntryDTO> Entries { get; set; }
-        public DateTime? LastEntryDate { get; set; }
-        public string? LastEntryBy { get; set; }
-        public decimal? LastEntryValue { get; set; }
         public string? TargetDescription { get; set; }
         public double? TargetValue { get; set; }
         public DateTime? TargetCompletionDate { get; set; }

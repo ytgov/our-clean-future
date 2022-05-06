@@ -191,6 +191,7 @@ try
 
     app.MapIndicatorEndpoints();
     app.MapActionEndpoints();
+    app.MapAreaEndpoints();
 
     app.Run();
     return 0;

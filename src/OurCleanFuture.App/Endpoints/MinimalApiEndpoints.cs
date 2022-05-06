@@ -22,7 +22,7 @@ public static class MinimalApiEndpoints
             .ProducesProblem(400);
     }
 
-    public static async Task<IResult> GetIndicators(AppDbContext context, int? page, int? pageSize)
+    private static async Task<IResult> GetIndicators(AppDbContext context, int? page, int? pageSize)
     {
         var pagerTake = pageSize ?? 50;
         int pagerSkip;
@@ -46,7 +46,7 @@ public static class MinimalApiEndpoints
             {
                 Id = l.Id,
                 Organization = l.Organization.Name,
-                Department = l.Branch.Department.Name,
+                Department = l.Branch!.Department.Name,
                 Branch = l.Branch.Name
             }).ToList(),
             ParentType = i.Action != null ? nameof(i.Action) : (i.Objective != null ? nameof(i.Objective) : nameof(i.Goal)),
@@ -82,7 +82,7 @@ public static class MinimalApiEndpoints
         return Results.Ok(indicators);
     }
 
-    public static async Task<IResult> GetIndicatorById(AppDbContext context, int id)
+    private static async Task<IResult> GetIndicatorById(AppDbContext context, int id)
     {
         var indicator = await context.Indicators.Select(i => new IndicatorDTO()
         {
@@ -96,7 +96,7 @@ public static class MinimalApiEndpoints
             {
                 Id = l.Id,
                 Organization = l.Organization.Name,
-                Department = l.Branch.Department.Name,
+                Department = l.Branch!.Department.Name,
                 Branch = l.Branch.Name
             }).ToList(),
             ParentType = i.Action != null ? nameof(i.Action) : (i.Objective != null ? nameof(i.Objective) : nameof(i.Goal)),
@@ -148,7 +148,7 @@ public static class MinimalApiEndpoints
             .ProducesProblem(400);
     }
 
-    public static async Task<IResult> GetActions(AppDbContext context)
+    private static async Task<IResult> GetActions(AppDbContext context)
     {
         var actions = await context.Actions.Select(a => new ActionDTO()
         {
@@ -159,7 +159,7 @@ public static class MinimalApiEndpoints
             {
                 Id = l.Id,
                 Organization = l.Organization.Name,
-                Department = l.Branch.Department.Name,
+                Department = l.Branch!.Department.Name,
                 Branch = l.Branch.Name
             }).ToList(),
             InternalStatus = a.InternalStatus.GetDisplayName(),
@@ -169,15 +169,15 @@ public static class MinimalApiEndpoints
             IndicatorCount = a.Indicators.Count,
             Indicators = a.Indicators.Select(i => new
             {
-                Id = i.Id,
-                Title = i.Title
+                i.Id,
+                i.Title
             }).ToList()
         }).AsNoTracking().ToListAsync();
 
         return Results.Ok(actions);
     }
 
-    public static async Task<IResult> GetActionById(AppDbContext context, int id)
+    private static async Task<IResult> GetActionById(AppDbContext context, int id)
     {
         var action = await context.Actions.Select(a => new ActionDTO()
         {
@@ -188,7 +188,7 @@ public static class MinimalApiEndpoints
             {
                 Id = l.Id,
                 Organization = l.Organization.Name,
-                Department = l.Branch.Department.Name,
+                Department = l.Branch!.Department.Name,
                 Branch = l.Branch.Name
             }).ToList(),
             InternalStatus = a.InternalStatus.GetDisplayName(),
@@ -198,12 +198,83 @@ public static class MinimalApiEndpoints
             IndicatorCount = a.Indicators.Count,
             Indicators = a.Indicators.Select(i => new
             {
-                Id = i.Id,
-                Title = i.Title
+                i.Id,
+                i.Title
             }).ToList()
         }).Where(a => a.Id == id).FirstOrDefaultAsync();
 
         return action is not null ? Results.Ok(action) : Results.NotFound();
+    }
+
+    public static void MapAreaEndpoints(this WebApplication app)
+    {
+        app.MapGet("api/v1/areas", GetAreas)
+            .WithTags("Areas")
+            .WithName("GetAreas")
+            .Produces<List<AreaDTO>>(200)
+            .ProducesProblem(400);
+        app.MapGet("api/v1/areas/{id}", GetAreaById)
+            .WithTags("Areas")
+            .WithName("GetAreaById")
+            .Produces<AreaDTO>(200)
+            .Produces(404)
+            .ProducesProblem(400);
+    }
+
+    private static async Task<IResult> GetAreas(AppDbContext context)
+    {
+        var areas = await context.Areas.Select(a => new AreaDTO()
+        {
+            Id = a.Id,
+            Title = a.Title,
+            Objectives = a.Objectives.Select(o => new ObjectiveDTO()
+            {
+                Id = o.Id,
+                Title = o.Title,
+                Goals = o.Goals.Select(g => new GoalDTO()
+                {
+                    Id = g.Id,
+                    Title = g.Title
+                }).ToList()
+            }).ToList()
+        }).ToListAsync();
+
+        return Results.Ok(areas);
+    }
+
+    private static async Task<IResult> GetAreaById(AppDbContext context, int id)
+    {
+        var area = await context.Areas.Select(a => new AreaDTO()
+        {
+            Id = a.Id,
+            Title = a.Title,
+            Objectives = a.Objectives.Select(o => new ObjectiveDTO()
+            {
+                Id = o.Id,
+                Title = o.Title,
+                Goals = o.Goals.Select(g => new GoalDTO()
+                {
+                    Id = g.Id,
+                    Title = g.Title
+                }).ToList()
+            }).ToList()
+        }).Where(a => a.Id == id).FirstOrDefaultAsync();
+
+        return area is not null ? Results.Ok(area) : Results.NotFound();
+    }
+
+    private record AreaDTO
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = null!;
+        public List<ObjectiveDTO> Objectives { get; set; } = null!;
+    }
+
+    private record ObjectiveDTO
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = null!;
+        public List<GoalDTO> Goals { get; set; } = null!;
     }
 
     private record IndicatorDTO
@@ -256,7 +327,7 @@ public static class MinimalApiEndpoints
         public DateTime? ActualOrAnticipatedCompletionDate { get; set; }
         public DateTime? TargetCompletionDate { get; set; }
         public int IndicatorCount { get; set; }
-        public object Indicators { get; set; }
+        public object Indicators { get; set; } = null!;
     }
 
     private record LeadDTO

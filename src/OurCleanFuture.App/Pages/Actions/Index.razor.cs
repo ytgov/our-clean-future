@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.JSInterop;
 using MudBlazor;
+using OurCleanFuture.App.Services;
 using OurCleanFuture.Data;
 using Action = OurCleanFuture.Data.Entities.Action;
 
@@ -26,7 +27,7 @@ public partial class Index : IDisposable
     private NavigationManager Navigation { get; set; } = null!;
 
     [Inject]
-    private StateContainer StateContainer { get; init; } = null!;
+    private StateContainerService StateContainer { get; init; } = null!;
 
     [Inject]
     private IJSRuntime JSRuntime { get; set; } = null!;

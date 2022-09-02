@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using OurCleanFuture.App.Services;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using Action = OurCleanFuture.Data.Entities.Action;
@@ -23,7 +24,7 @@ public partial class Details : IDisposable
     private NavigationManager Navigation { get; set; } = null!;
 
     [Inject]
-    private StateContainer StateContainer { get; init; } = null!;
+    private StateContainerService StateContainer { get; init; } = null!;
 
     // Required to force the app to re-render when navigating between Areas.
     // OnInitializedAsync is not called by default in this situation, as the user is merely changing the parameter, while staying on the same page.

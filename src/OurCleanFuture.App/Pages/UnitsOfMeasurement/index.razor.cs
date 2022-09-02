@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
+using OurCleanFuture.App.Services;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 
@@ -25,7 +26,7 @@ public partial class Index : IDisposable
     private ISnackbar Snackbar { get; set; } = null!;
 
     [Inject]
-    private StateContainer StateContainer { get; init; } = null!;
+    private StateContainerService StateContainer { get; init; } = null!;
 
     protected override async Task OnInitializedAsync()
     {

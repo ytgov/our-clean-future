@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using OurCleanFuture.App.Services;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using Action = OurCleanFuture.Data.Entities.Action;
@@ -23,7 +24,7 @@ public partial class Details : IDisposable
     private NavigationManager Navigation { get; set; } = null!;
 
     [Inject]
-    private StateContainer StateContainer { get; init; } = null!;
+    private StateContainerService StateContainer { get; init; } = null!;
 
     protected override async Task OnInitializedAsync()
     {

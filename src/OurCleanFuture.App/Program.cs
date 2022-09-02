@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.WindowsServices;
 using MudBlazor.Services;
 using OurCleanFuture.App;
 using OurCleanFuture.App.Endpoints;
+using OurCleanFuture.App.Services;
 using OurCleanFuture.Data;
 using Serilog.Events;
 
@@ -127,7 +129,8 @@ try
         options.UseSqlServer(configuration.GetConnectionString("AppDbContext"), options => options.EnableRetryOnFailure()));
 #endif
 
-    builder.Services.AddScoped<StateContainer>(s => new StateContainer(s.GetRequiredService<IDbContextFactory<AppDbContext>>()));
+    builder.Services.AddScoped<StateContainerService>(s => new StateContainerService(s.GetRequiredService<IDbContextFactory<AppDbContext>>()));
+    builder.Services.AddScoped<CircuitHandler>(s => new CircuitHandlerService(s.GetRequiredService<StateContainerService>()));
     builder.Services.AddScoped<IClaimsTransformation, AddRoleClaimsTransformation>();
     builder.Services.AddLocalization();
 
@@ -194,15 +197,12 @@ try
     app.MapAreaEndpoints();
 
     app.Run();
+    Log.CloseAndFlush();
     return 0;
 }
 catch (Exception ex)
 {
     Log.Fatal(ex, "Host terminated unexpectedly");
-    Console.WriteLine(ex.Message);
-    return 1;
-}
-finally
-{
     Log.CloseAndFlush();
+    return 1;
 }

@@ -4,7 +4,7 @@ namespace OurCleanFuture.App.Services;
 
 public class CircuitHandlerService : CircuitHandler
 {
-    private StateContainerService _stateContainer;
+    private readonly StateContainerService _stateContainer;
 
     public CircuitHandlerService(StateContainerService stateContainer)
     {

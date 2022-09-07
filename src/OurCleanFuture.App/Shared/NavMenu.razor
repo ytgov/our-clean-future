@@ -1,4 +1,7 @@
-﻿<MudNavMenu>
+﻿@inject IConfiguration _configuration;
+@inject IJSRuntime _jsRuntime;
+
+<MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
     <MudNavGroup Icon="@Icons.Material.Filled.AreaChart" Title="Areas">
         <MudNavLink Href="/areas/transportation" Match="NavLinkMatch.All">Transportation</MudNavLink>
@@ -18,6 +21,12 @@
             <MudNavLink Href="/admin/units" Icon="@Icons.Material.Filled.Architecture" IconColor="Color.Tertiary">Units Of Measurement</MudNavLink>
         </MudNavGroup>
     </AuthorizeView>
-    @*<MudNavLink Href="/dashboard" Icon="@Icons.Material.Filled.Insights">Dashboard</MudNavLink>*@
+    <MudNavLink OnClick="OpenDashboardInNewTab" Icon="@Icons.Material.Filled.Insights">Dashboard</MudNavLink>
 </MudNavMenu>
 
+@code {
+    private async Task OpenDashboardInNewTab()
+    {
+        await _jsRuntime.InvokeAsync<object>("open", CancellationToken.None, _configuration["PowerBI:EmbedUrl"], "_blank");
+    }
+}

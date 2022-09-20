@@ -19,7 +19,11 @@ public class CircuitHandlerService : CircuitHandler
 
     public override Task OnCircuitClosedAsync(Circuit circuit, CancellationToken cancellationToken)
     {
-        Log.Information("{User} has disconnected circuit {CircuitId}.", _stateContainer.ClaimsPrincipalEmail, circuit.Id);
+        Log.Information(
+            "{User} has disconnected circuit {CircuitId}.",
+            _stateContainer.ClaimsPrincipalEmail ?? "Unauthenticated user",
+            circuit.Id
+        );
         return base.OnCircuitClosedAsync(circuit, cancellationToken);
     }
 }

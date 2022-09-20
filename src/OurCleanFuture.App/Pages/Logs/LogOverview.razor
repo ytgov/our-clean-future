@@ -1,0 +1,59 @@
+﻿@page "/admin/log"
+@using Seq.Api
+@*@attribute [Authorize]*@
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
+    <MudText Typo="Typo.h3" Class="mb-8">Edit log</MudText>
+    <MudTabs Elevation="4" Rounded="true" Color="@Color.Primary">
+        <MudTabPanel Text="Indicators">
+            <MudTable Items="@(_logEvents.Where(x => x.EventType == _indicatorEventType))" Context="evt">
+                <HeaderContent>
+                    <MudTh>Timestamp</MudTh>
+                    <MudTh>User</MudTh>
+                    <MudTh>Id</MudTh>
+                    <MudTh>Title</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd>@DateTime.Parse(evt.Timestamp)</MudTd>
+                    <MudTd>@evt.Properties[0].Value</MudTd>
+                    <MudTd>@evt.Properties[1].Value</MudTd>
+                    <MudTd>@evt.Properties[2].Value</MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudTabPanel>
+        <MudTabPanel Text="Actions">
+            <MudTable Items="@(_logEvents.Where(x => x.EventType == _actionEventType))" Context="evt">
+                <HeaderContent>
+                    <MudTh>Timestamp</MudTh>
+                    <MudTh>User</MudTh>
+                    <MudTh>Id</MudTh>
+                    <MudTh>Title</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd>@DateTime.Parse(evt.Timestamp)</MudTd>
+                    <MudTd>@evt.Properties[0].Value</MudTd>
+                    <MudTd>@evt.Properties[1].Value</MudTd>
+                    <MudTd>@evt.Properties[2].Value</MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudTabPanel>
+    </MudTabs>
+</MudContainer>
+
+@code {
+    private List<Seq.Api.Model.Events.EventEntity> _logEvents = new();
+    private const string _indicatorEventType = "$615E81DE";
+    private const string _actionEventType = "$611D404A";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var connection = new SeqConnection("http://localhost:5341", "I3LmFD6Hc3GFxPxy3oJU");
+        var events = connection.Events.EnumerateAsync(
+            filter: "@EventType = ToEventType('{User} updated indicator {IndicatorId}: {IndicatorTitle}') || @EventType = ToEventType('{User} updated action {ActionId}: {ActionTitle}')",
+            count: 1000);
+        await foreach (var evt in events)
+        {
+            _logEvents.Add(evt);
+        }
+    }
+}

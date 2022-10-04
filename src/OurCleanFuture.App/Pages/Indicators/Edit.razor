@@ -1,6 +1,10 @@
 ﻿@page "/indicators/edit/{id:int}"
 @attribute [Authorize]
 
+@if(Indicator is not null){
+    <PageTitle>[Indicator] @(Indicator.Title.Substring(0, 16))...</PageTitle>
+}
+
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
     @if (_isLoaded == false)
     {

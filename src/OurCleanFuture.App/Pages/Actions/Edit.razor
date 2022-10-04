@@ -2,6 +2,9 @@
 @attribute [Authorize]
 @using OurCleanFuture.App.Extensions;
 
+@if(Action is not null){
+    <PageTitle>[Action] @Action.Number - @(Action.Title.Substring(0, 20))...</PageTitle>
+}
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
     @if (_isLoaded == false)

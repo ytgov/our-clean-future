@@ -2,6 +2,10 @@
 @attribute [Authorize]
 @using OurCleanFuture.App.Extensions;
 
+@if(Action is not null){
+    <PageTitle>[Action] @Action.Number - @(Action.Title.Substring(0, 20))...</PageTitle>
+}
+
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
     @if (_isLoaded == false)
     {
@@ -102,9 +106,9 @@
                         <MudList Clickable="true" DisableGutters="true" Dense="true">
                             @{
                                 var classText = $"{Action.Objective.Area.GetCssClass()} pl-4";
-                                <MudListItem Class="@classText" OnClick="(() => ViewArea(Action.Objective.Area))">
-                                    <MudText>@(Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudText>
-                                </MudListItem>
+                                    <MudListItem Class="@classText" OnClick="(() => ViewArea(Action.Objective.Area))">
+                                        <MudText>@(Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudText>
+                                        </MudListItem>
                             }
                         </MudList>
                     </MudItem>

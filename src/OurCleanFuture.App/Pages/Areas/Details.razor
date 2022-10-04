@@ -2,6 +2,10 @@
 @attribute [Authorize]
 @using OurCleanFuture.App.Extensions
 
+@if (Area is not null)
+{
+    <PageTitle>[Area] @Area.Title</PageTitle>
+}
 
 @if (_isLoaded == false)
 {

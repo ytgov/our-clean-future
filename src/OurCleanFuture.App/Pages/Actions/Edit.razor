@@ -3,7 +3,7 @@
 @using OurCleanFuture.App.Extensions;
 
 @if(Action is not null){
-    <PageTitle>[Action] @Action.Number - @(Action.Title.Substring(0, 20))...</PageTitle>
+    <PageTitle>[Action] @Action.Number - @Action.Title.Truncate(16)</PageTitle>
 }
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
@@ -18,9 +18,6 @@
     else
     {
         <MudText Typo="Typo.h3" Class="mb-8"><b>Editing action:</b> @Action.Number</MudText>
-        @*<MudAlert Icon="@Icons.Material.Filled.Lightbulb" Severity="Severity.Normal" Class="mb-6">
-            If you need to modify a value within a dropdown menu, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
-            </MudAlert>*@
         <EditForm Model="Action" OnValidSubmit="Update">
             <ObjectGraphDataAnnotationsValidator />
             <MudGrid>

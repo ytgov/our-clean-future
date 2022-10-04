@@ -3,7 +3,7 @@
 @using OurCleanFuture.App.Extensions;
 
 @if(Action is not null){
-    <PageTitle>[Action] @Action.Number - @(Action.Title.Substring(0, 20))...</PageTitle>
+    <PageTitle>[Action] @Action.Number - @Action.Title.Truncate(16)</PageTitle>
 }
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">

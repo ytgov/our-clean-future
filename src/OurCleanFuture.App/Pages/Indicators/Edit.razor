@@ -1,8 +1,9 @@
 ﻿@page "/indicators/edit/{id:int}"
+@using OurCleanFuture.App.Extensions
 @attribute [Authorize]
 
 @if(Indicator is not null){
-    <PageTitle>[Indicator] @(Indicator.Title.Substring(0, 16))...</PageTitle>
+    <PageTitle>[Indicator] @Indicator.Title.Truncate(16)</PageTitle>
 }
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">

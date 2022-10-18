@@ -26,7 +26,7 @@ public partial class Index : IDisposable
 
     [Inject] private StateContainerService StateContainer { get; init; } = null!;
 
-    [Inject] private IJSRuntime JSRuntime { get; set; } = null!;
+    [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
     public void Dispose() => _context.Dispose();
 
@@ -73,12 +73,12 @@ public partial class Index : IDisposable
     {
         if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey)
         {
-            await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/edit/{p.Item.Id}",
+            await JsRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/edit/{p.Item.Id}",
                 "_blank");
         }
         else if (p.MouseEventArgs.CtrlKey)
         {
-            await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/details/{p.Item.Id}",
+            await JsRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/details/{p.Item.Id}",
                 "_blank");
         }
         else
@@ -101,12 +101,14 @@ public partial class Index : IDisposable
                 return true;
             }
 
-            if (lead.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            if (lead.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ==
+                true)
             {
                 return true;
             }
 
-            if (lead.Branch?.Department.ShortName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            if (lead.Branch?.Department.ShortName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ==
+                true)
             {
                 return true;
             }
@@ -150,7 +152,7 @@ public partial class Index : IDisposable
         _filteredIndicators.Clear();
         if (_filterIndicatorsSwitch.Checked)
         {
-            _filteredIndicators = _indicators.Where(i => IsUserAMemberOfLeads(i)).ToList();
+            _filteredIndicators = _indicators.Where(IsUserAMemberOfLeads).ToList();
         }
         else
         {

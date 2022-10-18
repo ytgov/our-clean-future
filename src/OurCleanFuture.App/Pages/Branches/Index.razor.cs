@@ -117,8 +117,8 @@ public partial class Index : IDisposable
             "This action cannot not be undone.",
             "Delete", cancelText: "Cancel");
         if (result == true)
-        {
             //Prevents mid-method rerendering of the component, which avoids overlapping threads
+        {
             try
             {
                 _context.Remove(branch.Lead);

@@ -101,11 +101,11 @@
                             <MudNumericField Label="Value" @bind-Value="Indicator.Target.Value" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true"></MudNumericField>
                             <MudDatePicker Label="Completion Date" @bind-Date="Indicator.Target.CompletionDate" Editable="true" For="@(() => Indicator.Target.CompletionDate)"/>
                             <MudTextField Label="Description" @bind-Value="Indicator.Target.Description" Lines="2" For="@(() => Indicator.Target.Description)"/>
-                            <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="() => DeleteTarget()" Class="mt-4">Delete target</MudButton>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="DeleteTarget" Class="mt-4">Delete target</MudButton>
                         }
                         else
                         {
-                            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="() => CreateTarget()" Class="mt-4">Add target</MudButton>
+                            <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="CreateTarget" Class="mt-4">Add target</MudButton>
                         }
                     </MudPaper>
                 </MudItem>

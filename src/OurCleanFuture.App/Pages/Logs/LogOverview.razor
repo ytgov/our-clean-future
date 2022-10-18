@@ -10,7 +10,7 @@
     <MudText Typo="Typo.h3" Class="mb-8">Edit log</MudText>
     <MudTabs Elevation="4" Rounded="true" Color="@Color.Primary">
         <MudTabPanel Text="Indicators">
-            <MudTable Items="@(_logEvents.Where(x => x.EventType == _indicatorEditEventType || x.EventType == _indicatorCreateEventType))" Context="evt"
+            <MudTable Items="@(_logEvents.Where(x => x.EventType == IndicatorEditEventType || x.EventType == IndicatorCreateEventType))" Context="evt"
                       T="EventEntity" OnRowClick="@IndicatorRowClicked" RowClass="cursor-pointer">
                 <ColGroup>
                     <MudHidden Breakpoint="Breakpoint.Xs">
@@ -38,7 +38,7 @@
             </MudTable>
         </MudTabPanel>
         <MudTabPanel Text="Actions">
-            <MudTable Items="@(_logEvents.Where(x => x.EventType == _actionEditEventType || x.EventType == _actionCreateEventType))" Context="evt"
+            <MudTable Items="@(_logEvents.Where(x => x.EventType == ActionEditEventType || x.EventType == ActionCreateEventType))" Context="evt"
                       T="EventEntity" OnRowClick="@ActionRowClicked" RowClass="cursor-pointer">
                 <ColGroup>
                     <MudHidden Breakpoint="Breakpoint.Xs">
@@ -70,10 +70,10 @@
 
 @code {
     private readonly List<EventEntity> _logEvents = new();
-        private const string _indicatorEditEventType = "$615E81DE";
-        private const string _indicatorCreateEventType = "$8A9A5998";
-        private const string _actionEditEventType = "$611D404A";
-        private const string _actionCreateEventType = "$B2188044";
+        private const string IndicatorEditEventType = "$615E81DE";
+        private const string IndicatorCreateEventType = "$8A9A5998";
+        private const string ActionEditEventType = "$611D404A";
+        private const string ActionCreateEventType = "$B2188044";
 
 
     protected override async Task OnInitializedAsync()

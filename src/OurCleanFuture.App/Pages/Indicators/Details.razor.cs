@@ -81,7 +81,7 @@ public partial class Details : IDisposable
 
         async Task<DateTime> GetIndicatorLastUpdatedDate()
         {
-            var targetUpdated = DateTime.MinValue;
+            DateTime targetUpdated;
             if (Indicator?.Target != null)
             {
                 targetUpdated = _context.Entry(Indicator.Target).Property<DateTime>("ValidFrom").CurrentValue;

@@ -197,19 +197,19 @@ else
                             <col style="width: 5%"/>
                         </MudHidden>
                     </ColGroup>
-                    <RowTemplate Context="Entry">
-                        <MudTd DataLabel="Period" Style="text-align:right">@Entry.PeriodToString()</MudTd>
-                        <MudTd DataLabel="Value" Style="text-align:right">@Entry.ValueToString()</MudTd>
-                        <MudTd DataLabel="Note">@Entry.Note</MudTd>
+                    <RowTemplate Context="entry">
+                        <MudTd DataLabel="Period" Style="text-align:right">@entry.PeriodToString()</MudTd>
+                        <MudTd DataLabel="Value" Style="text-align:right">@entry.ValueToString()</MudTd>
+                        <MudTd DataLabel="Note">@entry.Note</MudTd>
                         <MudTd>
-                            @if (!string.IsNullOrWhiteSpace(Entry.UpdatedBy))
+                            @if (!string.IsNullOrWhiteSpace(entry.UpdatedBy))
                             {
                                 <MudTooltip Placement="Placement.Left">
                                     <ChildContent>
                                         <MudIcon Icon="@Icons.Material.Outlined.Info"></MudIcon>
                                     </ChildContent>
                                     <TooltipContent>
-                                        <MudText>Last updated by @(Entry.UpdatedBy) on @(GetEntryLastUpdatedDate(Entry).ToLocalTime().ToString("f"))</MudText>
+                                        <MudText>Last updated by @(entry.UpdatedBy) on @(GetEntryLastUpdatedDate(entry).ToLocalTime().ToString("f"))</MudText>
                                     </TooltipContent>
                                 </MudTooltip>
                             }
@@ -221,7 +221,7 @@ else
 
         <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
             <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/indicators">Back to indicators</MudButton>
-            <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Material.Filled.Edit" OnClick="() => Edit()">Edit</MudButton>
+            <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Material.Filled.Edit" OnClick="Edit">Edit</MudButton>
         </MudItem>
     </MudGrid>
 }

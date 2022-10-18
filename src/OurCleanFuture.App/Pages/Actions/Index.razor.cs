@@ -26,7 +26,7 @@ public partial class Index : IDisposable
 
     [Inject] private StateContainerService StateContainer { get; init; } = null!;
 
-    [Inject] private IJSRuntime JSRuntime { get; set; } = null!;
+    [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
     public void Dispose() => _context.Dispose();
 
@@ -71,7 +71,7 @@ public partial class Index : IDisposable
     {
         if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey)
         {
-            await JSRuntime.InvokeAsync<object>(
+            await JsRuntime.InvokeAsync<object>(
                 "open",
                 CancellationToken.None,
                 $"/actions/edit/{p.Item.Id}",
@@ -80,7 +80,7 @@ public partial class Index : IDisposable
         }
         else if (p.MouseEventArgs.CtrlKey)
         {
-            await JSRuntime.InvokeAsync<object>(
+            await JsRuntime.InvokeAsync<object>(
                 "open",
                 CancellationToken.None,
                 $"/actions/details/{p.Item.Id}",
@@ -164,7 +164,7 @@ public partial class Index : IDisposable
         _filteredActions.Clear();
         if (_filterActionsSwitch.Checked)
         {
-            _filteredActions = _orderedActions.Where(i => IsUserAMemberOfLeads(i)).ToList();
+            _filteredActions = _orderedActions.Where(IsUserAMemberOfLeads).ToList();
         }
         else
         {

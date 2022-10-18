@@ -1,7 +1,7 @@
 ﻿@using OurCleanFuture.App.Services
 @inherits LayoutComponentBase
 
-<MudThemeProvider Theme="currentTheme"/>
+<MudThemeProvider Theme="_currentTheme"/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
 
@@ -48,24 +48,24 @@
         {
             StateContainer.ClaimsPrincipal = AuthenticationState.User;
         }
-        currentTheme = defaultTheme;
+        _currentTheme = _defaultTheme;
     }
 
     void DarkMode()
     {
-        if (currentTheme == defaultTheme)
+        if (_currentTheme == _defaultTheme)
         {
-            currentTheme = darkTheme;
+            _currentTheme = _darkTheme;
         }
         else
         {
-            currentTheme = defaultTheme;
+            _currentTheme = _defaultTheme;
         }
     }
 
-    MudTheme currentTheme = new();
+    MudTheme _currentTheme = new();
 
-    readonly MudTheme defaultTheme = new()
+    readonly MudTheme _defaultTheme = new()
     {
         Palette = new Palette
         {
@@ -73,7 +73,7 @@
         }
     };
 
-    readonly MudTheme darkTheme = new()
+    readonly MudTheme _darkTheme = new()
     {
         Palette = new Palette
         {

@@ -9,7 +9,7 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudForm @bind-IsValid="isValid">
+        <MudForm @bind-IsValid="_isValid">
             @if (Indicator.CollectionInterval == CollectionInterval.Biannual)
             {
                 <MudSelect T="BiannualInterval" Label="Period" @bind-Value="SelectedBiannualInterval">
@@ -40,7 +40,7 @@
             <MudTextField @bind-Value="Entry.Note" Label="Note (optional)" For="@(() => Entry.Note)"/>
             <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
                 <MudButton OnClick="Cancel">Cancel</MudButton>
-                <MudButton Color="Color.Primary" Disabled="!isValid" OnClick="AddEntry">Add</MudButton>
+                <MudButton Color="Color.Primary" Disabled="!_isValid" OnClick="AddEntry">Add</MudButton>
             </MudItem>
         </MudForm>
     </DialogContent>
@@ -57,7 +57,7 @@
     [Parameter]
     public Indicator Indicator { get; set; } = null!;
 
-    private bool isValid;
+    private bool _isValid;
 
     private int SelectedYear { get; set; }
     private BiannualInterval SelectedBiannualInterval { get; set; }

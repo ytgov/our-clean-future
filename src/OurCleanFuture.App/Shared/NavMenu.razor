@@ -1,5 +1,5 @@
-﻿@inject IConfiguration _configuration;
-@inject IJSRuntime _jsRuntime;
+﻿@inject IConfiguration Configuration;
+@inject IJSRuntime JsRuntime;
 
 <MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
@@ -28,7 +28,7 @@
 
     private async Task OpenDashboardInNewTab()
     {
-        await _jsRuntime.InvokeAsync<object>("open", CancellationToken.None, _configuration["PowerBI:EmbedUrl"], "_blank");
+        await JsRuntime.InvokeAsync<object>("open", CancellationToken.None, Configuration["PowerBI:EmbedUrl"], "_blank");
     }
 
 }

@@ -11,12 +11,12 @@ public static class MinimalApiEndpoints
         app.MapGet("api/v1/indicators", GetIndicators)
             .WithTags("Indicators")
             .WithName("GetIndicators")
-            .Produces<List<IndicatorDTO>>();
+            .Produces<List<IndicatorDto>>();
 
         app.MapGet("api/v1/indicators/{id}", GetIndicatorById)
             .WithTags("Indicators")
             .WithName("GetIndicatorById")
-            .Produces<IndicatorDTO>()
+            .Produces<IndicatorDto>()
             .Produces(404);
     }
 
@@ -25,7 +25,7 @@ public static class MinimalApiEndpoints
         var indicators = await context.Indicators
             .Select(
                 i =>
-                    new IndicatorDTO
+                    new IndicatorDto
                     {
                         Id = i.Id,
                         Title = i.Title,
@@ -36,7 +36,7 @@ public static class MinimalApiEndpoints
                         Leads = i.Leads
                             .Select(
                                 l =>
-                                    new LeadDTO
+                                    new LeadDto
                                     {
                                         Id = l.Id,
                                         Organization = l.Organization.Name,
@@ -54,15 +54,15 @@ public static class MinimalApiEndpoints
                         Goals =
                             i.Action != null
                                 ? i.Action.Objective.Goals
-                                    .Select(g => new GoalDTO { Id = g.Id, Title = g.Title })
+                                    .Select(g => new GoalDto { Id = g.Id, Title = g.Title })
                                     .ToList()
                                 : i.Objective != null
                                     ? i.Objective.Goals
                                         .Select(
-                                            g => new GoalDTO { Id = g.Id, Title = g.Title }
+                                            g => new GoalDto { Id = g.Id, Title = g.Title }
                                         )
                                         .ToList()
-                                    : new List<GoalDTO> { new() { Id = i.Id, Title = i.Title } },
+                                    : new List<GoalDto> { new() { Id = i.Id, Title = i.Title } },
                         AreaId =
                             i.Action == null ? i.Objective!.Area.Id : i.Action.Objective.Area.Id,
                         AreaTitle =
@@ -78,7 +78,7 @@ public static class MinimalApiEndpoints
                         Entries = i.Entries
                             .Select(
                                 e =>
-                                    new EntryDTO
+                                    new EntryDto
                                     {
                                         StartDate = e.StartDate,
                                         EndDate = e.EndDate,
@@ -104,7 +104,7 @@ public static class MinimalApiEndpoints
         var indicator = await context.Indicators
             .Select(
                 i =>
-                    new IndicatorDTO
+                    new IndicatorDto
                     {
                         Id = i.Id,
                         Title = i.Title,
@@ -115,7 +115,7 @@ public static class MinimalApiEndpoints
                         Leads = i.Leads
                             .Select(
                                 l =>
-                                    new LeadDTO
+                                    new LeadDto
                                     {
                                         Id = l.Id,
                                         Organization = l.Organization.Name,
@@ -133,15 +133,15 @@ public static class MinimalApiEndpoints
                         Goals =
                             i.Action != null
                                 ? i.Action.Objective.Goals
-                                    .Select(g => new GoalDTO { Id = g.Id, Title = g.Title })
+                                    .Select(g => new GoalDto { Id = g.Id, Title = g.Title })
                                     .ToList()
                                 : i.Objective != null
                                     ? i.Objective.Goals
                                         .Select(
-                                            g => new GoalDTO { Id = g.Id, Title = g.Title }
+                                            g => new GoalDto { Id = g.Id, Title = g.Title }
                                         )
                                         .ToList()
-                                    : new List<GoalDTO> { new() { Id = i.Id, Title = i.Title } },
+                                    : new List<GoalDto> { new() { Id = i.Id, Title = i.Title } },
                         AreaId =
                             i.Action == null ? i.Objective!.Area.Id : i.Action.Objective.Area.Id,
                         AreaTitle =
@@ -157,7 +157,7 @@ public static class MinimalApiEndpoints
                         Entries = i.Entries
                             .Select(
                                 e =>
-                                    new EntryDTO
+                                    new EntryDto
                                     {
                                         StartDate = e.StartDate,
                                         EndDate = e.EndDate,
@@ -184,12 +184,12 @@ public static class MinimalApiEndpoints
         app.MapGet("api/v1/actions", GetActions)
             .WithTags("Actions")
             .WithName("GetActions")
-            .Produces<List<ActionDTO>>();
+            .Produces<List<ActionDto>>();
 
         app.MapGet("api/v1/actions/{id}", GetActionById)
             .WithTags("Actions")
             .WithName("GetActionById")
-            .Produces<ActionDTO>()
+            .Produces<ActionDto>()
             .Produces(404);
     }
 
@@ -198,7 +198,7 @@ public static class MinimalApiEndpoints
         var actions = await context.Actions
             .Select(
                 a =>
-                    new ActionDTO
+                    new ActionDto
                     {
                         Id = a.Id,
                         Number = a.Number,
@@ -206,7 +206,7 @@ public static class MinimalApiEndpoints
                         Leads = a.Leads
                             .Select(
                                 l =>
-                                    new LeadDTO
+                                    new LeadDto
                                     {
                                         Id = l.Id,
                                         Organization = l.Organization.Name,
@@ -234,7 +234,7 @@ public static class MinimalApiEndpoints
         var action = await context.Actions
             .Select(
                 a =>
-                    new ActionDTO
+                    new ActionDto
                     {
                         Id = a.Id,
                         Number = a.Number,
@@ -242,7 +242,7 @@ public static class MinimalApiEndpoints
                         Leads = a.Leads
                             .Select(
                                 l =>
-                                    new LeadDTO
+                                    new LeadDto
                                     {
                                         Id = l.Id,
                                         Organization = l.Organization.Name,
@@ -271,11 +271,11 @@ public static class MinimalApiEndpoints
         app.MapGet("api/v1/areas", GetAreas)
             .WithTags("Areas")
             .WithName("GetAreas")
-            .Produces<List<AreaDTO>>();
+            .Produces<List<AreaDto>>();
         app.MapGet("api/v1/areas/{id}", GetAreaById)
             .WithTags("Areas")
             .WithName("GetAreaById")
-            .Produces<AreaDTO>()
+            .Produces<AreaDto>()
             .Produces(404);
     }
 
@@ -284,20 +284,20 @@ public static class MinimalApiEndpoints
         var areas = await context.Areas
             .Select(
                 a =>
-                    new AreaDTO
+                    new AreaDto
                     {
                         Id = a.Id,
                         Title = a.Title,
                         Objectives = a.Objectives
                             .Select(
                                 o =>
-                                    new ObjectiveDTO
+                                    new ObjectiveDto
                                     {
                                         Id = o.Id,
                                         Title = o.Title,
                                         Goals = o.Goals
                                             .Select(
-                                                g => new GoalDTO { Id = g.Id, Title = g.Title }
+                                                g => new GoalDto { Id = g.Id, Title = g.Title }
                                             )
                                             .ToList()
                                     }
@@ -316,20 +316,20 @@ public static class MinimalApiEndpoints
         var area = await context.Areas
             .Select(
                 a =>
-                    new AreaDTO
+                    new AreaDto
                     {
                         Id = a.Id,
                         Title = a.Title,
                         Objectives = a.Objectives
                             .Select(
                                 o =>
-                                    new ObjectiveDTO
+                                    new ObjectiveDto
                                     {
                                         Id = o.Id,
                                         Title = o.Title,
                                         Goals = o.Goals
                                             .Select(
-                                                g => new GoalDTO { Id = g.Id, Title = g.Title }
+                                                g => new GoalDto { Id = g.Id, Title = g.Title }
                                             )
                                             .ToList()
                                     }
@@ -344,21 +344,21 @@ public static class MinimalApiEndpoints
         return area is not null ? Results.Ok(area) : Results.NotFound();
     }
 
-    private record AreaDTO
+    private record AreaDto
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;
-        public List<ObjectiveDTO> Objectives { get; set; } = null!;
+        public List<ObjectiveDto> Objectives { get; set; } = null!;
     }
 
-    private record ObjectiveDTO
+    private record ObjectiveDto
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;
-        public List<GoalDTO> Goals { get; set; } = null!;
+        public List<GoalDto> Goals { get; set; } = null!;
     }
 
-    private record IndicatorDTO
+    private record IndicatorDto
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;
@@ -366,9 +366,9 @@ public static class MinimalApiEndpoints
         public CollectionInterval CollectionInterval { get; set; }
         public string UnitOfMeasurementName { get; set; } = null!;
         public string UnitOfMeasurementSymbol { get; set; } = null!;
-        public List<LeadDTO> Leads { get; set; } = null!;
+        public List<LeadDto> Leads { get; set; } = null!;
         public ParentType ParentType { get; set; }
-        public List<GoalDTO> Goals { get; set; } = null!;
+        public List<GoalDto> Goals { get; set; } = null!;
         public int? AreaId { get; set; }
         public string? AreaTitle { get; set; }
         public int? ObjectiveId { get; set; }
@@ -376,13 +376,13 @@ public static class MinimalApiEndpoints
         public int? ActionId { get; set; }
         public string? ActionNumber { get; set; }
         public string? ActionTitle { get; set; }
-        public List<EntryDTO> Entries { get; set; } = null!;
+        public List<EntryDto> Entries { get; set; } = null!;
         public string? TargetDescription { get; set; }
         public double? TargetValue { get; set; }
         public DateTime? TargetCompletionDate { get; set; }
     }
 
-    private record EntryDTO
+    private record EntryDto
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -391,18 +391,18 @@ public static class MinimalApiEndpoints
         public string LastUpdatedBy { get; set; } = null!;
     }
 
-    private record GoalDTO
+    private record GoalDto
     {
         public int Id { get; set; }
         public string Title { get; set; } = null!;
     }
 
-    private record ActionDTO
+    private record ActionDto
     {
         public int Id { get; set; }
         public string Number { get; set; } = null!;
         public string Title { get; set; } = null!;
-        public List<LeadDTO> Leads { get; set; } = null!;
+        public List<LeadDto> Leads { get; set; } = null!;
         public InternalStatus InternalStatus { get; set; }
         public ExternalStatus ExternalStatus { get; set; }
         public DateTime? ActualOrAnticipatedCompletionDate { get; set; }
@@ -411,7 +411,7 @@ public static class MinimalApiEndpoints
         public object Indicators { get; set; } = null!;
     }
 
-    private record LeadDTO
+    private record LeadDto
     {
         public int Id { get; set; }
         public string Organization { get; set; } = null!;

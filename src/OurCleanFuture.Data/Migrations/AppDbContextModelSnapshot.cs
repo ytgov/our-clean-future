@@ -34,7 +34,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("DirectorsCommitteesId");
 
-                    b.ToTable("ActionDirectorsCommittee");
+                    b.ToTable("ActionDirectorsCommittee", (string)null);
                 });
 
             modelBuilder.Entity("GoalObjective", b =>
@@ -49,7 +49,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("ObjectivesId");
 
-                    b.ToTable("GoalObjective");
+                    b.ToTable("GoalObjective", (string)null);
                 });
 
             modelBuilder.Entity("LeadUser", b =>
@@ -64,7 +64,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("LeadUser");
+                    b.ToTable("LeadUser", (string)null);
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Action", b =>
@@ -150,7 +150,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("ObjectiveId");
 
-                    b.ToTable("Actions");
+                    b.ToTable("Actions", (string)null);
 
                     b.ToTable(tb => tb.IsTemporal(ttb =>
                         {
@@ -177,7 +177,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("LeadId");
 
-                    b.ToTable("ActionLead");
+                    b.ToTable("ActionLead", (string)null);
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Area", b =>
@@ -195,7 +195,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Areas");
+                    b.ToTable("Areas", (string)null);
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Branch", b =>
@@ -259,7 +259,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DirectorsCommittees");
+                    b.ToTable("DirectorsCommittees", (string)null);
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Goal", b =>
@@ -277,7 +277,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Goals");
+                    b.ToTable("Goals", (string)null);
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Indicator", b =>
@@ -350,7 +350,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("UnitOfMeasurementId");
 
-                    b.ToTable("Indicators");
+                    b.ToTable("Indicators", (string)null);
 
                     b.ToTable(tb => tb.IsTemporal(ttb =>
                         {
@@ -377,7 +377,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("LeadId");
 
-                    b.ToTable("IndicatorLead");
+                    b.ToTable("IndicatorLead", (string)null);
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Lead", b =>
@@ -402,7 +402,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("Leads");
+                    b.ToTable("Leads", (string)null);
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Objective", b =>
@@ -425,7 +425,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasIndex("AreaId");
 
-                    b.ToTable("Objectives");
+                    b.ToTable("Objectives", (string)null);
                 });
 
             modelBuilder.Entity("OurCleanFuture.Data.Entities.Organization", b =>
@@ -483,7 +483,7 @@ namespace OurCleanFuture.Data.Migrations
                     b.HasIndex("IndicatorId")
                         .IsUnique();
 
-                    b.ToTable("Targets");
+                    b.ToTable("Targets", (string)null);
 
                     b.ToTable(tb => tb.IsTemporal(ttb =>
                         {
@@ -538,7 +538,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ActionDirectorsCommittee", b =>
@@ -648,7 +648,7 @@ namespace OurCleanFuture.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsMany("OurCleanFuture.Data.Entities.Entry", "Entries", b1 =>
+                    b.OwnsMany("OurCleanFuture.Data.Entities.Indicator.Entries#OurCleanFuture.Data.Entities.Entry", "Entries", b1 =>
                         {
                             b1.Property<int>("IndicatorId")
                                 .HasColumnType("int");

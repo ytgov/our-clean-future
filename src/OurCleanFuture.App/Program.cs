@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Server.Circuits;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.WindowsServices;
 using MudBlazor.Services;
+using NSwag;
 using OurCleanFuture.App;
 using OurCleanFuture.App.Endpoints;
 using OurCleanFuture.App.Services;
@@ -89,7 +90,7 @@ try
 
                 options.Events = new OpenIdConnectEvents
                 {
-                    OnRedirectToIdentityProviderForSignOut = (context) =>
+                    OnRedirectToIdentityProviderForSignOut = context =>
                     {
                         var logoutUri =
                             $"https://{configuration["AuthNProvider:Domain"]}/v2/logout?client_id={configuration["AuthNProvider:ClientId"]}";
@@ -107,6 +108,7 @@ try
                                     + request.PathBase
                                     + postLogoutUri;
                             }
+
                             logoutUri += $"&returnTo={Uri.EscapeDataString(postLogoutUri)}";
                         }
 
@@ -117,7 +119,7 @@ try
                     }
                 };
 
-                options.Events.OnSignedOutCallbackRedirect = (context) =>
+                options.Events.OnSignedOutCallbackRedirect = context =>
                 {
                     context.Response.Redirect(options.SignedOutRedirectUri);
                     context.HandleResponse();
@@ -157,7 +159,7 @@ try
     );
 #endif
 
-    builder.Services.AddScoped<StateContainerService>(
+    builder.Services.AddScoped(
         s => new StateContainerService(s.GetRequiredService<IDbContextFactory<AppDbContext>>())
     );
     builder.Services.AddScoped<CircuitHandler>(
@@ -173,7 +175,7 @@ try
         {
             document.Info.Version = "v1";
             document.Info.Title = "Our Clean Future API";
-            document.Info.Contact = new NSwag.OpenApiContact
+            document.Info.Contact = new OpenApiContact
             {
                 Name = "Jon Hodgins",
                 Email = "jon.hodgins@yukon.ca",

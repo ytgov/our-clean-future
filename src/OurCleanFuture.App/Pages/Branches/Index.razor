@@ -1,4 +1,5 @@
 ﻿@page "/admin/leads/branches"
+@using OurCleanFuture.Data.Entities
 @attribute [Authorize]
 
 <PageTitle>Leads</PageTitle>
@@ -15,31 +16,35 @@ else
         <MudTable Items="Branches" Dense="true" Striped="true" Hover="true">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Branches</MudText>
-                <MudSpacer />
-                <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Create(Departments))">New Branch</MudButton>
+                <MudSpacer/>
+                <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="() => Create(Departments)">New Branch</MudButton>
             </ToolBarContent>
             <ColGroup>
                 <MudHidden Breakpoint="Breakpoint.Xs">
-                    <col style="width: 43%" />
-                    <col style="width: 43%" />
-                    <col style="width: 14%" />
+                    <col style="width: 43%"/>
+                    <col style="width: 43%"/>
+                    <col style="width: 14%"/>
                 </MudHidden>
             </ColGroup>
             <HeaderContent>
-                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Branch, object>(b => b.Name)">Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.Branch, object>(b => b.Department.Name)">Department</MudTableSortLabel></MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<Branch, object>(b => b.Name)">Name</MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<Branch, object>(b => b.Department.Name)">Department</MudTableSortLabel>
+                </MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Name">@context.Name</MudTd>
                 <MudTd DataLabel="Department">@context.Department.Name</MudTd>
                 <MudTd>
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context, Departments))"></MudIconButton>
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="() => Edit(context, Departments)"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="() => Delete(context)"></MudIconButton>
                 </MudTd>
             </RowTemplate>
             <PagerContent>
-                <MudTablePager />
+                <MudTablePager/>
             </PagerContent>
         </MudTable>
     </MudContainer>

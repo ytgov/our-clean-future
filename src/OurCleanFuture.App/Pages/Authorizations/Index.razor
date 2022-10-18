@@ -1,5 +1,5 @@
 ﻿@page "/admin/authorizations"
-@using OurCleanFuture.App.Extensions
+@using OurCleanFuture.Data.Entities
 
 <PageTitle>User authorizations</PageTitle>
 
@@ -13,7 +13,7 @@ else
 {
     <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
         <MudText Typo="Typo.h3" Class="mb-4">User Authorizations</MudText>
-        <MudItem md="12"  Class="mb-4">
+        <MudItem md="12" Class="mb-4">
             <MudAlert Severity="Severity.Info" Class="mb-2">All YNET users can view all indicator and actions data by default. Adding a user to a lead will allow them to edit indicators and actions associated with that lead.</MudAlert>
             <MudAlert Severity="Severity.Warning">Caution: Users added to ENV | Climate Change Secretariat can edit all data, including this page.</MudAlert>
         </MudItem>
@@ -25,23 +25,25 @@ else
                         <MudTable Items="Users.Where(u => u.Leads.Contains(lead))" Dense="true" Striped="true" Hover="true" Elevation="0">
                             <ToolBarContent>
                                 <MudText Typo="Typo.h6">@lead.ToString()</MudText>
-                                <MudSpacer />
-                                <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Add(lead))"></MudIconButton>
+                                <MudSpacer/>
+                                <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="() => Add(lead)"></MudIconButton>
                             </ToolBarContent>
                             <ColGroup>
                                 <MudHidden Breakpoint="Breakpoint.Xs">
-                                    <col style="width: 90%" />
-                                    <col style="width: 10%" />
+                                    <col style="width: 90%"/>
+                                    <col style="width: 10%"/>
                                 </MudHidden>
                             </ColGroup>
                             <HeaderContent>
-                                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.User, object>(u => u.Email)">Users</MudTableSortLabel></MudTh>
-                                <MudTh />
+                                <MudTh>
+                                    <MudTableSortLabel SortBy="new Func<User, object>(u => u.Email)">Users</MudTableSortLabel>
+                                </MudTh>
+                                <MudTh/>
                             </HeaderContent>
                             <RowTemplate>
                                 <MudTd DataLabel="User Name">@context.Email</MudTd>
                                 <MudTd>
-                                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Remove(context, lead))"></MudIconButton>
+                                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="() => Remove(context, lead)"></MudIconButton>
                                 </MudTd>
                             </RowTemplate>
                         </MudTable>

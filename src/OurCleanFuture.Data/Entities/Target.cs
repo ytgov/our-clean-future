@@ -24,13 +24,11 @@ public class Target
                 "Count" => value.ToString(),
                 "Dollars" => value.ToString("c"),
                 // All other units
-                _ => $"{value:n} {Indicator.UnitOfMeasurement.Symbol}",
+                _ => $"{value:n} {Indicator.UnitOfMeasurement.Symbol}"
             };
             return result;
         }
-        else
-        {
-            return "";
-        }
+
+        return "";
     }
 }

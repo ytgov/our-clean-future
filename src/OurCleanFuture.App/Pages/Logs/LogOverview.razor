@@ -1,6 +1,6 @@
 ﻿@page "/admin/log"
-@using Seq.Api
 @using Seq.Api.Model.Events
+@using Seq.Api
 @attribute [Authorize(Roles = "Administrator, 1")]
 @inject NavigationManager Navigation
 
@@ -14,10 +14,10 @@
                       T="EventEntity" OnRowClick="@IndicatorRowClicked" RowClass="cursor-pointer">
                 <ColGroup>
                     <MudHidden Breakpoint="Breakpoint.Xs">
-                        <col style="width: 10%" />
-                        <col style="width: 50%" />
-                        <col style="width: 20%" />
-                        <col style="width: 20%" />
+                        <col style="width: 10%"/>
+                        <col style="width: 50%"/>
+                        <col style="width: 20%"/>
+                        <col style="width: 20%"/>
                     </MudHidden>
                 </ColGroup>
                 <HeaderContent>
@@ -33,7 +33,7 @@
                     <MudTd>@DateTime.Parse(evt.Timestamp).ToString("U")</MudTd>
                 </RowTemplate>
                 <PagerContent>
-                    <MudTablePager />
+                    <MudTablePager/>
                 </PagerContent>
             </MudTable>
         </MudTabPanel>
@@ -42,10 +42,10 @@
                       T="EventEntity" OnRowClick="@ActionRowClicked" RowClass="cursor-pointer">
                 <ColGroup>
                     <MudHidden Breakpoint="Breakpoint.Xs">
-                        <col style="width: 10%" />
-                        <col style="width: 50%" />
-                        <col style="width: 20%" />
-                        <col style="width: 20%" />
+                        <col style="width: 10%"/>
+                        <col style="width: 50%"/>
+                        <col style="width: 20%"/>
+                        <col style="width: 20%"/>
                     </MudHidden>
                 </ColGroup>
                 <HeaderContent>
@@ -61,7 +61,7 @@
                     <MudTd>@DateTime.Parse(evt.Timestamp).ToString("U")</MudTd>
                 </RowTemplate>
                 <PagerContent>
-                    <MudTablePager />
+                    <MudTablePager/>
                 </PagerContent>
             </MudTable>
         </MudTabPanel>
@@ -69,11 +69,11 @@
 </MudContainer>
 
 @code {
-    private List<EventEntity> _logEvents = new();
-    private const string _indicatorEditEventType = "$615E81DE";
-    private const string _indicatorCreateEventType = "$8A9A5998";
-    private const string _actionEditEventType = "$611D404A";
-    private const string _actionCreateEventType = "$B2188044";
+    private readonly List<EventEntity> _logEvents = new();
+        private const string _indicatorEditEventType = "$615E81DE";
+        private const string _indicatorCreateEventType = "$8A9A5998";
+        private const string _actionEditEventType = "$611D404A";
+        private const string _actionCreateEventType = "$B2188044";
 
 
     protected override async Task OnInitializedAsync()
@@ -97,4 +97,5 @@
     {
         Navigation.NavigateTo($"/actions/details/{p.Item.Properties[1].Value}");
     }
+
 }

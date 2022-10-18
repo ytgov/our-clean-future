@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -17,34 +16,33 @@ namespace OurCleanFuture.App.Pages.Actions;
 [Authorize(Roles = "Administrator, 1")]
 public partial class Create : IDisposable
 {
-    private bool _isLoaded;
-    private AppDbContext _context = null!;
-    private ClaimsPrincipal _user = null!;
     private readonly Func<DirectorsCommittee, string> _committeeConverter = d => d.Name;
+    private AppDbContext _context = null!;
+    private bool _isLoaded;
+    private ClaimsPrincipal _user = null!;
 
     private IEnumerable<Lead> SelectedLeads { get; set; } = new List<Lead>();
 
     private List<Objective> Objectives { get; set; } = new();
     private List<Lead> Leads { get; set; } = new();
-    private Action Action { get; set; } = new();
+    private Action Action { get; } = new();
+
     private IEnumerable<DirectorsCommittee> SelectedDirectorsCommittees { get; set; } =
         new List<DirectorsCommittee>();
+
     private List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();
 
-    [CascadingParameter]
-    private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
+    [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
 
-    [Inject]
-    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject]
-    private NavigationManager Navigation { get; set; } = null!;
+    [Inject] private NavigationManager Navigation { get; set; } = null!;
 
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
+    [Inject] private ISnackbar Snackbar { get; set; } = null!;
 
-    [Inject]
-    private StateContainerService StateContainer { get; init; } = null!;
+    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+
+    public void Dispose() => _context.Dispose();
 
     protected override async Task OnInitializedAsync()
     {
@@ -95,8 +93,8 @@ public partial class Create : IDisposable
         )
         {
             Snackbar.Add(
-                $"The <b>Internal Status</b> cannot be set to <b>On track</b>, as the <b>Actual/Anticipated Completion Date</b> occurs after the <b>Target Completion Date</b>."
-                    + $" Either revise the <b>Actual/Anticipated Completion Date</b>, or change the <b>Internal Status</b> to <b>Delayed</b>.",
+                "The <b>Internal Status</b> cannot be set to <b>On track</b>, as the <b>Actual/Anticipated Completion Date</b> occurs after the <b>Target Completion Date</b>."
+                + " Either revise the <b>Actual/Anticipated Completion Date</b>, or change the <b>Internal Status</b> to <b>Delayed</b>.",
                 Severity.Error
             );
             return;
@@ -137,10 +135,5 @@ public partial class Create : IDisposable
                 );
             }
         }
-    }
-
-    public void Dispose()
-    {
-        _context.Dispose();
     }
 }

@@ -2,6 +2,8 @@
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 
+// ReSharper disable NotAccessedPositionalProperty.Local
+
 namespace OurCleanFuture.App.Endpoints;
 
 public static class MinimalApiEndpoints
@@ -13,7 +15,7 @@ public static class MinimalApiEndpoints
             .WithName("GetIndicators")
             .Produces<List<IndicatorDto>>();
 
-        app.MapGet("api/v1/indicators/{id}", GetIndicatorById)
+        app.MapGet("api/v1/indicators/{id:int}", GetIndicatorById)
             .WithTags("Indicators")
             .WithName("GetIndicatorById")
             .Produces<IndicatorDto>()
@@ -25,73 +27,53 @@ public static class MinimalApiEndpoints
         var indicators = await context.Indicators
             .Select(
                 i =>
-                    new IndicatorDto
-                    {
-                        Id = i.Id,
-                        Title = i.Title,
-                        Description = i.Description,
-                        CollectionInterval = i.CollectionInterval,
-                        UnitOfMeasurementName = i.UnitOfMeasurement.Name,
-                        UnitOfMeasurementSymbol = i.UnitOfMeasurement.Symbol,
-                        Leads = i.Leads
+                    new IndicatorDto(
+                        i.Id,
+                        i.Title,
+                        i.Description,
+                        i.CollectionInterval,
+                        i.UnitOfMeasurement.Name,
+                        i.UnitOfMeasurement.Symbol,
+                        i.Leads
                             .Select(
                                 l =>
-                                    new LeadDto
-                                    {
-                                        Id = l.Id,
-                                        Organization = l.Organization.Name,
-                                        Department = l.Branch!.Department.Name,
-                                        Branch = l.Branch.Name
-                                    }
+                                    new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name)
                             )
                             .ToList(),
-                        ParentType =
-                            i.Action != null
-                                ? ParentType.Action
-                                : i.Objective != null
-                                    ? ParentType.Objective
-                                    : ParentType.Goal,
-                        Goals =
-                            i.Action != null
-                                ? i.Action.Objective.Goals
-                                    .Select(g => new GoalDto { Id = g.Id, Title = g.Title })
+                        i.Action != null
+                            ? ParentType.Action
+                            : i.Objective != null
+                                ? ParentType.Objective
+                                : ParentType.Goal,
+                        i.Action != null
+                            ? i.Action.Objective.Goals
+                                .Select(g => new GoalDto(g.Id, g.Title))
+                                .ToList()
+                            : i.Objective != null
+                                ? i.Objective.Goals
+                                    .Select(
+                                        g => new GoalDto(g.Id, g.Title)
+                                    )
                                     .ToList()
-                                : i.Objective != null
-                                    ? i.Objective.Goals
-                                        .Select(
-                                            g => new GoalDto { Id = g.Id, Title = g.Title }
-                                        )
-                                        .ToList()
-                                    : new List<GoalDto> { new() { Id = i.Id, Title = i.Title } },
-                        AreaId =
-                            i.Action == null ? i.Objective!.Area.Id : i.Action.Objective.Area.Id,
-                        AreaTitle =
-                            i.Action == null
-                                ? i.Objective!.Area.Title
-                                : i.Action.Objective.Area.Title,
-                        ObjectiveId = i.Objective == null ? i.Action!.Objective.Id : i.Objective.Id,
-                        ObjectiveTitle =
-                            i.Objective == null ? i.Action!.Objective.Title : i.Objective.Title,
-                        ActionId = i.Action == null ? null : i.Action.Id,
-                        ActionNumber = i.Action == null ? default : i.Action.Number,
-                        ActionTitle = i.Action == null ? default : i.Action.Title,
-                        Entries = i.Entries
+                                : new List<GoalDto> { new(i.Id, i.Title) },
+                        i.Action == null ? i.Objective!.Area.Id : i.Action.Objective.Area.Id,
+                        i.Action == null
+                            ? i.Objective!.Area.Title
+                            : i.Action.Objective.Area.Title,
+                        i.Objective == null ? i.Action!.Objective.Id : i.Objective.Id,
+                        i.Objective == null ? i.Action!.Objective.Title : i.Objective.Title,
+                        i.Action == null ? null : i.Action.Id,
+                        i.Action == null ? default : i.Action.Number,
+                        i.Action == null ? default : i.Action.Title,
+                        i.Entries
                             .Select(
                                 e =>
-                                    new EntryDto
-                                    {
-                                        StartDate = e.StartDate,
-                                        EndDate = e.EndDate,
-                                        Value = e.Value,
-                                        Note = e.Note,
-                                        LastUpdatedBy = e.UpdatedBy
-                                    }
+                                    new EntryDto(e.StartDate, e.EndDate, e.Value, e.Note, e.UpdatedBy)
                             )
                             .ToList(),
-                        TargetDescription = i.Target == null ? default : i.Target.Description,
-                        TargetValue = i.Target == null ? default : i.Target.Value,
-                        TargetCompletionDate = i.Target == null ? default : i.Target.CompletionDate
-                    }
+                        i.Target == null ? default : i.Target.Description,
+                        i.Target == null ? default : i.Target.Value,
+                        i.Target == null ? default : i.Target.CompletionDate)
             )
             .AsNoTracking()
             .ToListAsync();
@@ -104,73 +86,53 @@ public static class MinimalApiEndpoints
         var indicator = await context.Indicators
             .Select(
                 i =>
-                    new IndicatorDto
-                    {
-                        Id = i.Id,
-                        Title = i.Title,
-                        Description = i.Description,
-                        CollectionInterval = i.CollectionInterval,
-                        UnitOfMeasurementName = i.UnitOfMeasurement.Name,
-                        UnitOfMeasurementSymbol = i.UnitOfMeasurement.Symbol,
-                        Leads = i.Leads
+                    new IndicatorDto(
+                        i.Id,
+                        i.Title,
+                        i.Description,
+                        i.CollectionInterval,
+                        i.UnitOfMeasurement.Name,
+                        i.UnitOfMeasurement.Symbol,
+                        i.Leads
                             .Select(
                                 l =>
-                                    new LeadDto
-                                    {
-                                        Id = l.Id,
-                                        Organization = l.Organization.Name,
-                                        Department = l.Branch!.Department.Name,
-                                        Branch = l.Branch.Name
-                                    }
+                                    new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name)
                             )
                             .ToList(),
-                        ParentType =
-                            i.Action != null
-                                ? ParentType.Action
-                                : i.Objective != null
-                                    ? ParentType.Objective
-                                    : ParentType.Goal,
-                        Goals =
-                            i.Action != null
-                                ? i.Action.Objective.Goals
-                                    .Select(g => new GoalDto { Id = g.Id, Title = g.Title })
+                        i.Action != null
+                            ? ParentType.Action
+                            : i.Objective != null
+                                ? ParentType.Objective
+                                : ParentType.Goal,
+                        i.Action != null
+                            ? i.Action.Objective.Goals
+                                .Select(g => new GoalDto(g.Id, g.Title))
+                                .ToList()
+                            : i.Objective != null
+                                ? i.Objective.Goals
+                                    .Select(
+                                        g => new GoalDto(g.Id, g.Title)
+                                    )
                                     .ToList()
-                                : i.Objective != null
-                                    ? i.Objective.Goals
-                                        .Select(
-                                            g => new GoalDto { Id = g.Id, Title = g.Title }
-                                        )
-                                        .ToList()
-                                    : new List<GoalDto> { new() { Id = i.Id, Title = i.Title } },
-                        AreaId =
-                            i.Action == null ? i.Objective!.Area.Id : i.Action.Objective.Area.Id,
-                        AreaTitle =
-                            i.Action == null
-                                ? i.Objective!.Area.Title
-                                : i.Action.Objective.Area.Title,
-                        ObjectiveId = i.Objective == null ? i.Action!.Objective.Id : i.Objective.Id,
-                        ObjectiveTitle =
-                            i.Objective == null ? i.Action!.Objective.Title : i.Objective.Title,
-                        ActionId = i.Action == null ? null : i.Action.Id,
-                        ActionNumber = i.Action == null ? default : i.Action.Number,
-                        ActionTitle = i.Action == null ? default : i.Action.Title,
-                        Entries = i.Entries
+                                : new List<GoalDto> { new(i.Id, i.Title) },
+                        i.Action == null ? i.Objective!.Area.Id : i.Action.Objective.Area.Id,
+                        i.Action == null
+                            ? i.Objective!.Area.Title
+                            : i.Action.Objective.Area.Title,
+                        i.Objective == null ? i.Action!.Objective.Id : i.Objective.Id,
+                        i.Objective == null ? i.Action!.Objective.Title : i.Objective.Title,
+                        i.Action == null ? null : i.Action.Id,
+                        i.Action == null ? default : i.Action.Number,
+                        i.Action == null ? default : i.Action.Title,
+                        i.Entries
                             .Select(
                                 e =>
-                                    new EntryDto
-                                    {
-                                        StartDate = e.StartDate,
-                                        EndDate = e.EndDate,
-                                        Value = e.Value,
-                                        Note = e.Note,
-                                        LastUpdatedBy = e.UpdatedBy
-                                    }
+                                    new EntryDto(e.StartDate, e.EndDate, e.Value, e.Note, e.UpdatedBy)
                             )
                             .ToList(),
-                        TargetDescription = i.Target == null ? default : i.Target.Description,
-                        TargetValue = i.Target == null ? default : i.Target.Value,
-                        TargetCompletionDate = i.Target == null ? default : i.Target.CompletionDate
-                    }
+                        i.Target == null ? default : i.Target.Description,
+                        i.Target == null ? default : i.Target.Value,
+                        i.Target == null ? default : i.Target.CompletionDate)
             )
             .Where(i => i.Id == id)
             .AsNoTracking()
@@ -186,7 +148,7 @@ public static class MinimalApiEndpoints
             .WithName("GetActions")
             .Produces<List<ActionDto>>();
 
-        app.MapGet("api/v1/actions/{id}", GetActionById)
+        app.MapGet("api/v1/actions/{id:int}", GetActionById)
             .WithTags("Actions")
             .WithName("GetActionById")
             .Produces<ActionDto>()
@@ -198,30 +160,13 @@ public static class MinimalApiEndpoints
         var actions = await context.Actions
             .Select(
                 a =>
-                    new ActionDto
-                    {
-                        Id = a.Id,
-                        Number = a.Number,
-                        Title = a.Title,
-                        Leads = a.Leads
-                            .Select(
+                    new ActionDto(a.Id, a.Number, a.Title, a.Leads.Select(
                                 l =>
-                                    new LeadDto
-                                    {
-                                        Id = l.Id,
-                                        Organization = l.Organization.Name,
-                                        Department = l.Branch!.Department.Name,
-                                        Branch = l.Branch.Name
-                                    }
+                                    new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name)
                             )
-                            .ToList(),
-                        InternalStatus = a.InternalStatus,
-                        ExternalStatus = a.ExternalStatus,
-                        ActualOrAnticipatedCompletionDate = a.ActualCompletionDate,
-                        TargetCompletionDate = a.TargetCompletionDate,
-                        IndicatorCount = a.Indicators.Count,
-                        Indicators = a.Indicators.Select(i => new { i.Id, i.Title }).ToList()
-                    }
+                            .ToList(), a.InternalStatus, a.ExternalStatus, a.ActualCompletionDate,
+                        a.TargetCompletionDate,
+                        a.Indicators.Count, a.Indicators.Select(i => new { i.Id, i.Title }).ToList())
             )
             .AsNoTracking()
             .ToListAsync();
@@ -234,30 +179,13 @@ public static class MinimalApiEndpoints
         var action = await context.Actions
             .Select(
                 a =>
-                    new ActionDto
-                    {
-                        Id = a.Id,
-                        Number = a.Number,
-                        Title = a.Title,
-                        Leads = a.Leads
-                            .Select(
+                    new ActionDto(a.Id, a.Number, a.Title, a.Leads.Select(
                                 l =>
-                                    new LeadDto
-                                    {
-                                        Id = l.Id,
-                                        Organization = l.Organization.Name,
-                                        Department = l.Branch!.Department.Name,
-                                        Branch = l.Branch.Name
-                                    }
+                                    new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name)
                             )
-                            .ToList(),
-                        InternalStatus = a.InternalStatus,
-                        ExternalStatus = a.ExternalStatus,
-                        ActualOrAnticipatedCompletionDate = a.ActualCompletionDate,
-                        TargetCompletionDate = a.TargetCompletionDate,
-                        IndicatorCount = a.Indicators.Count,
-                        Indicators = a.Indicators.Select(i => new { i.Id, i.Title }).ToList()
-                    }
+                            .ToList(), a.InternalStatus, a.ExternalStatus, a.ActualCompletionDate,
+                        a.TargetCompletionDate,
+                        a.Indicators.Count, a.Indicators.Select(i => new { i.Id, i.Title }).ToList())
             )
             .Where(a => a.Id == id)
             .AsNoTracking()
@@ -272,7 +200,7 @@ public static class MinimalApiEndpoints
             .WithTags("Areas")
             .WithName("GetAreas")
             .Produces<List<AreaDto>>();
-        app.MapGet("api/v1/areas/{id}", GetAreaById)
+        app.MapGet("api/v1/areas/{id:int}", GetAreaById)
             .WithTags("Areas")
             .WithName("GetAreaById")
             .Produces<AreaDto>()
@@ -284,26 +212,14 @@ public static class MinimalApiEndpoints
         var areas = await context.Areas
             .Select(
                 a =>
-                    new AreaDto
-                    {
-                        Id = a.Id,
-                        Title = a.Title,
-                        Objectives = a.Objectives
-                            .Select(
-                                o =>
-                                    new ObjectiveDto
-                                    {
-                                        Id = o.Id,
-                                        Title = o.Title,
-                                        Goals = o.Goals
-                                            .Select(
-                                                g => new GoalDto { Id = g.Id, Title = g.Title }
-                                            )
-                                            .ToList()
-                                    }
-                            )
-                            .ToList()
-                    }
+                    new AreaDto(a.Id, a.Title, a.Objectives.Select(
+                            o =>
+                                new ObjectiveDto(o.Id, o.Title, o.Goals.Select(
+                                        g => new GoalDto(g.Id, g.Title)
+                                    )
+                                    .ToList())
+                        )
+                        .ToList())
             )
             .AsNoTracking()
             .ToListAsync();
@@ -316,26 +232,14 @@ public static class MinimalApiEndpoints
         var area = await context.Areas
             .Select(
                 a =>
-                    new AreaDto
-                    {
-                        Id = a.Id,
-                        Title = a.Title,
-                        Objectives = a.Objectives
-                            .Select(
-                                o =>
-                                    new ObjectiveDto
-                                    {
-                                        Id = o.Id,
-                                        Title = o.Title,
-                                        Goals = o.Goals
-                                            .Select(
-                                                g => new GoalDto { Id = g.Id, Title = g.Title }
-                                            )
-                                            .ToList()
-                                    }
-                            )
-                            .ToList()
-                    }
+                    new AreaDto(a.Id, a.Title, a.Objectives.Select(
+                            o =>
+                                new ObjectiveDto(o.Id, o.Title, o.Goals.Select(
+                                        g => new GoalDto(g.Id, g.Title)
+                                    )
+                                    .ToList())
+                        )
+                        .ToList())
             )
             .Where(a => a.Id == id)
             .AsNoTracking()
@@ -344,80 +248,66 @@ public static class MinimalApiEndpoints
         return area is not null ? Results.Ok(area) : Results.NotFound();
     }
 
-    private record AreaDto
-    {
-        public int Id { get; set; }
-        public string Title { get; set; } = null!;
-        public List<ObjectiveDto> Objectives { get; set; } = null!;
-    }
+    private record AreaDto(
+        int Id,
+        string Title,
+        List<ObjectiveDto> Objectives);
 
-    private record ObjectiveDto
-    {
-        public int Id { get; set; }
-        public string Title { get; set; } = null!;
-        public List<GoalDto> Goals { get; set; } = null!;
-    }
+    private record ObjectiveDto(
+        int Id,
+        string Title,
+        List<GoalDto> Goals);
 
-    private record IndicatorDto
-    {
-        public int Id { get; set; }
-        public string Title { get; set; } = null!;
-        public string Description { get; set; } = null!;
-        public CollectionInterval CollectionInterval { get; set; }
-        public string UnitOfMeasurementName { get; set; } = null!;
-        public string UnitOfMeasurementSymbol { get; set; } = null!;
-        public List<LeadDto> Leads { get; set; } = null!;
-        public ParentType ParentType { get; set; }
-        public List<GoalDto> Goals { get; set; } = null!;
-        public int? AreaId { get; set; }
-        public string? AreaTitle { get; set; }
-        public int? ObjectiveId { get; set; }
-        public string? ObjectiveTitle { get; set; }
-        public int? ActionId { get; set; }
-        public string? ActionNumber { get; set; }
-        public string? ActionTitle { get; set; }
-        public List<EntryDto> Entries { get; set; } = null!;
-        public string? TargetDescription { get; set; }
-        public double? TargetValue { get; set; }
-        public DateTime? TargetCompletionDate { get; set; }
-    }
+    private record IndicatorDto(
+        int Id,
+        string Title,
+        string Description,
+        CollectionInterval CollectionInterval,
+        string UnitOfMeasurementName,
+        string UnitOfMeasurementSymbol,
+        List<LeadDto> Leads,
+        ParentType ParentType,
+        List<GoalDto> Goals,
+        int? AreaId,
+        string? AreaTitle,
+        int? ObjectiveId,
+        string? ObjectiveTitle,
+        int? ActionId,
+        string? ActionNumber,
+        string? ActionTitle,
+        List<EntryDto> Entries,
+        string? TargetDescription,
+        double? TargetValue,
+        DateTime? TargetCompletionDate);
 
-    private record EntryDto
-    {
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public decimal Value { get; set; }
-        public string Note { get; set; } = null!;
-        public string LastUpdatedBy { get; set; } = null!;
-    }
+    private record EntryDto(
+        DateTime StartDate,
+        DateTime EndDate,
+        decimal Value,
+        string Note,
+        string LastUpdatedBy);
 
-    private record GoalDto
-    {
-        public int Id { get; set; }
-        public string Title { get; set; } = null!;
-    }
+    private record GoalDto(
+        int Id,
+        string Title);
 
-    private record ActionDto
-    {
-        public int Id { get; set; }
-        public string Number { get; set; } = null!;
-        public string Title { get; set; } = null!;
-        public List<LeadDto> Leads { get; set; } = null!;
-        public InternalStatus InternalStatus { get; set; }
-        public ExternalStatus ExternalStatus { get; set; }
-        public DateTime? ActualOrAnticipatedCompletionDate { get; set; }
-        public DateTime? TargetCompletionDate { get; set; }
-        public int IndicatorCount { get; set; }
-        public object Indicators { get; set; } = null!;
-    }
+    private record ActionDto(
+        int Id,
+        string Number,
+        string Title,
+        List<LeadDto> Leads,
+        InternalStatus InternalStatus,
+        ExternalStatus ExternalStatus,
+        DateTime? ActualOrAnticipatedCompletionDate,
+        DateTime? TargetCompletionDate,
+        int IndicatorCount,
+        object Indicators);
 
-    private record LeadDto
-    {
-        public int Id { get; set; }
-        public string Organization { get; set; } = null!;
-        public string? Department { get; set; }
-        public string? Branch { get; set; }
-    }
+    private record LeadDto(
+        int Id,
+        string Organization,
+        string? Department,
+        string? Branch);
 
     private enum ParentType
     {

@@ -46,9 +46,10 @@ public partial class Index : IDisposable
                 .AsNoTracking()
                 .AsSingleQuery()
                 .ToListAsync();
-            _orderedActions = actions.OrderBy(a => a.Number[0])
-                                            .ThenBy(a => a.Number.Length)
-                                            .ThenBy(a => a.Number);
+            _orderedActions = actions
+                .OrderBy(a => a.Number[0])
+                .ThenBy(a => a.Number.Length)
+                .ThenBy(a => a.Number);
             _filteredActions.AddRange(_orderedActions);
         }
         catch (Exception ex)
@@ -60,6 +61,11 @@ public partial class Index : IDisposable
         {
             _isLoaded = true;
         }
+    }
+
+    private void Create()
+    {
+        Navigation.NavigateTo("/actions/create/");
     }
 
     private void Details(int actionId)
@@ -76,11 +82,21 @@ public partial class Index : IDisposable
     {
         if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey)
         {
-            await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/actions/edit/{p.Item.Id}", "_blank");
+            await JSRuntime.InvokeAsync<object>(
+                "open",
+                CancellationToken.None,
+                $"/actions/edit/{p.Item.Id}",
+                "_blank"
+            );
         }
         else if (p.MouseEventArgs.CtrlKey)
         {
-            await JSRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/actions/details/{p.Item.Id}", "_blank");
+            await JSRuntime.InvokeAsync<object>(
+                "open",
+                CancellationToken.None,
+                $"/actions/details/{p.Item.Id}",
+                "_blank"
+            );
         }
         else
         {
@@ -100,15 +116,28 @@ public partial class Index : IDisposable
             {
                 return true;
             }
-            if (lead.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            if (
+                lead.Branch?.Department.Name.Contains(
+                    _searchString,
+                    StringComparison.OrdinalIgnoreCase
+                ) == true
+            )
             {
                 return true;
             }
-            if (lead.Branch?.Department.ShortName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            if (
+                lead.Branch?.Department.ShortName.Contains(
+                    _searchString,
+                    StringComparison.OrdinalIgnoreCase
+                ) == true
+            )
             {
                 return true;
             }
-            if (lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            if (
+                lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase)
+                == true
+            )
             {
                 return true;
             }
@@ -159,8 +188,7 @@ public partial class Index : IDisposable
                 return true;
             }
         }
-        if (claimsPrincipal.IsInRole("Administrator")
-            || claimsPrincipal.IsInRole("1"))
+        if (claimsPrincipal.IsInRole("Administrator") || claimsPrincipal.IsInRole("1"))
         {
             return true;
         }

@@ -76,6 +76,7 @@ public static class MinimalApiEndpoints
                         i.Target == null ? default : i.Target.CompletionDate)
             )
             .AsNoTracking()
+            .AsSplitQuery()
             .ToListAsync();
 
         return Results.Ok(indicators);
@@ -136,6 +137,7 @@ public static class MinimalApiEndpoints
             )
             .Where(i => i.Id == id)
             .AsNoTracking()
+            .AsSplitQuery()
             .FirstOrDefaultAsync();
 
         return indicator is not null ? Results.Ok(indicator) : Results.NotFound();
@@ -169,6 +171,7 @@ public static class MinimalApiEndpoints
                         a.Indicators.Count, a.Indicators.Select(i => new { i.Id, i.Title }).ToList())
             )
             .AsNoTracking()
+            .AsSplitQuery()
             .ToListAsync();
 
         return Results.Ok(actions);
@@ -189,6 +192,7 @@ public static class MinimalApiEndpoints
             )
             .Where(a => a.Id == id)
             .AsNoTracking()
+            .AsSplitQuery()
             .FirstOrDefaultAsync();
 
         return action is not null ? Results.Ok(action) : Results.NotFound();
@@ -222,6 +226,7 @@ public static class MinimalApiEndpoints
                         .ToList())
             )
             .AsNoTracking()
+            .AsSingleQuery()
             .ToListAsync();
 
         return Results.Ok(areas);
@@ -243,6 +248,7 @@ public static class MinimalApiEndpoints
             )
             .Where(a => a.Id == id)
             .AsNoTracking()
+            .AsSingleQuery()
             .FirstOrDefaultAsync();
 
         return area is not null ? Results.Ok(area) : Results.NotFound();

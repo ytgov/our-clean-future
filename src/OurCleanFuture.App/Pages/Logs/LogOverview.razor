@@ -10,7 +10,7 @@
     <MudText Typo="Typo.h3" Class="mb-8">Edit log</MudText>
     <MudTabs Elevation="4" Rounded="true" Color="@Color.Primary">
         <MudTabPanel Text="Indicators">
-            <MudTable Items="@(_logEvents.Where(x => x.EventType == IndicatorEditEventType || x.EventType == IndicatorCreateEventType))" Context="evt"
+            <MudTable Items="@(_logEvents.Where(x => x.EventType is IndicatorEditEventType or IndicatorCreateEventType))" Context="evt"
                       T="EventEntity" OnRowClick="@IndicatorRowClicked" RowClass="cursor-pointer">
                 <ColGroup>
                     <MudHidden Breakpoint="Breakpoint.Xs">
@@ -38,7 +38,7 @@
             </MudTable>
         </MudTabPanel>
         <MudTabPanel Text="Actions">
-            <MudTable Items="@(_logEvents.Where(x => x.EventType == ActionEditEventType || x.EventType == ActionCreateEventType))" Context="evt"
+            <MudTable Items="@(_logEvents.Where(x => x.EventType is ActionEditEventType or ActionCreateEventType))" Context="evt"
                       T="EventEntity" OnRowClick="@ActionRowClicked" RowClass="cursor-pointer">
                 <ColGroup>
                     <MudHidden Breakpoint="Breakpoint.Xs">

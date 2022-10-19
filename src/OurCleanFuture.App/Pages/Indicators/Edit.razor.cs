@@ -161,8 +161,7 @@ public partial class Edit : IDisposable
             else if (Indicator.Target is not null)
             {
                 Console.WriteLine($"Indicator.Target state is: {_context.Entry(Indicator.Target).State}");
-                if (_context.Entry(Indicator.Target).State == EntityState.Added
-                    || _context.Entry(Indicator.Target).State == EntityState.Modified)
+                if (_context.Entry(Indicator.Target).State is EntityState.Added or EntityState.Modified)
                 {
                     Indicator.UpdatedBy = _user.GetFormattedName();
                 }

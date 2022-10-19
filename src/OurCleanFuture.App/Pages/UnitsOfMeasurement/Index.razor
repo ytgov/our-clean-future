@@ -39,7 +39,7 @@ else
                 <MudTd DataLabel="Symbol">@context.Symbol</MudTd>
                 <MudTd DataLabel="Name">@context.Name</MudTd>
                 <MudTd>
-                    @if (context.Name == "Dollars" || context.Name == "Count")
+                    @if (context.Name is "Dollars" or "Count")
                     {
                         <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Disabled="true"/>
                         <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Disabled="true"/>

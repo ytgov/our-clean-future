@@ -1,0 +1,30 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define DEVICONS2 https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons2
+!define FONTAWESOME https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/font-awesome-5
+!include DEVICONS2/dotnetcore.puml
+!include DEVICONS2/microsoftsqlserver.puml
+!include FONTAWESOME/users.puml
+
+LAYOUT_TOP_DOWN()
+LAYOUT_WITH_LEGEND()
+Person(lead, "Lead", "Reporting branch", $sprite="users")
+Person(owner, "Owner", "Climate Change Secretariat")
+
+System_Boundary(c1, "Our Clean Future"){
+    Container(app, "App", "ASP.NET Core & Blazor Server", "The server-side web application that all users interact with. Contains all business logic", $sprite="dotnetcore")
+    ContainerDb(db, "Database", "Microsoft SQL", "Holds all transactional data", $sprite="microsoftsqlserver")
+    Container(log_store, "Centralized Log Store", "Seq", "Holds all logs relating to users connecting, viewing, and updating data")
+}
+System_Ext(power_bi, "Power BI Dashboard")
+
+Rel(lead, app, "Uses", "HTTPS/WebSocket")
+Rel(owner, app, "Uses", "HTTPS/WebSocket")
+Rel_R(app, db, "Reads/Writes", "SQL/ODBC")
+Rel(power_bi, db, "Reads", "HTTPS")
+Rel(app, log_store, "Writes", "HTTPS")
+
+Rel(lead, power_bi, "Uses", "HTTPS")
+Rel(owner, power_bi, "Uses", "HTTPS")
+@enduml

@@ -1,6 +1,8 @@
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
 using OurCleanFuture.App.Extensions;
@@ -11,22 +13,19 @@ using Action = OurCleanFuture.Data.Entities.Action;
 
 namespace OurCleanFuture.App.Pages.Actions;
 
-public partial class Edit : IDisposable
+[Authorize(Roles = "Administrator, 1")]
+public partial class Create : IDisposable
 {
     private readonly Func<DirectorsCommittee, string> _committeeConverter = d => d.Name;
     private AppDbContext _context = null!;
     private bool _isLoaded;
     private ClaimsPrincipal _user = null!;
 
-    [Parameter] public int Id { get; set; }
-
-    private string AuthorizedRoles { get; set; } = "Administrator, 1";
-
     private IEnumerable<Lead> SelectedLeads { get; set; } = new List<Lead>();
 
     private List<Objective> Objectives { get; set; } = new();
     private List<Lead> Leads { get; set; } = new();
-    private Action? Action { get; set; }
+    private Action Action { get; } = new();
 
     private IEnumerable<DirectorsCommittee> SelectedDirectorsCommittees { get; set; } =
         new List<DirectorsCommittee>();
@@ -65,27 +64,7 @@ public partial class Edit : IDisposable
             DirectorsCommittees = await _context.DirectorsCommittees
                 .OrderBy(dc => dc.Name)
                 .ToListAsync();
-            Action = await _context.Actions
-                .Include(a => a.Indicators)
-                .Include(a => a.DirectorsCommittees)
-                .Include(a => a.Leads)
-                .AsSingleQuery()
-                .FirstOrDefaultAsync(a => a.Id == Id);
-            if (Action is not null)
-            {
-                foreach (var committee in Action!.DirectorsCommittees)
-                {
-                    SelectedDirectorsCommittees = SelectedDirectorsCommittees.Append(committee);
-                }
-
-                foreach (var lead in Action.Leads)
-                {
-                    SelectedLeads = SelectedLeads.Append(lead);
-                }
-
-                await GetUserPrincipal();
-                AuthorizedRoles += GetAuthorizedRoles();
-            }
+            await GetUserPrincipal();
         }
         catch (Exception ex)
         {
@@ -106,21 +85,10 @@ public partial class Edit : IDisposable
         _user = authState.User;
     }
 
-    private string GetAuthorizedRoles()
-    {
-        var authorizedRoles = "";
-        foreach (var lead in Action!.Leads)
-        {
-            authorizedRoles += $", {lead.Id}";
-        }
-
-        return authorizedRoles;
-    }
-
     private async Task Update()
     {
         if (
-            Action!.TargetCompletionDate < Action.ActualCompletionDate
+            Action.TargetCompletionDate < Action.ActualCompletionDate
             && Action.InternalStatus == InternalStatus.OnTrack
         )
         {
@@ -132,17 +100,11 @@ public partial class Edit : IDisposable
             return;
         }
 
-        if (_context.Entry(Action).Property(a => a.InternalStatus).IsModified)
-        {
-            Action.InternalStatusUpdatedBy = _user.GetFormattedName();
-            Action.InternalStatusUpdatedDate = DateTimeOffset.Now;
-        }
+        Action.InternalStatusUpdatedBy = _user.GetFormattedName();
+        Action.InternalStatusUpdatedDate = DateTimeOffset.Now;
 
-        if (_context.Entry(Action).Property(a => a.ExternalStatus).IsModified)
-        {
-            Action.ExternalStatusUpdatedBy = _user.GetFormattedName();
-            Action.ExternalStatusUpdatedDate = DateTimeOffset.Now;
-        }
+        Action.ExternalStatusUpdatedBy = _user.GetFormattedName();
+        Action.ExternalStatusUpdatedDate = DateTimeOffset.Now;
 
         Action.DirectorsCommittees.Clear();
         Action.DirectorsCommittees.AddRange(SelectedDirectorsCommittees);
@@ -150,14 +112,28 @@ public partial class Edit : IDisposable
         Action.Leads.Clear();
         Action.Leads.AddRange(SelectedLeads);
 
-        await _context.SaveChangesAsync();
-        Snackbar.Add($"Successfully updated action: {Action.Number}", Severity.Success);
-        Log.Information(
-            "{User} updated action {ActionId}: {ActionTitle}",
-            StateContainer.ClaimsPrincipalEmail,
-            Action.Id,
-            Action.Title
-        );
-        Navigation.NavigateTo($"/actions/details/{Id}");
+        _context.Add(Action);
+        try
+        {
+            await _context.SaveChangesAsync();
+            Snackbar.Add($"Successfully created action: {Action.Number}", Severity.Success);
+            Log.Information(
+                "{User} created action {ActionId}: {ActionTitle}",
+                StateContainer.ClaimsPrincipalEmail,
+                Action.Id,
+                Action.Title
+            );
+            Navigation.NavigateTo($"/actions/details/{Action.Id}");
+        }
+        catch (DbUpdateException ex)
+        {
+            if (ex.InnerException is SqlException sqlException && sqlException.Number == 2601)
+            {
+                Snackbar.Add(
+                    $"An action with number {Action.Number} already exists",
+                    Severity.Error
+                );
+            }
+        }
     }
 }

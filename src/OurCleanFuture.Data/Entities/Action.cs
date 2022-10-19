@@ -6,10 +6,18 @@ public class Action
 {
     public int Id { get; set; }
 
-    [StringLength(3, MinimumLength = 2, ErrorMessage = "{0} must be between {2} and {1} characters.")]
+    [StringLength(
+        3,
+        MinimumLength = 2,
+        ErrorMessage = "{0} must be between {2} and {1} characters."
+    )]
     public string Number { get; set; } = "";
 
-    [StringLength(300, MinimumLength = 5, ErrorMessage = "{0} must be between {2} and {1} characters.")]
+    [StringLength(
+        300,
+        MinimumLength = 5,
+        ErrorMessage = "{0} must be between {2} and {1} characters."
+    )]
     public string Title { get; set; } = "";
 
     public DateTime? StartDate { get; set; }
@@ -37,7 +45,10 @@ public class Action
     public List<Lead> Leads { get; set; } = new();
     public List<ActionLead> ActionLeads { get; set; } = new();
     public List<Indicator> Indicators { get; set; } = new();
+
+    [Required(ErrorMessage = "An objective is required.")]
     public Objective Objective { get; set; } = null!;
+
     public int ObjectiveId { get; set; }
     public List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();
 

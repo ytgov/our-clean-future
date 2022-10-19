@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.JSInterop;
 using MudBlazor;
+using OurCleanFuture.App.Services;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 
@@ -23,9 +24,9 @@ public partial class Index : IDisposable
 
     [Inject] private NavigationManager Navigation { get; set; } = null!;
 
-    [Inject] private StateContainer StateContainer { get; init; } = null!;
+    [Inject] private StateContainerService StateContainer { get; init; } = null!;
 
-    [Inject] private IJSRuntime JSRuntime { get; set; } = null!;
+    [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
     [Inject] private IDialogService DialogService { get; set; } = null!;
 
@@ -111,21 +112,13 @@ public partial class Index : IDisposable
     {
         if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey)
         {
-            await JSRuntime.InvokeAsync<object>(
-                "open",
-                CancellationToken.None,
-                $"/indicators/edit/{p.Item.Id}",
-                "_blank"
-            );
+            await JsRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/edit/{p.Item.Id}",
+                "_blank");
         }
         else if (p.MouseEventArgs.CtrlKey)
         {
-            await JSRuntime.InvokeAsync<object>(
-                "open",
-                CancellationToken.None,
-                $"/indicators/details/{p.Item.Id}",
-                "_blank"
-            );
+            await JsRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/details/{p.Item.Id}",
+                "_blank");
         }
         else
         {
@@ -139,7 +132,6 @@ public partial class Index : IDisposable
         {
             return true;
         }
-
         foreach (var lead in indicator.Leads)
         {
             if (lead.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
@@ -147,30 +139,19 @@ public partial class Index : IDisposable
                 return true;
             }
 
-            if (
-                lead.Branch?.Department.Name.Contains(
-                    _searchString,
-                    StringComparison.OrdinalIgnoreCase
-                ) == true
-            )
+            if (lead.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ==
+                true)
             {
                 return true;
             }
 
-            if (
-                lead.Branch?.Department.ShortName.Contains(
-                    _searchString,
-                    StringComparison.OrdinalIgnoreCase
-                ) == true
-            )
+            if (lead.Branch?.Department.ShortName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ==
+                true)
             {
                 return true;
             }
 
-            if (
-                lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase)
-                == true
-            )
+            if (lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
             {
                 return true;
             }
@@ -209,7 +190,7 @@ public partial class Index : IDisposable
         _filteredIndicators.Clear();
         if (_filterIndicatorsSwitch.Checked)
         {
-            _filteredIndicators = _indicators.Where(i => IsUserAMemberOfLeads(i)).ToList();
+            _filteredIndicators = _indicators.Where(IsUserAMemberOfLeads).ToList();
         }
         else
         {
@@ -250,6 +231,12 @@ public partial class Index : IDisposable
             }
         }
 
-        return claimsPrincipal.IsInRole("Administrator") || claimsPrincipal.IsInRole("1");
+        if (claimsPrincipal.IsInRole("Administrator")
+            || claimsPrincipal.IsInRole("1"))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

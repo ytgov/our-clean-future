@@ -1,0 +1,99 @@
+﻿@page "/admin/log"
+@using Seq.Api.Model.Events
+@using Seq.Api
+@attribute [Authorize(Roles = "Administrator, 1")]
+@inject NavigationManager Navigation
+
+<PageTitle>Edit log</PageTitle>
+
+<MudText Typo="Typo.h3" Class="mb-8">Edit log</MudText>
+<MudTabs Elevation="4" Rounded="true" Color="@Color.Primary">
+    <MudTabPanel Text="Indicators">
+        <MudTable Items="@(_logEvents.Where(x => x.EventType is IndicatorEditEventType or IndicatorCreateEventType))" Context="evt"
+                  T="EventEntity" OnRowClick="@IndicatorRowClicked" RowClass="cursor-pointer">
+            <ColGroup>
+                <MudHidden Breakpoint="Breakpoint.Xs">
+                    <col style="width: 10%"/>
+                    <col style="width: 50%"/>
+                    <col style="width: 20%"/>
+                    <col style="width: 20%"/>
+                </MudHidden>
+            </ColGroup>
+            <HeaderContent>
+                <MudTh>Id</MudTh>
+                <MudTh>Title</MudTh>
+                <MudTh>User</MudTh>
+                <MudTh>Timestamp</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@evt.Properties[1].Value</MudTd>
+                <MudTd>@evt.Properties[2].Value</MudTd>
+                <MudTd>@evt.Properties[0].Value</MudTd>
+                <MudTd>@DateTime.Parse(evt.Timestamp).ToString("U")</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager/>
+            </PagerContent>
+        </MudTable>
+    </MudTabPanel>
+    <MudTabPanel Text="Actions">
+        <MudTable Items="@(_logEvents.Where(x => x.EventType is ActionEditEventType or ActionCreateEventType))" Context="evt"
+                  T="EventEntity" OnRowClick="@ActionRowClicked" RowClass="cursor-pointer">
+            <ColGroup>
+                <MudHidden Breakpoint="Breakpoint.Xs">
+                    <col style="width: 10%"/>
+                    <col style="width: 50%"/>
+                    <col style="width: 20%"/>
+                    <col style="width: 20%"/>
+                </MudHidden>
+            </ColGroup>
+            <HeaderContent>
+                <MudTh>Id</MudTh>
+                <MudTh>Title</MudTh>
+                <MudTh>User</MudTh>
+                <MudTh>Timestamp</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@evt.Properties[1].Value</MudTd>
+                <MudTd>@evt.Properties[2].Value</MudTd>
+                <MudTd>@evt.Properties[0].Value</MudTd>
+                <MudTd>@DateTime.Parse(evt.Timestamp).ToString("U")</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager/>
+            </PagerContent>
+        </MudTable>
+    </MudTabPanel>
+</MudTabs>
+
+@code {
+    private readonly List<EventEntity> _logEvents = new();
+        private const string IndicatorEditEventType = "$615E81DE";
+        private const string IndicatorCreateEventType = "$8A9A5998";
+        private const string ActionEditEventType = "$611D404A";
+        private const string ActionCreateEventType = "$B2188044";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var connection = new SeqConnection("http://localhost:5341", "I3LmFD6Hc3GFxPxy3oJU");
+        var events = connection.Events.EnumerateAsync(
+            filter: "@EventType = ToEventType('{User} updated indicator {IndicatorId}: {IndicatorTitle}') || @EventType = ToEventType('{User} updated action {ActionId}: {ActionTitle}') || @EventType = ToEventType('{User} created action {ActionId}: {ActionTitle}') || @EventType = ToEventType('{User} created indicator {IndicatorId}: {IndicatorTitle}')",
+            count: 1000);
+        await foreach (var evt in events)
+        {
+            _logEvents.Add(evt);
+        }
+    }
+
+    public void IndicatorRowClicked(TableRowClickEventArgs<EventEntity> p)
+    {
+        Navigation.NavigateTo($"/indicators/details/{p.Item.Properties[1].Value}");
+    }
+
+    public void ActionRowClicked(TableRowClickEventArgs<EventEntity> p)
+    {
+        Navigation.NavigateTo($"/actions/details/{p.Item.Properties[1].Value}");
+    }
+
+}

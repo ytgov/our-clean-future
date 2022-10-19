@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using OurCleanFuture.App.Services;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using Action = OurCleanFuture.Data.Entities.Action;
@@ -11,7 +12,7 @@ public partial class Details : IDisposable
     private AppDbContext _context = null!;
     private bool _isLoaded;
 
-    private Area Area { get; set; } = null!;
+    private Area? Area { get; set; }
 
     [Parameter] public string AreaTitle { get; set; } = null!;
 
@@ -19,7 +20,7 @@ public partial class Details : IDisposable
 
     [Inject] private NavigationManager Navigation { get; set; } = null!;
 
-    [Inject] private StateContainer StateContainer { get; init; } = null!;
+    [Inject] private StateContainerService StateContainer { get; init; } = null!;
 
     public void Dispose() => _context.Dispose();
 
@@ -32,10 +33,13 @@ public partial class Details : IDisposable
         try
         {
             _context = ContextFactory.CreateDbContext();
-#pragma warning disable CS8601 // Possible null reference assignment.
             Area = await _context.Areas.Include(a => a.Objectives).ThenInclude(o => o.Actions).AsSingleQuery()
                 .AsNoTracking().FirstOrDefaultAsync(a => a.Title == AreaTitle.Replace('-', ' '));
-#pragma warning restore CS8601 // Possible null reference assignment.
+            if (Area is not null)
+            {
+                Log.Information("{User} is viewing area {AreaId}: {AreaTitle}", StateContainer.ClaimsPrincipalEmail,
+                    Area.Id, Area.Title);
+            }
         }
         catch (Exception ex)
         {
@@ -46,9 +50,6 @@ public partial class Details : IDisposable
         {
             _isLoaded = true;
         }
-
-        Log.Information("{User} is viewing area {AreaId}: {AreaTitle}", StateContainer.ClaimsPrincipalEmail, Area?.Id,
-            Area?.Title);
 
         await base.OnInitializedAsync();
     }

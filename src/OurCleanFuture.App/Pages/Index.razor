@@ -1,136 +1,136 @@
 ﻿@page "/"
 
-<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-    <MudText Typo="Typo.h3" GutterBottom="true">Home</MudText>
-    <MudText Typo="Typo.h5" Class="mb-4 mt-n2">Welcome to the Our Clean Future app!</MudText>
-    <MudItem sm="12" md="6" Class="mb-4">
-        <MudAlert Severity="Severity.Normal">
-            Feedback/Questions? Contact:
-            <MudLink Href="mailto:jon.hodgins@yukon.ca;emma.seward@yukon.ca?subject=Our Clean Future app feedback" Typo="Typo.body2" Color="Color.Inherit">
-                <b>Emma Seward & Jon Hodgins</b>
-            </MudLink>
-        </MudAlert>
+<PageTitle>Home page</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Home</MudText>
+<MudText Typo="Typo.h5" Class="mb-4 mt-n2">Welcome to the Our Clean Future app!</MudText>
+<MudItem sm="12" md="6" Class="mb-4">
+    <MudAlert Severity="Severity.Normal">
+        Feedback/Questions? Contact:
+        <MudLink Href="mailto:jon.hodgins@yukon.ca;emma.seward@yukon.ca?subject=Our Clean Future app feedback" Typo="Typo.body2" Color="Color.Inherit">
+            <b>Emma Seward & Jon Hodgins</b>
+        </MudLink>
+    </MudAlert>
+</MudItem>
+<MudGrid>
+    <MudItem sm="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4 mb-5">
+            <MudText Typo="Typo.h5">Introduction</MudText>
+            <div class="pl-1 my-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    We live in a world that’s rapidly changing. Climate change is threatening ecosystems, subsistence harvesting, infrastructure, leisure activities, and many other aspects of our lives.
+                </MudText>
+            </div>
+            <div class="pl-1 my-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    Yukon’s population is growing, along with our need for reliable, affordable and renewable energy to continue to power our lives, our work and our economy. New economic opportunities are emerging in the sustainable, green economy.
+                </MudText>
+            </div>
+            <div class="pl-1 my-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    <MudLink href="https://yukon.ca/en/our-clean-future-yukon-strategy-climate-change-energy-and-green-economy">Our Clean Future</MudLink> is our answer to the climate emergency.
+                </MudText>
+            </div>
+            <div class="pl-1 my-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    The Government of Yukon developed Our Clean Future in partnership with Yukon First Nations, transboundary Indigenous groups and Yukon municipalities over the course of 3 years. During this time, the partner group gathered 4 times to establish a vision and values for Our Clean Future and to prioritize the areas we should focus on over the next 10 years to respond to the climate emergency. As a result of this collaborative process, the strategy reflects multiple perspectives, worldviews and ideas.
+                </MudText>
+            </div>
+        </MudPaper>
+
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h5">Key data collection dates</MudText>
+            <div class="pl-1">
+                <div class="d-flex my-2">
+                    <MudText Typo="Typo.h6" Color="Color.Primary">
+                        January
+                    </MudText>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary ml-10">
+                        Collection of data from October 1 – December 31
+                    </MudText>
+                </div>
+                <MudDivider/>
+                <div class="d-flex my-2">
+                    <MudText Typo="Typo.h6" Color="Color.Primary" Class="mr-2">April</MudText>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary ml-16">
+                        Collection of data from entire previous year for <b>public annual reporting</b>, and collection of quarterly indicators from January 1 – March 31
+                    </MudText>
+                </div>
+                <MudDivider/>
+                <div class="d-flex my-2">
+                    <MudText Typo="Typo.h6" Color="Color.Primary">August</MudText>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary ml-12">
+                        Collection of data from April 1 – June 30
+                    </MudText>
+                </div>
+                <MudDivider/>
+                <div class="d-flex mt-2">
+                    <MudText Typo="Typo.h6" Color="Color.Primary">November</MudText>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary ml-4">
+                        Collection of data from July 1 – September 30
+                    </MudText>
+                </div>
+            </div>
+        </MudPaper>
     </MudItem>
-    <MudGrid>
-        <MudItem sm="12" md="6">
-            <MudPaper Elevation="2" Class="pa-4 mb-5">
-                <MudText Typo="Typo.h5">Introduction</MudText>
-                <div class="pl-1 my-2">
-                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
-                        We live in a world that’s rapidly changing. Climate change is threatening ecosystems, subsistence harvesting, infrastructure, leisure activities, and many other aspects of our lives.
-                    </MudText>
-                </div>
-                <div class="pl-1 my-2">
-                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
-                        Yukon’s population is growing, along with our need for reliable, affordable and renewable energy to continue to power our lives, our work and our economy. New economic opportunities are emerging in the sustainable, green economy.
-                    </MudText>
-                </div>
-                <div class="pl-1 my-2">
-                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
-                        <MudLink href="https://yukon.ca/en/our-clean-future-yukon-strategy-climate-change-energy-and-green-economy">Our Clean Future</MudLink> is our answer to the climate emergency.
-                    </MudText>
-                </div>
-                <div class="pl-1 my-2">
-                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
-                        The Government of Yukon developed Our Clean Future in partnership with Yukon First Nations, transboundary Indigenous groups and Yukon municipalities over the course of 3 years. During this time, the partner group gathered 4 times to establish a vision and values for Our Clean Future and to prioritize the areas we should focus on over the next 10 years to respond to the climate emergency. As a result of this collaborative process, the strategy reflects multiple perspectives, worldviews and ideas.
-                    </MudText>
-                </div>
-            </MudPaper>
 
-            <MudPaper Elevation="2" Class="pa-4">
-                <MudText Typo="Typo.h5">Key data collection dates</MudText>
-                <div class="pl-1">
-                    <div class="d-flex my-2">
-                        <MudText Typo="Typo.h6" Color="Color.Primary">
-                            January
-                        </MudText>
-                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary ml-10">
-                            Collection of data from October 1 – December 31
-                        </MudText>
-                    </div>
-                    <MudDivider/>
-                    <div class="d-flex my-2">
-                        <MudText Typo="Typo.h6" Color="Color.Primary" Class="mr-2">April</MudText>
-                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary ml-16">
-                            Collection of data from entire previous year for <b>public annual reporting</b>, and collection of quarterly indicators from January 1 – March 31
-                        </MudText>
-                    </div>
-                    <MudDivider/>
-                    <div class="d-flex my-2">
-                        <MudText Typo="Typo.h6" Color="Color.Primary">August</MudText>
-                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary ml-12">
-                            Collection of data from April 1 – June 30
-                        </MudText>
-                    </div>
-                    <MudDivider/>
-                    <div class="d-flex mt-2">
-                        <MudText Typo="Typo.h6" Color="Color.Primary">November</MudText>
-                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary ml-4">
-                            Collection of data from July 1 – September 30
-                        </MudText>
-                    </div>
-                </div>
-            </MudPaper>
-        </MudItem>
+    <MudItem sm="12" md="6">
+        <MudPaper Elevation="2" Class="pa-4 mb-5">
+            <MudText Typo="Typo.h5">Purpose of data collection</MudText>
+            <div class="pl-1 my-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    Collecting and reporting on <b>action statuses</b> and <b>indicators</b> related to the implementation of Our Clean Future contributes to accountability, performance management, and evaluation.
+                </MudText>
+            </div>
+        </MudPaper>
+        <MudPaper Elevation="2" Class="pa-4 mb-5">
+            <MudText Typo="Typo.h5">Role of lead branches</MudText>
+            <div class="pl-1 my-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    Each action is led by a specific branch or two branches. Each branch is responsible for the planning, budgeting, performance management and reporting on their action. Many actions have associated indicators to support with performance measurement of an action. Lead branches also track and report on indicators, if applicable.
+                </MudText>
+            </div>
+        </MudPaper>
 
-        <MudItem sm="12" md="6">
-            <MudPaper Elevation="2" Class="pa-4 mb-5">
-                <MudText Typo="Typo.h5">Purpose of data collection</MudText>
-                <div class="pl-1 my-2">
-                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
-                        Collecting and reporting on <b>action statuses</b> and <b>indicators</b> related to the implementation of Our Clean Future contributes to accountability, performance management, and evaluation.
-                    </MudText>
-                </div>
-            </MudPaper>
-            <MudPaper Elevation="2" Class="pa-4 mb-5">
-                <MudText Typo="Typo.h5">Role of lead branches</MudText>
-                <div class="pl-1 my-2">
-                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
-                        Each action is led by a specific branch or two branches. Each branch is responsible for the planning, budgeting, performance management and reporting on their action. Many actions have associated indicators to support with performance measurement of an action. Lead branches also track and report on indicators, if applicable.
-                    </MudText>
-                </div>
-            </MudPaper>
+        <MudPaper Elevation="2" Class="pa-4 mb-5">
+            <MudText Typo="Typo.h5">Actions</MudText>
+            <div class="pl-1 my-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    Our Clean Future contains 131 measurable and time-bound actions. A status is assigned to each action in the strategy by comparing the anticipated completion date for the action to the completion date indicated in Our Clean Future. Based on this information, each action is to be assigned one of the following statuses:
+                </MudText>
+            </div>
+            <div class="d-flex mt-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    <b>Complete:</b> the action has been implemented. The year in which each action is anticipated to be marked as complete is listed in the action description.
+                </MudText>
+            </div>
+            <div class="d-flex mt-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    <b>On track:</b> work on the action is underway and on schedule to be implemented by the date indicated in the strategy, but the action has not yet been implemented.
+                </MudText>
+            </div>
+            <div class="d-flex mt-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    <b>Not started:</b> work on the action has not started, and was not supposed to start during the reporting year.
+                </MudText>
+            </div>
+            <div class="d-flex mt-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    <b>Delayed:</b> completion of the action is expected to be delayed relative to the completion date indicated in the strategy. This information is not communicated in public reporting.
+                </MudText>
+            </div>
+        </MudPaper>
 
-            <MudPaper Elevation="2" Class="pa-4 mb-5">
-                <MudText Typo="Typo.h5">Actions</MudText>
-                <div class="pl-1 my-2">
-                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
-                        Our Clean Future contains 131 measurable and time-bound actions. A status is assigned to each action in the strategy by comparing the anticipated completion date for the action to the completion date indicated in Our Clean Future. Based on this information, each action is to be assigned one of the following statuses:
-                    </MudText>
-                </div>
-                <div class="d-flex mt-2">
-                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
-                        <b>Complete:</b> the action has been implemented. The year in which each action is anticipated to be marked as complete is listed in the action description.
-                    </MudText>
-                </div>
-                <div class="d-flex mt-2">
-                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
-                        <b>On track:</b> work on the action is underway and on schedule to be implemented by the date indicated in the strategy, but the action has not yet been implemented.
-                    </MudText>
-                </div>
-                <div class="d-flex mt-2">
-                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
-                        <b>Not started:</b> work on the action has not started, and was not supposed to start during the reporting year.
-                    </MudText>
-                </div>
-                <div class="d-flex mt-2">
-                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
-                        <b>Delayed:</b> completion of the action is expected to be delayed relative to the completion date indicated in the strategy. This information is not communicated in public reporting.
-                    </MudText>
-                </div>
-            </MudPaper>
-
-            <MudPaper Elevation="2" Class="pa-4">
-                <MudText Typo="Typo.h5">Indicators</MudText>
-                <div class="pl-1 my-2">
-                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
-                        Numerical indicators and/or descriptive information will be tracked for all actions and goals, as well as most objectives in the strategy. This information is used to assess progress toward them and to determine whether we are on track to reach, or have reached, any associated targets.
-                    </MudText>
-                </div>
-            </MudPaper>
-        </MudItem>
-    </MudGrid>
-</MudContainer>
+        <MudPaper Elevation="2" Class="pa-4">
+            <MudText Typo="Typo.h5">Indicators</MudText>
+            <div class="pl-1 my-2">
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
+                    Numerical indicators and/or descriptive information will be tracked for all actions and goals, as well as most objectives in the strategy. This information is used to assess progress toward them and to determine whether we are on track to reach, or have reached, any associated targets.
+                </MudText>
+            </div>
+        </MudPaper>
+    </MudItem>
+</MudGrid>
 
 @code {
 

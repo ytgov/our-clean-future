@@ -2,15 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 using OurCleanFuture.Data;
 
-namespace OurCleanFuture.App;
+namespace OurCleanFuture.App.Services;
 
-public class StateContainer
+public class StateContainerService
 {
     private readonly IDbContextFactory<AppDbContext> _dbContextFactory;
     private ClaimsPrincipal _claimsPrincipal = null!;
     private AppDbContext _context = null!;
 
-    public StateContainer(IDbContextFactory<AppDbContext> dbContextFactory) => _dbContextFactory = dbContextFactory;
+    public StateContainerService(IDbContextFactory<AppDbContext> dbContextFactory) =>
+        _dbContextFactory = dbContextFactory;
 
     public ClaimsPrincipal ClaimsPrincipal
     {

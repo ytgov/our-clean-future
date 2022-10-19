@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
 using OurCleanFuture.App.Extensions;
+using OurCleanFuture.App.Services;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using Action = OurCleanFuture.Data.Entities.Action;
@@ -36,6 +37,8 @@ public partial class Create : IDisposable
 
     [Inject] private ISnackbar Snackbar { get; set; } = null!;
 
+    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+
     public void Dispose() => _context.Dispose();
 
     protected override async Task OnInitializedAsync()
@@ -43,12 +46,19 @@ public partial class Create : IDisposable
         try
         {
             _context = ContextFactory.CreateDbContext();
-            Leads = await _context.Leads.Include(l => l.Organization).Include(l => l.Branch)
-                .ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Department.ShortName)
-                .ThenBy(l => l.Branch!.Name).ToListAsync();
+            Leads = await _context.Leads
+                .Include(l => l.Organization)
+                .Include(l => l.Branch)
+                .ThenInclude(b => b!.Department)
+                .OrderBy(l => l.Branch!.Department.ShortName)
+                .ThenBy(l => l.Branch!.Name)
+                .ToListAsync();
             UnitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
             Goals = await _context.Goals.OrderBy(g => g.Title).ToListAsync();
-            Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title)
+            Objectives = await _context.Objectives
+                .Include(o => o.Area)
+                .OrderBy(o => o.Area.Title)
+                .ThenBy(o => o.Title)
                 .ToListAsync();
             Actions = await _context.Actions.ToListAsync();
             Indicator = new Indicator { UnitOfMeasurement = UnitsOfMeasurement.OrderBy(u => u.Symbol).First() };
@@ -126,6 +136,12 @@ public partial class Create : IDisposable
         _context.Indicators.Add(Indicator);
         await _context.SaveChangesAsync();
         Snackbar.Add($"Successfully created indicator: {Indicator.Title}", Severity.Success);
+        Log.Information(
+            "{User} created indicator {IndicatorId}: {IndicatorTitle}",
+            StateContainer.ClaimsPrincipalEmail,
+            Indicator.Id,
+            Indicator.Title
+        );
         Navigation.NavigateTo($"/indicators/details/{Indicator.Id}");
     }
 

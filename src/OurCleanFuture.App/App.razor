@@ -9,9 +9,7 @@
                 <NotAuthorized>
                     @if (context.User.Identity is not null && context.User.Identity.IsAuthenticated)
                     {
-                        <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-                            <MudAlert Severity="Severity.Error">You are not authorized to view this page.</MudAlert>
-                        </MudContainer>
+                        <MudAlert Severity="Severity.Error">You are not authorized to view this page.</MudAlert>
                     }
                     else
                     {

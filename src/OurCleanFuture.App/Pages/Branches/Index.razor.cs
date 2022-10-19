@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
+using OurCleanFuture.App.Services;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 
@@ -22,7 +23,7 @@ public partial class Index : IDisposable
 
     [Inject] private ISnackbar Snackbar { get; set; } = null!;
 
-    [Inject] private StateContainer StateContainer { get; init; } = null!;
+    [Inject] private StateContainerService StateContainer { get; init; } = null!;
 
     public void Dispose() => _context.Dispose();
 
@@ -116,8 +117,8 @@ public partial class Index : IDisposable
             "This action cannot not be undone.",
             "Delete", cancelText: "Cancel");
         if (result == true)
-        {
             //Prevents mid-method rerendering of the component, which avoids overlapping threads
+        {
             try
             {
                 _context.Remove(branch.Lead);

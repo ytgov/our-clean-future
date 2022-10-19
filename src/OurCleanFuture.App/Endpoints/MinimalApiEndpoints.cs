@@ -85,6 +85,7 @@ public static class MinimalApiEndpoints
     private static async Task<IResult> GetIndicatorById(AppDbContext context, int id)
     {
         var indicator = await context.Indicators
+            .Where(i => i.Id == id)
             .Select(
                 i =>
                     new IndicatorDto(
@@ -135,7 +136,6 @@ public static class MinimalApiEndpoints
                         i.Target == null ? default : i.Target.Value,
                         i.Target == null ? default : i.Target.CompletionDate)
             )
-            .Where(i => i.Id == id)
             .AsNoTracking()
             .AsSplitQuery()
             .FirstOrDefaultAsync();
@@ -167,8 +167,7 @@ public static class MinimalApiEndpoints
                                     new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name)
                             )
                             .ToList(), a.InternalStatus, a.ExternalStatus, a.ActualCompletionDate,
-                        a.TargetCompletionDate,
-                        a.Indicators.Count, a.Indicators.Select(i => new { i.Id, i.Title }).ToList())
+                        a.TargetCompletionDate, a.Indicators.Select(i => new { i.Id, i.Title }).ToList())
             )
             .AsNoTracking()
             .AsSplitQuery()
@@ -180,6 +179,7 @@ public static class MinimalApiEndpoints
     private static async Task<IResult> GetActionById(AppDbContext context, int id)
     {
         var action = await context.Actions
+            .Where(a => a.Id == id)
             .Select(
                 a =>
                     new ActionDto(a.Id, a.Number, a.Title, a.Leads.Select(
@@ -187,10 +187,8 @@ public static class MinimalApiEndpoints
                                     new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name)
                             )
                             .ToList(), a.InternalStatus, a.ExternalStatus, a.ActualCompletionDate,
-                        a.TargetCompletionDate,
-                        a.Indicators.Count, a.Indicators.Select(i => new { i.Id, i.Title }).ToList())
+                        a.TargetCompletionDate, a.Indicators.Select(i => new { i.Id, i.Title }).ToList())
             )
-            .Where(a => a.Id == id)
             .AsNoTracking()
             .AsSplitQuery()
             .FirstOrDefaultAsync();
@@ -235,6 +233,7 @@ public static class MinimalApiEndpoints
     private static async Task<IResult> GetAreaById(AppDbContext context, int id)
     {
         var area = await context.Areas
+            .Where(a => a.Id == id)
             .Select(
                 a =>
                     new AreaDto(a.Id, a.Title, a.Objectives.Select(
@@ -246,7 +245,6 @@ public static class MinimalApiEndpoints
                         )
                         .ToList())
             )
-            .Where(a => a.Id == id)
             .AsNoTracking()
             .AsSingleQuery()
             .FirstOrDefaultAsync();
@@ -306,7 +304,6 @@ public static class MinimalApiEndpoints
         ExternalStatus ExternalStatus,
         DateTime? ActualOrAnticipatedCompletionDate,
         DateTime? TargetCompletionDate,
-        int IndicatorCount,
         object Indicators);
 
     private record LeadDto(

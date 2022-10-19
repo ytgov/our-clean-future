@@ -186,6 +186,11 @@ try
         config.GenerateEnumMappingDescription = true;
     });
 
+    if (builder.Environment.IsDevelopment() || builder.Environment.IsEnvironment("LocalStaging"))
+    {
+        builder.WebHost.UseStaticWebAssets();
+    }
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.

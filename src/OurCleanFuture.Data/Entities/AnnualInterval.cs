@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OurCleanFuture.Data.Entities
+namespace OurCleanFuture.Data.Entities;
+
+public enum AnnualInterval
 {
-    public enum AnnualInterval
-    {
-        [Display(Name = "January 1st to December 31st")]
-        JanuaryToDecember = 0
-    }
+    [Display(Name = "January 1st to December 31st")]
+    JanuaryToDecember = 0
 }

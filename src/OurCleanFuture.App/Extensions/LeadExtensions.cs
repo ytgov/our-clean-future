@@ -10,16 +10,15 @@ public static class LeadExtensions
         {
             return "None";
         }
-        else
+
+        var result = "";
+        foreach (var lead in leads)
         {
-            var result = "";
-            foreach (var lead in leads)
-            {
-                result += $"{lead}, ";
-            }
-            //Trim the trailing comma and space
-            result = result.Remove(result.Length - 2, 2);
-            return result;
+            result += $"{lead}, ";
         }
+
+        //Trim the trailing comma and space
+        result = result.Remove(result.Length - 2, 2);
+        return result;
     }
 }

@@ -1,201 +1,204 @@
 ﻿@page "/indicators/details/{id:int}"
-@attribute [Authorize]
 @using OurCleanFuture.App.Extensions
+@attribute [Authorize]
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-    @if (_isLoaded == false)
-    {
-        <p><em>Loading...</em></p>
-    }
-    else if (Indicator is null)
-    {
-        <MudAlert Severity="Severity.Error">There is no indicator with an id of @Id</MudAlert>
-    }
-    else
-    {
-        <MudText Typo="Typo.h3" Class="mb-8"><b>Indicator:</b> @Indicator.Title</MudText>
-        <MudGrid>
-            <MudItem xs="12" sm="6">
-                <MudPaper Elevation="2" Class="pa-4">
-                    <MudField Label="Lead(s)">@Indicator.LeadsToString()</MudField>
-                    <MudField Label="Description">@Indicator.Description</MudField>
-                    @if (Indicator.Target is null || string.IsNullOrWhiteSpace(Indicator.Target.Description))
+@if (_isLoaded == false)
+{
+    <p>
+        <em>Loading...</em>
+    </p>
+}
+else if (Indicator is null)
+{
+    <MudAlert Severity="Severity.Error">There is no indicator with an id of @Id</MudAlert>
+}
+else
+{
+    <MudText Typo="Typo.h3" Class="mb-8">
+        <b>Indicator:</b> @Indicator.Title
+    </MudText>
+    <MudGrid>
+        <MudItem xs="12" sm="6">
+            <MudPaper Elevation="2" Class="pa-4">
+                <MudField Label="Lead(s)">@Indicator.LeadsToString()</MudField>
+                <MudField Label="Description">@Indicator.Description</MudField>
+                @if (Indicator.Target is null || string.IsNullOrWhiteSpace(Indicator.Target.Description))
+                {
+                    <MudField Label="Target">None</MudField>
+                }
+                else
+                {
+                    <MudField Label="Target">@Indicator.Target.Description</MudField>
+                }
+                <MudField Label="Internal Notes">@Indicator.Note</MudField>
+                <MudField Label="Last Updated By">@IndicatorLastUpdatedBy</MudField>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="6">
+            <MudPaper Elevation="2" Class="pa-4">
+                <MudField Label="Data Type">@Indicator.DataType</MudField>
+                <MudField Label="Collection Interval">@Indicator.CollectionInterval</MudField>
+                <MudField Label="Unit of Measurement">@Indicator.UnitOfMeasurement.Name</MudField>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudPaper Elevation="2" Class="pa-4">
+                <MudItem>
+                    @if (Indicator.Action is not null)
                     {
-                        <MudField Label="Target">None</MudField>
-                    }
-                    else
-                    {
-                        <MudField Label="Target">@Indicator.Target.Description</MudField>
-                    }
-                    <MudField Label="Internal Notes">@Indicator.Note</MudField>
-                    <MudField Label="Last Updated By">@IndicatorLastUpdatedBy</MudField>
-                </MudPaper>
-            </MudItem>
-
-            <MudItem xs="12" sm="6" md="6">
-                <MudPaper Elevation="2" Class="pa-4">
-                    <MudField Label="Data Type">@Indicator.DataType</MudField>
-                    <MudField Label="Collection Interval">@Indicator.CollectionInterval</MudField>
-                    <MudField Label="Unit of Measurement">@Indicator.UnitOfMeasurement.Name</MudField>
-                </MudPaper>
-            </MudItem>
-
-            <MudItem xs="12" sm="6">
-                <MudPaper Elevation="2" Class="pa-4">
-                    <MudItem>
-                        @if (Indicator.Action is not null)
-                        {
-                            <MudText Typo="Typo.h6">Goals</MudText>
-                            <MudList DisableGutters="true" Dense="true">
-                                @if (Indicator.Action.Objective is not null && Indicator.Action.Objective.Goals.Count > 0)
-                                {
-                                    <MudListItem Class="goal pl-4">
-                                        @foreach (var goal in Indicator.Action.Objective.Goals)
-                                        {
-                                            <div class="d-flex py-2">
-                                                <MudAvatar Image="@goal.GetIconPath()" Class="mr-2" />
-                                                <MudText Class="mt-2">@goal.Title</MudText>
-                                            </div>
-                                        }
-                                    </MudListItem>
-
-                                }
-                                else
-                                {
-                                    <MudText>Error: This objective is not associated with any goals!</MudText>
-                                }
-                            </MudList>
-                            <MudText Typo="Typo.h6">Area</MudText>
-                            <MudList Clickable="true" DisableGutters="true" Dense="true">
-                                @if (Indicator.Action.Objective is not null && Indicator.Action.Objective.Area is not null)
-                                {
-                                    var classText = $"{Indicator.Action.Objective.Area.GetCssClass()} pl-4";
-                                    <MudListItem Class="@classText" OnClick="(() => ViewArea(Indicator.Action.Objective.Area))">
-                                        <div class="d-flex">
-                                            <MudAvatar Image="@Indicator.Action.Objective.Area.GetIconPath()" Class="mr-2 my-2" />
-                                            <MudText Class="my-4">@Indicator.Action.Objective?.Area?.Title</MudText>
-                                        </div>
-                                    </MudListItem>
-                                }
-                                else
-                                {
-                                    <MudText Class="my-4">Error: This objective is not associated with an area!</MudText>
-                                }
-                            </MudList>
-                            <MudText Typo="Typo.h6">Objective</MudText>
-                            <MudList Clickable="true" DisableGutters="true" Dense="true">
-                                @if (Indicator.Action.Objective is not null && Indicator.Action.Objective.Area is not null)
-                                {
-                                    var classText = $"{Indicator.Action.Objective.Area.GetCssClass()} pl-4";
-                                    <MudListItem Class="@classText" OnClick="(() => ViewArea(Indicator.Action.Objective.Area))">
-                                        <MudText>@(Indicator.Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudText>
-                                    </MudListItem>
-                                }
-                                else
-                                {
-                                    <MudText>Error: This action is not associated with an objective!</MudText>
-                                }
-                            </MudList>
-
-                            <MudText Typo="Typo.h6">Action</MudText>
-                            <MudList Clickable="true" DisableGutters="true" Dense="true">
-                                @{
-                                    var classText = $"{Indicator.Action.Objective.Area.GetCssClass()} pl-4";
-                                    <MudListItem Class="@classText" OnClick="(() => ViewAction(Indicator.Action))">
-                                        <MudText>@Indicator.Action.ToString()</MudText>
-                                    </MudListItem>
-                                }
-                            </MudList>
-                        }
-                        else if (Indicator.Objective is not null)
-                        {
-                            <MudText Typo="Typo.h6">Goals</MudText>
-                            <MudList DisableGutters="true" Dense="true">
-                                @if (Indicator.Objective is not null && Indicator.Objective.Goals.Count > 0)
-                                {
-                                    <MudListItem Class="goal pl-4">
-                                        @foreach (var goal in Indicator.Objective.Goals)
-                                        {
-                                            <div class="d-flex py-2">
-                                                <MudAvatar Image="@goal.GetIconPath()" Class="mr-2" />
-                                                <MudText Class="mt-2">@goal.Title</MudText>
-                                            </div>
-                                        }
-                                    </MudListItem>
-                                }
-                                else
-                                {
-                                    <MudText>Error: This objective is not associated with any goals!</MudText>
-                                }
-                            </MudList>
-                            <MudText Typo="Typo.h6">Area</MudText>
-                            <MudList Clickable="true" DisableGutters="true" Dense="true">
-                                @if (Indicator.Objective.Area is not null)
-                                {
-                                    var classText = $"{Indicator.Objective.Area.GetCssClass()} pl-4";
-                                    <MudListItem Class="@classText" OnClick="(() => ViewArea(Indicator.Objective.Area))">
-                                        <div class="d-flex">
-                                            <MudAvatar Image="@Indicator.Objective.Area.GetIconPath()" Class="mr-2 my-2" />
-                                            <MudText Class="my-4">@Indicator.Objective?.Area?.Title</MudText>
-                                        </div>
-                                    </MudListItem>
-                                }
-                                else
-                                {
-                                    <MudText Class="my-4">Error: This objective is not associated with an area!</MudText>
-                                }
-                            </MudList>
-                            <MudText Typo="Typo.h6">Objective</MudText>
-                            <MudList Clickable="true" DisableGutters="true" Dense="true">
-                                @{
-                                    var classText = $"{Indicator.Objective.Area.GetCssClass()} pl-4";
-                                    <MudListItem Class="@classText" OnClick="(() => ViewArea(Indicator.Objective.Area))">
-                                        <MudText>@(Indicator.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudText>
-                                    </MudListItem>
-                                }
-                            </MudList>
-                        }
-                        else if (Indicator.Goal is not null)
-                        {
-                            <MudText Typo="Typo.h6">Goal</MudText>
-                            <MudList DisableGutters="true" Dense="true">
+                        <MudText Typo="Typo.h6">Goals</MudText>
+                        <MudList DisableGutters="true" Dense="true">
+                            @if (Indicator.Action.Objective is not null && Indicator.Action.Objective.Goals.Count > 0)
+                            {
                                 <MudListItem Class="goal pl-4">
-                                    <div class="d-flex py-2">
-                                        <MudAvatar Image="@Indicator.Goal.GetIconPath()" Class="mr-2" />
-                                        <MudText Class="mt-2">@Indicator.Goal.Title</MudText>
+                                    @foreach (var goal in Indicator.Action.Objective.Goals)
+                                    {
+                                        <div class="d-flex py-2">
+                                            <MudAvatar Image="@goal.GetIconPath()" Class="mr-2"/>
+                                            <MudText Class="mt-2">@goal.Title</MudText>
+                                        </div>
+                                    }
+                                </MudListItem>
+                            }
+                            else
+                            {
+                                <MudText>Error: This objective is not associated with any goals!</MudText>
+                            }
+                        </MudList>
+                        <MudText Typo="Typo.h6">Area</MudText>
+                        <MudList Clickable="true" DisableGutters="true" Dense="true">
+                            @if (Indicator.Action.Objective is not null && Indicator.Action.Objective.Area is not null)
+                            {
+                                var classText = $"{Indicator.Action.Objective.Area.GetCssClass()} pl-4";
+                                <MudListItem Class="@classText" OnClick="() => ViewArea(Indicator.Action.Objective.Area)">
+                                    <div class="d-flex">
+                                        <MudAvatar Image="@Indicator.Action.Objective.Area.GetIconPath()" Class="mr-2 my-2"/>
+                                        <MudText Class="my-4">@Indicator.Action.Objective?.Area?.Title</MudText>
                                     </div>
                                 </MudListItem>
-                            </MudList>
-                        }
-                    </MudItem>
-                </MudPaper>
-            </MudItem>
+                            }
+                            else
+                            {
+                                <MudText Class="my-4">Error: This objective is not associated with an area!</MudText>
+                            }
+                        </MudList>
+                        <MudText Typo="Typo.h6">Objective</MudText>
+                        <MudList Clickable="true" DisableGutters="true" Dense="true">
+                            @if (Indicator.Action.Objective is not null && Indicator.Action.Objective.Area is not null)
+                            {
+                                var classText = $"{Indicator.Action.Objective.Area.GetCssClass()} pl-4";
+                                <MudListItem Class="@classText" OnClick="() => ViewArea(Indicator.Action.Objective.Area)">
+                                    <MudText>@(Indicator.Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudText>
+                                </MudListItem>
+                            }
+                            else
+                            {
+                                <MudText>Error: This action is not associated with an objective!</MudText>
+                            }
+                        </MudList>
 
-            <MudItem xs="12" sm="6">
-                <MudPaper Class="pa-4" Elevation="2">
-                    <MudText Typo="Typo.h6" Class="mb-2">Entries</MudText>
-                    <MudTable Items="Indicator.Entries.OrderBy(e => e.StartDate)" Elevation="0" Class="mt-n2" Dense="true">
-                        <HeaderContent>
-                            <MudTh Style="text-align:right">Period</MudTh>
-                            <MudTh Style="text-align:right">Value</MudTh>
-                            <MudTh>Note</MudTh>
-                            <MudTh></MudTh>
-                        </HeaderContent>
-                        <ColGroup>
-                            <MudHidden Breakpoint="Breakpoint.Xs">
-                                <col style="width: 35%" />
-                                <col style="width: 30%" />
-                                <col style="width: 30%" />
-                                <col style="width: 5%" />
-                            </MudHidden>
-                        </ColGroup>
-                        <RowTemplate Context="Entry">
-                            <MudTd DataLabel="Period" Style="text-align:right">@Entry.PeriodToString()</MudTd>
-                            <MudTd DataLabel="Value" Style="text-align:right">@Entry.ValueToString()</MudTd>
-                            <MudTd DataLabel="Note">@Entry.Note</MudTd>
-                            <MudTd>
-                                @if (!string.IsNullOrWhiteSpace(Entry.UpdatedBy))
-                                {
+                        <MudText Typo="Typo.h6">Action</MudText>
+                        <MudList Clickable="true" DisableGutters="true" Dense="true">
+                            @{
+                                var classText = $"{Indicator.Action.Objective.Area.GetCssClass()} pl-4";
+                                <MudListItem Class="@classText" OnClick="() => ViewAction(Indicator.Action)">
+                                    <MudText>@Indicator.Action.ToString()</MudText>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    }
+                    else if (Indicator.Objective is not null)
+                    {
+                        <MudText Typo="Typo.h6">Goals</MudText>
+                        <MudList DisableGutters="true" Dense="true">
+                            @if (Indicator.Objective is not null && Indicator.Objective.Goals.Count > 0)
+                            {
+                                <MudListItem Class="goal pl-4">
+                                    @foreach (var goal in Indicator.Objective.Goals)
+                                    {
+                                        <div class="d-flex py-2">
+                                            <MudAvatar Image="@goal.GetIconPath()" Class="mr-2"/>
+                                            <MudText Class="mt-2">@goal.Title</MudText>
+                                        </div>
+                                    }
+                                </MudListItem>
+                            }
+                            else
+                            {
+                                <MudText>Error: This objective is not associated with any goals!</MudText>
+                            }
+                        </MudList>
+                        <MudText Typo="Typo.h6">Area</MudText>
+                        <MudList Clickable="true" DisableGutters="true" Dense="true">
+                            @if (Indicator.Objective.Area is not null)
+                            {
+                                var classText = $"{Indicator.Objective.Area.GetCssClass()} pl-4";
+                                <MudListItem Class="@classText" OnClick="() => ViewArea(Indicator.Objective.Area)">
+                                    <div class="d-flex">
+                                        <MudAvatar Image="@Indicator.Objective.Area.GetIconPath()" Class="mr-2 my-2"/>
+                                        <MudText Class="my-4">@Indicator.Objective?.Area?.Title</MudText>
+                                    </div>
+                                </MudListItem>
+                            }
+                            else
+                            {
+                                <MudText Class="my-4">Error: This objective is not associated with an area!</MudText>
+                            }
+                        </MudList>
+                        <MudText Typo="Typo.h6">Objective</MudText>
+                        <MudList Clickable="true" DisableGutters="true" Dense="true">
+                            @{
+                                var classText = $"{Indicator.Objective.Area.GetCssClass()} pl-4";
+                                <MudListItem Class="@classText" OnClick="() => ViewArea(Indicator.Objective.Area)">
+                                    <MudText>@(Indicator.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudText>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    }
+                    else if (Indicator.Goal is not null)
+                    {
+                        <MudText Typo="Typo.h6">Goal</MudText>
+                        <MudList DisableGutters="true" Dense="true">
+                            <MudListItem Class="goal pl-4">
+                                <div class="d-flex py-2">
+                                    <MudAvatar Image="@Indicator.Goal.GetIconPath()" Class="mr-2"/>
+                                    <MudText Class="mt-2">@Indicator.Goal.Title</MudText>
+                                </div>
+                            </MudListItem>
+                        </MudList>
+                    }
+                </MudItem>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudPaper Class="pa-4" Elevation="2">
+                <MudText Typo="Typo.h6" Class="mb-2">Entries</MudText>
+                <MudTable Items="Indicator.Entries.OrderBy(e => e.StartDate)" Elevation="0" Class="mt-n2" Dense="true">
+                    <HeaderContent>
+                        <MudTh Style="text-align:right">Period</MudTh>
+                        <MudTh Style="text-align:right">Value</MudTh>
+                        <MudTh>Note</MudTh>
+                        <MudTh></MudTh>
+                    </HeaderContent>
+                    <ColGroup>
+                        <MudHidden Breakpoint="Breakpoint.Xs">
+                            <col style="width: 35%"/>
+                            <col style="width: 30%"/>
+                            <col style="width: 30%"/>
+                            <col style="width: 5%"/>
+                        </MudHidden>
+                    </ColGroup>
+                    <RowTemplate Context="Entry">
+                        <MudTd DataLabel="Period" Style="text-align:right">@Entry.PeriodToString()</MudTd>
+                        <MudTd DataLabel="Value" Style="text-align:right">@Entry.ValueToString()</MudTd>
+                        <MudTd DataLabel="Note">@Entry.Note</MudTd>
+                        <MudTd>
+                            @if (!string.IsNullOrWhiteSpace(Entry.UpdatedBy))
+                            {
                                 <MudTooltip Placement="Placement.Left">
                                     <ChildContent>
                                         <MudIcon Icon="@Icons.Material.Outlined.Info"></MudIcon>
@@ -204,7 +207,7 @@
                                         <MudText>Last updated by @(Entry.UpdatedBy) on @(GetEntryLastUpdatedDate(Entry).ToLocalTime().ToString("f"))</MudText>
                                     </TooltipContent>
                                 </MudTooltip>
-                                }
+                            }
                         </MudTd>
                     </RowTemplate>
                 </MudTable>
@@ -213,8 +216,8 @@
 
         <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
             <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/indicators">Back to indicators</MudButton>
-            <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Material.Filled.Edit" OnClick="(() => Edit())">Edit</MudButton>
+            <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Material.Filled.Edit" OnClick="() => Edit()">Edit</MudButton>
         </MudItem>
     </MudGrid>
-    }
+}
 </MudContainer>

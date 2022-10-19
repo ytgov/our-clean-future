@@ -1,4 +1,5 @@
 ﻿@page "/admin/units"
+@using OurCleanFuture.Data.Entities
 @attribute [Authorize]
 
 @if (_isLoaded == false)
@@ -13,40 +14,44 @@ else
         <MudTable Items="UnitsOfMeasurement" Dense="true" Striped="true" Hover="true">
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Units Of Measurement</MudText>
-                <MudSpacer />
-                <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="(() => Create())">New Unit</MudButton>
+                <MudSpacer/>
+                <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="() => Create()">New Unit</MudButton>
             </ToolBarContent>
             <ColGroup>
                 <MudHidden Breakpoint="Breakpoint.Xs">
-                    <col style="width: 43%" />
-                    <col style="width: 43%" />
-                    <col style="width: 14%" />
+                    <col style="width: 43%"/>
+                    <col style="width: 43%"/>
+                    <col style="width: 14%"/>
                 </MudHidden>
             </ColGroup>
             <HeaderContent>
-                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.UnitOfMeasurement, object>(u => u.Symbol)">Symbol</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Data.Entities.UnitOfMeasurement, object>(u => u.Name)">Name</MudTableSortLabel></MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<UnitOfMeasurement, object>(u => u.Symbol)">Symbol</MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<UnitOfMeasurement, object>(u => u.Name)">Name</MudTableSortLabel>
+                </MudTh>
                 <MudTh></MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd DataLabel="Symbol">@context.Symbol</MudTd>
                 <MudTd DataLabel="Name">@context.Name</MudTd>
                 <MudTd>
-                    @if (@context.Name == "Dollars" || @context.Name == "Count")
+                    @if (context.Name == "Dollars" || context.Name == "Count")
                     {
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Disabled="true" />
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Disabled="true" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Disabled="true"/>
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Disabled="true"/>
                     }
                     else
                     {
-                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="(() => Edit(context))" />
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="(() => Delete(context))" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="() => Edit(context)"/>
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="() => Delete(context)"/>
                     }
-            </MudTd>
-        </RowTemplate>
-        <PagerContent>
-            <MudTablePager />
-        </PagerContent>
-    </MudTable>
-</MudContainer>
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager/>
+            </PagerContent>
+        </MudTable>
+    </MudContainer>
 }

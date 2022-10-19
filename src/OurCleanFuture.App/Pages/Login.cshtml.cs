@@ -2,24 +2,16 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace OurCleanFuture.App.Pages
+namespace OurCleanFuture.App.Pages;
+
+[AllowAnonymous]
+public class LoginModel : PageModel
 {
-    [AllowAnonymous]
-    public class LoginModel : PageModel
-    {
-        private IConfiguration Configuration { get; set; }
+    public LoginModel(IConfiguration configuration) => Configuration = configuration;
 
-        public LoginModel(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+    private IConfiguration Configuration { get; set; }
 
-        public async Task OnGet(string redirectUri = "/")
-        {
-            await HttpContext.ChallengeAsync(Configuration["AuthNProvider:Name"], new AuthenticationProperties
-            {
-                RedirectUri = redirectUri
-            });
-        }
-    }
+    public async Task OnGet(string redirectUri = "/") =>
+        await HttpContext.ChallengeAsync(Configuration["AuthNProvider:Name"],
+            new AuthenticationProperties { RedirectUri = redirectUri });
 }

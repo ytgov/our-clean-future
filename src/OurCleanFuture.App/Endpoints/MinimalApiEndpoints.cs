@@ -8,7 +8,7 @@ public static class MinimalApiEndpoints
 {
     public static void MapIndicatorEndpoints(this WebApplication app)
     {
-        app.MapGet("/indicators", async (AppDbContext context, int? page, int? pageSize) =>
+        app.MapGet("/indicatorss", async (AppDbContext context, int? page, int? pageSize) =>
         {
             var pagerTake = pageSize ?? 50;
             int pagerSkip;
@@ -20,6 +20,7 @@ public static class MinimalApiEndpoints
             {
                 pagerSkip = 0;
             }
+
             var indicators = await context.Indicators.Select(i => new IndicatorDTO()
             {
                 Id = i.Id,
@@ -28,35 +29,35 @@ public static class MinimalApiEndpoints
                 CollectionInterval = i.CollectionInterval.ToString(),
                 UnitOfMeasurementName = i.UnitOfMeasurement.Name,
                 UnitOfMeasurementSymbol = i.UnitOfMeasurement.Symbol,
-                Leads = i.Leads.Select(l => new LeadDTO()
-                {
-                    Id = l.Id,
-                    Organization = l.Organization.Name,
-                    Department = l.Branch.Department.Name,
-                    Branch = l.Branch.Name
-                }).ToList(),
-                Goals = i.Action != null ? i.Action.Objective.Goals.Select(g => new GoalDTO()
-                {
-                    Id = g.Id,
-                    Title = g.Title
-                }).ToList() : (i.Objective != null ? i.Objective.Goals.Select(g => new GoalDTO()
-                {
-                    Id = g.Id,
-                    Title = g.Title
-                }).ToList() : new List<GoalDTO>() { new GoalDTO() { Id = i.Id, Title = i.Title } }),
+                Leads =
+                    i.Leads.Select(l => new LeadDTO()
+                    {
+                        Id = l.Id,
+                        Organization = l.Organization.Name,
+                        Department = l.Branch.Department.Name,
+                        Branch = l.Branch.Name
+                    }).ToList(),
+                Goals =
+                    i.Action != null
+                        ? i.Action.Objective.Goals.Select(g => new GoalDTO() { Id = g.Id, Title = g.Title })
+                            .ToList()
+                        : (i.Objective != null
+                            ? i.Objective.Goals.Select(g => new GoalDTO() { Id = g.Id, Title = g.Title }).ToList()
+                            : new List<GoalDTO>() { new GoalDTO() { Id = i.Id, Title = i.Title } }),
                 AreaTitle = i.Action == null ? i.Objective!.Area.Title : i.Action.Objective.Area.Title,
                 ObjectiveTitle = i.Objective == null ? i.Action!.Objective.Title : i.Objective.Title,
                 ActionId = i.Action == null ? null : i.Action.Id,
                 ActionNumber = i.Action == null ? default : i.Action.Number,
                 ActionTitle = i.Action == null ? default : i.Action.Title,
-                Entries = i.Entries.Select(e => new EntryDTO()
-                {
-                    StartDate = e.StartDate,
-                    EndDate = e.EndDate,
-                    Value = e.Value,
-                    Note = e.Note,
-                    LastUpdatedBy = e.UpdatedBy
-                }).ToList(),
+                Entries =
+                    i.Entries.Select(e => new EntryDTO()
+                    {
+                        StartDate = e.StartDate,
+                        EndDate = e.EndDate,
+                        Value = e.Value,
+                        Note = e.Note,
+                        LastUpdatedBy = e.UpdatedBy
+                    }).ToList(),
                 LastEntryDate = i.Entries.OrderBy(e => e.EndDate).LastOrDefault().EndDate,
                 LastEntryBy = i.Entries.OrderBy(e => e.EndDate).LastOrDefault().UpdatedBy,
                 LastEntryValue = i.Entries.OrderBy(e => e.EndDate).LastOrDefault().Value,
@@ -71,7 +72,7 @@ public static class MinimalApiEndpoints
 
     public static void MapActionEndpoints(this WebApplication app)
     {
-        app.MapGet("/actions", async (AppDbContext context) =>
+        app.MapGet("/actionss", async (AppDbContext context) =>
         {
             var actions = await context.Actions.Select(a => new ActionDTO()
             {

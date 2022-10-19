@@ -18,15 +18,13 @@ public class Action
 
     public InternalStatus InternalStatus { get; set; }
 
-    [StringLength(100)]
-    public string InternalStatusUpdatedBy { get; set; } = "";
+    [StringLength(100)] public string InternalStatusUpdatedBy { get; set; } = "";
 
     public DateTimeOffset? InternalStatusUpdatedDate { get; set; }
 
     public ExternalStatus ExternalStatus { get; set; }
 
-    [StringLength(100)]
-    public string ExternalStatusUpdatedBy { get; set; } = "";
+    [StringLength(100)] public string ExternalStatusUpdatedBy { get; set; } = "";
 
     public DateTimeOffset? ExternalStatusUpdatedDate { get; set; }
 
@@ -43,8 +41,5 @@ public class Action
     public int ObjectiveId { get; set; }
     public List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();
 
-    public override string ToString()
-    {
-        return $"{Number}. {Title}";
-    }
+    public override string ToString() => $"{Number}. {Title}";
 }

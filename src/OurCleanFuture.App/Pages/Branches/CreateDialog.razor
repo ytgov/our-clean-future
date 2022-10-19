@@ -1,8 +1,8 @@
-﻿@attribute [Authorize]
-@using Data.Entities
+﻿@using OurCleanFuture.Data.Entities
+@attribute [Authorize]
 
 <EditForm Model="Branch" OnValidSubmit="Update">
-    <DataAnnotationsValidator />
+    <DataAnnotationsValidator/>
     <MudDialog>
         <TitleContent>
             <MudText Typo="Typo.h6">
@@ -10,7 +10,7 @@
             </MudText>
         </TitleContent>
         <DialogContent>
-            <MudTextField Label="Name" @bind-Value="Branch.Name" For="(() => Branch.Name)" />
+            <MudTextField Label="Name" @bind-Value="Branch.Name" For="() => Branch.Name"/>
             <MudSelect Label="Department" @bind-Value="Branch.Department" DisableUnderLine="true">
                 @foreach (var department in Departments)
                 {
@@ -26,9 +26,11 @@
 </EditForm>
 
 @code {
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
 
-    private Branch Branch { get; set; } = new();
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = null!;
+
+    private Branch Branch { get; } = new();
 
     [Parameter]
     public List<Department> Departments { get; set; } = new();
@@ -42,4 +44,5 @@
     {
         MudDialog.Close(DialogResult.Ok(Branch));
     }
+
 }

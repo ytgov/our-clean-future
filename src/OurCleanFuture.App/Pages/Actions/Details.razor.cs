@@ -8,22 +8,20 @@ namespace OurCleanFuture.App.Pages.Actions;
 
 public partial class Details : IDisposable
 {
-    private bool _isLoaded;
     private AppDbContext _context = null!;
+    private bool _isLoaded;
 
-    [Parameter]
-    public int Id { get; set; }
+    [Parameter] public int Id { get; set; }
 
     private Action Action { get; set; } = null!;
 
-    [Inject]
-    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject]
-    private NavigationManager Navigation { get; set; } = null!;
+    [Inject] private NavigationManager Navigation { get; set; } = null!;
 
-    [Inject]
-    private StateContainer StateContainer { get; init; } = null!;
+    [Inject] private StateContainer StateContainer { get; init; } = null!;
+
+    public void Dispose() => _context.Dispose();
 
     protected override async Task OnInitializedAsync()
     {
@@ -55,7 +53,9 @@ public partial class Details : IDisposable
         {
             _isLoaded = true;
         }
-        Log.Information("{User} is viewing action {ActionId}: {ActionTitle}", StateContainer.ClaimsPrincipalEmail, Action?.Id, Action?.Title);
+
+        Log.Information("{User} is viewing action {ActionId}: {ActionTitle}", StateContainer.ClaimsPrincipalEmail,
+            Action?.Id, Action?.Title);
 
         await base.OnInitializedAsync();
     }
@@ -65,12 +65,11 @@ public partial class Details : IDisposable
         // Only append updated by information if the InternalStatus has been updated after database creation
         if (!string.IsNullOrWhiteSpace(Action.InternalStatusUpdatedBy))
         {
-            return $"Last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
+            return
+                $"Last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
         }
-        else
-        {
-            return string.Empty;
-        }
+
+        return string.Empty;
     }
 
     private string ExternalStatusToString()
@@ -78,31 +77,16 @@ public partial class Details : IDisposable
         // Only append updated by information if the ExternalStatus has been updated after database creation
         if (!string.IsNullOrWhiteSpace(Action.ExternalStatusUpdatedBy))
         {
-            return $"Last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
+            return
+                $"Last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
         }
-        else
-        {
-            return string.Empty;
-        }
+
+        return string.Empty;
     }
 
-    private void Edit()
-    {
-        Navigation.NavigateTo("/actions/edit/" + Action.Id);
-    }
+    private void Edit() => Navigation.NavigateTo("/actions/edit/" + Action.Id);
 
-    private void ViewIndicator(Indicator indicator)
-    {
-        Navigation.NavigateTo("/indicators/details/" + indicator.Id);
-    }
+    private void ViewIndicator(Indicator indicator) => Navigation.NavigateTo("/indicators/details/" + indicator.Id);
 
-    private void ViewArea(Area area)
-    {
-        Navigation.NavigateTo("/areas/" + area.Title.ToLower().Replace(' ', '-'));
-    }
-
-    public void Dispose()
-    {
-        _context.Dispose();
-    }
+    private void ViewArea(Area area) => Navigation.NavigateTo("/areas/" + area.Title.ToLower().Replace(' ', '-'));
 }

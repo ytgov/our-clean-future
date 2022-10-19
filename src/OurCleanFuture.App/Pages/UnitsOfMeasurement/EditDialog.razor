@@ -1,5 +1,5 @@
-﻿@attribute [Authorize]
-@using Data.Entities
+﻿@using OurCleanFuture.Data.Entities
+@attribute [Authorize]
 
 <MudDialog>
     <TitleContent>
@@ -8,8 +8,8 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudTextField Label="Symbol" @bind-Value="UnitOfMeasurement.Symbol" For="@(() => UnitOfMeasurement.Symbol)" />
-        <MudTextField Label="Name" @bind-Value="UnitOfMeasurement.Name" For="@(() => UnitOfMeasurement.Name)" />
+        <MudTextField Label="Symbol" @bind-Value="UnitOfMeasurement.Symbol" For="@(() => UnitOfMeasurement.Symbol)"/>
+        <MudTextField Label="Name" @bind-Value="UnitOfMeasurement.Name" For="@(() => UnitOfMeasurement.Name)"/>
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
@@ -18,7 +18,9 @@
 </MudDialog>
 
 @code {
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
     public UnitOfMeasurement UnitOfMeasurement { get; set; } = null!;
@@ -32,4 +34,5 @@
     {
         MudDialog.Close(DialogResult.Ok(UnitOfMeasurement));
     }
+
 }

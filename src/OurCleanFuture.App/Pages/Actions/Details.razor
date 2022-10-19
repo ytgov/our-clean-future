@@ -1,11 +1,13 @@
 ﻿@page "/actions/details/{id:int}"
+@using OurCleanFuture.App.Extensions
 @attribute [Authorize]
-@using OurCleanFuture.App.Extensions;
 
 <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
     @if (_isLoaded == false)
     {
-        <p><em>Loading...</em></p>
+        <p>
+            <em>Loading...</em>
+        </p>
     }
     else if (Action is null)
     {
@@ -13,7 +15,9 @@
     }
     else
     {
-        <MudText Typo="Typo.h3" Class="mb-8"><b>Action:</b> @Action.Number</MudText>
+        <MudText Typo="Typo.h3" Class="mb-8">
+            <b>Action:</b> @Action.Number
+        </MudText>
         <MudGrid>
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
@@ -70,7 +74,7 @@
                                     @foreach (var goal in Action.Objective.Goals)
                                     {
                                         <div class="d-flex py-2">
-                                            <MudAvatar Image="@goal.GetIconPath()" Class="mr-2" />
+                                            <MudAvatar Image="@goal.GetIconPath()" Class="mr-2"/>
                                             <MudText Class="mt-2">@goal.Title</MudText>
                                         </div>
                                     }
@@ -86,9 +90,9 @@
                             @if (Action.Objective.Area is not null)
                             {
                                 var classText = $"{Action.Objective.Area.GetCssClass()} pl-4";
-                                <MudListItem Class="@classText" OnClick="(() => ViewArea(Action.Objective.Area))">
+                                <MudListItem Class="@classText" OnClick="() => ViewArea(Action.Objective.Area)">
                                     <div class="d-flex">
-                                        <MudAvatar Image="@Action.Objective.Area.GetIconPath()" Class="mr-2 my-2" />
+                                        <MudAvatar Image="@Action.Objective.Area.GetIconPath()" Class="mr-2 my-2"/>
                                         <MudText Class="my-4">@Action.Objective?.Area?.Title</MudText>
                                     </div>
                                 </MudListItem>
@@ -102,7 +106,7 @@
                         <MudList Clickable="true" DisableGutters="true" Dense="true">
                             @{
                                 var classText = $"{Action.Objective.Area.GetCssClass()} pl-4";
-                                <MudListItem Class="@classText" OnClick="(() => ViewArea(Action.Objective.Area))">
+                                <MudListItem Class="@classText" OnClick="() => ViewArea(Action.Objective.Area)">
                                     <MudText>@(Action.Objective?.Title ?? "Error: This action is not associated with an objective!")</MudText>
                                 </MudListItem>
                             }
@@ -121,14 +125,14 @@
                         @foreach (var indicator in Action.Indicators)
                         {
                             var classText = $"{Action.Objective.Area.GetCssClass()} ma-1";
-                            <MudListItem Class="@classText" OnClick="(() => ViewIndicator(indicator))">@indicator.Title</MudListItem>
+                            <MudListItem Class="@classText" OnClick="() => ViewIndicator(indicator)">@indicator.Title</MudListItem>
                         }
                     </MudList>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
                 <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/actions">Back to actions</MudButton>
-                <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Material.Filled.Edit" OnClick="(() => Edit())">Edit</MudButton>
+                <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Material.Filled.Edit" OnClick="() => Edit()">Edit</MudButton>
             </MudItem>
         </MudGrid>
     }

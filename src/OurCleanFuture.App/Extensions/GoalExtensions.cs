@@ -17,9 +17,7 @@ public static class GoalExtensions
                 _ => ""
             };
         }
-        else
-        {
-            return string.Empty;
-        }
+
+        return string.Empty;
     }
 }

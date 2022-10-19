@@ -20,10 +20,8 @@ public static class AreaExtensions
                 _ => ""
             };
         }
-        else
-        {
-            return string.Empty;
-        }
+
+        return string.Empty;
     }
 
     public static string GetCssClass(this Area area)
@@ -42,9 +40,7 @@ public static class AreaExtensions
                 _ => ""
             };
         }
-        else
-        {
-            return string.Empty;
-        }
+
+        return string.Empty;
     }
 }

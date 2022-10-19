@@ -18,9 +18,7 @@ public class UnitOfMeasurement
         {
             return Name;
         }
-        else
-        {
-            return Symbol;
-        }
+
+        return Symbol;
     }
 }

@@ -31,6 +31,12 @@ public partial class Index : IDisposable
     [Inject]
     private IJSRuntime JSRuntime { get; set; } = null!;
 
+    [Inject]
+    private IDialogService DialogService { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
     protected override async Task OnInitializedAsync()
     {
         try
@@ -43,7 +49,7 @@ public partial class Index : IDisposable
             .Include(i => i.Leads)
             .ThenInclude(l => l.Branch)
             .ThenInclude(b => b!.Department)
-            //.AsNoTracking()
+                .AsNoTrackingWithIdentityResolution()
             .AsSingleQuery()
             .ToListAsync();
             _filteredIndicators.AddRange(_indicators);
@@ -81,14 +87,38 @@ public partial class Index : IDisposable
         Navigation.NavigateTo("/indicators/edit/" + indicatorId);
     }
 
-    private void Delete(int indicatorId)
+    private async Task Delete(int indicatorId)
     {
-        var indicator = _context.Indicators.Find(indicatorId);
+        var indicator = _indicators.Find(i => i.Id == indicatorId);
         if (indicator != null)
         {
+            var result = await DialogService.ShowMessageBox(
+                $"Delete indicator {indicator.Title}?",
+                "This action cannot not be undone.",
+                yesText: "Delete",
+                cancelText: "Cancel"
+            );
+            if (result == true)
+            {
+                try
+                {
+                    _context.Indicators.Remove(indicator);
+                    await _context.SaveChangesAsync();
             _indicators.Remove(indicator);
-            _context.Remove(indicator);
-            _context.SaveChangesAsync();
+                    _filteredIndicators.Remove(indicator);
+                    Snackbar.Add($"Deleted indicator {indicator.Title}", Severity.Success);
+                    Log.Information(
+                        "{User} deleted indicator {IndicatorId}: {IndicatorTitle}",
+                        StateContainer.ClaimsPrincipalEmail,
+                        indicator.Id,
+                        indicator.Title
+                    );
+        }
+                catch (DbUpdateException)
+                {
+                    Snackbar.Add("Unable to delete indicator.", Severity.Error);
+    }
+            }
         }
     }
 

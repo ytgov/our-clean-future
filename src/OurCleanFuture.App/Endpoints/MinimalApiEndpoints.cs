@@ -167,7 +167,7 @@ public static class MinimalApiEndpoints
                                     new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name)
                             )
                             .ToList(), a.InternalStatus, a.ExternalStatus, a.ActualCompletionDate,
-                        a.TargetCompletionDate, a.Indicators.Select(i => new { i.Id, i.Title }).ToList())
+                        a.TargetCompletionDate, a.Indicators.Select(i => new IndicatorHeaderDto(i.Id, i.Title)).ToList())
             )
             .AsNoTracking()
             .AsSplitQuery()
@@ -187,7 +187,7 @@ public static class MinimalApiEndpoints
                                     new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name)
                             )
                             .ToList(), a.InternalStatus, a.ExternalStatus, a.ActualCompletionDate,
-                        a.TargetCompletionDate, a.Indicators.Select(i => new { i.Id, i.Title }).ToList())
+                        a.TargetCompletionDate, a.Indicators.Select(i => new IndicatorHeaderDto(i.Id, i.Title )).ToList())
             )
             .AsNoTracking()
             .AsSplitQuery()
@@ -262,6 +262,10 @@ public static class MinimalApiEndpoints
         string Title,
         List<GoalDto> Goals);
 
+    private record IndicatorHeaderDto(
+        int Id,
+        string Title);
+
     private record IndicatorDto(
         int Id,
         string Title,
@@ -304,7 +308,7 @@ public static class MinimalApiEndpoints
         ExternalStatus ExternalStatus,
         DateTime? ActualOrAnticipatedCompletionDate,
         DateTime? TargetCompletionDate,
-        object Indicators);
+        List<IndicatorHeaderDto> Indicators);
 
     private record LeadDto(
         int Id,

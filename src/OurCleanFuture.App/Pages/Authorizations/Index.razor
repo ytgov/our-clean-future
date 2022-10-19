@@ -5,51 +5,47 @@
 
 @if (_isLoaded == false)
 {
-    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <MudText Typo="Typo.h6">Loading...</MudText>
-    </MudContainer>
+    <MudText Typo="Typo.h6">Loading...</MudText>
 }
 else
 {
-    <MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-16">
-        <MudText Typo="Typo.h3" Class="mb-4">User authorizations</MudText>
-        <MudItem md="12" Class="mb-4">
-            <MudAlert Severity="Severity.Info" Class="mb-2">All YNET users can view all indicator and actions data by default. Adding a user to a lead will allow them to edit indicators and actions associated with that lead.</MudAlert>
-            <MudAlert Severity="Severity.Warning">Caution: Users added to ENV | Climate Change Secretariat can edit all data, including this page.</MudAlert>
-        </MudItem>
-        <MudGrid>
-            @foreach (var lead in Leads.OrderBy(l => l.ToString()))
-            {
-                <MudItem xs="12" md="6" lg="4">
-                    <MudPaper Elevation="2" Class="ma-5">
-                        <MudTable Items="Users.Where(u => u.Leads.Contains(lead))" Dense="true" Striped="true" Hover="true" Elevation="0">
-                            <ToolBarContent>
-                                <MudText Typo="Typo.h6">@lead.ToString()</MudText>
-                                <MudSpacer/>
-                                <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="() => Add(lead)"></MudIconButton>
-                            </ToolBarContent>
-                            <ColGroup>
-                                <MudHidden Breakpoint="Breakpoint.Xs">
-                                    <col style="width: 90%"/>
-                                    <col style="width: 10%"/>
-                                </MudHidden>
-                            </ColGroup>
-                            <HeaderContent>
-                                <MudTh>
-                                    <MudTableSortLabel SortBy="new Func<User, object>(u => u.Email)">Users</MudTableSortLabel>
-                                </MudTh>
-                                <MudTh/>
-                            </HeaderContent>
-                            <RowTemplate>
-                                <MudTd DataLabel="User Name">@context.Email</MudTd>
-                                <MudTd>
-                                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="() => Remove(context, lead)"></MudIconButton>
-                                </MudTd>
-                            </RowTemplate>
-                        </MudTable>
-                    </MudPaper>
-                </MudItem>
-            }
-        </MudGrid>
-    </MudContainer>
+    <MudText Typo="Typo.h3" Class="mb-4">User authorizations</MudText>
+    <MudItem md="12" Class="mb-4">
+        <MudAlert Severity="Severity.Info" Class="mb-2">All YNET users can view all indicator and actions data by default. Adding a user to a lead will allow them to edit indicators and actions associated with that lead.</MudAlert>
+        <MudAlert Severity="Severity.Warning">Caution: Users added to ENV | Climate Change Secretariat can edit all data, including this page.</MudAlert>
+    </MudItem>
+    <MudGrid>
+        @foreach (var lead in Leads.OrderBy(l => l.ToString()))
+        {
+            <MudItem xs="12" md="6" lg="4">
+                <MudPaper Elevation="2" Class="ma-5">
+                    <MudTable Items="Users.Where(u => u.Leads.Contains(lead))" Dense="true" Striped="true" Hover="true" Elevation="0">
+                        <ToolBarContent>
+                            <MudText Typo="Typo.h6">@lead.ToString()</MudText>
+                            <MudSpacer/>
+                            <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="() => Add(lead)"></MudIconButton>
+                        </ToolBarContent>
+                        <ColGroup>
+                            <MudHidden Breakpoint="Breakpoint.Xs">
+                                <col style="width: 90%"/>
+                                <col style="width: 10%"/>
+                            </MudHidden>
+                        </ColGroup>
+                        <HeaderContent>
+                            <MudTh>
+                                <MudTableSortLabel SortBy="new Func<User, object>(u => u.Email)">Users</MudTableSortLabel>
+                            </MudTh>
+                            <MudTh/>
+                        </HeaderContent>
+                        <RowTemplate>
+                            <MudTd DataLabel="User Name">@context.Email</MudTd>
+                            <MudTd>
+                                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="() => Remove(context, lead)"></MudIconButton>
+                            </MudTd>
+                        </RowTemplate>
+                    </MudTable>
+                </MudPaper>
+            </MudItem>
+        }
+    </MudGrid>
 }

@@ -31,7 +31,7 @@ public partial class Edit : IDisposable
     private List<Goal> Goals { get; set; } = new();
     private List<Objective> Objectives { get; set; } = new();
     private List<Action> Actions { get; set; } = new();
-    private Indicator Indicator { get; set; } = null!;
+    private Indicator? Indicator { get; set; }
 
     [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
 
@@ -60,10 +60,8 @@ public partial class Edit : IDisposable
             Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title)
                 .ToListAsync();
             Actions = await _context.Actions.ToListAsync();
-#pragma warning disable CS8601 // Possible null reference assignment.
             Indicator = await _context.Indicators.Include(i => i.Target).Include(i => i.Leads).AsSingleQuery()
                 .FirstOrDefaultAsync(i => i.Id == Id);
-#pragma warning restore CS8601 // Possible null reference assignment.
             if (Indicator != null)
             {
                 foreach (var lead in Indicator.Leads)
@@ -92,7 +90,7 @@ public partial class Edit : IDisposable
     private string GetAuthorizedRoles()
     {
         var authorizedRoles = "";
-        foreach (var lead in Indicator.Leads)
+        foreach (var lead in Indicator!.Leads)
         {
             authorizedRoles += $", {lead.Id}";
         }
@@ -108,15 +106,15 @@ public partial class Edit : IDisposable
 
     private void GetSelectedParentType()
     {
-        if (Indicator.Goal is not null)
+        if (Indicator?.Goal is not null)
         {
             SelectedParentType = "Goal";
         }
-        else if (Indicator.Objective is not null)
+        else if (Indicator?.Objective is not null)
         {
             SelectedParentType = "Objective";
         }
-        else if (Indicator.Action is not null)
+        else if (Indicator?.Action is not null)
         {
             SelectedParentType = "Action";
         }
@@ -127,22 +125,22 @@ public partial class Edit : IDisposable
         switch (SelectedParentType)
         {
             case "Goal":
-                Indicator.Objective = null;
+                Indicator!.Objective = null;
                 Indicator.Action = null;
                 break;
 
             case "Objective":
-                Indicator.Goal = null;
+                Indicator!.Goal = null;
                 Indicator.Action = null;
                 break;
 
             case "Action":
-                Indicator.Goal = null;
+                Indicator!.Goal = null;
                 Indicator.Objective = null;
                 break;
 
             default:
-                Indicator.Goal = null;
+                Indicator!.Goal = null;
                 Indicator.Objective = null;
                 Indicator.Action = null;
                 break;
@@ -199,7 +197,7 @@ public partial class Edit : IDisposable
 
     private void CreateTarget()
     {
-        Indicator.Target = new Target();
+        Indicator!.Target = new Target();
         _context.Attach(Indicator.Target);
     }
 
@@ -207,7 +205,7 @@ public partial class Edit : IDisposable
     {
         // This flag is used by the Update() method instead of checking EntityState, as we cannot check the EntityState of a null reference (Indicator.Target).
         _targetIsDeleted = true;
-        Indicator.Target = null;
+        Indicator!.Target = null;
         StateHasChanged();
     }
 
@@ -222,7 +220,7 @@ public partial class Edit : IDisposable
         {
             var newEntry = (Entry)result.Data;
             newEntry.UpdatedBy = _user.GetFormattedName();
-            Indicator.Entries.Add(newEntry);
+            Indicator!.Entries.Add(newEntry);
             Snackbar.Add($"Click submit to confirm adding entry dated {newEntry.StartDate.ToLongDateString()}",
                 Severity.Info);
         }
@@ -252,7 +250,7 @@ public partial class Edit : IDisposable
             "Delete", cancelText: "Cancel");
         if (result == true)
         {
-            Indicator.Entries.Remove(entry);
+            Indicator!.Entries.Remove(entry);
             Snackbar.Add($"Click submit to confirm deletion of entry dated {entry.StartDate.ToLongDateString()}",
                 Severity.Info);
         }

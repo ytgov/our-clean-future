@@ -14,7 +14,7 @@ public partial class Details : IDisposable
 
     [Parameter] public int Id { get; set; }
 
-    private Indicator Indicator { get; set; } = null!;
+    private Indicator? Indicator { get; set; }
 
     private string IndicatorLastUpdatedBy { get; set; } = "";
 
@@ -52,7 +52,12 @@ public partial class Details : IDisposable
                 .ThenInclude(o => o.Goals)
                 .AsSingleQuery()
                 .FirstAsync(i => i.Id == Id);
-            IndicatorLastUpdatedBy = await GetIndicatorLastUpdatedBy();
+            if (Indicator is not null)
+            {
+                IndicatorLastUpdatedBy = await GetIndicatorLastUpdatedBy();
+                Log.Information("{User} is viewing indicator {IndicatorId}: {IndicatorTitle}",
+                    StateContainer.ClaimsPrincipalEmail, Indicator.Id, Indicator.Title);
+            }
         }
         catch (Exception ex)
         {
@@ -64,15 +69,12 @@ public partial class Details : IDisposable
             _isLoaded = true;
         }
 
-        Log.Information("{User} is viewing indicator {IndicatorId}: {IndicatorTitle}",
-            StateContainer.ClaimsPrincipalEmail, Indicator.Id, Indicator.Title);
-
         await base.OnInitializedAsync();
     }
 
     private async Task<string> GetIndicatorLastUpdatedBy()
     {
-        if (!string.IsNullOrWhiteSpace(Indicator.UpdatedBy))
+        if (!string.IsNullOrWhiteSpace(Indicator!.UpdatedBy))
         {
             return $"{Indicator.UpdatedBy} on {(await GetIndicatorLastUpdatedDate()).ToLocalTime():f}";
         }
@@ -105,7 +107,7 @@ public partial class Details : IDisposable
     private DateTime GetEntryLastUpdatedDate(Entry entry) =>
         _context.Entry(entry).Property<DateTime>("ValidFrom").CurrentValue;
 
-    private void Edit() => Navigation.NavigateTo("/indicators/edit/" + Indicator.Id);
+    private void Edit() => Navigation.NavigateTo("/indicators/edit/" + Indicator!.Id);
 
     private void ViewAction(Action action) => Navigation.NavigateTo("/actions/details/" + action.Id);
 

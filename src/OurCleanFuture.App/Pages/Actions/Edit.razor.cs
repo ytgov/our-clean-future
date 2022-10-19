@@ -26,7 +26,7 @@ public partial class Edit : IDisposable
 
     private List<Objective> Objectives { get; set; } = new();
     private List<Lead> Leads { get; set; } = new();
-    private Action Action { get; set; } = null!;
+    private Action? Action { get; set; }
 
     private IEnumerable<DirectorsCommittee> SelectedDirectorsCommittees { get; set; } =
         new List<DirectorsCommittee>();
@@ -65,15 +65,13 @@ public partial class Edit : IDisposable
             DirectorsCommittees = await _context.DirectorsCommittees
                 .OrderBy(dc => dc.Name)
                 .ToListAsync();
-#pragma warning disable CS8601 // Possible null reference assignment.
             Action = await _context.Actions
                 .Include(a => a.Indicators)
                 .Include(a => a.DirectorsCommittees)
                 .Include(a => a.Leads)
                 .AsSingleQuery()
                 .FirstOrDefaultAsync(a => a.Id == Id);
-#pragma warning restore CS8601 // Possible null reference assignment.
-            if (Action != null)
+            if (Action is not null)
             {
                 foreach (var committee in Action!.DirectorsCommittees)
                 {
@@ -84,10 +82,10 @@ public partial class Edit : IDisposable
                 {
                     SelectedLeads = SelectedLeads.Append(lead);
                 }
-            }
 
-            await GetUserPrincipal();
-            AuthorizedRoles += GetAuthorizedRoles();
+                await GetUserPrincipal();
+                AuthorizedRoles += GetAuthorizedRoles();
+            }
         }
         catch (Exception ex)
         {
@@ -111,7 +109,7 @@ public partial class Edit : IDisposable
     private string GetAuthorizedRoles()
     {
         var authorizedRoles = "";
-        foreach (var lead in Action.Leads)
+        foreach (var lead in Action!.Leads)
         {
             authorizedRoles += $", {lead.Id}";
         }
@@ -122,7 +120,7 @@ public partial class Edit : IDisposable
     private async Task Update()
     {
         if (
-            Action.TargetCompletionDate < Action.ActualCompletionDate
+            Action!.TargetCompletionDate < Action.ActualCompletionDate
             && Action.InternalStatus == InternalStatus.OnTrack
         )
         {

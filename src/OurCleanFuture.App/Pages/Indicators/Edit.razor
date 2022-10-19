@@ -4,11 +4,6 @@
 @using Action = OurCleanFuture.Data.Entities.Action
 @attribute [Authorize]
 
-@if (Indicator is not null)
-{
-    <PageTitle>[Indicator] @Indicator.Title.Truncate(16)</PageTitle>
-}
-
 @if (_isLoaded == false)
 {
     <MudText Typo="Typo.h6">Loading...</MudText>
@@ -19,12 +14,10 @@ else if (Indicator is null)
 }
 else
 {
+    <PageTitle>[Indicator] @Indicator.Title.Truncate(16)</PageTitle>
     <MudText Typo="Typo.h3" Class="mb-8">
         <b>Editing indicator:</b> @Indicator.Title
     </MudText>
-        @*<MudAlert Icon="@Icons.Material.Filled.Lightbulb" Severity="Severity.Normal" Class="mb-6">
-            If you need to modify a value within a dropdown menu, you can do that from the <b>Administration</b> menu on the lefthand navigation bar.
-            </MudAlert>*@
     <EditForm Model="@Indicator" OnValidSubmit="Update">
         <ObjectGraphDataAnnotationsValidator/>
         <MudGrid>

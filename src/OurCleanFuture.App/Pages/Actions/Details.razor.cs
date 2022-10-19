@@ -14,7 +14,7 @@ public partial class Details : IDisposable
 
     [Parameter] public int Id { get; set; }
 
-    private Action Action { get; set; } = null!;
+    private Action? Action { get; set; }
 
     [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
@@ -29,7 +29,6 @@ public partial class Details : IDisposable
         try
         {
             _context = ContextFactory.CreateDbContext();
-#pragma warning disable CS8601 // Possible null reference assignment.
             Action = await _context.Actions.Include(a => a.Indicators)
                 .Include(a => a.DirectorsCommittees)
                 .Include(i => i.Leads)
@@ -43,7 +42,12 @@ public partial class Details : IDisposable
                 .ThenInclude(a => a.Goals)
                 .AsSingleQuery()
                 .FirstOrDefaultAsync(a => a.Id == Id);
-#pragma warning restore CS8601 // Possible null reference assignment.
+            if (Action is not null)
+            {
+                Log.Information("{User} is viewing action {ActionId}: {ActionTitle}",
+                    StateContainer.ClaimsPrincipalEmail,
+                    Action.Id, Action.Title);
+            }
         }
         catch (Exception ex)
         {
@@ -55,19 +59,16 @@ public partial class Details : IDisposable
             _isLoaded = true;
         }
 
-        Log.Information("{User} is viewing action {ActionId}: {ActionTitle}", StateContainer.ClaimsPrincipalEmail,
-            Action?.Id, Action?.Title);
-
         await base.OnInitializedAsync();
     }
 
     private string InternalStatusToString()
     {
         // Only append updated by information if the InternalStatus has been updated after database creation
-        if (!string.IsNullOrWhiteSpace(Action.InternalStatusUpdatedBy))
+        if (!string.IsNullOrWhiteSpace(Action!.InternalStatusUpdatedBy))
         {
             return
-                $"Last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
+                $"Last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime:f}";
         }
 
         return string.Empty;
@@ -76,16 +77,16 @@ public partial class Details : IDisposable
     private string ExternalStatusToString()
     {
         // Only append updated by information if the ExternalStatus has been updated after database creation
-        if (!string.IsNullOrWhiteSpace(Action.ExternalStatusUpdatedBy))
+        if (!string.IsNullOrWhiteSpace(Action!.ExternalStatusUpdatedBy))
         {
             return
-                $"Last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime.ToString("f")}";
+                $"Last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime:f}";
         }
 
         return string.Empty;
     }
 
-    private void Edit() => Navigation.NavigateTo("/actions/edit/" + Action.Id);
+    private void Edit() => Navigation.NavigateTo("/actions/edit/" + Action!.Id);
 
     private void ViewIndicator(Indicator indicator) => Navigation.NavigateTo("/indicators/details/" + indicator.Id);
 

@@ -46,7 +46,8 @@ public class Action
     public List<ActionLead> ActionLeads { get; set; } = new();
     public List<Indicator> Indicators { get; set; } = new();
 
-    [Required] public Objective Objective { get; set; } = null!;
+    [Required(ErrorMessage = "An objective is required.")]
+    public Objective Objective { get; set; } = null!;
 
     public int ObjectiveId { get; set; }
     public List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();

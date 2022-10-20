@@ -7,7 +7,7 @@
 <PageTitle>Edit log</PageTitle>
 
 <MudText Typo="Typo.h3" Class="mb-8">Edit log</MudText>
-<MudTabs Elevation="4" Rounded="true" Color="@Color.Primary">
+<MudTabs Elevation="4" Rounded="true" Color="@Color.Warning">
     <MudTabPanel Text="Indicators">
         <MudTable Items="@(_logEvents.Where(x => x.EventType is IndicatorEditEventType or IndicatorCreateEventType))" Context="evt"
                   T="EventEntity" OnRowClick="@IndicatorRowClicked" RowClass="cursor-pointer">

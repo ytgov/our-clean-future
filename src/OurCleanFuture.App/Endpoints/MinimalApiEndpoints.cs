@@ -32,6 +32,7 @@ public static class MinimalApiEndpoints
                         i.Title,
                         i.Description,
                         i.CollectionInterval,
+                        i.DataType,
                         i.UnitOfMeasurement.Name,
                         i.UnitOfMeasurement.Symbol,
                         i.Leads
@@ -73,7 +74,8 @@ public static class MinimalApiEndpoints
                             .ToList(),
                         i.Target == null ? default : i.Target.Description,
                         i.Target == null ? default : i.Target.Value,
-                        i.Target == null ? default : i.Target.CompletionDate)
+                        i.Target == null ? default : i.Target.CompletionDate,
+                        i.Note)
             )
             .AsNoTracking()
             .AsSplitQuery()
@@ -93,6 +95,7 @@ public static class MinimalApiEndpoints
                         i.Title,
                         i.Description,
                         i.CollectionInterval,
+                        i.DataType,
                         i.UnitOfMeasurement.Name,
                         i.UnitOfMeasurement.Symbol,
                         i.Leads
@@ -134,7 +137,8 @@ public static class MinimalApiEndpoints
                             .ToList(),
                         i.Target == null ? default : i.Target.Description,
                         i.Target == null ? default : i.Target.Value,
-                        i.Target == null ? default : i.Target.CompletionDate)
+                        i.Target == null ? default : i.Target.CompletionDate,
+                        i.Note)
             )
             .AsNoTracking()
             .AsSplitQuery()
@@ -163,11 +167,13 @@ public static class MinimalApiEndpoints
             .Select(
                 a =>
                     new ActionDto(a.Id, a.Number, a.Title, a.Leads.Select(
-                                l =>
-                                    new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name)
-                            )
-                            .ToList(), a.InternalStatus, a.ExternalStatus, a.ActualCompletionDate,
-                        a.TargetCompletionDate, a.Indicators.Select(i => new IndicatorHeaderDto(i.Id, i.Title)).ToList())
+                                l => new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name))
+                            .ToList(),
+                        a.DirectorsCommittees.Select(d => new DirectorsCommitteeDto(d.Id, d.Name)).ToList(),
+                        a.PublicExplanation.Trim(), a.Note.Trim(), a.InternalStatus, a.InternalStatusUpdatedDate,
+                        a.ExternalStatus, a.ExternalStatusUpdatedDate, a.StartDate, a.TargetCompletionDate,
+                        a.ActualCompletionDate,
+                        a.Indicators.Select(i => new IndicatorHeaderDto(i.Id, i.Title)).ToList())
             )
             .AsNoTracking()
             .AsSplitQuery()
@@ -183,11 +189,13 @@ public static class MinimalApiEndpoints
             .Select(
                 a =>
                     new ActionDto(a.Id, a.Number, a.Title, a.Leads.Select(
-                                l =>
-                                    new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name)
-                            )
-                            .ToList(), a.InternalStatus, a.ExternalStatus, a.ActualCompletionDate,
-                        a.TargetCompletionDate, a.Indicators.Select(i => new IndicatorHeaderDto(i.Id, i.Title )).ToList())
+                                l => new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name))
+                            .ToList(),
+                        a.DirectorsCommittees.Select(d => new DirectorsCommitteeDto(d.Id, d.Name)).ToList(),
+                        a.PublicExplanation.Trim(), a.Note.Trim(), a.InternalStatus, a.InternalStatusUpdatedDate,
+                        a.ExternalStatus, a.ExternalStatusUpdatedDate, a.StartDate, a.TargetCompletionDate,
+                        a.ActualCompletionDate,
+                        a.Indicators.Select(i => new IndicatorHeaderDto(i.Id, i.Title)).ToList())
             )
             .AsNoTracking()
             .AsSplitQuery()
@@ -271,6 +279,7 @@ public static class MinimalApiEndpoints
         string Title,
         string Description,
         CollectionInterval CollectionInterval,
+        DataType DataType,
         string UnitOfMeasurementName,
         string UnitOfMeasurementSymbol,
         List<LeadDto> Leads,
@@ -286,7 +295,8 @@ public static class MinimalApiEndpoints
         List<EntryDto> Entries,
         string? TargetDescription,
         double? TargetValue,
-        DateTime? TargetCompletionDate);
+        DateTime? TargetCompletionDate,
+        string? Note);
 
     private record EntryDto(
         DateTime StartDate,
@@ -304,10 +314,16 @@ public static class MinimalApiEndpoints
         string Number,
         string Title,
         List<LeadDto> Leads,
+        List<DirectorsCommitteeDto> DirectorsCommittees,
+        string PublicExplanation,
+        string Note,
         InternalStatus InternalStatus,
+        DateTimeOffset? InternalStatusLastUpdatedDateTime,
         ExternalStatus ExternalStatus,
-        DateTime? ActualOrAnticipatedCompletionDate,
+        DateTimeOffset? ExternalStatusLastUpdatedDateTime,
+        DateTime? StartDate,
         DateTime? TargetCompletionDate,
+        DateTime? ActualOrAnticipatedCompletionDate,
         List<IndicatorHeaderDto> Indicators);
 
     private record LeadDto(
@@ -315,6 +331,10 @@ public static class MinimalApiEndpoints
         string Organization,
         string? Department,
         string? Branch);
+
+    private record DirectorsCommitteeDto(
+        int Id,
+        string Name);
 
     private enum ParentType
     {

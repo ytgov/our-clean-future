@@ -24,7 +24,7 @@ public class Entry
             "Count" => Value.ToString("n0"),
             "Dollars" => Value.ToString("c"),
             // All other units
-            _ => $"{Value:n} {Indicator.UnitOfMeasurement.Symbol}"
+            _ => $"{Value:n3} {Indicator.UnitOfMeasurement.Symbol}"
         };
         return result;
     }

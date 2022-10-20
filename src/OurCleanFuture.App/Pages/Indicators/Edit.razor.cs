@@ -18,7 +18,8 @@ public partial class Edit : IDisposable
     private bool _targetIsDeleted;
     private ClaimsPrincipal _user = null!;
 
-    private int[] Years { get; } = Enumerable.Range(2009, DateTime.Now.Year - 2008).Reverse().ToArray();
+    private int[] Years { get; } =
+        Enumerable.Range(2009, DateTime.Now.Year - 2008).Reverse().ToArray();
 
     [Parameter] public int Id { get; set; }
 
@@ -52,15 +53,25 @@ public partial class Edit : IDisposable
         try
         {
             _context = ContextFactory.CreateDbContext();
-            Leads = await _context.Leads.Include(l => l.Organization).Include(l => l.Branch)
-                .ThenInclude(b => b!.Department).OrderBy(l => l.Branch!.Department.ShortName)
-                .ThenBy(l => l.Branch!.Name).ToListAsync();
+            Leads = await _context.Leads
+                .Include(l => l.Organization)
+                .Include(l => l.Branch)
+                .ThenInclude(b => b!.Department)
+                .OrderBy(l => l.Branch!.Department.ShortName)
+                .ThenBy(l => l.Branch!.Name)
+                .ToListAsync();
             UnitsOfMeasurement = await _context.UnitsOfMeasurement.ToListAsync();
             Goals = await _context.Goals.OrderBy(g => g.Title).ToListAsync();
-            Objectives = await _context.Objectives.Include(o => o.Area).OrderBy(o => o.Area.Title).ThenBy(o => o.Title)
+            Objectives = await _context.Objectives
+                .Include(o => o.Area)
+                .OrderBy(o => o.Area.Title)
+                .ThenBy(o => o.Title)
                 .ToListAsync();
             Actions = await _context.Actions.ToListAsync();
-            Indicator = await _context.Indicators.Include(i => i.Target).Include(i => i.Leads).AsSingleQuery()
+            Indicator = await _context.Indicators
+                .Include(i => i.Target)
+                .Include(i => i.Leads)
+                .AsSingleQuery()
                 .FirstOrDefaultAsync(i => i.Id == Id);
             if (Indicator != null)
             {
@@ -158,8 +169,14 @@ public partial class Edit : IDisposable
             }
             else if (Indicator.Target is not null)
             {
-                Console.WriteLine($"Indicator.Target state is: {_context.Entry(Indicator.Target).State}");
-                if (_context.Entry(Indicator.Target).State is EntityState.Added or EntityState.Modified)
+                Console.WriteLine(
+                    $"Indicator.Target state is: {_context.Entry(Indicator.Target).State}"
+                );
+                if (
+                    _context.Entry(Indicator.Target).State
+                    is EntityState.Added
+                    or EntityState.Modified
+                )
                 {
                     Indicator.UpdatedBy = _user.GetFormattedName();
                 }
@@ -171,16 +188,22 @@ public partial class Edit : IDisposable
 
             await _context.SaveChangesAsync();
             Snackbar.Add($"Successfully updated indicator: {Indicator.Title}", Severity.Success);
-            Log.Information("{User} updated indicator {IndicatorId}: {IndicatorTitle}",
-                StateContainer.ClaimsPrincipalEmail, Indicator.Id, Indicator.Title);
+            Log.Information(
+                "{User} updated indicator {IndicatorId}: {IndicatorTitle}",
+                StateContainer.ClaimsPrincipalEmail,
+                Indicator.Id,
+                Indicator.Title
+            );
         }
         catch (Exception ex)
         {
             switch (ex)
             {
                 case InvalidOperationException:
-                    Snackbar.Add("The entry changes were not saved. Two entries cannot have the same period.",
-                        Severity.Error);
+                    Snackbar.Add(
+                        "The entry changes were not saved. Two entries cannot have the same period.",
+                        Severity.Error
+                    );
                     break;
 
                 case DbUpdateException:
@@ -221,8 +244,10 @@ public partial class Edit : IDisposable
             var newEntry = (Entry)result.Data;
             newEntry.UpdatedBy = _user.GetFormattedName();
             Indicator!.Entries.Add(newEntry);
-            Snackbar.Add($"Click submit to confirm adding entry dated {newEntry.StartDate.ToLongDateString()}",
-                Severity.Info);
+            Snackbar.Add(
+                $"Click submit to confirm adding entry dated {newEntry.StartDate.ToLongDateString()}",
+                Severity.Info
+            );
         }
     }
 
@@ -237,8 +262,10 @@ public partial class Edit : IDisposable
         {
             var editedEntry = (Entry)result.Data;
             editedEntry.UpdatedBy = _user.GetFormattedName();
-            Snackbar.Add($"Click submit to confirm update of entry dated {editedEntry.StartDate.ToLongDateString()}",
-                Severity.Info);
+            Snackbar.Add(
+                $"Click submit to confirm update of entry dated {editedEntry.StartDate.ToLongDateString()}",
+                Severity.Info
+            );
         }
     }
 
@@ -247,12 +274,16 @@ public partial class Edit : IDisposable
         var result = await DialogService.ShowMessageBox(
             $"Delete entry dated {entry.StartDate.ToLongDateString()}?",
             "",
-            "Delete", cancelText: "Cancel");
+            "Delete",
+            cancelText: "Cancel"
+        );
         if (result == true)
         {
             Indicator!.Entries.Remove(entry);
-            Snackbar.Add($"Click submit to confirm deletion of entry dated {entry.StartDate.ToLongDateString()}",
-                Severity.Info);
+            Snackbar.Add(
+                $"Click submit to confirm deletion of entry dated {entry.StartDate.ToLongDateString()}",
+                Severity.Info
+            );
         }
     }
 }

@@ -33,12 +33,20 @@ public partial class Details : IDisposable
         try
         {
             _context = ContextFactory.CreateDbContext();
-            Area = await _context.Areas.Include(a => a.Objectives).ThenInclude(o => o.Actions).AsSingleQuery()
-                .AsNoTracking().FirstOrDefaultAsync(a => a.Title == AreaTitle.Replace('-', ' '));
+            Area = await _context.Areas
+                .Include(a => a.Objectives)
+                .ThenInclude(o => o.Actions)
+                .AsSingleQuery()
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.Title == AreaTitle.Replace('-', ' '));
             if (Area is not null)
             {
-                Log.Information("{User} is viewing area {AreaId}: {AreaTitle}", StateContainer.ClaimsPrincipalEmail,
-                    Area.Id, Area.Title);
+                Log.Information(
+                    "{User} is viewing area {AreaId}: {AreaTitle}",
+                    StateContainer.ClaimsPrincipalEmail,
+                    Area.Id,
+                    Area.Title
+                );
             }
         }
         catch (Exception ex)
@@ -54,5 +62,6 @@ public partial class Details : IDisposable
         await base.OnInitializedAsync();
     }
 
-    private void ViewAction(Action action) => Navigation.NavigateTo("/actions/details/" + action.Id);
+    private void ViewAction(Action action) =>
+        Navigation.NavigateTo("/actions/details/" + action.Id);
 }

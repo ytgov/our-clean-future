@@ -10,7 +10,8 @@ namespace OurCleanFuture.Data.Migrations
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_IndicatorLead_Indicators_IndicatorId",
-                table: "IndicatorLead");
+                table: "IndicatorLead"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_IndicatorLead_Indicators_IndicatorId",
@@ -18,14 +19,16 @@ namespace OurCleanFuture.Data.Migrations
                 column: "IndicatorId",
                 principalTable: "Indicators",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
                 name: "FK_IndicatorLead_Indicators_IndicatorId",
-                table: "IndicatorLead");
+                table: "IndicatorLead"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_IndicatorLead_Indicators_IndicatorId",
@@ -33,7 +36,8 @@ namespace OurCleanFuture.Data.Migrations
                 column: "IndicatorId",
                 principalTable: "Indicators",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                onDelete: ReferentialAction.Restrict
+            );
         }
     }
 }

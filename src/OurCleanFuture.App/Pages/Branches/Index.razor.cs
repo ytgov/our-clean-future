@@ -32,7 +32,10 @@ public partial class Index : IDisposable
         try
         {
             _context = ContextFactory.CreateDbContext();
-            Branches = await _context.Branches.OrderBy(b => b.Name).Include(b => b.Department).Include(b => b.Lead)
+            Branches = await _context.Branches
+                .OrderBy(b => b.Name)
+                .Include(b => b.Department)
+                .Include(b => b.Lead)
                 .ToListAsync();
             Departments = await _context.Departments.OrderBy(d => d.Name).ToListAsync();
         }
@@ -68,11 +71,13 @@ public partial class Index : IDisposable
                 {
                     Branches.Add(newBranch);
                     Snackbar.Add($"Created branch {newBranch.Name}", Severity.Success);
-                    Log.Information("{User} created branch: {BranchId}, {BranchName}, {DepartmentName}",
+                    Log.Information(
+                        "{User} created branch: {BranchId}, {BranchName}, {DepartmentName}",
                         StateContainer.ClaimsPrincipalEmail,
                         newBranch.Id,
                         newBranch.Name,
-                        newBranch.Department.Name);
+                        newBranch.Department.Name
+                    );
                 }
             }
             catch (DbUpdateException)
@@ -97,10 +102,12 @@ public partial class Index : IDisposable
                 if (entriesSaved == 1)
                 {
                     Snackbar.Add($"Updated branch {updatedBranch.Name}", Severity.Success);
-                    Log.Information("{User} updated branch: {BranchId}, {BranchName}",
+                    Log.Information(
+                        "{User} updated branch: {BranchId}, {BranchName}",
                         StateContainer.ClaimsPrincipalEmail,
                         branch.Id,
-                        updatedBranch.Name);
+                        updatedBranch.Name
+                    );
                 }
             }
             catch (DbUpdateException)
@@ -115,7 +122,9 @@ public partial class Index : IDisposable
         var result = await DialogService.ShowMessageBox(
             $"Delete {branch.Name}?",
             "This action cannot not be undone.",
-            "Delete", cancelText: "Cancel");
+            "Delete",
+            cancelText: "Cancel"
+        );
         if (result == true)
             //Prevents mid-method rerendering of the component, which avoids overlapping threads
         {
@@ -126,16 +135,20 @@ public partial class Index : IDisposable
                 await _context.SaveChangesAsync();
                 Branches.Remove(branch);
                 Snackbar.Add($"Deleted branch {branch.Name}", Severity.Success);
-                Log.Information("{User} deleted branch: {BranchId}, {BranchName}, {DepartmentName}",
+                Log.Information(
+                    "{User} deleted branch: {BranchId}, {BranchName}, {DepartmentName}",
                     StateContainer.ClaimsPrincipalEmail,
                     branch.Id,
                     branch.Name,
-                    branch.Department.Name);
+                    branch.Department.Name
+                );
             }
             catch (DbUpdateException)
             {
-                Snackbar.Add($"Unable to delete branch {branch.Name}, as it is associated with an indicator or action",
-                    Severity.Error);
+                Snackbar.Add(
+                    $"Unable to delete branch {branch.Name}, as it is associated with an indicator or action",
+                    Severity.Error
+                );
             }
         }
     }

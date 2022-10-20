@@ -14,7 +14,8 @@ namespace OurCleanFuture.Data.Migrations
                 type: "datetime2",
                 nullable: true,
                 oldClrType: typeof(DateTime),
-                oldType: "datetime2");
+                oldType: "datetime2"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -27,7 +28,8 @@ namespace OurCleanFuture.Data.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldNullable: true);
+                oldNullable: true
+            );
         }
     }
 }

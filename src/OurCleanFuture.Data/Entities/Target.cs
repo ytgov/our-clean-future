@@ -8,7 +8,11 @@ public class Target
     public double? Value { get; set; }
     public DateTime? CompletionDate { get; set; }
 
-    [StringLength(500, MinimumLength = 1, ErrorMessage = "{0} must be between {2} and {1} characters.")]
+    [StringLength(
+        500,
+        MinimumLength = 1,
+        ErrorMessage = "{0} must be between {2} and {1} characters."
+    )]
     public string Description { get; set; } = "";
 
     public int IndicatorId { get; set; }

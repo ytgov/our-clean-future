@@ -29,7 +29,8 @@ public partial class Details : IDisposable
         try
         {
             _context = ContextFactory.CreateDbContext();
-            Action = await _context.Actions.Include(a => a.Indicators)
+            Action = await _context.Actions
+                .Include(a => a.Indicators)
                 .Include(a => a.DirectorsCommittees)
                 .Include(i => i.Leads)
                 .ThenInclude(l => l.Branch)
@@ -44,9 +45,12 @@ public partial class Details : IDisposable
                 .FirstOrDefaultAsync(a => a.Id == Id);
             if (Action is not null)
             {
-                Log.Information("{User} is viewing action {ActionId}: {ActionTitle}",
+                Log.Information(
+                    "{User} is viewing action {ActionId}: {ActionTitle}",
                     StateContainer.ClaimsPrincipalEmail,
-                    Action.Id, Action.Title);
+                    Action.Id,
+                    Action.Title
+                );
             }
         }
         catch (Exception ex)
@@ -88,7 +92,9 @@ public partial class Details : IDisposable
 
     private void Edit() => Navigation.NavigateTo("/actions/edit/" + Action!.Id);
 
-    private void ViewIndicator(Indicator indicator) => Navigation.NavigateTo("/indicators/details/" + indicator.Id);
+    private void ViewIndicator(Indicator indicator) =>
+        Navigation.NavigateTo("/indicators/details/" + indicator.Id);
 
-    private void ViewArea(Area area) => Navigation.NavigateTo("/areas/" + area.Title.ToLower().Replace(' ', '-'));
+    private void ViewArea(Area area) =>
+        Navigation.NavigateTo("/areas/" + area.Title.ToLower().Replace(' ', '-'));
 }

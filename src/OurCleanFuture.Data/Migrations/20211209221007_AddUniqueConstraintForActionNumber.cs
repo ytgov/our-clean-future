@@ -12,14 +12,13 @@ namespace OurCleanFuture.Data.Migrations
                 name: "IX_Actions_Number",
                 table: "Actions",
                 column: "Number",
-                unique: true);
+                unique: true
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_Actions_Number",
-                table: "Actions");
+            migrationBuilder.DropIndex(name: "IX_Actions_Number", table: "Actions");
         }
     }
 }

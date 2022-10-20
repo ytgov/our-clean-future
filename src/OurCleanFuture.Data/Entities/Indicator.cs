@@ -6,13 +6,21 @@ public class Indicator
 {
     public int Id { get; set; }
 
-    [StringLength(100, MinimumLength = 5, ErrorMessage = "{0} must be between {2} and {1} characters.")]
+    [StringLength(
+        100,
+        MinimumLength = 5,
+        ErrorMessage = "{0} must be between {2} and {1} characters."
+    )]
     public string Title { get; set; } = "";
 
     public List<Lead> Leads { get; set; } = new();
     public List<IndicatorLead> IndicatorLeads { get; set; } = new();
 
-    [StringLength(500, MinimumLength = 1, ErrorMessage = "{0} must be between {2} and {1} characters.")]
+    [StringLength(
+        500,
+        MinimumLength = 1,
+        ErrorMessage = "{0} must be between {2} and {1} characters."
+    )]
     public string Description { get; set; } = "";
 
     public int UnitOfMeasurementId { get; set; }

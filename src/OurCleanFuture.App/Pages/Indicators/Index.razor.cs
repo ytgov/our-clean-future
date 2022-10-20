@@ -69,7 +69,8 @@ public partial class Index : IDisposable
 
     private void Create() => Navigation.NavigateTo("/indicators/create/");
 
-    private void Details(int indicatorId) => Navigation.NavigateTo("/indicators/details/" + indicatorId);
+    private void Details(int indicatorId) =>
+        Navigation.NavigateTo("/indicators/details/" + indicatorId);
 
     private void Edit(int indicatorId) => Navigation.NavigateTo("/indicators/edit/" + indicatorId);
 
@@ -112,13 +113,21 @@ public partial class Index : IDisposable
     {
         if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey)
         {
-            await JsRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/edit/{p.Item.Id}",
-                "_blank");
+            await JsRuntime.InvokeAsync<object>(
+                "open",
+                CancellationToken.None,
+                $"/indicators/edit/{p.Item.Id}",
+                "_blank"
+            );
         }
         else if (p.MouseEventArgs.CtrlKey)
         {
-            await JsRuntime.InvokeAsync<object>("open", CancellationToken.None, $"/indicators/details/{p.Item.Id}",
-                "_blank");
+            await JsRuntime.InvokeAsync<object>(
+                "open",
+                CancellationToken.None,
+                $"/indicators/details/{p.Item.Id}",
+                "_blank"
+            );
         }
         else
         {
@@ -132,6 +141,7 @@ public partial class Index : IDisposable
         {
             return true;
         }
+
         foreach (var lead in indicator.Leads)
         {
             if (lead.Organization.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
@@ -139,19 +149,30 @@ public partial class Index : IDisposable
                 return true;
             }
 
-            if (lead.Branch?.Department.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ==
-                true)
+            if (
+                lead.Branch?.Department.Name.Contains(
+                    _searchString,
+                    StringComparison.OrdinalIgnoreCase
+                ) == true
+            )
             {
                 return true;
             }
 
-            if (lead.Branch?.Department.ShortName.Contains(_searchString, StringComparison.OrdinalIgnoreCase) ==
-                true)
+            if (
+                lead.Branch?.Department.ShortName.Contains(
+                    _searchString,
+                    StringComparison.OrdinalIgnoreCase
+                ) == true
+            )
             {
                 return true;
             }
 
-            if (lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase) == true)
+            if (
+                lead.Branch?.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase)
+                == true
+            )
             {
                 return true;
             }
@@ -231,8 +252,7 @@ public partial class Index : IDisposable
             }
         }
 
-        if (claimsPrincipal.IsInRole("Administrator")
-            || claimsPrincipal.IsInRole("1"))
+        if (claimsPrincipal.IsInRole("Administrator") || claimsPrincipal.IsInRole("1"))
         {
             return true;
         }

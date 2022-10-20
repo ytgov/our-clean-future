@@ -30,7 +30,8 @@ public partial class Index
         {
             _context = ContextFactory.CreateDbContext();
             Users = await _context.Users.Include(u => u.Leads).ToListAsync();
-            Leads = await _context.Leads.Include(l => l.Organization)
+            Leads = await _context.Leads
+                .Include(l => l.Organization)
                 .Include(l => l.Branch)
                 .ThenInclude(b => b!.Department)
                 .ToListAsync();
@@ -68,10 +69,17 @@ public partial class Index
                 var entriesSaved = await _context.SaveChangesAsync();
                 if (entriesSaved == 2)
                 {
-                    Snackbar.Add($"Successfully added user {newUser.Email} to {lead}", Severity.Success);
+                    Snackbar.Add(
+                        $"Successfully added user {newUser.Email} to {lead}",
+                        Severity.Success
+                    );
 
-                    Log.Information("{User} added user {AddedUser} to {Lead}", StateContainer.ClaimsPrincipalEmail,
-                        newUser.Email, lead);
+                    Log.Information(
+                        "{User} added user {AddedUser} to {Lead}",
+                        StateContainer.ClaimsPrincipalEmail,
+                        newUser.Email,
+                        lead
+                    );
                 }
             }
             catch (DbUpdateException)
@@ -86,7 +94,9 @@ public partial class Index
         var result = await DialogService.ShowMessageBox(
             $"Remove {user.Email} from {lead}?",
             "This action cannot not be undone.",
-            "Remove", cancelText: "Cancel");
+            "Remove",
+            cancelText: "Cancel"
+        );
         if (result == true)
         {
             try
@@ -99,8 +109,12 @@ public partial class Index
                 lead.Users.Remove(user);
                 await _context.SaveChangesAsync();
                 Snackbar.Add($"Removed {user.Email} from {lead}", Severity.Success);
-                Log.Information("{User} removed user {RemovedUser} from {Lead}", StateContainer.ClaimsPrincipalEmail,
-                    user.Email, lead);
+                Log.Information(
+                    "{User} removed user {RemovedUser} from {Lead}",
+                    StateContainer.ClaimsPrincipalEmail,
+                    user.Email,
+                    lead
+                );
             }
             catch (DbUpdateException)
             {

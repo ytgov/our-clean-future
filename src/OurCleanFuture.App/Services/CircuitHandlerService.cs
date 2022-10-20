@@ -6,7 +6,8 @@ public class CircuitHandlerService : CircuitHandler
 {
     private readonly StateContainerService _stateContainer;
 
-    public CircuitHandlerService(StateContainerService stateContainer) => _stateContainer = stateContainer;
+    public CircuitHandlerService(StateContainerService stateContainer) =>
+        _stateContainer = stateContainer;
 
     public override Task OnCircuitOpenedAsync(Circuit circuit, CancellationToken cancellationToken)
     {

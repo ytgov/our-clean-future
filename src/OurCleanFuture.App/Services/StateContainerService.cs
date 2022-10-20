@@ -19,8 +19,9 @@ public class StateContainerService
         set
         {
             _claimsPrincipal = value ?? throw new ArgumentNullException(nameof(ClaimsPrincipal));
-            ClaimsPrincipalEmail =
-                _claimsPrincipal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value.ToLower();
+            ClaimsPrincipalEmail = _claimsPrincipal.Claims
+                .FirstOrDefault(c => c.Type == ClaimTypes.Email)
+                ?.Value.ToLower();
             if (ClaimsPrincipalEmail is not null)
             {
                 Log.Information("{User} has established a connection.", ClaimsPrincipalEmail);

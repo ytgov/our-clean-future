@@ -8,18 +8,16 @@ namespace OurCleanFuture.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Entries",
-                table: "Entries")
+            migrationBuilder
+                .DropPrimaryKey(name: "PK_Entries", table: "Entries")
                 .Annotation("SqlServer:IsTemporal", true)
                 .Annotation("SqlServer:TemporalHistoryTableName", "EntriesHistory")
                 .Annotation("SqlServer:TemporalHistoryTableSchema", null)
                 .Annotation("SqlServer:TemporalPeriodEndColumnName", "ValidTo")
                 .Annotation("SqlServer:TemporalPeriodStartColumnName", "ValidFrom");
 
-            migrationBuilder.DropColumn(
-                name: "Id",
-                table: "Entries")
+            migrationBuilder
+                .DropColumn(name: "Id", table: "Entries")
                 .Annotation("SqlServer:IsTemporal", true)
                 .Annotation("SqlServer:TemporalHistoryTableName", "EntriesHistory")
                 .Annotation("SqlServer:TemporalHistoryTableSchema", null);
@@ -27,14 +25,14 @@ namespace OurCleanFuture.Data.Migrations
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Entries",
                 table: "Entries",
-                columns: new[] { "IndicatorId", "StartDate" });
+                columns: new[] { "IndicatorId", "StartDate" }
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Entries",
-                table: "Entries")
+            migrationBuilder
+                .DropPrimaryKey(name: "PK_Entries", table: "Entries")
                 .Annotation("SqlServer:IsTemporal", true)
                 .Annotation("SqlServer:TemporalHistoryTableName", "EntriesHistory")
                 .Annotation("SqlServer:TemporalHistoryTableSchema", null)
@@ -46,12 +44,14 @@ namespace OurCleanFuture.Data.Migrations
                 table: "Entries",
                 type: "int",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: 0
+            );
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_Entries",
                 table: "Entries",
-                columns: new[] { "IndicatorId", "Id", "StartDate" });
+                columns: new[] { "IndicatorId", "Id", "StartDate" }
+            );
         }
     }
 }

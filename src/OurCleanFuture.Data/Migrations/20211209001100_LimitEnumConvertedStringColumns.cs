@@ -15,7 +15,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 25,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "CollectionInterval",
@@ -24,7 +25,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 25,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "InternalStatusUpdatedBy",
@@ -33,7 +35,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 100,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "InternalStatus",
@@ -42,7 +45,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 25,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExternalStatus",
@@ -51,7 +55,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 25,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -63,7 +68,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(25)",
-                oldMaxLength: 25);
+                oldMaxLength: 25
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "CollectionInterval",
@@ -72,7 +78,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(25)",
-                oldMaxLength: 25);
+                oldMaxLength: 25
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "InternalStatusUpdatedBy",
@@ -81,7 +88,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(100)",
-                oldMaxLength: 100);
+                oldMaxLength: 100
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "InternalStatus",
@@ -90,7 +98,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(25)",
-                oldMaxLength: 25);
+                oldMaxLength: 25
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExternalStatus",
@@ -99,7 +108,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(25)",
-                oldMaxLength: 25);
+                oldMaxLength: 25
+            );
         }
     }
 }

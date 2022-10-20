@@ -38,7 +38,12 @@ public static class MinimalApiEndpoints
                         i.Leads
                             .Select(
                                 l =>
-                                    new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name)
+                                    new LeadDto(
+                                        l.Id,
+                                        l.Organization.Name,
+                                        l.Branch!.Department.Name,
+                                        l.Branch.Name
+                                    )
                             )
                             .ToList(),
                         i.Action != null
@@ -51,16 +56,10 @@ public static class MinimalApiEndpoints
                                 .Select(g => new GoalDto(g.Id, g.Title))
                                 .ToList()
                             : i.Objective != null
-                                ? i.Objective.Goals
-                                    .Select(
-                                        g => new GoalDto(g.Id, g.Title)
-                                    )
-                                    .ToList()
+                                ? i.Objective.Goals.Select(g => new GoalDto(g.Id, g.Title)).ToList()
                                 : new List<GoalDto> { new(i.Id, i.Title) },
                         i.Action == null ? i.Objective!.Area.Id : i.Action.Objective.Area.Id,
-                        i.Action == null
-                            ? i.Objective!.Area.Title
-                            : i.Action.Objective.Area.Title,
+                        i.Action == null ? i.Objective!.Area.Title : i.Action.Objective.Area.Title,
                         i.Objective == null ? i.Action!.Objective.Id : i.Objective.Id,
                         i.Objective == null ? i.Action!.Objective.Title : i.Objective.Title,
                         i.Action == null ? null : i.Action.Id,
@@ -69,13 +68,20 @@ public static class MinimalApiEndpoints
                         i.Entries
                             .Select(
                                 e =>
-                                    new EntryDto(e.StartDate, e.EndDate, e.Value, e.Note, e.UpdatedBy)
+                                    new EntryDto(
+                                        e.StartDate,
+                                        e.EndDate,
+                                        e.Value,
+                                        e.Note,
+                                        e.UpdatedBy
+                                    )
                             )
                             .ToList(),
                         i.Target == null ? default : i.Target.Description,
                         i.Target == null ? default : i.Target.Value,
                         i.Target == null ? default : i.Target.CompletionDate,
-                        i.Note)
+                        i.Note
+                    )
             )
             .AsNoTracking()
             .AsSplitQuery()
@@ -101,7 +107,12 @@ public static class MinimalApiEndpoints
                         i.Leads
                             .Select(
                                 l =>
-                                    new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name)
+                                    new LeadDto(
+                                        l.Id,
+                                        l.Organization.Name,
+                                        l.Branch!.Department.Name,
+                                        l.Branch.Name
+                                    )
                             )
                             .ToList(),
                         i.Action != null
@@ -114,16 +125,10 @@ public static class MinimalApiEndpoints
                                 .Select(g => new GoalDto(g.Id, g.Title))
                                 .ToList()
                             : i.Objective != null
-                                ? i.Objective.Goals
-                                    .Select(
-                                        g => new GoalDto(g.Id, g.Title)
-                                    )
-                                    .ToList()
+                                ? i.Objective.Goals.Select(g => new GoalDto(g.Id, g.Title)).ToList()
                                 : new List<GoalDto> { new(i.Id, i.Title) },
                         i.Action == null ? i.Objective!.Area.Id : i.Action.Objective.Area.Id,
-                        i.Action == null
-                            ? i.Objective!.Area.Title
-                            : i.Action.Objective.Area.Title,
+                        i.Action == null ? i.Objective!.Area.Title : i.Action.Objective.Area.Title,
                         i.Objective == null ? i.Action!.Objective.Id : i.Objective.Id,
                         i.Objective == null ? i.Action!.Objective.Title : i.Objective.Title,
                         i.Action == null ? null : i.Action.Id,
@@ -132,13 +137,20 @@ public static class MinimalApiEndpoints
                         i.Entries
                             .Select(
                                 e =>
-                                    new EntryDto(e.StartDate, e.EndDate, e.Value, e.Note, e.UpdatedBy)
+                                    new EntryDto(
+                                        e.StartDate,
+                                        e.EndDate,
+                                        e.Value,
+                                        e.Note,
+                                        e.UpdatedBy
+                                    )
                             )
                             .ToList(),
                         i.Target == null ? default : i.Target.Description,
                         i.Target == null ? default : i.Target.Value,
                         i.Target == null ? default : i.Target.CompletionDate,
-                        i.Note)
+                        i.Note
+                    )
             )
             .AsNoTracking()
             .AsSplitQuery()
@@ -166,14 +178,35 @@ public static class MinimalApiEndpoints
         var actions = await context.Actions
             .Select(
                 a =>
-                    new ActionDto(a.Id, a.Number, a.Title, a.Leads.Select(
-                                l => new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name))
+                    new ActionDto(
+                        a.Id,
+                        a.Number,
+                        a.Title,
+                        a.Leads
+                            .Select(
+                                l =>
+                                    new LeadDto(
+                                        l.Id,
+                                        l.Organization.Name,
+                                        l.Branch!.Department.Name,
+                                        l.Branch.Name
+                                    )
+                            )
                             .ToList(),
-                        a.DirectorsCommittees.Select(d => new DirectorsCommitteeDto(d.Id, d.Name)).ToList(),
-                        a.PublicExplanation.Trim(), a.Note.Trim(), a.InternalStatus, a.InternalStatusUpdatedDate,
-                        a.ExternalStatus, a.ExternalStatusUpdatedDate, a.StartDate, a.TargetCompletionDate,
+                        a.DirectorsCommittees
+                            .Select(d => new DirectorsCommitteeDto(d.Id, d.Name))
+                            .ToList(),
+                        a.PublicExplanation.Trim(),
+                        a.Note.Trim(),
+                        a.InternalStatus,
+                        a.InternalStatusUpdatedDate,
+                        a.ExternalStatus,
+                        a.ExternalStatusUpdatedDate,
+                        a.StartDate,
+                        a.TargetCompletionDate,
                         a.ActualCompletionDate,
-                        a.Indicators.Select(i => new IndicatorHeaderDto(i.Id, i.Title)).ToList())
+                        a.Indicators.Select(i => new IndicatorHeaderDto(i.Id, i.Title)).ToList()
+                    )
             )
             .AsNoTracking()
             .AsSplitQuery()
@@ -188,14 +221,35 @@ public static class MinimalApiEndpoints
             .Where(a => a.Id == id)
             .Select(
                 a =>
-                    new ActionDto(a.Id, a.Number, a.Title, a.Leads.Select(
-                                l => new LeadDto(l.Id, l.Organization.Name, l.Branch!.Department.Name, l.Branch.Name))
+                    new ActionDto(
+                        a.Id,
+                        a.Number,
+                        a.Title,
+                        a.Leads
+                            .Select(
+                                l =>
+                                    new LeadDto(
+                                        l.Id,
+                                        l.Organization.Name,
+                                        l.Branch!.Department.Name,
+                                        l.Branch.Name
+                                    )
+                            )
                             .ToList(),
-                        a.DirectorsCommittees.Select(d => new DirectorsCommitteeDto(d.Id, d.Name)).ToList(),
-                        a.PublicExplanation.Trim(), a.Note.Trim(), a.InternalStatus, a.InternalStatusUpdatedDate,
-                        a.ExternalStatus, a.ExternalStatusUpdatedDate, a.StartDate, a.TargetCompletionDate,
+                        a.DirectorsCommittees
+                            .Select(d => new DirectorsCommitteeDto(d.Id, d.Name))
+                            .ToList(),
+                        a.PublicExplanation.Trim(),
+                        a.Note.Trim(),
+                        a.InternalStatus,
+                        a.InternalStatusUpdatedDate,
+                        a.ExternalStatus,
+                        a.ExternalStatusUpdatedDate,
+                        a.StartDate,
+                        a.TargetCompletionDate,
                         a.ActualCompletionDate,
-                        a.Indicators.Select(i => new IndicatorHeaderDto(i.Id, i.Title)).ToList())
+                        a.Indicators.Select(i => new IndicatorHeaderDto(i.Id, i.Title)).ToList()
+                    )
             )
             .AsNoTracking()
             .AsSplitQuery()
@@ -222,14 +276,20 @@ public static class MinimalApiEndpoints
         var areas = await context.Areas
             .Select(
                 a =>
-                    new AreaDto(a.Id, a.Title, a.Objectives.Select(
-                            o =>
-                                new ObjectiveDto(o.Id, o.Title, o.Goals.Select(
-                                        g => new GoalDto(g.Id, g.Title)
+                    new AreaDto(
+                        a.Id,
+                        a.Title,
+                        a.Objectives
+                            .Select(
+                                o =>
+                                    new ObjectiveDto(
+                                        o.Id,
+                                        o.Title,
+                                        o.Goals.Select(g => new GoalDto(g.Id, g.Title)).ToList()
                                     )
-                                    .ToList())
-                        )
-                        .ToList())
+                            )
+                            .ToList()
+                    )
             )
             .AsNoTracking()
             .AsSingleQuery()
@@ -244,14 +304,20 @@ public static class MinimalApiEndpoints
             .Where(a => a.Id == id)
             .Select(
                 a =>
-                    new AreaDto(a.Id, a.Title, a.Objectives.Select(
-                            o =>
-                                new ObjectiveDto(o.Id, o.Title, o.Goals.Select(
-                                        g => new GoalDto(g.Id, g.Title)
+                    new AreaDto(
+                        a.Id,
+                        a.Title,
+                        a.Objectives
+                            .Select(
+                                o =>
+                                    new ObjectiveDto(
+                                        o.Id,
+                                        o.Title,
+                                        o.Goals.Select(g => new GoalDto(g.Id, g.Title)).ToList()
                                     )
-                                    .ToList())
-                        )
-                        .ToList())
+                            )
+                            .ToList()
+                    )
             )
             .AsNoTracking()
             .AsSingleQuery()
@@ -260,19 +326,11 @@ public static class MinimalApiEndpoints
         return area is not null ? Results.Ok(area) : Results.NotFound();
     }
 
-    private record AreaDto(
-        int Id,
-        string Title,
-        List<ObjectiveDto> Objectives);
+    private record AreaDto(int Id, string Title, List<ObjectiveDto> Objectives);
 
-    private record ObjectiveDto(
-        int Id,
-        string Title,
-        List<GoalDto> Goals);
+    private record ObjectiveDto(int Id, string Title, List<GoalDto> Goals);
 
-    private record IndicatorHeaderDto(
-        int Id,
-        string Title);
+    private record IndicatorHeaderDto(int Id, string Title);
 
     private record IndicatorDto(
         int Id,
@@ -296,18 +354,18 @@ public static class MinimalApiEndpoints
         string? TargetDescription,
         double? TargetValue,
         DateTime? TargetCompletionDate,
-        string? Note);
+        string? Note
+    );
 
     private record EntryDto(
         DateTime StartDate,
         DateTime EndDate,
         decimal Value,
         string Note,
-        string LastUpdatedBy);
+        string LastUpdatedBy
+    );
 
-    private record GoalDto(
-        int Id,
-        string Title);
+    private record GoalDto(int Id, string Title);
 
     private record ActionDto(
         int Id,
@@ -324,17 +382,12 @@ public static class MinimalApiEndpoints
         DateTime? StartDate,
         DateTime? TargetCompletionDate,
         DateTime? ActualOrAnticipatedCompletionDate,
-        List<IndicatorHeaderDto> Indicators);
+        List<IndicatorHeaderDto> Indicators
+    );
 
-    private record LeadDto(
-        int Id,
-        string Organization,
-        string? Department,
-        string? Branch);
+    private record LeadDto(int Id, string Organization, string? Department, string? Branch);
 
-    private record DirectorsCommitteeDto(
-        int Id,
-        string Name);
+    private record DirectorsCommitteeDto(int Id, string Name);
 
     private enum ParentType
     {

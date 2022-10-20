@@ -11,7 +11,8 @@ namespace OurCleanFuture.Data.Migrations
             migrationBuilder.RenameColumn(
                 name: "EndDate",
                 table: "Targets",
-                newName: "CompletionDate");
+                newName: "CompletionDate"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -19,7 +20,8 @@ namespace OurCleanFuture.Data.Migrations
             migrationBuilder.RenameColumn(
                 name: "CompletionDate",
                 table: "Targets",
-                newName: "EndDate");
+                newName: "EndDate"
+            );
         }
     }
 }

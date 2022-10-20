@@ -16,7 +16,8 @@ namespace OurCleanFuture.Data.Migrations
                 scale: 6,
                 nullable: false,
                 oldClrType: typeof(double),
-                oldType: "float");
+                oldType: "float"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -29,7 +30,8 @@ namespace OurCleanFuture.Data.Migrations
                 oldClrType: typeof(decimal),
                 oldType: "decimal(22,6)",
                 oldPrecision: 22,
-                oldScale: 6);
+                oldScale: 6
+            );
         }
     }
 }

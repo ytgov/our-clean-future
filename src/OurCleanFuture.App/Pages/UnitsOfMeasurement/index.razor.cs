@@ -31,7 +31,9 @@ public partial class Index : IDisposable
         try
         {
             _context = ContextFactory.CreateDbContext();
-            UnitsOfMeasurement = await _context.UnitsOfMeasurement.OrderBy(u => u.Symbol).ToListAsync();
+            UnitsOfMeasurement = await _context.UnitsOfMeasurement
+                .OrderBy(u => u.Symbol)
+                .ToListAsync();
         }
         catch (Exception ex)
         {
@@ -65,14 +67,17 @@ public partial class Index : IDisposable
                         StateContainer.ClaimsPrincipalEmail,
                         newUnitOfMeasurement.Id,
                         newUnitOfMeasurement.Name,
-                        newUnitOfMeasurement.Symbol);
+                        newUnitOfMeasurement.Symbol
+                    );
                     Snackbar.Add($"Created unit {newUnitOfMeasurement.Symbol}", Severity.Success);
                 }
             }
             catch (DbUpdateException)
             {
-                Snackbar.Add($"Unable to add new unit {newUnitOfMeasurement.Symbol}. Does it already exist?",
-                    Severity.Error);
+                Snackbar.Add(
+                    $"Unable to add new unit {newUnitOfMeasurement.Symbol}. Does it already exist?",
+                    Severity.Error
+                );
             }
         }
     }
@@ -91,13 +96,17 @@ public partial class Index : IDisposable
                 var entriesSaved = await _context.SaveChangesAsync();
                 if (entriesSaved == 1)
                 {
-                    Snackbar.Add($"Updated unit {updatedUnitOfMeasurement.Symbol}", Severity.Success);
+                    Snackbar.Add(
+                        $"Updated unit {updatedUnitOfMeasurement.Symbol}",
+                        Severity.Success
+                    );
                     Log.Information(
                         "{User} updated unit of measurement: {UnitOfMeasurementId}, {UnitOfMeasurementName}, {UnitOfMeasurementSymbol}",
                         StateContainer.ClaimsPrincipalEmail,
                         updatedUnitOfMeasurement.Id,
                         updatedUnitOfMeasurement.Name,
-                        updatedUnitOfMeasurement.Symbol);
+                        updatedUnitOfMeasurement.Symbol
+                    );
                 }
             }
             catch (DbUpdateException)
@@ -112,7 +121,9 @@ public partial class Index : IDisposable
         var result = await DialogService.ShowMessageBox(
             $"Delete {unitOfMeasurement.Symbol}?",
             "This action cannot not be undone.",
-            "Delete", cancelText: "Cancel");
+            "Delete",
+            cancelText: "Cancel"
+        );
         if (result == true)
         {
             try
@@ -126,12 +137,15 @@ public partial class Index : IDisposable
                     StateContainer.ClaimsPrincipalEmail,
                     unitOfMeasurement.Id,
                     unitOfMeasurement.Name,
-                    unitOfMeasurement.Symbol);
+                    unitOfMeasurement.Symbol
+                );
             }
             catch (DbUpdateException)
             {
-                Snackbar.Add($"Unable to delete unit {unitOfMeasurement.Symbol}, as it is associated with an indicator",
-                    Severity.Error);
+                Snackbar.Add(
+                    $"Unable to delete unit {unitOfMeasurement.Symbol}, as it is associated with an indicator",
+                    Severity.Error
+                );
             }
         }
     }

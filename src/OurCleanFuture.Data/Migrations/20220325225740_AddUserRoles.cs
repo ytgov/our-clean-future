@@ -10,24 +10,28 @@ namespace OurCleanFuture.Data.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
+                columns: table =>
+                    new
+                    {
+                        Id = table
+                            .Column<int>(type: "int", nullable: false)
+                            .Annotation("SqlServer:Identity", "1, 1"),
+                        Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "LeadUser",
-                columns: table => new
-                {
-                    LeadsId = table.Column<int>(type: "int", nullable: false),
-                    UsersId = table.Column<int>(type: "int", nullable: false)
-                },
+                columns: table =>
+                    new
+                    {
+                        LeadsId = table.Column<int>(type: "int", nullable: false),
+                        UsersId = table.Column<int>(type: "int", nullable: false)
+                    },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_LeadUser", x => new { x.LeadsId, x.UsersId });
@@ -36,28 +40,30 @@ namespace OurCleanFuture.Data.Migrations
                         column: x => x.LeadsId,
                         principalTable: "Leads",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "FK_LeadUser_Users_UsersId",
                         column: x => x.UsersId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_LeadUser_UsersId",
                 table: "LeadUser",
-                column: "UsersId");
+                column: "UsersId"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "LeadUser");
+            migrationBuilder.DropTable(name: "LeadUser");
 
-            migrationBuilder.DropTable(
-                name: "Users");
+            migrationBuilder.DropTable(name: "Users");
         }
     }
 }

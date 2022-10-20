@@ -55,8 +55,12 @@ public partial class Details : IDisposable
             if (Indicator is not null)
             {
                 IndicatorLastUpdatedBy = await GetIndicatorLastUpdatedBy();
-                Log.Information("{User} is viewing indicator {IndicatorId}: {IndicatorTitle}",
-                    StateContainer.ClaimsPrincipalEmail, Indicator.Id, Indicator.Title);
+                Log.Information(
+                    "{User} is viewing indicator {IndicatorId}: {IndicatorTitle}",
+                    StateContainer.ClaimsPrincipalEmail,
+                    Indicator.Id,
+                    Indicator.Title
+                );
             }
         }
         catch (Exception ex)
@@ -86,7 +90,10 @@ public partial class Details : IDisposable
             DateTime targetUpdated;
             if (Indicator?.Target != null)
             {
-                targetUpdated = _context.Entry(Indicator.Target).Property<DateTime>("ValidFrom").CurrentValue;
+                targetUpdated = _context
+                    .Entry(Indicator.Target)
+                    .Property<DateTime>("ValidFrom")
+                    .CurrentValue;
             }
             else
             {
@@ -98,7 +105,10 @@ public partial class Details : IDisposable
                     .LastOrDefaultAsync();
             }
 
-            var indicatorUpdated = _context.Entry(Indicator!).Property<DateTime>("ValidFrom").CurrentValue;
+            var indicatorUpdated = _context
+                .Entry(Indicator!)
+                .Property<DateTime>("ValidFrom")
+                .CurrentValue;
             //An indicator might not have a target, in which case we return the indicatorUpdatedDate
             return indicatorUpdated > targetUpdated ? indicatorUpdated : targetUpdated;
         }
@@ -109,7 +119,9 @@ public partial class Details : IDisposable
 
     private void Edit() => Navigation.NavigateTo("/indicators/edit/" + Indicator!.Id);
 
-    private void ViewAction(Action action) => Navigation.NavigateTo("/actions/details/" + action.Id);
+    private void ViewAction(Action action) =>
+        Navigation.NavigateTo("/actions/details/" + action.Id);
 
-    private void ViewArea(Area area) => Navigation.NavigateTo("/areas/" + area.Title.ToLower().Replace(' ', '-'));
+    private void ViewArea(Area area) =>
+        Navigation.NavigateTo("/areas/" + area.Title.ToLower().Replace(' ', '-'));
 }

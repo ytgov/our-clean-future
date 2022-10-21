@@ -21,8 +21,12 @@
                 </MudHidden>
             </ColGroup>
             <HeaderContent>
-                <MudTh>Id</MudTh>
-                <MudTh>Title</MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[1].Value)">Id</MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[2].Value)">Title</MudTableSortLabel>
+                </MudTh>
                 <MudTh>
                     <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[0].Value)">User</MudTableSortLabel>
                 </MudTh>
@@ -53,8 +57,12 @@
                 </MudHidden>
             </ColGroup>
             <HeaderContent>
-                <MudTh>Id</MudTh>
-                <MudTh>Title</MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[1].Value)">Id</MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[2].Value)">Title</MudTableSortLabel>
+                </MudTh>
                 <MudTh>
                     <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[0].Value)">User</MudTableSortLabel>
                 </MudTh>

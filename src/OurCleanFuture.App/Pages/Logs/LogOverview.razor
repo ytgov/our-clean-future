@@ -3,6 +3,7 @@
 @using Seq.Api
 @attribute [Authorize(Roles = "Administrator, 1")]
 @inject NavigationManager Navigation
+@inject IConfiguration Configuration
 
 <PageTitle>Edit log</PageTitle>
 
@@ -22,8 +23,12 @@
             <HeaderContent>
                 <MudTh>Id</MudTh>
                 <MudTh>Title</MudTh>
-                <MudTh>User</MudTh>
-                <MudTh>Timestamp</MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[0].Value)">User</MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Timestamp)">Timestamp</MudTableSortLabel>
+                </MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd>@evt.Properties[1].Value</MudTd>
@@ -50,8 +55,12 @@
             <HeaderContent>
                 <MudTh>Id</MudTh>
                 <MudTh>Title</MudTh>
-                <MudTh>User</MudTh>
-                <MudTh>Timestamp</MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[0].Value)">User</MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Timestamp)">Timestamp</MudTableSortLabel>
+                </MudTh>
             </HeaderContent>
             <RowTemplate>
                 <MudTd>@evt.Properties[1].Value</MudTd>
@@ -68,17 +77,17 @@
 
 @code {
     private readonly List<EventEntity> _logEvents = new();
-        private const string IndicatorEditEventType = "$615E81DE";
         private const string IndicatorCreateEventType = "$8A9A5998";
-        private const string ActionEditEventType = "$611D404A";
+        private const string IndicatorEditEventType = "$615E81DE";
         private const string ActionCreateEventType = "$B2188044";
-
+        private const string ActionEditEventType = "$611D404A";
 
     protected override async Task OnInitializedAsync()
     {
-        var connection = new SeqConnection("http://localhost:5341", "I3LmFD6Hc3GFxPxy3oJU");
+        var connection = new SeqConnection(Configuration["Seq:Url"], Configuration["Seq:ReadOnlyApiKey"]);
+    // The Seq filter parameter uses a "0x" prefix for hexadecimal values, whereas the Seq EventEntity uses "$"
         var events = connection.Events.EnumerateAsync(
-            filter: "@EventType = ToEventType('{User} updated indicator {IndicatorId}: {IndicatorTitle}') || @EventType = ToEventType('{User} updated action {ActionId}: {ActionTitle}') || @EventType = ToEventType('{User} created action {ActionId}: {ActionTitle}') || @EventType = ToEventType('{User} created indicator {IndicatorId}: {IndicatorTitle}')",
+            filter: $"@EventType = {IndicatorCreateEventType.Replace("$", "0x")} || @EventType = {IndicatorEditEventType.Replace("$", "0x")} || @EventType = {ActionCreateEventType.Replace("$", "0x")} || @EventType = {ActionEditEventType.Replace("$", "0x")}",
             count: 1000);
         await foreach (var evt in events)
         {
@@ -86,12 +95,12 @@
         }
     }
 
-    public void IndicatorRowClicked(TableRowClickEventArgs<EventEntity> p)
+    private void IndicatorRowClicked(TableRowClickEventArgs<EventEntity> p)
     {
         Navigation.NavigateTo($"/indicators/details/{p.Item.Properties[1].Value}");
     }
 
-    public void ActionRowClicked(TableRowClickEventArgs<EventEntity> p)
+    private void ActionRowClicked(TableRowClickEventArgs<EventEntity> p)
     {
         Navigation.NavigateTo($"/actions/details/{p.Item.Properties[1].Value}");
     }

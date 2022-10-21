@@ -230,7 +230,7 @@ try
         .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
         .WriteTo.Console()
 #endif
-        .WriteTo.Seq("http://localhost:5341")
+        .WriteTo.Seq(configuration["Seq:Url"])
         .CreateLogger();
 
     app.MapIndicatorEndpoints();

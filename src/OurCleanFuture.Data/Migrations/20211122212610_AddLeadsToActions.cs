@@ -10,11 +10,12 @@ namespace OurCleanFuture.Data.Migrations
         {
             migrationBuilder.CreateTable(
                 name: "ActionLead",
-                columns: table => new
-                {
-                    ActionId = table.Column<int>(type: "int", nullable: false),
-                    LeadId = table.Column<int>(type: "int", nullable: false)
-                },
+                columns: table =>
+                    new
+                    {
+                        ActionId = table.Column<int>(type: "int", nullable: false),
+                        LeadId = table.Column<int>(type: "int", nullable: false)
+                    },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ActionLead", x => new { x.ActionId, x.LeadId });
@@ -23,25 +24,28 @@ namespace OurCleanFuture.Data.Migrations
                         column: x => x.ActionId,
                         principalTable: "Actions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Restrict
+                    );
                     table.ForeignKey(
                         name: "FK_ActionLead_Leads_LeadId",
                         column: x => x.LeadId,
                         principalTable: "Leads",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
+                        onDelete: ReferentialAction.Restrict
+                    );
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_ActionLead_LeadId",
                 table: "ActionLead",
-                column: "LeadId");
+                column: "LeadId"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ActionLead");
+            migrationBuilder.DropTable(name: "ActionLead");
         }
     }
 }

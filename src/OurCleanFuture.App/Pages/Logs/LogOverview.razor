@@ -1,0 +1,116 @@
+﻿@page "/admin/log"
+@using Seq.Api.Model.Events
+@using Seq.Api
+@attribute [Authorize(Roles = "Administrator, 1")]
+@inject NavigationManager Navigation
+@inject IConfiguration Configuration
+
+<PageTitle>Edit log</PageTitle>
+
+<MudText Typo="Typo.h3" Class="mb-8">Edit log</MudText>
+<MudTabs Elevation="4" Rounded="true" Color="@Color.Warning">
+    <MudTabPanel Text="Indicators">
+        <MudTable Items="@(_logEvents.Where(x => x.EventType is IndicatorEditEventType or IndicatorCreateEventType))" Context="evt"
+                  T="EventEntity" OnRowClick="@IndicatorRowClicked" RowClass="cursor-pointer">
+            <ColGroup>
+                <MudHidden Breakpoint="Breakpoint.Xs">
+                    <col style="width: 10%"/>
+                    <col style="width: 50%"/>
+                    <col style="width: 20%"/>
+                    <col style="width: 20%"/>
+                </MudHidden>
+            </ColGroup>
+            <HeaderContent>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[1].Value)">Id</MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[2].Value)">Title</MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[0].Value)">User</MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Timestamp)">Timestamp</MudTableSortLabel>
+                </MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@evt.Properties[1].Value</MudTd>
+                <MudTd>@evt.Properties[2].Value</MudTd>
+                <MudTd>@evt.Properties[0].Value</MudTd>
+                <MudTd>@DateTime.Parse(evt.Timestamp).ToString("f")</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager/>
+            </PagerContent>
+        </MudTable>
+    </MudTabPanel>
+    <MudTabPanel Text="Actions">
+        <MudTable Items="@(_logEvents.Where(x => x.EventType is ActionEditEventType or ActionCreateEventType))" Context="evt"
+                  T="EventEntity" OnRowClick="@ActionRowClicked" RowClass="cursor-pointer">
+            <ColGroup>
+                <MudHidden Breakpoint="Breakpoint.Xs">
+                    <col style="width: 10%"/>
+                    <col style="width: 50%"/>
+                    <col style="width: 20%"/>
+                    <col style="width: 20%"/>
+                </MudHidden>
+            </ColGroup>
+            <HeaderContent>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[1].Value)">Id</MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[2].Value)">Title</MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Properties[0].Value)">User</MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<EventEntity, object>(evt => evt.Timestamp)">Timestamp</MudTableSortLabel>
+                </MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd>@evt.Properties[1].Value</MudTd>
+                <MudTd>@evt.Properties[2].Value</MudTd>
+                <MudTd>@evt.Properties[0].Value</MudTd>
+                <MudTd>@DateTime.Parse(evt.Timestamp).ToString("f")</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager/>
+            </PagerContent>
+        </MudTable>
+    </MudTabPanel>
+</MudTabs>
+
+@code {
+    private readonly List<EventEntity> _logEvents = new();
+        private const string IndicatorCreateEventType = "$8A9A5998";
+        private const string IndicatorEditEventType = "$615E81DE";
+        private const string ActionCreateEventType = "$B2188044";
+        private const string ActionEditEventType = "$611D404A";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var connection = new SeqConnection(Configuration["Seq:Url"], Configuration["Seq:ReadOnlyApiKey"]);
+    // The Seq filter parameter uses a "0x" prefix for hexadecimal values, whereas the Seq EventEntity uses "$"
+        var events = connection.Events.EnumerateAsync(
+            filter: $"@EventType = {IndicatorCreateEventType.Replace("$", "0x")} || @EventType = {IndicatorEditEventType.Replace("$", "0x")} || @EventType = {ActionCreateEventType.Replace("$", "0x")} || @EventType = {ActionEditEventType.Replace("$", "0x")}",
+            count: 1000);
+        await foreach (var evt in events)
+        {
+            _logEvents.Add(evt);
+        }
+    }
+
+    private void IndicatorRowClicked(TableRowClickEventArgs<EventEntity> p)
+    {
+        Navigation.NavigateTo($"/indicators/details/{p.Item.Properties[1].Value}");
+    }
+
+    private void ActionRowClicked(TableRowClickEventArgs<EventEntity> p)
+    {
+        Navigation.NavigateTo($"/actions/details/{p.Item.Properties[1].Value}");
+    }
+
+}

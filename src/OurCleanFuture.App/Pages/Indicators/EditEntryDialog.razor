@@ -1,6 +1,6 @@
-﻿@attribute [Authorize]
-@using Data.Entities
-@using OurCleanFuture.App.Extensions;
+﻿@using OurCleanFuture.App.Extensions
+@using OurCleanFuture.Data.Entities
+@attribute [Authorize]
 
 <MudDialog>
     <TitleContent>
@@ -9,11 +9,11 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <MudForm @bind-IsValid="isValid">
+        <MudForm @bind-IsValid="_isValid">
             @if (Indicator.CollectionInterval == CollectionInterval.Biannual)
             {
-                <MudSelect T="Data.Entities.BiannualInterval" Label="Period" @bind-Value="SelectedBiannualInterval">
-                    @foreach (Data.Entities.BiannualInterval interval in Enum.GetValues(typeof(Data.Entities.BiannualInterval)))
+                <MudSelect T="BiannualInterval" Label="Period" @bind-Value="SelectedBiannualInterval">
+                    @foreach (BiannualInterval interval in Enum.GetValues(typeof(BiannualInterval)))
                     {
                         <MudSelectItem Value="interval">@interval.GetDisplayName()</MudSelectItem>
                     }
@@ -21,8 +21,8 @@
             }
             else if (Indicator.CollectionInterval == CollectionInterval.Quarterly)
             {
-                <MudSelect T="Data.Entities.QuarterlyInterval" Label="Period" @bind-Value="SelectedQuarterlyInterval">
-                    @foreach (Data.Entities.QuarterlyInterval interval in Enum.GetValues(typeof(Data.Entities.QuarterlyInterval)))
+                <MudSelect T="QuarterlyInterval" Label="Period" @bind-Value="SelectedQuarterlyInterval">
+                    @foreach (QuarterlyInterval interval in Enum.GetValues(typeof(QuarterlyInterval)))
                     {
                         <MudSelectItem Value="interval">@interval.GetDisplayName()</MudSelectItem>
                     }
@@ -36,18 +36,20 @@
                 }
             </MudAutocomplete>
             <MudNumericField Label="Value" @bind-Value="TempValue" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true"
-                             Required="true" RequiredError="Value is required" />
-            <MudTextField @bind-Value="Entry.Note" Label="Note (optional)" For="@(() => Entry.Note)" />
+                             Required="true" RequiredError="Value is required"/>
+            <MudTextField @bind-Value="Entry.Note" Label="Note (optional)" For="@(() => Entry.Note)"/>
             <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
                 <MudButton OnClick="Cancel">Cancel</MudButton>
-                <MudButton Color="Color.Primary" Disabled="(!isValid)" OnClick="AddEntry">Update</MudButton>
+                <MudButton Color="Color.Primary" Disabled="!_isValid" OnClick="AddEntry">Update</MudButton>
             </MudItem>
         </MudForm>
     </DialogContent>
 </MudDialog>
 
 @code {
-    [CascadingParameter] MudDialogInstance MudDialog { get; set; } = null!;
+
+    [CascadingParameter]
+    MudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter]
     public int[] Years { get; set; } = null!;
@@ -58,7 +60,7 @@
     [Parameter]
     public Entry Entry { get; set; } = null!;
 
-    private bool isValid = true;
+    private bool _isValid = true;
 
     private int SelectedYear { get; set; }
     private BiannualInterval SelectedBiannualInterval { get; set; }
@@ -73,7 +75,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var periodLength = (Entry.EndDate.Month - Entry.StartDate.Month) + 1;
+        var periodLength = Entry.EndDate.Month - Entry.StartDate.Month + 1;
         if (Indicator.CollectionInterval == CollectionInterval.Annual)
         {
             if (periodLength != 12)
@@ -129,7 +131,7 @@
 
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
-        // We must re-validate the SelectedYear after the component is initialized, or else the component will erroneously remain in an invalid state.
+    // We must re-validate the SelectedYear after the component is initialized, or else the component will erroneously remain in an invalid state.
         YearAutocomplete.Validate();
         return base.OnAfterRenderAsync(firstRender);
     }
@@ -203,4 +205,5 @@
             return Years;
         return await Task.FromResult(Years.Where(y => Convert.ToString(y).Contains(value)));
     }
+
 }

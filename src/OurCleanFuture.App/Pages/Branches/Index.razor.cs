@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor;
+using OurCleanFuture.App.Services;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 
@@ -10,30 +11,32 @@ namespace OurCleanFuture.App.Pages.Branches;
 [Authorize(Roles = "Administrator, 1")]
 public partial class Index : IDisposable
 {
-    private bool _isLoaded;
     private AppDbContext _context = null!;
+    private bool _isLoaded;
 
     private List<Branch> Branches { get; set; } = new();
     private List<Department> Departments { get; set; } = new();
 
-    [Inject]
-    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject]
-    private IDialogService DialogService { get; set; } = null!;
+    [Inject] private IDialogService DialogService { get; set; } = null!;
 
-    [Inject]
-    private ISnackbar Snackbar { get; set; } = null!;
+    [Inject] private ISnackbar Snackbar { get; set; } = null!;
 
-    [Inject]
-    private StateContainer StateContainer { get; init; } = null!;
+    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+
+    public void Dispose() => _context.Dispose();
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             _context = ContextFactory.CreateDbContext();
-            Branches = await _context.Branches.OrderBy(b => b.Name).Include(b => b.Department).Include(b => b.Lead).ToListAsync();
+            Branches = await _context.Branches
+                .OrderBy(b => b.Name)
+                .Include(b => b.Department)
+                .Include(b => b.Lead)
+                .ToListAsync();
             Departments = await _context.Departments.OrderBy(d => d.Name).ToListAsync();
         }
         catch (Exception ex)
@@ -68,11 +71,13 @@ public partial class Index : IDisposable
                 {
                     Branches.Add(newBranch);
                     Snackbar.Add($"Created branch {newBranch.Name}", Severity.Success);
-                    Log.Information("{User} created branch: {BranchId}, {BranchName}, {DepartmentName}",
-                                    StateContainer.ClaimsPrincipalEmail,
-                                    newBranch.Id,
-                                    newBranch.Name,
-                                    newBranch.Department.Name);
+                    Log.Information(
+                        "{User} created branch: {BranchId}, {BranchName}, {DepartmentName}",
+                        StateContainer.ClaimsPrincipalEmail,
+                        newBranch.Id,
+                        newBranch.Name,
+                        newBranch.Department.Name
+                    );
                 }
             }
             catch (DbUpdateException)
@@ -97,10 +102,12 @@ public partial class Index : IDisposable
                 if (entriesSaved == 1)
                 {
                     Snackbar.Add($"Updated branch {updatedBranch.Name}", Severity.Success);
-                    Log.Information("{User} updated branch: {BranchId}, {BranchName}",
-                                    StateContainer.ClaimsPrincipalEmail,
-                                    branch.Id,
-                                    updatedBranch.Name);
+                    Log.Information(
+                        "{User} updated branch: {BranchId}, {BranchName}",
+                        StateContainer.ClaimsPrincipalEmail,
+                        branch.Id,
+                        updatedBranch.Name
+                    );
                 }
             }
             catch (DbUpdateException)
@@ -115,10 +122,12 @@ public partial class Index : IDisposable
         var result = await DialogService.ShowMessageBox(
             $"Delete {branch.Name}?",
             "This action cannot not be undone.",
-            yesText: "Delete", cancelText: "Cancel");
+            "Delete",
+            cancelText: "Cancel"
+        );
         if (result == true)
-        {
             //Prevents mid-method rerendering of the component, which avoids overlapping threads
+        {
             try
             {
                 _context.Remove(branch.Lead);
@@ -126,21 +135,21 @@ public partial class Index : IDisposable
                 await _context.SaveChangesAsync();
                 Branches.Remove(branch);
                 Snackbar.Add($"Deleted branch {branch.Name}", Severity.Success);
-                Log.Information("{User} deleted branch: {BranchId}, {BranchName}, {DepartmentName}",
-                                StateContainer.ClaimsPrincipalEmail,
-                                branch.Id,
-                                branch.Name,
-                                branch.Department.Name);
+                Log.Information(
+                    "{User} deleted branch: {BranchId}, {BranchName}, {DepartmentName}",
+                    StateContainer.ClaimsPrincipalEmail,
+                    branch.Id,
+                    branch.Name,
+                    branch.Department.Name
+                );
             }
             catch (DbUpdateException)
             {
-                Snackbar.Add($"Unable to delete branch {branch.Name}, as it is associated with an indicator or action", Severity.Error);
+                Snackbar.Add(
+                    $"Unable to delete branch {branch.Name}, as it is associated with an indicator or action",
+                    Severity.Error
+                );
             }
         }
-    }
-
-    public void Dispose()
-    {
-        _context.Dispose();
     }
 }

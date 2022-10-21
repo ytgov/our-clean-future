@@ -8,9 +8,8 @@ namespace OurCleanFuture.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "StartDate",
-                table: "Targets")
+            migrationBuilder
+                .DropColumn(name: "StartDate", table: "Targets")
                 .Annotation("SqlServer:IsTemporal", true)
                 .Annotation("SqlServer:TemporalHistoryTableName", "TargetsHistory")
                 .Annotation("SqlServer:TemporalHistoryTableSchema", null);
@@ -22,7 +21,8 @@ namespace OurCleanFuture.Data.Migrations
                 name: "StartDate",
                 table: "Targets",
                 type: "date",
-                nullable: true);
+                nullable: true
+            );
         }
     }
 }

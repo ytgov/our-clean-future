@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using OurCleanFuture.App.Services;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
 using Action = OurCleanFuture.Data.Entities.Action;
@@ -8,24 +9,22 @@ namespace OurCleanFuture.App.Pages.Indicators;
 
 public partial class Details : IDisposable
 {
-    private bool _isLoaded;
     private AppDbContext _context = null!;
+    private bool _isLoaded;
 
-    [Parameter]
-    public int Id { get; set; }
+    [Parameter] public int Id { get; set; }
 
-    private Indicator Indicator { get; set; } = null!;
+    private Indicator? Indicator { get; set; }
 
     private string IndicatorLastUpdatedBy { get; set; } = "";
 
-    [Inject]
-    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject]
-    private NavigationManager Navigation { get; set; } = null!;
+    [Inject] private NavigationManager Navigation { get; set; } = null!;
 
-    [Inject]
-    private StateContainer StateContainer { get; init; } = null!;
+    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+
+    public void Dispose() => _context.Dispose();
 
     protected override async Task OnInitializedAsync()
     {
@@ -53,7 +52,16 @@ public partial class Details : IDisposable
                 .ThenInclude(o => o.Goals)
                 .AsSingleQuery()
                 .FirstAsync(i => i.Id == Id);
-            IndicatorLastUpdatedBy = await GetIndicatorLastUpdatedBy();
+            if (Indicator is not null)
+            {
+                IndicatorLastUpdatedBy = await GetIndicatorLastUpdatedBy();
+                Log.Information(
+                    "{User} is viewing indicator {IndicatorId}: {IndicatorTitle}",
+                    StateContainer.ClaimsPrincipalEmail,
+                    Indicator.Id,
+                    Indicator.Title
+                );
+            }
         }
         catch (Exception ex)
         {
@@ -64,28 +72,28 @@ public partial class Details : IDisposable
         {
             _isLoaded = true;
         }
-        Log.Information("{User} is viewing indicator {IndicatorId}: {IndicatorTitle}", StateContainer.ClaimsPrincipalEmail, Indicator.Id, Indicator.Title);
 
         await base.OnInitializedAsync();
     }
 
     private async Task<string> GetIndicatorLastUpdatedBy()
     {
-        if (!string.IsNullOrWhiteSpace(Indicator.UpdatedBy))
+        if (!string.IsNullOrWhiteSpace(Indicator!.UpdatedBy))
         {
             return $"{Indicator.UpdatedBy} on {(await GetIndicatorLastUpdatedDate()).ToLocalTime():f}";
         }
-        else
-        {
-            return string.Empty;
-        }
+
+        return string.Empty;
 
         async Task<DateTime> GetIndicatorLastUpdatedDate()
         {
-            var targetUpdated = DateTime.MinValue;
+            DateTime targetUpdated;
             if (Indicator?.Target != null)
             {
-                targetUpdated = _context.Entry(Indicator.Target).Property<DateTime>("ValidFrom").CurrentValue;
+                targetUpdated = _context
+                    .Entry(Indicator.Target)
+                    .Property<DateTime>("ValidFrom")
+                    .CurrentValue;
             }
             else
             {
@@ -96,34 +104,24 @@ public partial class Details : IDisposable
                     .Select(t => EF.Property<DateTime>(t, "ValidTo"))
                     .LastOrDefaultAsync();
             }
-            var indicatorUpdated = _context.Entry(Indicator!).Property<DateTime>("ValidFrom").CurrentValue;
+
+            var indicatorUpdated = _context
+                .Entry(Indicator!)
+                .Property<DateTime>("ValidFrom")
+                .CurrentValue;
             //An indicator might not have a target, in which case we return the indicatorUpdatedDate
             return indicatorUpdated > targetUpdated ? indicatorUpdated : targetUpdated;
         }
     }
 
-    private DateTime GetEntryLastUpdatedDate(Entry entry)
-    {
-        return _context.Entry(entry).Property<DateTime>("ValidFrom").CurrentValue;
-    }
+    private DateTime GetEntryLastUpdatedDate(Entry entry) =>
+        _context.Entry(entry).Property<DateTime>("ValidFrom").CurrentValue;
 
-    private void Edit()
-    {
-        Navigation.NavigateTo("/indicators/edit/" + Indicator.Id);
-    }
+    private void Edit() => Navigation.NavigateTo("/indicators/edit/" + Indicator!.Id);
 
-    private void ViewAction(Action action)
-    {
+    private void ViewAction(Action action) =>
         Navigation.NavigateTo("/actions/details/" + action.Id);
-    }
 
-    private void ViewArea(Area area)
-    {
+    private void ViewArea(Area area) =>
         Navigation.NavigateTo("/areas/" + area.Title.ToLower().Replace(' ', '-'));
-    }
-
-    public void Dispose()
-    {
-        _context.Dispose();
-    }
 }

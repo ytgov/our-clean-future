@@ -1,50 +1,52 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
-	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
-		<UserSecretsId>aspnet-ClimateChangeIndicators.App-B5D24B22-92E1-45F4-8F18-129997494BB9</UserSecretsId>
-		<WebProject_DirectoryAccessLevelKey>0</WebProject_DirectoryAccessLevelKey>
-		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-		<DockerfileContext>.</DockerfileContext>
-		<DockerfileFile>..\..\Dockerfile</DockerfileFile>
-		<Nullable>enable</Nullable>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<OutputType>Exe</OutputType>
-	</PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>aspnet-ClimateChangeIndicators.App-B5D24B22-92E1-45F4-8F18-129997494BB9</UserSecretsId>
+    <WebProject_DirectoryAccessLevelKey>0</WebProject_DirectoryAccessLevelKey>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
+    <DockerfileFile>..\..\Dockerfile</DockerfileFile>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <NoWarn>1701;1702;CA1816</NoWarn>
-	</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;CA1816</NoWarn>
+  </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <NoWarn>1701;1702;CA1816</NoWarn>
-	</PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <NoWarn>1701;1702;CA1816</NoWarn>
+  </PropertyGroup>
 
-	<ItemGroup>
-	  <Compile Remove="Pages\Leads\**" />
-	  <Content Remove="Pages\Leads\**" />
-	  <EmbeddedResource Remove="Pages\Leads\**" />
-	  <None Remove="Pages\Leads\**" />
-	</ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Pages\Leads\**"/>
+    <Content Remove="Pages\Leads\**"/>
+    <EmbeddedResource Remove="Pages\Leads\**"/>
+    <None Remove="Pages\Leads\**"/>
+  </ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.3" NoWarn="NU1605" />
-		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.3" NoWarn="NU1605" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.3">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="6.0.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.0" />
-		<PackageReference Include="MudBlazor" Version="6.0.9" />
-		<PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
-		<PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
-		<PackageReference Include="Serilog.Sinks.Seq" Version="5.1.1" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" NoWarn="NU1605"/>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.10" NoWarn="NU1605"/>
+    <PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Hosting.WindowsServices" Version="6.0.1"/>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0"/>
+    <PackageReference Include="MudBlazor" Version="6.0.17"/>
+    <PackageReference Include="NSwag.AspNetCore" Version="13.17.0"/>
+    <PackageReference Include="Seq.Api" Version="2022.1.0"/>
+    <PackageReference Include="Serilog.AspNetCore" Version="6.0.1"/>
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0"/>
+    <PackageReference Include="Serilog.Sinks.Seq" Version="5.2.1"/>
+  </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\OurCleanFuture.Data\OurCleanFuture.Data.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OurCleanFuture.Data\OurCleanFuture.Data.csproj"/>
+  </ItemGroup>
 
 </Project>

@@ -2,18 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 using OurCleanFuture.Data;
 
-namespace OurCleanFuture.App;
+namespace OurCleanFuture.App.Services;
 
-public class StateContainer
+public class StateContainerService
 {
     private readonly IDbContextFactory<AppDbContext> _dbContextFactory;
-    private AppDbContext _context = null!;
     private ClaimsPrincipal _claimsPrincipal = null!;
+    private AppDbContext _context = null!;
 
-    public StateContainer(IDbContextFactory<AppDbContext> dbContextFactory)
-    {
+    public StateContainerService(IDbContextFactory<AppDbContext> dbContextFactory) =>
         _dbContextFactory = dbContextFactory;
-    }
 
     public ClaimsPrincipal ClaimsPrincipal
     {
@@ -21,7 +19,9 @@ public class StateContainer
         set
         {
             _claimsPrincipal = value ?? throw new ArgumentNullException(nameof(ClaimsPrincipal));
-            ClaimsPrincipalEmail = _claimsPrincipal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value.ToLower();
+            ClaimsPrincipalEmail = _claimsPrincipal.Claims
+                .FirstOrDefault(c => c.Type == ClaimTypes.Email)
+                ?.Value.ToLower();
             if (ClaimsPrincipalEmail is not null)
             {
                 Log.Information("{User} has established a connection.", ClaimsPrincipalEmail);

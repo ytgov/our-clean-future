@@ -13,27 +13,27 @@ namespace OurCleanFuture.Data.Migrations
                 table: "Actions",
                 type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: ""
+            );
 
             migrationBuilder.AddColumn<DateTimeOffset>(
                 name: "ExternalStatusUpdatedDate",
                 table: "Actions",
                 type: "datetimeoffset",
-                nullable: true);
+                nullable: true
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "ExternalStatusUpdatedBy",
-                table: "Actions")
+            migrationBuilder
+                .DropColumn(name: "ExternalStatusUpdatedBy", table: "Actions")
                 .Annotation("SqlServer:IsTemporal", true)
                 .Annotation("SqlServer:TemporalHistoryTableName", "ActionsHistory")
                 .Annotation("SqlServer:TemporalHistoryTableSchema", null);
 
-            migrationBuilder.DropColumn(
-                name: "ExternalStatusUpdatedDate",
-                table: "Actions")
+            migrationBuilder
+                .DropColumn(name: "ExternalStatusUpdatedDate", table: "Actions")
                 .Annotation("SqlServer:IsTemporal", true)
                 .Annotation("SqlServer:TemporalHistoryTableName", "ActionsHistory")
                 .Annotation("SqlServer:TemporalHistoryTableSchema", null);

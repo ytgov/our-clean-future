@@ -11,7 +11,8 @@ namespace OurCleanFuture.Data.Migrations
             migrationBuilder.RenameColumn(
                 name: "OcfDescription",
                 table: "Targets",
-                newName: "Description");
+                newName: "Description"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Symbol",
@@ -20,7 +21,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 50,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(450)");
+                oldType: "nvarchar(450)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
@@ -29,7 +31,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 100,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Description",
@@ -38,7 +41,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 500,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
@@ -47,7 +51,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 50,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
@@ -56,7 +61,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 250,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "UpdatedBy",
@@ -65,7 +71,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 100,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
@@ -74,7 +81,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 100,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Note",
@@ -83,7 +91,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 2000,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Description",
@@ -92,7 +101,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 500,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
@@ -101,7 +111,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 200,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "UpdatedBy",
@@ -110,7 +121,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 100,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Note",
@@ -119,7 +131,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 500,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
@@ -128,7 +141,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 100,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ShortName",
@@ -137,7 +151,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 10,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
@@ -146,7 +161,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 100,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
@@ -155,7 +171,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 100,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
@@ -164,7 +181,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 50,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
@@ -173,7 +191,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 300,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "PublicExplanation",
@@ -182,7 +201,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 1000,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Number",
@@ -191,7 +211,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 3,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Note",
@@ -200,7 +221,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 2000,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExternalStatusUpdatedBy",
@@ -209,7 +231,8 @@ namespace OurCleanFuture.Data.Migrations
                 maxLength: 100,
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldType: "nvarchar(max)"
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -217,7 +240,8 @@ namespace OurCleanFuture.Data.Migrations
             migrationBuilder.RenameColumn(
                 name: "Description",
                 table: "Targets",
-                newName: "OcfDescription");
+                newName: "OcfDescription"
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "OcfDescription",
@@ -226,7 +250,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(500)",
-                oldMaxLength: 500);
+                oldMaxLength: 500
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Symbol",
@@ -235,7 +260,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(50)",
-                oldMaxLength: 50);
+                oldMaxLength: 50
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
@@ -244,7 +270,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(100)",
-                oldMaxLength: 100);
+                oldMaxLength: 100
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
@@ -253,7 +280,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(50)",
-                oldMaxLength: 50);
+                oldMaxLength: 50
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
@@ -262,7 +290,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(250)",
-                oldMaxLength: 250);
+                oldMaxLength: 250
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "UpdatedBy",
@@ -271,7 +300,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(100)",
-                oldMaxLength: 100);
+                oldMaxLength: 100
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
@@ -280,7 +310,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(100)",
-                oldMaxLength: 100);
+                oldMaxLength: 100
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Note",
@@ -289,7 +320,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(2000)",
-                oldMaxLength: 2000);
+                oldMaxLength: 2000
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Description",
@@ -298,7 +330,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(500)",
-                oldMaxLength: 500);
+                oldMaxLength: 500
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
@@ -307,7 +340,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(200)",
-                oldMaxLength: 200);
+                oldMaxLength: 200
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "UpdatedBy",
@@ -316,7 +350,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(100)",
-                oldMaxLength: 100);
+                oldMaxLength: 100
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Note",
@@ -325,7 +360,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(500)",
-                oldMaxLength: 500);
+                oldMaxLength: 500
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
@@ -334,7 +370,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(100)",
-                oldMaxLength: 100);
+                oldMaxLength: 100
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ShortName",
@@ -343,7 +380,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(10)",
-                oldMaxLength: 10);
+                oldMaxLength: 10
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
@@ -352,7 +390,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(100)",
-                oldMaxLength: 100);
+                oldMaxLength: 100
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Name",
@@ -361,7 +400,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(100)",
-                oldMaxLength: 100);
+                oldMaxLength: 100
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
@@ -370,7 +410,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(50)",
-                oldMaxLength: 50);
+                oldMaxLength: 50
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Title",
@@ -379,7 +420,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(300)",
-                oldMaxLength: 300);
+                oldMaxLength: 300
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "PublicExplanation",
@@ -388,7 +430,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(1000)",
-                oldMaxLength: 1000);
+                oldMaxLength: 1000
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Number",
@@ -397,7 +440,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(3)",
-                oldMaxLength: 3);
+                oldMaxLength: 3
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "Note",
@@ -406,7 +450,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(2000)",
-                oldMaxLength: 2000);
+                oldMaxLength: 2000
+            );
 
             migrationBuilder.AlterColumn<string>(
                 name: "ExternalStatusUpdatedBy",
@@ -415,7 +460,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(100)",
-                oldMaxLength: 100);
+                oldMaxLength: 100
+            );
         }
     }
 }

@@ -19,9 +19,7 @@ public class Lead
         {
             return $"{Organization.Name}";
         }
-        else
-        {
-            return $"{Branch.Department.ShortName} | {Branch.Name}";
-        }
+
+        return $"{Branch.Department.ShortName} | {Branch.Name}";
     }
 }

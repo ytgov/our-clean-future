@@ -15,7 +15,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "EndDate",
@@ -24,7 +25,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.Sql("ALTER TABLE [Entries] SET (SYSTEM_VERSIONING = OFF)");
             migrationBuilder.Sql("ALTER TABLE [Entries] DROP CONSTRAINT [PK_Entries];");
@@ -35,7 +37,8 @@ namespace OurCleanFuture.Data.Migrations
                 type: "date",
                 nullable: false,
                 oldClrType: typeof(DateTime),
-                oldType: "datetime2");
+                oldType: "datetime2"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "EndDate",
@@ -43,7 +46,8 @@ namespace OurCleanFuture.Data.Migrations
                 type: "date",
                 nullable: false,
                 oldClrType: typeof(DateTime),
-                oldType: "datetime2");
+                oldType: "datetime2"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "StartDate",
@@ -51,7 +55,8 @@ namespace OurCleanFuture.Data.Migrations
                 type: "date",
                 nullable: false,
                 oldClrType: typeof(DateTime),
-                oldType: "datetime2");
+                oldType: "datetime2"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "StartDate",
@@ -59,11 +64,16 @@ namespace OurCleanFuture.Data.Migrations
                 type: "date",
                 nullable: false,
                 oldClrType: typeof(DateTime),
-                oldType: "datetime2");
+                oldType: "datetime2"
+            );
 
-            migrationBuilder.Sql("ALTER TABLE [Entries] ADD CONSTRAINT [PK_Entries] PRIMARY KEY ([IndicatorId], [StartDate]);");
-            migrationBuilder.Sql(@"DECLARE @historyTableSchema sysname = SCHEMA_NAME()
-                EXEC(N'ALTER TABLE [Entries] SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = [' + @historyTableSchema + '].[EntriesHistory]))')");
+            migrationBuilder.Sql(
+                "ALTER TABLE [Entries] ADD CONSTRAINT [PK_Entries] PRIMARY KEY ([IndicatorId], [StartDate]);"
+            );
+            migrationBuilder.Sql(
+                @"DECLARE @historyTableSchema sysname = SCHEMA_NAME()
+                EXEC(N'ALTER TABLE [Entries] SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = [' + @historyTableSchema + '].[EntriesHistory]))')"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "TargetCompletionDate",
@@ -72,7 +82,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "StartDate",
@@ -81,7 +92,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "ActualCompletionDate",
@@ -90,7 +102,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldNullable: true);
+                oldNullable: true
+            );
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -102,7 +115,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "date",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "EndDate",
@@ -111,7 +125,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "date",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.Sql("ALTER TABLE [Entries] SET (SYSTEM_VERSIONING = OFF)");
             migrationBuilder.Sql("ALTER TABLE [Entries] DROP CONSTRAINT [PK_Entries];");
@@ -122,7 +137,8 @@ namespace OurCleanFuture.Data.Migrations
                 type: "datetime2",
                 nullable: false,
                 oldClrType: typeof(DateTime),
-                oldType: "date");
+                oldType: "date"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "EndDate",
@@ -130,7 +146,8 @@ namespace OurCleanFuture.Data.Migrations
                 type: "datetime2",
                 nullable: false,
                 oldClrType: typeof(DateTime),
-                oldType: "date");
+                oldType: "date"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "StartDate",
@@ -138,7 +155,8 @@ namespace OurCleanFuture.Data.Migrations
                 type: "datetime2",
                 nullable: false,
                 oldClrType: typeof(DateTime),
-                oldType: "date");
+                oldType: "date"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "StartDate",
@@ -146,11 +164,16 @@ namespace OurCleanFuture.Data.Migrations
                 type: "datetime2",
                 nullable: false,
                 oldClrType: typeof(DateTime),
-                oldType: "date");
+                oldType: "date"
+            );
 
-            migrationBuilder.Sql("ALTER TABLE [Entries] ADD CONSTRAINT [PK_Entries] PRIMARY KEY ([IndicatorId], [StartDate]);");
-            migrationBuilder.Sql(@"DECLARE @historyTableSchema sysname = SCHEMA_NAME()
-                EXEC(N'ALTER TABLE [Entries] SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = [' + @historyTableSchema + '].[EntriesHistory]))')");
+            migrationBuilder.Sql(
+                "ALTER TABLE [Entries] ADD CONSTRAINT [PK_Entries] PRIMARY KEY ([IndicatorId], [StartDate]);"
+            );
+            migrationBuilder.Sql(
+                @"DECLARE @historyTableSchema sysname = SCHEMA_NAME()
+                EXEC(N'ALTER TABLE [Entries] SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = [' + @historyTableSchema + '].[EntriesHistory]))')"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "TargetCompletionDate",
@@ -159,7 +182,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "date",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "StartDate",
@@ -168,7 +192,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "date",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "ActualCompletionDate",
@@ -177,7 +202,8 @@ namespace OurCleanFuture.Data.Migrations
                 nullable: true,
                 oldClrType: typeof(DateTime),
                 oldType: "date",
-                oldNullable: true);
+                oldNullable: true
+            );
         }
     }
 }

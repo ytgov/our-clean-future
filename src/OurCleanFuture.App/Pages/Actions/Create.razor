@@ -1,0 +1,81 @@
+﻿@page "/actions/create"
+@using OurCleanFuture.App.Extensions
+@using OurCleanFuture.Data.Entities
+@attribute [Authorize]
+
+<PageTitle>[Action] New</PageTitle>
+
+@if (_isLoaded == false)
+{
+    <MudText Typo="Typo.h6">Loading...</MudText>
+}
+else
+{
+    <MudText Typo="Typo.h3" Class="mb-8">New Action</MudText>
+    <EditForm Model="Action" OnValidSubmit="Update">
+        <ObjectGraphDataAnnotationsValidator/>
+        <MudGrid>
+            <MudItem xs="12" sm="6">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudSelect T="Lead" Label="Lead(s)" MultiSelection="true" @bind-SelectedValues="SelectedLeads">
+                        @foreach (var lead in Leads)
+                        {
+                            <MudSelectItem Value="lead">@lead.ToString()</MudSelectItem>
+                        }
+                    </MudSelect>
+                    <MudTextField Label="Number" @bind-Value="Action.Number" For=@(() => Action.Number)/>
+                    <MudTextField Label="Title" @bind-Value="Action.Title" Lines="3" For=@(() => Action.Title)/>
+                    <MudItem Class="mb-6">
+                        <MudSelect Label="Objective" T="Objective" @bind-Value="Action.Objective" DisableUnderLine="true" For=@(() => Action.Objective)>
+                            @foreach (var objective in Objectives)
+                            {
+                                <MudSelectItem Value="objective">@objective.Area.Title | @objective.Title</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudSelect Label="Director's Committee(s)" MultiSelection="true" ToStringFunc="@_committeeConverter" @bind-SelectedValues="SelectedDirectorsCommittees">
+                        @foreach (var committee in DirectorsCommittees)
+                        {
+                            <MudSelectItem Value="committee">@committee.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudDatePicker Label="Start Date" @bind-Date="Action.StartDate" Editable="true"/>
+                    <MudDatePicker Label="Target Completion Date" @bind-Date="Action.TargetCompletionDate" Editable="true"/>
+                </MudPaper>
+            </MudItem>
+
+            <MudItem xs="12" sm="6">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudSelect T="InternalStatus" Label="Internal Status" @bind-Value="Action.InternalStatus">
+                        @foreach (InternalStatus internalStatus in Enum.GetValues(typeof(InternalStatus)))
+                        {
+                            <MudSelectItem Value="internalStatus">@internalStatus.GetDisplayName()</MudSelectItem>
+                        }
+                    </MudSelect>
+                    <MudSelect T="ExternalStatus" Label="External Status" @bind-Value="Action.ExternalStatus">
+                        @foreach (ExternalStatus externalStatus in Enum.GetValues(typeof(ExternalStatus)))
+                        {
+                            <MudSelectItem Value="externalStatus">@externalStatus.GetDisplayName()</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudPaper Elevation="2" Class="pa-4">
+                    <MudDatePicker Label="Actual/Anticipated Completion Date" @bind-Date="Action.ActualCompletionDate" Editable="true"/>
+                    <MudTextField Label="Internal Notes" @bind-Value="Action.Note" Lines="2" For=@(() => Action.Note)/>
+                    <MudTextField Label="Public Explanation" @bind-Value="Action.PublicExplanation" Lines="2" For=@(() => Action.PublicExplanation)/>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">
+                <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" Link="/actions">Cancel</MudButton>
+                <MudButton ButtonType="ButtonType.Submit" Disabled="true"/>
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto">Submit</MudButton>
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+}

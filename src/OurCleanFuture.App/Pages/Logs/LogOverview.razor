@@ -34,7 +34,7 @@
                 <MudTd>@evt.Properties[1].Value</MudTd>
                 <MudTd>@evt.Properties[2].Value</MudTd>
                 <MudTd>@evt.Properties[0].Value</MudTd>
-                <MudTd>@DateTime.Parse(evt.Timestamp).ToString("U")</MudTd>
+                <MudTd>@DateTime.Parse(evt.Timestamp).ToString("f")</MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager/>
@@ -66,7 +66,7 @@
                 <MudTd>@evt.Properties[1].Value</MudTd>
                 <MudTd>@evt.Properties[2].Value</MudTd>
                 <MudTd>@evt.Properties[0].Value</MudTd>
-                <MudTd>@DateTime.Parse(evt.Timestamp).ToString("U")</MudTd>
+                <MudTd>@DateTime.Parse(evt.Timestamp).ToString("f")</MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager/>

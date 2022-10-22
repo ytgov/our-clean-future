@@ -1,4 +1,8 @@
 ﻿@page "/"
+@using OurCleanFuture.Data
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<AppDbContext> ContextFactory
+@implements IDisposable
 
 <PageTitle>Home page</PageTitle>
 
@@ -96,7 +100,7 @@
             <MudText Typo="Typo.h5">Actions</MudText>
             <div class="pl-1 my-2">
                 <MudText Typo="Typo.subtitle1" Class="mud-text-secondary">
-                    Our Clean Future contains 131 measurable and time-bound actions. A status is assigned to each action in the strategy by comparing the anticipated completion date for the action to the completion date indicated in Our Clean Future. Based on this information, each action is to be assigned one of the following statuses:
+                    Our Clean Future contains @_actionCount measurable and time-bound actions. A status is assigned to each action in the strategy by comparing the anticipated completion date for the action to the completion date indicated in Our Clean Future. Based on this information, each action is to be assigned one of the following statuses:
                 </MudText>
             </div>
             <div class="d-flex mt-2">
@@ -133,5 +137,18 @@
 </MudGrid>
 
 @code {
+    int _actionCount = 131;
+    AppDbContext _context = default!;
+
+    protected override async Task OnInitializedAsync()
+    {
+            _context = await ContextFactory.CreateDbContextAsync();
+            _actionCount = _context.Actions.Count();
+    }
+
+    public void Dispose()
+    {
+        _context.Dispose();
+    }
 
 }

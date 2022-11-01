@@ -7,11 +7,11 @@
 
 <MudLayout>
     <MudAppBar Elevation="0">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(e => DrawerToggle())"/>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(_ => DrawerToggle())"/>
         <MudSpacer/>
         <LoginDisplay/>
         <MudTooltip Text="Toggle light/dark theme">
-            <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@(e => DarkMode())"/>
+            <MudIconButton Icon="@Icons.Material.Filled.Brightness4" Color="Color.Inherit" OnClick="@(_ => DarkMode())"/>
         </MudTooltip>
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
@@ -55,14 +55,7 @@
 
     void DarkMode()
     {
-        if (_currentTheme == _defaultTheme)
-        {
-            _currentTheme = _darkTheme;
-        }
-        else
-        {
-            _currentTheme = _defaultTheme;
-        }
+        _currentTheme = _currentTheme == _defaultTheme ? _darkTheme : _defaultTheme;
     }
 
     MudTheme _currentTheme = new();

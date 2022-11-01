@@ -34,7 +34,7 @@ public partial class Index : IDisposable
     {
         try
         {
-            _context = ContextFactory.CreateDbContext();
+            _context = await ContextFactory.CreateDbContextAsync();
             var actions = await _context.Actions
                 .Include(i => i.Leads)
                 .ThenInclude(l => l.Organization)
@@ -67,29 +67,29 @@ public partial class Index : IDisposable
 
     private void Edit(int actionId) => Navigation.NavigateTo("/actions/edit/" + actionId);
 
-    public async void RowClicked(TableRowClickEventArgs<Action> p)
+    private async void RowClicked(TableRowClickEventArgs<Action> p)
     {
-        if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey)
+        switch (p.MouseEventArgs.CtrlKey)
         {
-            await JsRuntime.InvokeAsync<object>(
-                "open",
-                CancellationToken.None,
-                $"/actions/edit/{p.Item.Id}",
-                "_blank"
-            );
-        }
-        else if (p.MouseEventArgs.CtrlKey)
-        {
-            await JsRuntime.InvokeAsync<object>(
-                "open",
-                CancellationToken.None,
-                $"/actions/details/{p.Item.Id}",
-                "_blank"
-            );
-        }
-        else
-        {
-            Details(p.Item.Id);
+            case true when p.MouseEventArgs.AltKey:
+                await JsRuntime.InvokeAsync<object>(
+                    "open",
+                    CancellationToken.None,
+                    $"/actions/edit/{p.Item.Id}",
+                    "_blank"
+                );
+                break;
+            case true:
+                await JsRuntime.InvokeAsync<object>(
+                    "open",
+                    CancellationToken.None,
+                    $"/actions/details/{p.Item.Id}",
+                    "_blank"
+                );
+                break;
+            default:
+                Details(p.Item.Id);
+                break;
         }
     }
 
@@ -175,19 +175,11 @@ public partial class Index : IDisposable
     private bool IsUserAMemberOfLeads(Action action)
     {
         var claimsPrincipal = StateContainer.ClaimsPrincipal;
-        foreach (var lead in action.Leads)
-        {
-            if (claimsPrincipal.IsInRole(lead.Id.ToString()))
-            {
-                return true;
-            }
-        }
-
-        if (claimsPrincipal.IsInRole("Administrator") || claimsPrincipal.IsInRole("1"))
+        if (action.Leads.Any(lead => claimsPrincipal.IsInRole(lead.Id.ToString())))
         {
             return true;
         }
 
-        return false;
+        return claimsPrincipal.IsInRole("Administrator") || claimsPrincipal.IsInRole("1");
     }
 }

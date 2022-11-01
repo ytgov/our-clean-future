@@ -22,11 +22,6 @@ public class UnitOfMeasurement
 
     public override string ToString()
     {
-        if (string.IsNullOrWhiteSpace(Symbol))
-        {
-            return Name;
-        }
-
-        return Symbol;
+        return string.IsNullOrWhiteSpace(Symbol) ? Name : Symbol;
     }
 }

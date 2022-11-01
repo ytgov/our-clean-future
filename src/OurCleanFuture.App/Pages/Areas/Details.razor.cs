@@ -32,7 +32,7 @@ public partial class Details : IDisposable
     {
         try
         {
-            _context = ContextFactory.CreateDbContext();
+            _context = await ContextFactory.CreateDbContextAsync();
             Area = await _context.Areas
                 .Include(a => a.Objectives)
                 .ThenInclude(o => o.Actions)

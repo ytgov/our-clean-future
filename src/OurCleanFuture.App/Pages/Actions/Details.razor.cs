@@ -28,7 +28,7 @@ public partial class Details : IDisposable
     {
         try
         {
-            _context = ContextFactory.CreateDbContext();
+            _context = await ContextFactory.CreateDbContextAsync();
             Action = await _context.Actions
                 .Include(a => a.Indicators)
                 .Include(a => a.DirectorsCommittees)
@@ -69,13 +69,9 @@ public partial class Details : IDisposable
     private string InternalStatusToString()
     {
         // Only append updated by information if the InternalStatus has been updated after database creation
-        if (!string.IsNullOrWhiteSpace(Action!.InternalStatusUpdatedBy))
-        {
-            return
-                $"Last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime:f}";
-        }
-
-        return string.Empty;
+        return !string.IsNullOrWhiteSpace(Action!.InternalStatusUpdatedBy)
+            ? $"Last updated by {Action.InternalStatusUpdatedBy} on {Action.InternalStatusUpdatedDate?.LocalDateTime:f}"
+            : string.Empty;
     }
 
     private string ExternalStatusToString()

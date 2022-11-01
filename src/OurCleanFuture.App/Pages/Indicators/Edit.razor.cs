@@ -52,7 +52,7 @@ public partial class Edit : IDisposable
     {
         try
         {
-            _context = ContextFactory.CreateDbContext();
+            _context = await ContextFactory.CreateDbContextAsync();
             Leads = await _context.Leads
                 .Include(l => l.Organization)
                 .Include(l => l.Branch)

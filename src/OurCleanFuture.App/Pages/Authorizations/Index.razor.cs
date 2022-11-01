@@ -28,7 +28,7 @@ public partial class Index
     {
         try
         {
-            _context = ContextFactory.CreateDbContext();
+            _context = await ContextFactory.CreateDbContextAsync();
             Users = await _context.Users.Include(u => u.Leads).ToListAsync();
             Leads = await _context.Leads
                 .Include(l => l.Organization)

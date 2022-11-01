@@ -30,7 +30,7 @@ public partial class Details : IDisposable
     {
         try
         {
-            _context = ContextFactory.CreateDbContext();
+            _context = await ContextFactory.CreateDbContextAsync();
             Indicator = await _context.Indicators
                 .Include(i => i.Target)
                 .Include(i => i.UnitOfMeasurement)

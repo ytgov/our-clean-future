@@ -24,7 +24,7 @@ public class StateContainerService
                 ?.Value.ToLower();
             if (ClaimsPrincipalEmail is not null)
             {
-                Log.Information("{User} has established a connection.", ClaimsPrincipalEmail);
+                Log.Information("{User} has established a connection", ClaimsPrincipalEmail);
                 _context = _dbContextFactory.CreateDbContext();
                 UserHasARole = _context.Users.Any(u => u.Email == ClaimsPrincipalEmail);
             }

@@ -116,15 +116,14 @@ try
                         context.HandleResponse();
 
                         return Task.CompletedTask;
+                    },
+                    OnSignedOutCallbackRedirect = context =>
+                    {
+                        context.Response.Redirect(options.SignedOutRedirectUri);
+                        context.HandleResponse();
+
+                        return Task.CompletedTask;
                     }
-                };
-
-                options.Events.OnSignedOutCallbackRedirect = context =>
-                {
-                    context.Response.Redirect(options.SignedOutRedirectUri);
-                    context.HandleResponse();
-
-                    return Task.CompletedTask;
                 };
             }
         );

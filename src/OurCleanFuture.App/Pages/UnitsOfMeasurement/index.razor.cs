@@ -30,7 +30,7 @@ public partial class Index : IDisposable
     {
         try
         {
-            _context = ContextFactory.CreateDbContext();
+            _context = await ContextFactory.CreateDbContextAsync();
             UnitsOfMeasurement = await _context.UnitsOfMeasurement
                 .OrderBy(u => u.Symbol)
                 .ToListAsync();

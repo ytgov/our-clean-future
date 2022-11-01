@@ -31,7 +31,7 @@ public partial class Index : IDisposable
     {
         try
         {
-            _context = ContextFactory.CreateDbContext();
+            _context = await ContextFactory.CreateDbContextAsync();
             Branches = await _context.Branches
                 .OrderBy(b => b.Name)
                 .Include(b => b.Department)

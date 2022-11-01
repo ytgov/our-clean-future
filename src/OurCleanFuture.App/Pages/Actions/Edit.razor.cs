@@ -49,7 +49,7 @@ public partial class Edit : IDisposable
     {
         try
         {
-            _context = ContextFactory.CreateDbContext();
+            _context = await ContextFactory.CreateDbContextAsync();
             Leads = await _context.Leads
                 .Include(l => l.Organization)
                 .Include(l => l.Branch)
@@ -108,13 +108,7 @@ public partial class Edit : IDisposable
 
     private string GetAuthorizedRoles()
     {
-        var authorizedRoles = "";
-        foreach (var lead in Action!.Leads)
-        {
-            authorizedRoles += $", {lead.Id}";
-        }
-
-        return authorizedRoles;
+        return Action!.Leads.Aggregate("", (current, lead) => current + $", {lead.Id}");
     }
 
     private async Task Update()

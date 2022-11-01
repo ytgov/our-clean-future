@@ -38,7 +38,7 @@ public partial class Index : IDisposable
     {
         try
         {
-            _context = ContextFactory.CreateDbContext();
+            _context = await ContextFactory.CreateDbContextAsync();
             _indicators = await _context.Indicators
                 .Include(i => i.Action)
                 .Include(i => i.Leads)

@@ -77,33 +77,33 @@ else
                     </MudPaper>
                 </MudItem>
             </AuthorizeView>
+            <AuthorizeView Roles="@AuthorizedRoles" Context="_">
                 <MudItem xs="12" sm="6" md="3">
                     <MudPaper Elevation="2" Class="pa-4">
-                        <AuthorizeView Roles="Administrator, 1" Context="_">
-                        <MudSelect T="DataType" Label="Data Type" @bind-Value="Indicator.DataType">
-                            @foreach (DataType dataType in Enum.GetValues(typeof(DataType)))
-                            {
-                                <MudSelectItem Value="dataType">@dataType</MudSelectItem>
-                            }
-                        </MudSelect>
-                        <MudSelect Label="Collection Interval" T="CollectionInterval" @bind-Value="Indicator.CollectionInterval">
-                            @foreach (CollectionInterval interval in Enum.GetValues(typeof(CollectionInterval)))
-                            {
-                                <MudSelectItem Value="interval">@interval</MudSelectItem>
-                            }
-                        </MudSelect>
-                        <MudSelect T="UnitOfMeasurement" Label="Unit of Measurement" @bind-Value="Indicator.UnitOfMeasurement">
-                            @foreach (var unit in UnitsOfMeasurement.OrderBy(u => u.Symbol))
-                            {
-                                <MudSelectItem Value="unit">@unit.ToString()</MudSelectItem>
-                            }
-                        </MudSelect>
+                        <AuthorizeView Roles="Administrator, 1" Context="discard">
+                            <MudSelect T="DataType" Label="Data Type" @bind-Value="Indicator.DataType">
+                                @foreach (DataType dataType in Enum.GetValues(typeof(DataType)))
+                                {
+                                    <MudSelectItem Value="dataType">@dataType</MudSelectItem>
+                                }
+                            </MudSelect>
+                            <MudSelect Label="Collection Interval" T="CollectionInterval" @bind-Value="Indicator.CollectionInterval">
+                                @foreach (CollectionInterval interval in Enum.GetValues(typeof(CollectionInterval)))
+                                {
+                                    <MudSelectItem Value="interval">@interval</MudSelectItem>
+                                }
+                            </MudSelect>
+                            <MudSelect T="UnitOfMeasurement" Label="Unit of Measurement" @bind-Value="Indicator.UnitOfMeasurement">
+                                @foreach (var unit in UnitsOfMeasurement.OrderBy(u => u.Symbol))
+                                {
+                                    <MudSelectItem Value="unit">@unit.ToString()</MudSelectItem>
+                                }
+                            </MudSelect>
                         </AuthorizeView>
-                        <AuthorizeView Roles="@AuthorizedRoles" Context="_internalNote">
-                            <MudTextField Label="Internal Notes" @bind-Value="Indicator.Note" Lines="6" For=@(() => Indicator.Note)/>
-                        </AuthorizeView>
+                        <MudTextField Label="Internal Notes" @bind-Value="Indicator.Note" Lines="6" For=@(() => Indicator.Note)/>
                     </MudPaper>
                 </MudItem>
+            </AuthorizeView>
             <AuthorizeView Roles="Administrator, 1" Context="_">
                 <MudItem xs="12" sm="6" md="3">
                     <MudPaper Elevation="2" Class="pa-4">

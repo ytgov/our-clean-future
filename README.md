@@ -12,7 +12,7 @@ This app enables Yukon Government to record and analyze data on ~230 indicators 
 
 ## Stack
 
-* UI Component Library: [MudBlazor](https://github.com/Garderoben/MudBlazor)
+* UI Component Library: [MudBlazor](https://github.com/MudBlazor/MudBlazor)
 * Web Framework: [ASP.NET Core 6](https://github.com/dotnet/aspnetcore) and [Blazor Server](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
 * Authentication: OpenID Connect
 * Data Access: [Entity Framework Core](https://github.com/dotnet/efcore)

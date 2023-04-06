@@ -23,6 +23,9 @@ else
             <MudTextField @bind-Value="_searchString" Placeholder="Search by lead or title" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
             <MudSpacer/>
             <AuthorizeView Roles="Administrator, 1">
+                <MudItem Class="mr-4">
+                    <DownloadFileFromStream/>
+                </MudItem>
                 <MudButton Color="Color.Tertiary" Variant="Variant.Outlined" OnClick="Create" Class="flex-shrink-0">New Action</MudButton>
             </AuthorizeView>
             @if (StateContainer.UserHasARole && !StateContainer.ClaimsPrincipal.IsInRole("Administrator") && !StateContainer.ClaimsPrincipal.IsInRole("1"))

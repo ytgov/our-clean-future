@@ -1,0 +1,26 @@
+﻿@using OurCleanFuture.App.Services;
+@inject IJSRuntime JS
+
+<MudButton StartIcon="@Icons.Material.Filled.Download" Color="Color.Info" Variant="Variant.Outlined" OnClick="DownloadActionsXlsx">@{
+        if (isDownloading)
+        {
+            <MudProgressCircular Indeterminate="true" Size="Size.Small"/>
+        } else
+        {
+            <span>Xlsx</span>
+        }
+    }</MudButton>
+
+    @code {
+    private bool isDownloading = false;
+    [Inject] private DataExportService DataExportService { get; set; } = null!;
+
+    private async Task DownloadActionsXlsx()
+    {
+        isDownloading = true;
+        var file = await DataExportService.GenerateActionsXlsx($"OCF_actions_{ DateTimeOffset.Now.ToString("yyyy-MM-dd")}");
+        using var streamRef = new DotNetStreamReference(file.MemoryStream);
+        await JS.InvokeVoidAsync("downloadFileFromStream", file.FileName, file.MimeType, streamRef);
+        isDownloading = false;
+    }
+}

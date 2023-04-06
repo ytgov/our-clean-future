@@ -157,7 +157,7 @@ try
             )
     );
 #endif
-
+    builder.Services.AddScoped<DataExportService>();
     builder.Services.AddScoped(
         s => new StateContainerService(s.GetRequiredService<IDbContextFactory<AppDbContext>>())
     );

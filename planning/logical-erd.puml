@@ -1,0 +1,114 @@
+@startuml logical-erd
+title Logical ERD
+
+skinparam linetype ortho
+skinparam arrowThickness 1.5
+
+entity "Action" as action {
+    *Id: number <<generated>>
+    --
+    *Title: string
+    StartDate: date
+    TargetCompletionDate: date
+    ActualCompletionDate: date
+    *InternalStatus: enum
+    InternalStatusUpdatedBy: string
+    InternalStatusUpdatedDate: datetime
+    *ExternalStatus: enum
+    ExternalStatusUpdatedBy: string
+    ExternalStatusUpdatedDate: datetime
+    *PublicExplanation: string
+    *Note: string
+    *ObjectiveId: number <<FK>>
+}
+entity "Area" as area {
+    *Id: number <<generated>>
+    --
+    *Title: string
+}
+entity "Branch" as branch {
+    *Id: number <<generated>>
+    --
+    *Name: string
+    *DepartmentId: number <<FK>>
+}
+entity "Department" as department {
+    *Id: number <<generated>>
+    --
+    *Name: string
+    *ShortName: string
+}
+entity "DirectorsCommittee" as directorscommittee {
+    *Id: number <<generated>>
+    --
+    *Name: string
+}
+entity "Entry" as entry {
+    *IndicatorId: number <<FK>>
+    *StartDate: datetime
+    --
+    *EndDate: datetime
+    *Value: number
+    *Note: string
+    *UpdatedBy: string
+}
+entity "Goal" as goal {
+    *Id: number <<generated>>
+    --
+    *Title: string
+}
+entity "Indicator" as indicator {
+    *Id: number <<generated>>
+    --
+    *Title: string
+    *Description: string
+    *UnitOfMeasurementId: number <<FK>>
+    *DataType: enum
+    ActionId: number <<FK>>
+    ObjectiveId: number <<FK>>
+    GoalId: number <<FK>>
+    *CollectionInterval: enum
+    *Note: string
+    *UpdatedBy: string
+}
+entity "Lead" as lead {
+    *Id: number <<generated>>
+    --
+    *OrganizationId: number <<FK>>
+    BranchId: number <<FK>>
+}
+entity "Objective" as objective {
+    *Id: number <<generated>>
+    --
+    *Title: string
+    *AreaId: number <<FK>>
+}
+entity "Organization" as organization {
+    *Id: number <<generated>>
+    --
+    *Name: string
+}
+entity "Target" as target {
+    *Id: number <<generated>>
+    --
+    Value: number
+    CompletionDate: date
+    *Description: string
+    *IndicatorId: number <<FK>>
+}
+entity "UnitOfMeasurement" as unitofmeasurement {
+    *Id: number <<generated>>
+    --
+    *Name: string
+    *Symbol: string
+}
+entity "User" as user {
+    *Id: number <<generated>>
+    --
+    *Email: string
+}
+
+indicator ||..o| target
+indicator ||..o{ entry
+
+@enduml

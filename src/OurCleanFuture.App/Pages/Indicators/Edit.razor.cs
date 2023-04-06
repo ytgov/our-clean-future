@@ -21,7 +21,8 @@ public partial class Edit : IDisposable
     private int[] Years { get; } =
         Enumerable.Range(2009, DateTime.Now.Year - 2008).Reverse().ToArray();
 
-    [Parameter] public int Id { get; set; }
+    [Parameter]
+    public int Id { get; set; }
 
     private string AuthorizedRoles { get; set; } = "Administrator, 1";
     private string SelectedParentType { get; set; } = "";
@@ -34,17 +35,23 @@ public partial class Edit : IDisposable
     private List<Action> Actions { get; set; } = new();
     private Indicator? Indicator { get; set; }
 
-    [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
 
-    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    [Inject]
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject] private IDialogService DialogService { get; set; } = null!;
+    [Inject]
+    private IDialogService DialogService { get; set; } = null!;
 
-    [Inject] private NavigationManager Navigation { get; set; } = null!;
+    [Inject]
+    private NavigationManager Navigation { get; set; } = null!;
 
-    [Inject] private ISnackbar Snackbar { get; set; } = null!;
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
 
-    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+    [Inject]
+    private StateContainerService StateContainer { get; init; } = null!;
 
     public void Dispose() => _context.Dispose();
 
@@ -175,7 +182,7 @@ public partial class Edit : IDisposable
                 if (
                     _context.Entry(Indicator.Target).State
                     is EntityState.Added
-                    or EntityState.Modified
+                        or EntityState.Modified
                 )
                 {
                     Indicator.UpdatedBy = _user.GetFormattedName();
@@ -239,7 +246,7 @@ public partial class Edit : IDisposable
         var dialog = DialogService.Show<CreateEntryDialog>("Add entry", parameters);
         var result = await dialog.Result;
 
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             var newEntry = (Entry)result.Data;
             newEntry.UpdatedBy = _user.GetFormattedName();
@@ -253,12 +260,17 @@ public partial class Edit : IDisposable
 
     private async Task EditEntry(Entry entry)
     {
-        var parameters = new DialogParameters { ["Indicator"] = Indicator, ["Entry"] = entry, ["Years"] = Years };
+        var parameters = new DialogParameters
+        {
+            ["Indicator"] = Indicator,
+            ["Entry"] = entry,
+            ["Years"] = Years
+        };
 
         var dialog = DialogService.Show<EditEntryDialog>("Edit entry", parameters);
         var result = await dialog.Result;
 
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             var editedEntry = (Entry)result.Data;
             editedEntry.UpdatedBy = _user.GetFormattedName();

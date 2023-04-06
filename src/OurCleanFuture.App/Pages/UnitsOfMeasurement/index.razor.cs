@@ -16,13 +16,17 @@ public partial class Index : IDisposable
 
     private List<UnitOfMeasurement> UnitsOfMeasurement { get; set; } = new();
 
-    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    [Inject]
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject] private IDialogService DialogService { get; set; } = null!;
+    [Inject]
+    private IDialogService DialogService { get; set; } = null!;
 
-    [Inject] private ISnackbar Snackbar { get; set; } = null!;
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
 
-    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+    [Inject]
+    private StateContainerService StateContainer { get; init; } = null!;
 
     public void Dispose() => _context.Dispose();
 
@@ -52,7 +56,7 @@ public partial class Index : IDisposable
     {
         var dialog = DialogService.Show<CreateDialog>("Create");
         var result = await dialog.Result;
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             var newUnitOfMeasurement = (UnitOfMeasurement)result.Data;
             try
@@ -88,7 +92,7 @@ public partial class Index : IDisposable
 
         var dialog = DialogService.Show<EditDialog>("Edit", parameters);
         var result = await dialog.Result;
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             var updatedUnitOfMeasurement = (UnitOfMeasurement)result.Data;
             try

@@ -62,7 +62,7 @@ public partial class Index : IDisposable
 
         var dialog = DialogService.Show<CreateDialog>("Create", parameters);
         var result = await dialog.Result;
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             var newBranch = (Branch)result.Data;
             try
@@ -101,7 +101,7 @@ public partial class Index : IDisposable
 
         var dialog = DialogService.Show<EditDialog>("Edit", parameters);
         var result = await dialog.Result;
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             var updatedBranch = (Branch)result.Data;
             try

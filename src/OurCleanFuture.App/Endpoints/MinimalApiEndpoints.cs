@@ -29,8 +29,8 @@ public static class MinimalApiEndpoints
                 i =>
                     new IndicatorDto(
                         i.Id,
-                        i.Title,
-                        i.Description,
+                        i.Title.Trim(),
+                        i.Description.Trim(),
                         i.CollectionInterval,
                         i.DataType,
                         i.UnitOfMeasurement.Name,
@@ -98,8 +98,8 @@ public static class MinimalApiEndpoints
                 i =>
                     new IndicatorDto(
                         i.Id,
-                        i.Title,
-                        i.Description,
+                        i.Title.Trim(),
+                        i.Description.Trim(),
                         i.CollectionInterval,
                         i.DataType,
                         i.UnitOfMeasurement.Name,
@@ -181,7 +181,7 @@ public static class MinimalApiEndpoints
                     new ActionDto(
                         a.Id,
                         a.Number,
-                        a.Title,
+                        a.Title.Trim(),
                         a.Leads
                             .Select(
                                 l =>
@@ -224,7 +224,7 @@ public static class MinimalApiEndpoints
                     new ActionDto(
                         a.Id,
                         a.Number,
-                        a.Title,
+                        a.Title.Trim(),
                         a.Leads
                             .Select(
                                 l =>

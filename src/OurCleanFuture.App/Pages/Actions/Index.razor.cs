@@ -20,13 +20,17 @@ public partial class Index : IDisposable
 
     private Action _selectedItem = null!;
 
-    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    [Inject]
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject] private NavigationManager Navigation { get; set; } = null!;
+    [Inject]
+    private NavigationManager Navigation { get; set; } = null!;
 
-    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+    [Inject]
+    private StateContainerService StateContainer { get; init; } = null!;
 
-    [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = null!;
 
     public void Dispose() => _context.Dispose();
 

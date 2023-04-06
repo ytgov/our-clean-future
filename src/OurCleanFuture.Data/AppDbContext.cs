@@ -6,20 +6,19 @@ namespace OurCleanFuture.Data;
 
 public class AppDbContext : DbContext
 {
-    //Uncomment to allow EF Core Power Tools to generate a diagram
-    //public AppDbContext()
-    //{
-    //}
+    ////Uncomment to allow EF Core Power Tools to generate a diagram
+    //public AppDbContext() { }
 
-    //Uncomment to allow EF Core Power Tools to generate a diagram
+    ////Uncomment to allow EF Core Power Tools to generate a diagram
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     //{
-    //    optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=EnvOurCleanFuture; Integrated Security=True");
+    //    optionsBuilder.UseSqlServer(
+    //        "Data Source=(localdb)\\MSSQLLocalDB; Initial Catalog=EnvOurCleanFuture; Integrated Security=True"
+    //    );
     //}
 
-    public AppDbContext(DbContextOptions options) : base(options)
-    {
-    }
+    public AppDbContext(DbContextOptions options)
+        : base(options) { }
 
     public DbSet<Indicator> Indicators => Set<Indicator>();
     public DbSet<Lead> Leads => Set<Lead>();

@@ -17,13 +17,17 @@ public partial class Index : IDisposable
     private List<Branch> Branches { get; set; } = new();
     private List<Department> Departments { get; set; } = new();
 
-    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    [Inject]
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject] private IDialogService DialogService { get; set; } = null!;
+    [Inject]
+    private IDialogService DialogService { get; set; } = null!;
 
-    [Inject] private ISnackbar Snackbar { get; set; } = null!;
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
 
-    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+    [Inject]
+    private StateContainerService StateContainer { get; init; } = null!;
 
     public void Dispose() => _context.Dispose();
 
@@ -89,7 +93,11 @@ public partial class Index : IDisposable
 
     private async Task Edit(Branch branch, List<Department> departments)
     {
-        var parameters = new DialogParameters { ["Branch"] = branch, ["Departments"] = departments };
+        var parameters = new DialogParameters
+        {
+            ["Branch"] = branch,
+            ["Departments"] = departments
+        };
 
         var dialog = DialogService.Show<EditDialog>("Edit", parameters);
         var result = await dialog.Result;
@@ -126,7 +134,7 @@ public partial class Index : IDisposable
             cancelText: "Cancel"
         );
         if (result == true)
-            //Prevents mid-method rerendering of the component, which avoids overlapping threads
+        //Prevents mid-method rerendering of the component, which avoids overlapping threads
         {
             try
             {

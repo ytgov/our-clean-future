@@ -16,13 +16,17 @@ public partial class Index
     private List<User> Users { get; set; } = new();
     public List<Lead> Leads { get; set; } = new();
 
-    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    [Inject]
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject] private IDialogService DialogService { get; set; } = null!;
+    [Inject]
+    private IDialogService DialogService { get; set; } = null!;
 
-    [Inject] private ISnackbar Snackbar { get; set; } = null!;
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
 
-    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+    [Inject]
+    private StateContainerService StateContainer { get; init; } = null!;
 
     protected override async Task OnInitializedAsync()
     {
@@ -48,7 +52,7 @@ public partial class Index
 
         var dialog = DialogService.Show<AddUserDialog>("Add", parameters);
         var result = await dialog.Result;
-        if (!result.Cancelled)
+        if (!result.Canceled)
         {
             var newUser = (User)result.Data;
             try

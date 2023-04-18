@@ -78,8 +78,8 @@ else
                     <MudItem xs="12" sm="6">
                         <MudPaper Elevation="2" Class="pa-4">
                             <MudDatePicker Label="Actual/Anticipated Completion Date" @bind-Date="Action.ActualCompletionDate" Editable="true"/>
-                            <MudTextField Style="height: auto; overflow: hidden" Label="Internal Notes" @bind-Value="Action.Note" Lines="10" For=@(() => Action.Note) />
-                            <MudTextField Style="height: auto; overflow: hidden" Label="Public Explanation" @bind-Value="Action.PublicExplanation" Lines="10" For=@(() => Action.PublicExplanation) />
+                            <MudTextField Style="height: auto; overflow: hidden" Label="Internal Notes" @bind-Value="Action.Note" Lines="20" For=@(() => Action.Note) />
+                            <MudTextField Style="height: auto; overflow: hidden" Label="Public Explanation" @bind-Value="Action.PublicExplanation" Lines="15" For=@(() => Action.PublicExplanation) />
                         </MudPaper>
                     </MudItem>
                     <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">

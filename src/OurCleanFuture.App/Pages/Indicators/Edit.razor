@@ -100,7 +100,7 @@ else
                                 }
                             </MudSelect>
                         </AuthorizeView>
-                        <MudTextField Label="Internal Notes" @bind-Value="Indicator.Note" Lines="6" For=@(() => Indicator.Note)/>
+                        <MudTextField Style="height: auto; overflow: hidden" Label="Internal Notes" @bind-Value="Indicator.Note" Lines="10" For=@(() => Indicator.Note) />
                     </MudPaper>
                 </MudItem>
             </AuthorizeView>

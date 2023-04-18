@@ -29,7 +29,7 @@
 
     private async Task OpenDashboardInNewTab()
     {
-        await JsRuntime.InvokeAsync<object>("open", CancellationToken.None, Configuration["PowerBI:EmbedUrl"], "_blank");
+        await JsRuntime.InvokeVoidAsync("open", CancellationToken.None, Configuration["PowerBI:EmbedUrl"], "_blank");
     }
 
 }

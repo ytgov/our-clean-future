@@ -20,17 +20,23 @@ public partial class Index : IDisposable
 
     private Indicator _selectedItem = null!;
 
-    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    [Inject]
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject] private NavigationManager Navigation { get; set; } = null!;
+    [Inject]
+    private NavigationManager Navigation { get; set; } = null!;
 
-    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+    [Inject]
+    private StateContainerService StateContainer { get; init; } = null!;
 
-    [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
+    [Inject]
+    private IJSRuntime JsRuntime { get; set; } = null!;
 
-    [Inject] private IDialogService DialogService { get; set; } = null!;
+    [Inject]
+    private IDialogService DialogService { get; set; } = null!;
 
-    [Inject] private ISnackbar Snackbar { get; set; } = null!;
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
 
     public void Dispose() => _context.Dispose();
 
@@ -113,7 +119,7 @@ public partial class Index : IDisposable
     {
         if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey)
         {
-            await JsRuntime.InvokeAsync<object>(
+            await JsRuntime.InvokeVoidAsync(
                 "open",
                 CancellationToken.None,
                 $"/indicators/edit/{p.Item.Id}",
@@ -122,7 +128,7 @@ public partial class Index : IDisposable
         }
         else if (p.MouseEventArgs.CtrlKey)
         {
-            await JsRuntime.InvokeAsync<object>(
+            await JsRuntime.InvokeVoidAsync(
                 "open",
                 CancellationToken.None,
                 $"/indicators/details/{p.Item.Id}",

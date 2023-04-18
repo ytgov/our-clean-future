@@ -76,7 +76,7 @@ public partial class Index : IDisposable
         switch (p.MouseEventArgs.CtrlKey)
         {
             case true when p.MouseEventArgs.AltKey:
-                await JsRuntime.InvokeAsync<object>(
+                await JsRuntime.InvokeVoidAsync(
                     "open",
                     CancellationToken.None,
                     $"/actions/edit/{p.Item.Id}",
@@ -84,7 +84,7 @@ public partial class Index : IDisposable
                 );
                 break;
             case true:
-                await JsRuntime.InvokeAsync<object>(
+                await JsRuntime.InvokeVoidAsync(
                     "open",
                     CancellationToken.None,
                     $"/actions/details/{p.Item.Id}",

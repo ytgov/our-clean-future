@@ -72,6 +72,7 @@ public class DataExportService
                         a.ExternalStatus.GetDisplayName(),
                         a.ExternalStatusUpdatedBy,
                         a.ExternalStatusUpdatedDate,
+                        a.EngagementsAndPartnershipActivities,
                         a.PublicExplanation,
                         a.Note,
                         string.Join(
@@ -133,8 +134,9 @@ public class DataExportService
         ws.Column("P").AdjustToContents();
         ws.Column("Q").Width = 30;
         ws.Column("R").Width = 30;
-        ws.Column("S").Width = 20;
+        ws.Column("S").Width = 30;
         ws.Column("T").Width = 20;
+        ws.Column("U").Width = 20;
         ws.Columns().Style.Alignment.WrapText = true;
     }
 
@@ -156,10 +158,11 @@ public class DataExportService
         ws.Cell("N1").Value = "External Status";
         ws.Cell("O1").Value = "Updated By";
         ws.Cell("P1").Value = "Updated Date";
-        ws.Cell("Q1").Value = "Public Explanation";
-        ws.Cell("R1").Value = "Additional Internal Info";
-        ws.Cell("S1").Value = "Quarterly Or Biannual Indicators";
-        ws.Cell("T1").Value = "Annual Indicators";
+        ws.Cell("Q1").Value = "Engagements And Partnership Activities";
+        ws.Cell("R1").Value = "Public Explanation";
+        ws.Cell("S1").Value = "Additional Internal Info";
+        ws.Cell("T1").Value = "Quarterly Or Biannual Indicators";
+        ws.Cell("U1").Value = "Annual Indicators";
     }
 
     private static void InsertData(
@@ -234,6 +237,7 @@ public record ActionExportModel(
     string ExternalStatus,
     string ExternalStatusUpdatedBy,
     DateTimeOffset? ExternalStatusUpdatedDate,
+    string EngagementsAndPartnershipActivities,
     string PublicExplanation,
     string AdditionalInternalInfo,
     string QuarterlyOrBiannualIndicators,

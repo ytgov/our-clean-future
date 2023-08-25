@@ -73,6 +73,8 @@ else
                                     <MudSelectItem Value="externalStatus">@externalStatus.GetDisplayName()</MudSelectItem>
                                 }
                             </MudSelect>
+                            <MudTextField Style="height: auto; overflow: hidden" Label="Engagements And Partnership Activities" HelperText="Completed, planned, or anticipated - including estimated timelines" HelperTextOnFocus="true"
+                                @bind-Value="Action.EngagementsAndPartnershipActivities" Lines="20" For=@(() => Action.EngagementsAndPartnershipActivities) />
                         </MudPaper>
                     </MudItem>
                     <MudItem xs="12" sm="6">

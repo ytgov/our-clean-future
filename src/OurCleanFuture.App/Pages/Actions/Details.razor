@@ -50,6 +50,7 @@ else
                         </MudTooltip>
                     }
                 </div>
+                <MudField Style="white-space: pre-wrap" Label="Engagements And Partnership Activities">@Action.EngagementsAndPartnershipActivities</MudField>
             </MudPaper>
         </MudItem>
         <MudItem xs="12" sm="6">
@@ -72,7 +73,9 @@ else
                                 @foreach (var goal in Action.Objective.Goals)
                                 {
                                     <div class="d-flex py-2">
-                                        <MudAvatar Image="@goal.GetIconPath()" Class="mr-2"/>
+                                        <MudAvatar Class="mr-2">
+                                            <MudImage Src="@goal.GetIconPath()" />
+                                        </MudAvatar>
                                         <MudText Class="mt-2">@goal.Title</MudText>
                                     </div>
                                 }
@@ -90,7 +93,9 @@ else
                             var classText = $"{Action.Objective.Area.GetCssClass()} pl-4";
                             <MudListItem Class="@classText" OnClick="() => ViewArea(Action.Objective.Area)">
                                 <div class="d-flex">
-                                    <MudAvatar Image="@Action.Objective.Area.GetIconPath()" Class="mr-2 my-2"/>
+                                    <MudAvatar Class="mr-2 my-2">
+                                        <MudImage Src="@Action.Objective.Area.GetIconPath()" />
+                                    </MudAvatar>
                                     <MudText Class="my-4">@Action.Objective?.Area?.Title</MudText>
                                 </div>
                             </MudListItem>

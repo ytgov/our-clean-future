@@ -55,7 +55,9 @@ else
                                     @foreach (var goal in Indicator.Action.Objective.Goals)
                                     {
                                         <div class="d-flex py-2">
-                                            <MudAvatar Image="@goal.GetIconPath()" Class="mr-2"/>
+                                            <MudAvatar Class="mr-2">
+                                                <MudImage Src="@goal.GetIconPath()" />
+                                            </MudAvatar>
                                             <MudText Class="mt-2">@goal.Title</MudText>
                                         </div>
                                     }
@@ -73,7 +75,9 @@ else
                                 var classText = $"{Indicator.Action.Objective.Area.GetCssClass()} pl-4";
                                 <MudListItem Class="@classText" OnClick="() => ViewArea(Indicator.Action.Objective.Area)">
                                     <div class="d-flex">
-                                        <MudAvatar Image="@Indicator.Action.Objective.Area.GetIconPath()" Class="mr-2 my-2"/>
+                                        <MudAvatar Class="mr-2 my-2">
+                                            <MudImage Src="@Indicator.Action.Objective.Area.GetIconPath()" />
+                                        </MudAvatar>
                                         <MudText Class="my-4">@Indicator.Action.Objective?.Area?.Title</MudText>
                                     </div>
                                 </MudListItem>
@@ -118,7 +122,9 @@ else
                                     @foreach (var goal in Indicator.Objective.Goals)
                                     {
                                         <div class="d-flex py-2">
-                                            <MudAvatar Image="@goal.GetIconPath()" Class="mr-2"/>
+                                            <MudAvatar Class="mr-2">
+                                                <MudImage Src="@goal.GetIconPath()" />
+                                            </MudAvatar>
                                             <MudText Class="mt-2">@goal.Title</MudText>
                                         </div>
                                     }
@@ -136,7 +142,9 @@ else
                                 var classText = $"{Indicator.Objective.Area.GetCssClass()} pl-4";
                                 <MudListItem Class="@classText" OnClick="() => ViewArea(Indicator.Objective.Area)">
                                     <div class="d-flex">
-                                        <MudAvatar Image="@Indicator.Objective.Area.GetIconPath()" Class="mr-2 my-2"/>
+                                        <MudAvatar Class="mr-2 my-2">
+                                            <MudImage Src="@Indicator.Objective.Area.GetIconPath()" />
+                                        </MudAvatar>
                                         <MudText Class="my-4">@Indicator.Objective?.Area?.Title</MudText>
                                     </div>
                                 </MudListItem>
@@ -162,7 +170,9 @@ else
                         <MudList DisableGutters="true" Dense="true">
                             <MudListItem Class="goal pl-4">
                                 <div class="d-flex py-2">
-                                    <MudAvatar Image="@Indicator.Goal.GetIconPath()" Class="mr-2"/>
+                                    <MudAvatar Class="mr-2">
+                                       <MudImage Src="@Indicator.Goal.GetIconPath()" />
+                                    </MudAvatar>
                                     <MudText Class="mt-2">@Indicator.Goal.Title</MudText>
                                 </div>
                             </MudListItem>

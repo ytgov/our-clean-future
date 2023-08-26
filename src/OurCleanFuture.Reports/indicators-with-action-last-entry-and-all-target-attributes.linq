@@ -4,9 +4,9 @@
     <NamingServiceVersion>2</NamingServiceVersion>
     <Persist>true</Persist>
     <Driver Assembly="EF7Driver" PublicKeyToken="469b5aa5a4331a8c">EF7Driver.StaticDriver</Driver>
-    <CustomAssemblyPath>C:\Users\jhodgins\source\repos\ytgov-env\our-clean-future\src\OurCleanFuture.Data\bin\Debug\net6.0\OurCleanFuture.Data.dll</CustomAssemblyPath>
+    <CustomAssemblyPath>C:\Users\jhodgins\source\repos\ytgov-env\our-clean-future\src\OurCleanFuture.Data\bin\Debug\net7.0\OurCleanFuture.Data.dll</CustomAssemblyPath>
     <CustomTypeName>OurCleanFuture.Data.AppDbContext</CustomTypeName>
-    <CustomCxString>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAqEU91o4KiEeKBG+qj9AJsQAAAAACAAAAAAADZgAAwAAAABAAAACfv0dvNi3TuwVplynBG1uaAAAAAASAAACgAAAAEAAAAHuaoM2o13XvcE7sMGuTpIxIAAAARq6jhOEc4F9rpvyIRE+oENYn7zHONCbY72zdtMP/YxbMtpqAahFr7hcDPhutQrBw8V1IubW8dc41Z1jfgHTALUXq4QZJyyZoFAAAABHfvv+DqmNtA3xlg9SaLVClGdCj</CustomCxString>
+    <CustomCxString>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA8G3L47roBEC09Oj833mpUgAAAAACAAAAAAADZgAAwAAAABAAAAAUjinwp41jcwu0ZU+/lEDeAAAAAASAAACgAAAAEAAAAJeunNpQ66I/4DU3akPKEl1oAAAAk87FY5ENUMIhfCWlI+JDfl9DN++1QrjyXAV5RSDHPEnP8mIOF2Zy/OL6QJr6yZIt94Yd0gchLHzZ864k9olJvBcDhZfS82ETIlMHjf/bw5xFzNaxLbM5wuWoi/l9IJKHnaLHdr9xw8EUAAAAHdzQm59qRuk/cW/89zjt+Z9b5+k=</CustomCxString>
     <EncryptCustomCxString>true</EncryptCustomCxString>
     <DriverData>
       <UseDbContextOptions>true</UseDbContextOptions>
@@ -47,14 +47,15 @@ Indicators.Select(i => new IndicatorLastEntryViewModel
 	TargetValue = (i.Target == null ? default : i.Target.Value as double?),
 	TargetCompletionDate = (i.Target == null ? default : i.Target.CompletionDate.ToString()),
 	UnitOfMeasurement = i.UnitOfMeasurement.Symbol,
-	Link = $"https://ourcleanfuture.ynet.gov.yk.ca/indicators/details/{i.Id}"
+	ViewLink = $"https://ourcleanfuture.ynet.gov.yk.ca/indicators/details/{i.Id}",
+	EditLink = $"https://ourcleanfuture.ynet.gov.yk.ca/indicators/edit/{i.Id}"
 }).AsNoTracking().OrderBy(i => i.IndicatorId).Dump();
 
 public class IndicatorLastEntryViewModel
 {
 	public int IndicatorId { get; set; }
 	public string IndicatorTitle { get; set; } = null!;
-	public string IndicatorDescription {get; set; } = null!;
+	public string IndicatorDescription { get; set; } = null!;
 	public string? Organization { get; set; }
 	public string? Department { get; set; }
 	public string? Branch { get; set; }
@@ -76,7 +77,8 @@ public class IndicatorLastEntryViewModel
 	public double? TargetValue { get; set; }
 	public string? TargetCompletionDate { get; set; }
 	public string UnitOfMeasurement { get; set; } = null!;
-	public string Link { get; set; } = null!;
+	public string ViewLink { get; set; } = null!;
+	public string EditLink { get; set; } = null!;
 }
 
 #nullable disable

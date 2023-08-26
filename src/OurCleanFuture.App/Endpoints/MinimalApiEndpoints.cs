@@ -202,6 +202,7 @@ public static class MinimalApiEndpoints
                                 i => new IndigenousGroupDto(i.Id, i.FullName, i.AbbreviatedName)
                             )
                             .ToList(),
+                        a.EngagementsAndPartnershipActivities.Trim(),
                         a.PublicExplanation.Trim(),
                         a.Note.Trim(),
                         a.InternalStatus,
@@ -250,6 +251,7 @@ public static class MinimalApiEndpoints
                                 i => new IndigenousGroupDto(i.Id, i.FullName, i.AbbreviatedName)
                             )
                             .ToList(),
+                        a.EngagementsAndPartnershipActivities.Trim(),
                         a.PublicExplanation.Trim(),
                         a.Note.Trim(),
                         a.InternalStatus,
@@ -385,6 +387,7 @@ public static class MinimalApiEndpoints
         List<LeadDto> Leads,
         List<DirectorsCommitteeDto> DirectorsCommittees,
         List<IndigenousGroupDto> UndertakenInTheTraditionalTerritoriesOf,
+        string EngagementsAndPartnershipActivities,
         string PublicExplanation,
         string Note,
         InternalStatus InternalStatus,

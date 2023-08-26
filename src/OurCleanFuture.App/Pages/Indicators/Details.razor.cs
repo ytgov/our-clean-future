@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor;
 using OurCleanFuture.App.Services;
 using OurCleanFuture.Data;
 using OurCleanFuture.Data.Entities;
@@ -12,17 +13,27 @@ public partial class Details : IDisposable
     private AppDbContext _context = null!;
     private bool _isLoaded;
 
-    [Parameter] public int Id { get; set; }
+    [Parameter]
+    public int Id { get; set; }
 
     private Indicator? Indicator { get; set; }
 
     private string IndicatorLastUpdatedBy { get; set; } = "";
 
-    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    [Inject]
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject] private NavigationManager Navigation { get; set; } = null!;
+    [Inject]
+    private NavigationManager Navigation { get; set; } = null!;
 
-    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+    [Inject]
+    private StateContainerService StateContainer { get; init; } = null!;
+
+    [Inject]
+    private IDialogService DialogService { get; set; } = null!;
+
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
 
     public void Dispose() => _context.Dispose();
 
@@ -51,7 +62,7 @@ public partial class Details : IDisposable
                 .ThenInclude(a => a!.Objective)
                 .ThenInclude(o => o.Goals)
                 .AsSingleQuery()
-                .FirstAsync(i => i.Id == Id);
+                .FirstOrDefaultAsync(i => i.Id == Id);
             if (Indicator is not null)
             {
                 IndicatorLastUpdatedBy = await GetIndicatorLastUpdatedBy();
@@ -118,6 +129,40 @@ public partial class Details : IDisposable
         _context.Entry(entry).Property<DateTime>("ValidFrom").CurrentValue;
 
     private void Edit() => Navigation.NavigateTo("/indicators/edit/" + Indicator!.Id);
+
+    private async Task Delete()
+    {
+        if (Indicator is null)
+            return;
+        var parameters = new DialogParameters
+        {
+            [nameof(DeleteIndicatorDialog.Title)] = Indicator.Title
+        };
+
+        var dialog = DialogService.Show<DeleteIndicatorDialog>("", parameters);
+        var result = await dialog.Result;
+        if (!result.Canceled)
+        {
+            try
+            {
+                _context.Indicators.Remove(Indicator);
+                await _context.SaveChangesAsync();
+                Snackbar.Add($"Deleted indicator {Indicator.Title}", Severity.Success);
+                Log.Information(
+                    "{User} deleted indicator {IndicatorId}: {IndicatorTitle}",
+                    StateContainer.ClaimsPrincipalEmail,
+                    Indicator.Id,
+                    Indicator.Title
+                );
+                Indicator = null;
+                Navigation.NavigateTo("/indicators");
+            }
+            catch (DbUpdateException)
+            {
+                Snackbar.Add("Unable to delete indicator.", Severity.Error);
+            }
+        }
+    }
 
     private void ViewAction(Action action) =>
         Navigation.NavigateTo("/actions/details/" + action.Id);

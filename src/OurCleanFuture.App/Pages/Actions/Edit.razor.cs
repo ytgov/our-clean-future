@@ -14,11 +14,13 @@ namespace OurCleanFuture.App.Pages.Actions;
 public partial class Edit : IDisposable
 {
     private readonly Func<DirectorsCommittee, string> _committeeConverter = d => d.Name;
+    private readonly Func<IndigenousGroup, string> _territoryConverter = d => d.AbbreviatedName;
     private AppDbContext _context = null!;
     private bool _isLoaded;
     private ClaimsPrincipal _user = null!;
 
-    [Parameter] public int Id { get; set; }
+    [Parameter]
+    public int Id { get; set; }
 
     private string AuthorizedRoles { get; set; } = "Administrator, 1";
 
@@ -32,16 +34,24 @@ public partial class Edit : IDisposable
         new List<DirectorsCommittee>();
 
     private List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();
+    private IEnumerable<IndigenousGroup> SelectedTerritories { get; set; } =
+        new List<IndigenousGroup>();
+    private List<IndigenousGroup> UndertakenInTheTraditionalTerritoriesOf { get; set; } = new();
 
-    [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
 
-    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    [Inject]
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject] private NavigationManager Navigation { get; set; } = null!;
+    [Inject]
+    private NavigationManager Navigation { get; set; } = null!;
 
-    [Inject] private ISnackbar Snackbar { get; set; } = null!;
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
 
-    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+    [Inject]
+    private StateContainerService StateContainer { get; init; } = null!;
 
     public void Dispose() => _context.Dispose();
 
@@ -65,9 +75,13 @@ public partial class Edit : IDisposable
             DirectorsCommittees = await _context.DirectorsCommittees
                 .OrderBy(dc => dc.Name)
                 .ToListAsync();
+            UndertakenInTheTraditionalTerritoriesOf = await _context.IndigenousGroups
+                .OrderBy(ig => ig.FullName)
+                .ToListAsync();
             Action = await _context.Actions
                 .Include(a => a.Indicators)
                 .Include(a => a.DirectorsCommittees)
+                .Include(a => a.UndertakenInTheTraditionalTerritoriesOf)
                 .Include(a => a.Leads)
                 .AsSingleQuery()
                 .FirstOrDefaultAsync(a => a.Id == Id);
@@ -76,6 +90,11 @@ public partial class Edit : IDisposable
                 foreach (var committee in Action!.DirectorsCommittees)
                 {
                     SelectedDirectorsCommittees = SelectedDirectorsCommittees.Append(committee);
+                }
+
+                foreach (var territory in Action.UndertakenInTheTraditionalTerritoriesOf)
+                {
+                    SelectedTerritories = SelectedTerritories.Append(territory);
                 }
 
                 foreach (var lead in Action.Leads)
@@ -115,14 +134,20 @@ public partial class Edit : IDisposable
     {
         if (
             Action!.TargetCompletionDate < Action.ActualCompletionDate
-            && Action.InternalStatus == InternalStatus.OnTrack
+            && Action.InternalStatus == InternalStatus.InProgress
         )
         {
             Snackbar.Add(
-                "The <b>Internal Status</b> cannot be set to <b>On track</b>, as the <b>Actual/Anticipated Completion Date</b> occurs after the <b>Target Completion Date</b>."
-                + " Either revise the <b>Actual/Anticipated Completion Date</b>, or change the <b>Internal Status</b> to <b>Delayed</b>.",
+                "The <b>Internal Status</b> cannot be set to <b>In progress</b>, as the <b>Actual/Anticipated Completion Date</b> occurs after the <b>Target Completion Date</b>."
+                    + " Either revise the <b>Actual/Anticipated Completion Date</b>, or change the <b>Internal Status</b> to <b>Delayed</b>.",
                 Severity.Error
             );
+            return;
+        }
+
+        if (!SelectedTerritories.Any())
+        {
+            Snackbar.Add("Must contain at least one traditional territory.", Severity.Error);
             return;
         }
 
@@ -140,6 +165,9 @@ public partial class Edit : IDisposable
 
         Action.DirectorsCommittees.Clear();
         Action.DirectorsCommittees.AddRange(SelectedDirectorsCommittees);
+
+        Action.UndertakenInTheTraditionalTerritoriesOf.Clear();
+        Action.UndertakenInTheTraditionalTerritoriesOf.AddRange(SelectedTerritories);
 
         Action.Leads.Clear();
         Action.Leads.AddRange(SelectedLeads);

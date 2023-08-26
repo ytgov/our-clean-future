@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OurCleanFuture.Data;
 
@@ -11,13 +12,15 @@ using OurCleanFuture.Data;
 namespace OurCleanFuture.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230825211023_FixTypoInEngagementsColumnName")]
+    partial class FixTypoInEngagementsColumnName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.10")
+                .HasAnnotation("ProductVersion", "7.0.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -42,12 +45,12 @@ namespace OurCleanFuture.Data.Migrations
                     b.Property<int>("ActionsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UndertakenInTheTraditionalTerritoriesOfId")
+                    b.Property<int>("UndertakenInTraditionalTerritoriesOfId")
                         .HasColumnType("int");
 
-                    b.HasKey("ActionsId", "UndertakenInTheTraditionalTerritoriesOfId");
+                    b.HasKey("ActionsId", "UndertakenInTraditionalTerritoriesOfId");
 
-                    b.HasIndex("UndertakenInTheTraditionalTerritoriesOfId");
+                    b.HasIndex("UndertakenInTraditionalTerritoriesOfId");
 
                     b.ToTable("ActionIndigenousGroup");
                 });
@@ -406,11 +409,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AbbreviatedName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FullName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -604,7 +603,7 @@ namespace OurCleanFuture.Data.Migrations
 
                     b.HasOne("OurCleanFuture.Data.Entities.IndigenousGroup", null)
                         .WithMany()
-                        .HasForeignKey("UndertakenInTheTraditionalTerritoriesOfId")
+                        .HasForeignKey("UndertakenInTraditionalTerritoriesOfId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

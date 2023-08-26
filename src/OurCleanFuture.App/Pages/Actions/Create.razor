@@ -51,24 +51,32 @@ else
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
                     <MudSelect T="InternalStatus" Label="Internal Status" @bind-Value="Action.InternalStatus">
-                        @foreach (InternalStatus internalStatus in Enum.GetValues(typeof(InternalStatus)))
+                        @foreach (var internalStatus in (Enum.GetValues(typeof(InternalStatus)).Cast<InternalStatus>().OrderBy(x => x.ToString())))
                         {
                             <MudSelectItem Value="internalStatus">@internalStatus.GetDisplayName()</MudSelectItem>
                         }
                     </MudSelect>
                     <MudSelect T="ExternalStatus" Label="External Status" @bind-Value="Action.ExternalStatus">
-                        @foreach (ExternalStatus externalStatus in Enum.GetValues(typeof(ExternalStatus)))
+                        @foreach (var externalStatus in Enum.GetValues(typeof(ExternalStatus)).Cast<ExternalStatus>().OrderBy(x => x.ToString()))
                         {
                             <MudSelectItem Value="externalStatus">@externalStatus.GetDisplayName()</MudSelectItem>
                         }
                     </MudSelect>
+                    <MudSelect Label="Undertaken In The Traditional Territories Of" Dense="true" MultiSelection="true" SelectAll="true" SelectAllText="Territory-wide" ToStringFunc="@_territoryConverter" @bind-SelectedValues="SelectedTerritories">
+                        @foreach (var territory in UndertakenInTheTraditionalTerritoriesOf)
+                        {
+                            <MudSelectItem Value="territory">@territory.FullName (@territory.AbbreviatedName)</MudSelectItem>
+                        }
+                    </MudSelect>
+                    <MudTextField Style="height: auto; overflow: hidden" Label="Engagements And Partnership Activities" HelperText="Completed, planned, or anticipated - including estimated timelines" HelperTextOnFocus="true"
+                        @bind-Value="Action.EngagementsAndPartnershipActivities" Lines="20" For=@(() => Action.EngagementsAndPartnershipActivities)/>
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" sm="6">
                 <MudPaper Elevation="2" Class="pa-4">
                     <MudDatePicker Label="Actual/Anticipated Completion Date" @bind-Date="Action.ActualCompletionDate" Editable="true"/>
-                    <MudTextField Label="Internal Notes" @bind-Value="Action.Note" Lines="2" For=@(() => Action.Note)/>
-                    <MudTextField Label="Public Explanation" @bind-Value="Action.PublicExplanation" Lines="2" For=@(() => Action.PublicExplanation)/>
+                    <MudTextField Style="height: auto; overflow: hidden" Label="Internal Notes" @bind-Value="Action.Note" Lines="20" For=@(() => Action.Note)/>
+                    <MudTextField Style="height: auto; overflow: hidden" Label="Public Explanation" @bind-Value="Action.PublicExplanation" Lines="15" For=@(() => Action.PublicExplanation) />
                 </MudPaper>
             </MudItem>
             <MudItem xs="12" Class="d-flex justify-space-between py-2 px-3 mt-2">

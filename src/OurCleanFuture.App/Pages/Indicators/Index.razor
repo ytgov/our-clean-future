@@ -87,9 +87,6 @@ else
                 {
                     <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" Disabled="true"/>
                 }
-                <AuthorizeView Roles="Administrator" Context="_">
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="() => Delete(context.Id)"/>
-                </AuthorizeView>
             </MudTd>
         </RowTemplate>
         <PagerContent>

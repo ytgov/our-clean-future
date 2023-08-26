@@ -26,18 +26,23 @@ public class Action
 
     public InternalStatus InternalStatus { get; set; }
 
-    [StringLength(100)] public string InternalStatusUpdatedBy { get; set; } = "";
+    [StringLength(100)]
+    public string InternalStatusUpdatedBy { get; set; } = "";
 
     public DateTimeOffset? InternalStatusUpdatedDate { get; set; }
 
     public ExternalStatus ExternalStatus { get; set; }
 
-    [StringLength(100)] public string ExternalStatusUpdatedBy { get; set; } = "";
+    [StringLength(100)]
+    public string ExternalStatusUpdatedBy { get; set; } = "";
 
     public DateTimeOffset? ExternalStatusUpdatedDate { get; set; }
 
     [StringLength(1000, ErrorMessage = "{0} has a maximum length of {1} characters.")]
     public string PublicExplanation { get; set; } = "";
+
+    [StringLength(2000, ErrorMessage = "{0} has a maximum length of {1} characters.")]
+    public string EngagementsAndPartnershipActivities { get; set; } = "";
 
     [StringLength(2000, ErrorMessage = "{0} has a maximum length of {1} characters.")]
     public string Note { get; set; } = "";
@@ -51,6 +56,8 @@ public class Action
 
     public int ObjectiveId { get; set; }
     public List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();
+
+    public List<IndigenousGroup> UndertakenInTheTraditionalTerritoriesOf { get; set; } = new();
 
     public override string ToString() => $"{Number}. {Title}";
 }

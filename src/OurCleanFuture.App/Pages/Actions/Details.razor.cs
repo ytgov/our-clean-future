@@ -12,15 +12,21 @@ public partial class Details : IDisposable
     private AppDbContext _context = null!;
     private bool _isLoaded;
 
-    [Parameter] public int Id { get; set; }
+    [Parameter]
+    public int Id { get; set; }
 
     private Action? Action { get; set; }
 
-    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    private List<IndigenousGroup> Territories { get; set; } = new();
 
-    [Inject] private NavigationManager Navigation { get; set; } = null!;
+    [Inject]
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+    [Inject]
+    private NavigationManager Navigation { get; set; } = null!;
+
+    [Inject]
+    private StateContainerService StateContainer { get; init; } = null!;
 
     public void Dispose() => _context.Dispose();
 
@@ -32,6 +38,7 @@ public partial class Details : IDisposable
             Action = await _context.Actions
                 .Include(a => a.Indicators)
                 .Include(a => a.DirectorsCommittees)
+                .Include(a => a.UndertakenInTheTraditionalTerritoriesOf)
                 .Include(i => i.Leads)
                 .ThenInclude(l => l.Branch)
                 .ThenInclude(b => b!.Department)
@@ -43,6 +50,7 @@ public partial class Details : IDisposable
                 .ThenInclude(a => a.Goals)
                 .AsSingleQuery()
                 .FirstOrDefaultAsync(a => a.Id == Id);
+            Territories = await _context.IndigenousGroups.ToListAsync();
             if (Action is not null)
             {
                 Log.Information(
@@ -79,8 +87,7 @@ public partial class Details : IDisposable
         // Only append updated by information if the ExternalStatus has been updated after database creation
         if (!string.IsNullOrWhiteSpace(Action!.ExternalStatusUpdatedBy))
         {
-            return
-                $"Last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime:f}";
+            return $"Last updated by {Action.ExternalStatusUpdatedBy} on {Action.ExternalStatusUpdatedDate?.LocalDateTime:f}";
         }
 
         return string.Empty;

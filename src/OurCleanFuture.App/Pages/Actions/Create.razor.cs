@@ -17,6 +17,7 @@ namespace OurCleanFuture.App.Pages.Actions;
 public partial class Create : IDisposable
 {
     private readonly Func<DirectorsCommittee, string> _committeeConverter = d => d.Name;
+    private readonly Func<IndigenousGroup, string> _territoryConverter = d => d.AbbreviatedName;
     private AppDbContext _context = null!;
     private bool _isLoaded;
     private ClaimsPrincipal _user = null!;
@@ -32,15 +33,24 @@ public partial class Create : IDisposable
 
     private List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();
 
-    [CascadingParameter] private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
+    private IEnumerable<IndigenousGroup> SelectedTerritories { get; set; } =
+        new List<IndigenousGroup>();
+    private List<IndigenousGroup> UndertakenInTheTraditionalTerritoriesOf { get; set; } = new();
 
-    [Inject] private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
 
-    [Inject] private NavigationManager Navigation { get; set; } = null!;
+    [Inject]
+    private IDbContextFactory<AppDbContext> ContextFactory { get; set; } = null!;
 
-    [Inject] private ISnackbar Snackbar { get; set; } = null!;
+    [Inject]
+    private NavigationManager Navigation { get; set; } = null!;
 
-    [Inject] private StateContainerService StateContainer { get; init; } = null!;
+    [Inject]
+    private ISnackbar Snackbar { get; set; } = null!;
+
+    [Inject]
+    private StateContainerService StateContainer { get; init; } = null!;
 
     public void Dispose() => _context.Dispose();
 
@@ -63,6 +73,9 @@ public partial class Create : IDisposable
                 .ToListAsync();
             DirectorsCommittees = await _context.DirectorsCommittees
                 .OrderBy(dc => dc.Name)
+                .ToListAsync();
+            UndertakenInTheTraditionalTerritoriesOf = await _context.IndigenousGroups
+                .OrderBy(ig => ig.FullName)
                 .ToListAsync();
             await GetUserPrincipal();
         }
@@ -89,14 +102,20 @@ public partial class Create : IDisposable
     {
         if (
             Action.TargetCompletionDate < Action.ActualCompletionDate
-            && Action.InternalStatus == InternalStatus.OnTrack
+            && Action.InternalStatus == InternalStatus.InProgress
         )
         {
             Snackbar.Add(
-                "The <b>Internal Status</b> cannot be set to <b>On track</b>, as the <b>Actual/Anticipated Completion Date</b> occurs after the <b>Target Completion Date</b>."
-                + " Either revise the <b>Actual/Anticipated Completion Date</b>, or change the <b>Internal Status</b> to <b>Delayed</b>.",
+                "The <b>Internal Status</b> cannot be set to <b>In progress</b>, as the <b>Actual/Anticipated Completion Date</b> occurs after the <b>Target Completion Date</b>."
+                    + " Either revise the <b>Actual/Anticipated Completion Date</b>, or change the <b>Internal Status</b> to <b>Delayed</b>.",
                 Severity.Error
             );
+            return;
+        }
+
+        if (!SelectedTerritories.Any())
+        {
+            Snackbar.Add("Must contain at least one traditional territory.", Severity.Error);
             return;
         }
 
@@ -108,6 +127,9 @@ public partial class Create : IDisposable
 
         Action.DirectorsCommittees.Clear();
         Action.DirectorsCommittees.AddRange(SelectedDirectorsCommittees);
+
+        Action.UndertakenInTheTraditionalTerritoriesOf.Clear();
+        Action.UndertakenInTheTraditionalTerritoriesOf.AddRange(SelectedTerritories);
 
         Action.Leads.Clear();
         Action.Leads.AddRange(SelectedLeads);

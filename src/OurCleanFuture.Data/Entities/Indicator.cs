@@ -27,7 +27,8 @@ public class Indicator
     public UnitOfMeasurement UnitOfMeasurement { get; set; } = null!;
     public DataType DataType { get; set; }
 
-    [ValidateComplexType] public Target? Target { get; set; }
+    [ValidateComplexType]
+    public Target? Target { get; set; }
 
     public int? ActionId { get; set; }
     public Action? Action { get; set; }
@@ -44,26 +45,16 @@ public class Indicator
     [StringLength(2000, ErrorMessage = "{0} has a maximum length of {1} characters.")]
     public string Note { get; set; } = "";
 
-    [StringLength(100)] public string UpdatedBy { get; set; } = "";
+    [StringLength(100)]
+    public string UpdatedBy { get; set; } = "";
 
     public string LeadsToString()
     {
-        var result = "";
-        if (Leads.Count != 0)
+        if (Leads.Count == 0)
         {
-            foreach (var lead in Leads)
-            {
-                result += $"{lead}, ";
-            }
-
-            //Trim the trailing comma and space
-            result = result.Remove(result.Length - 2, 2);
-        }
-        else
-        {
-            result = "None";
+            return "None";
         }
 
-        return result;
+        return string.Join(", ", Leads.Select(l => l));
     }
 }

@@ -26,6 +26,7 @@ public class AppDbContext : DbContext
     public DbSet<Department> Departments => Set<Department>();
     public DbSet<UnitOfMeasurement> UnitsOfMeasurement => Set<UnitOfMeasurement>();
     public DbSet<DirectorsCommittee> DirectorsCommittees => Set<DirectorsCommittee>();
+    public DbSet<IndigenousGroup> IndigenousGroups => Set<IndigenousGroup>();
     public DbSet<Action> Actions => Set<Action>();
     public DbSet<Target> Targets => Set<Target>();
     public DbSet<Goal> Goals => Set<Goal>();

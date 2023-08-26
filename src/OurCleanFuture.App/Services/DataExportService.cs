@@ -72,6 +72,10 @@ public class DataExportService
                         a.ExternalStatus.GetDisplayName(),
                         a.ExternalStatusUpdatedBy,
                         a.ExternalStatusUpdatedDate,
+                        string.Join(
+                            ", ",
+                            a.UndertakenInTheTraditionalTerritoriesOf.Select(x => x.AbbreviatedName)
+                        ),
                         a.EngagementsAndPartnershipActivities,
                         a.PublicExplanation,
                         a.Note,
@@ -132,10 +136,11 @@ public class DataExportService
         ws.Column("N").Width = 10;
         ws.Column("O").Width = 10;
         ws.Column("P").AdjustToContents();
-        ws.Column("Q").Width = 30;
+        ws.Column("Q").Width = 20;
         ws.Column("R").Width = 30;
         ws.Column("S").Width = 30;
-        ws.Column("T").Width = 20;
+        ws.Column("T").Width = 30;
+        ws.Column("U").Width = 20;
         ws.Column("U").Width = 20;
         ws.Columns().Style.Alignment.WrapText = true;
     }
@@ -158,11 +163,12 @@ public class DataExportService
         ws.Cell("N1").Value = "External Status";
         ws.Cell("O1").Value = "Updated By";
         ws.Cell("P1").Value = "Updated Date";
-        ws.Cell("Q1").Value = "Engagements And Partnership Activities";
-        ws.Cell("R1").Value = "Public Explanation";
-        ws.Cell("S1").Value = "Additional Internal Info";
-        ws.Cell("T1").Value = "Quarterly Or Biannual Indicators";
-        ws.Cell("U1").Value = "Annual Indicators";
+        ws.Cell("Q1").Value = "Traditional Territories";
+        ws.Cell("R1").Value = "Engagements And Partnership Activities";
+        ws.Cell("S1").Value = "Public Explanation";
+        ws.Cell("T1").Value = "Additional Internal Info";
+        ws.Cell("U1").Value = "Quarterly Or Biannual Indicators";
+        ws.Cell("V1").Value = "Annual Indicators";
     }
 
     private static void InsertData(
@@ -237,6 +243,7 @@ public record ActionExportModel(
     string ExternalStatus,
     string ExternalStatusUpdatedBy,
     DateTimeOffset? ExternalStatusUpdatedDate,
+    string UndertakenInTheTraditionalTerritoriesOf,
     string EngagementsAndPartnershipActivities,
     string PublicExplanation,
     string AdditionalInternalInfo,

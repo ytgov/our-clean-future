@@ -57,7 +57,7 @@ public class Action
     public int ObjectiveId { get; set; }
     public List<DirectorsCommittee> DirectorsCommittees { get; set; } = new();
 
-    public List<IndigenousGroup> UndertakenInTraditionalTerritoriesOf { get; set; } = new();
+    public List<IndigenousGroup> UndertakenInTheTraditionalTerritoriesOf { get; set; } = new();
 
     public override string ToString() => $"{Number}. {Title}";
 }

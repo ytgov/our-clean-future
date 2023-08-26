@@ -50,6 +50,12 @@ else
                         </MudTooltip>
                     }
                 </div>
+                <MudField Label="Undertaken In The Traditional Territories Of" DisableUnderLine="true">
+                    @foreach(var territory in Territories)
+                    {
+                        <MudChip Disabled="!Action.UndertakenInTheTraditionalTerritoriesOf.Contains(territory)" Class="mr-2" Color="Action.UndertakenInTheTraditionalTerritoriesOf.Contains(territory) ? Color.Primary : Color.Transparent">@territory.FullName (@territory.AbbreviatedName)</MudChip>
+                    }
+                </MudField>
                 <MudField Style="white-space: pre-wrap" Label="Engagements And Partnership Activities">@Action.EngagementsAndPartnershipActivities</MudField>
             </MudPaper>
         </MudItem>

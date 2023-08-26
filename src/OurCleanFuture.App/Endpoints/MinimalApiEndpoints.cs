@@ -6,6 +6,7 @@ using OurCleanFuture.Data.Entities;
 
 namespace OurCleanFuture.App.Endpoints;
 
+#pragma warning disable RCS1077 // Optimize LINQ method call.
 public static class MinimalApiEndpoints
 {
     public static void MapIndicatorEndpoints(this WebApplication app)
@@ -196,6 +197,11 @@ public static class MinimalApiEndpoints
                         a.DirectorsCommittees
                             .Select(d => new DirectorsCommitteeDto(d.Id, d.Name))
                             .ToList(),
+                        a.UndertakenInTheTraditionalTerritoriesOf
+                            .Select(
+                                i => new IndigenousGroupDto(i.Id, i.FullName, i.AbbreviatedName)
+                            )
+                            .ToList(),
                         a.PublicExplanation.Trim(),
                         a.Note.Trim(),
                         a.InternalStatus,
@@ -238,6 +244,11 @@ public static class MinimalApiEndpoints
                             .ToList(),
                         a.DirectorsCommittees
                             .Select(d => new DirectorsCommitteeDto(d.Id, d.Name))
+                            .ToList(),
+                        a.UndertakenInTheTraditionalTerritoriesOf
+                            .Select(
+                                i => new IndigenousGroupDto(i.Id, i.FullName, i.AbbreviatedName)
+                            )
                             .ToList(),
                         a.PublicExplanation.Trim(),
                         a.Note.Trim(),
@@ -373,6 +384,7 @@ public static class MinimalApiEndpoints
         string Title,
         List<LeadDto> Leads,
         List<DirectorsCommitteeDto> DirectorsCommittees,
+        List<IndigenousGroupDto> UndertakenInTheTraditionalTerritoriesOf,
         string PublicExplanation,
         string Note,
         InternalStatus InternalStatus,
@@ -389,6 +401,8 @@ public static class MinimalApiEndpoints
 
     private record DirectorsCommitteeDto(int Id, string Name);
 
+    private record IndigenousGroupDto(int Id, string FullName, string AbbreviatedName);
+
     private enum ParentType
     {
         Action,
@@ -396,3 +410,4 @@ public static class MinimalApiEndpoints
         Objective
     }
 }
+#pragma warning restore RCS1077 // Optimize LINQ method call.

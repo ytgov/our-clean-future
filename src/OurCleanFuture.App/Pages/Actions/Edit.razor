@@ -62,15 +62,21 @@ else
                     <MudItem xs="12" sm="6">
                         <MudPaper Elevation="2" Class="pa-4">
                             <MudSelect T="InternalStatus" Label="Internal Status" @bind-Value="Action.InternalStatus">
-                                @foreach (InternalStatus internalStatus in Enum.GetValues(typeof(InternalStatus)))
+                                @foreach (var internalStatus in (Enum.GetValues(typeof(InternalStatus)).Cast<InternalStatus>().OrderBy(x => x.ToString())))
                                 {
                                     <MudSelectItem Value="internalStatus">@internalStatus.GetDisplayName()</MudSelectItem>
                                 }
                             </MudSelect>
                             <MudSelect T="ExternalStatus" Label="External Status" @bind-Value="Action.ExternalStatus">
-                                @foreach (ExternalStatus externalStatus in Enum.GetValues(typeof(ExternalStatus)))
+                                @foreach (var externalStatus in Enum.GetValues(typeof(ExternalStatus)).Cast<ExternalStatus>().OrderBy(x => x.ToString()))
                                 {
                                     <MudSelectItem Value="externalStatus">@externalStatus.GetDisplayName()</MudSelectItem>
+                                }
+                            </MudSelect>
+                            <MudSelect Label="Undertaken In The Traditional Territories Of" Dense="true" MultiSelection="true" SelectAll="true" SelectAllText="Territory-wide" ToStringFunc="@_territoryConverter" @bind-SelectedValues="SelectedTerritories">
+                                @foreach (var territory in UndertakenInTheTraditionalTerritoriesOf)
+                                {
+                                    <MudSelectItem Value="territory">@territory.FullName (@territory.AbbreviatedName)</MudSelectItem>
                                 }
                             </MudSelect>
                             <MudTextField Style="height: auto; overflow: hidden" Label="Engagements And Partnership Activities" HelperText="Completed, planned, or anticipated - including estimated timelines" HelperTextOnFocus="true"

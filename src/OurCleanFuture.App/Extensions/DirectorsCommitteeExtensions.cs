@@ -11,14 +11,6 @@ public static class DirectorsCommitteeExtensions
             return "None";
         }
 
-        var result = "";
-        foreach (var directorsCommittee in directorsCommittees)
-        {
-            result += $"{directorsCommittee.Name}, ";
-        }
-
-        //Trim the trailing comma and space
-        result = result.Remove(result.Length - 2, 2);
-        return result;
+        return string.Join(", ", directorsCommittees.Select(x => x.Name));
     }
 }

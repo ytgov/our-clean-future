@@ -145,12 +145,11 @@ public partial class Edit : IDisposable
             return;
         }
 
-        // Todo: Enable after CCS adds territories to all existing actions. Can't enable immediately, or other users won't be able to edit actions.
-        //if (!SelectedTerritories.Any())
-        //{
-        //    Snackbar.Add("Must contain at least one traditional territory.", Severity.Error);
-        //    return;
-        //}
+        if (!SelectedTerritories.Any())
+        {
+            Snackbar.Add("Must contain at least one traditional territory.", Severity.Error);
+            return;
+        }
 
         if (_context.Entry(Action).Property(a => a.InternalStatus).IsModified)
         {

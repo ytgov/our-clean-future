@@ -223,6 +223,9 @@ else
         </MudItem>
 
         <MudItem xs="12" Class="d-flex justify-end py-2 px-3 mt-2">
+            <AuthorizeView Roles="Administrator, 1">
+                <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Secondary" EndIcon="@Icons.Material.Filled.DeleteForever" OnClick="Delete" Class="mr-2">Delete</MudButton>
+            </AuthorizeView>
             <MudButton ButtonType="ButtonType.Button" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Material.Filled.Edit" OnClick="Edit">Edit</MudButton>
         </MudItem>
     </MudGrid>

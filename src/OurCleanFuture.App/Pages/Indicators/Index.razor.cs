@@ -80,41 +80,6 @@ public partial class Index : IDisposable
 
     private void Edit(int indicatorId) => Navigation.NavigateTo("/indicators/edit/" + indicatorId);
 
-    private async Task Delete(int indicatorId)
-    {
-        var indicator = _indicators.Find(i => i.Id == indicatorId);
-        if (indicator != null)
-        {
-            var result = await DialogService.ShowMessageBox(
-                $"Delete indicator {indicator.Title}?",
-                "This action cannot not be undone.",
-                "Delete",
-                cancelText: "Cancel"
-            );
-            if (result == true)
-            {
-                try
-                {
-                    _context.Indicators.Remove(indicator);
-                    await _context.SaveChangesAsync();
-                    _indicators.Remove(indicator);
-                    _filteredIndicators.Remove(indicator);
-                    Snackbar.Add($"Deleted indicator {indicator.Title}", Severity.Success);
-                    Log.Information(
-                        "{User} deleted indicator {IndicatorId}: {IndicatorTitle}",
-                        StateContainer.ClaimsPrincipalEmail,
-                        indicator.Id,
-                        indicator.Title
-                    );
-                }
-                catch (DbUpdateException)
-                {
-                    Snackbar.Add("Unable to delete indicator.", Severity.Error);
-                }
-            }
-        }
-    }
-
     public async void RowClicked(TableRowClickEventArgs<Indicator> p)
     {
         if (p.MouseEventArgs.CtrlKey && p.MouseEventArgs.AltKey)

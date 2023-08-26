@@ -1,0 +1,51 @@
+﻿@using Blazored.FluentValidation
+@using FluentValidation;
+<EditForm Model="_model" OnValidSubmit="@(() => MudDialog.Close(_model.Reason))">
+    <FluentValidationValidator />
+    <MudDialog>
+        <DialogContent>
+            Are you sure that you want to permanently delete the indicator: <strong>@Title</strong>?
+            <MudTextField Label="Enter the title to confirm" @bind-Value="_model.EnteredTitle" For="@( () => _model.EnteredTitle)" OnlyValidateIfDirty="true"/>
+        </DialogContent>
+        <DialogActions>
+            <MudButton Color="Color.Primary" OnClick="@MudDialog.Cancel">Cancel</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Color="Color.Secondary" >Delete</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+
+@code {
+    private DeleteIndicatorViewModel _model = null!;
+
+    protected override void OnInitialized()
+    {
+        _model = new(Title);
+        base.OnInitialized();
+    }
+
+    [Parameter]
+    public string Title { get; set; } = null!;
+
+    [CascadingParameter]
+    public MudDialogInstance MudDialog { get; set; } = null!;
+
+    public class DeleteIndicatorViewModel
+    {
+        public string Title { get; }
+        public string EnteredTitle { get; set; } = string.Empty;
+        public string Reason { get; set; } = string.Empty;
+
+        public DeleteIndicatorViewModel(string title)
+        {
+            this.Title = title;
+        }
+    }
+
+    public class DeleteHarvestViewModelValidator : AbstractValidator<DeleteIndicatorViewModel>
+    {
+        public DeleteHarvestViewModelValidator()
+        {
+            RuleFor(x => x.EnteredTitle).Equal(x => x.Title);
+        }
+    }
+}

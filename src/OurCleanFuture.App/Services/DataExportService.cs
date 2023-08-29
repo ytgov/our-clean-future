@@ -34,6 +34,7 @@ public class DataExportService
             InsertData(orderedActions, ws);
             SetColumnWidth(ws);
             SetHyperlinksForIdColumn(ws);
+            SetHyperlinksForEditColumn(ws);
             SetBackgroundColorForIdAndNumberColumn(ws);
             SetGreyColorForAlternatingRows(ws);
 
@@ -100,7 +101,8 @@ public class DataExportService
                                         == Data.Entities.CollectionInterval.Annual
                                 )
                                 .Select(x => x.Title)
-                        )
+                        ),
+                        "edit"
                     )
             )
             .ToArrayAsync();
@@ -114,6 +116,21 @@ public class DataExportService
                 new XLHyperlink(
                     $"https://ourcleanfuture.ynet.gov.yk.ca/actions/details/{cell.Value}"
                 )
+            );
+        }
+    }
+
+    private static void SetHyperlinksForEditColumn(IXLWorksheet ws)
+    {
+        var linkColumn = ws.Column("W");
+        var idColumn = ws.Column("A");
+        foreach (var idCell in idColumn.Cells().Skip(1))
+        {
+            var id = idCell.Value;
+            var linkCell = linkColumn.Cell(idCell.Address.RowNumber);
+
+            linkCell.SetHyperlink(
+                new XLHyperlink($"https://ourcleanfuture.ynet.gov.yk.ca/actions/edit/{id}")
             );
         }
     }
@@ -141,7 +158,8 @@ public class DataExportService
         ws.Column("S").Width = 30;
         ws.Column("T").Width = 30;
         ws.Column("U").Width = 20;
-        ws.Column("U").Width = 20;
+        ws.Column("V").Width = 20;
+        ws.Column("W").AdjustToContents();
         ws.Columns().Style.Alignment.WrapText = true;
     }
 
@@ -169,6 +187,7 @@ public class DataExportService
         ws.Cell("T1").Value = "Additional Internal Info";
         ws.Cell("U1").Value = "Quarterly Or Biannual Indicators";
         ws.Cell("V1").Value = "Annual Indicators";
+        ws.Cell("W1").Value = "Edit Link";
     }
 
     private static void InsertData(
@@ -248,7 +267,8 @@ public record ActionExportModel(
     string PublicExplanation,
     string AdditionalInternalInfo,
     string QuarterlyOrBiannualIndicators,
-    string AnnualIndicators
+    string AnnualIndicators,
+    string EditLink
 );
 
 public class XlsxExport

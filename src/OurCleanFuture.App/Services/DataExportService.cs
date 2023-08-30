@@ -204,7 +204,7 @@ public class DataExportService
 
     private static void SetGreyColorForAlternatingRows(IXLWorksheet ws)
     {
-        foreach (var row in ws.Range("C2:T300").RowsUsed())
+        foreach (var row in ws.Range("C2:W300").RowsUsed())
         {
             if (row.RowNumber() % 2 == 0)
             {

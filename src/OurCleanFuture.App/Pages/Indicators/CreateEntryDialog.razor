@@ -36,7 +36,7 @@
                 }
             </MudAutocomplete>
             <MudNumericField Label="Value" @bind-Value="TempValue" Adornment="Adornment.End" AdornmentText="@Indicator.UnitOfMeasurement.Symbol" HideSpinButtons="true"
-                             Required="true" RequiredError="Value is required"/>
+                             Required="true" RequiredError="Value is required" Format="0.######" />
             @if (CheckIfValueIsLikelyUsingTheWrongUnit())
             {
                 <MudAlert Severity="Severity.Warning">Please double check that the value you entered is using the correct unit: <b>@Indicator.UnitOfMeasurement.Name.ToLower()</b>. The value entered, @TempValue!.Value, is significantly greater or smaller than the other entry values for this indicator.</MudAlert>

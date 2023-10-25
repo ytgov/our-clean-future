@@ -18,8 +18,7 @@ public partial class Edit : IDisposable
     private bool _targetIsDeleted;
     private ClaimsPrincipal _user = null!;
 
-    private int[] Years { get; } =
-        Enumerable.Range(2009, DateTime.Now.Year - 2008).Reverse().ToArray();
+    private int[] Years { get; } = Enumerable.Range(2009, 2030 - 2008).Reverse().ToArray();
 
     [Parameter]
     public int Id { get; set; }

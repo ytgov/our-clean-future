@@ -1,13 +1,18 @@
 ﻿@using OurCleanFuture.App.Services
 @inherits LayoutComponentBase
+@inject IJSRuntime JsRuntime
 
 <MudThemeProvider Theme="_currentTheme"/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
 
 <MudLayout>
-    <MudAppBar Elevation="0">
+    <MudAppBar Elevation="0" Color="@(_isTestEnvironment ? Color.Dark : Color.Default)">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@(_ => DrawerToggle())"/>
+        @if (_isTestEnvironment)
+        {
+            <MudText Color="Color.Tertiary" Typo="Typo.h5">TEST ENVIRONMENT</MudText>
+        }
         <MudSpacer/>
         <LoginDisplay/>
         <MudTooltip Text="Toggle light/dark theme">
@@ -28,6 +33,7 @@
 </MudLayout>
 
 @code {
+    private bool _isTestEnvironment = false;
     bool _drawerOpen = true;
 
     [Inject]
@@ -37,6 +43,11 @@
     public Task<AuthenticationState> AuthenticationStateTask { get; set; } = null!;
 
     private AuthenticationState AuthenticationState { get; set; } = null!;
+
+    private async Task<bool> IsTestEnvironment()
+    {
+        return await JsRuntime.InvokeAsync<bool>("isTestEnvironment");
+    }
 
     void DrawerToggle()
     {
@@ -51,6 +62,7 @@
             StateContainer.ClaimsPrincipal = AuthenticationState.User;
         }
         _currentTheme = _defaultTheme;
+        _isTestEnvironment = await IsTestEnvironment();
     }
 
     void DarkMode()

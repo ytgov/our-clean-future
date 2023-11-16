@@ -19,6 +19,18 @@ This app enables Yukon Government to record and analyze data on ~230 indicators 
 * Data Store: SQL Server
 * Logging: [Serilog](https://github.com/serilog/serilog)
 
+## Deployments
+
+### Production environment
+App: https://ourcleanfuture.ynet.gov.yk.ca
+
+Database: [sql-apps4-prd.ynet.gov.yk.ca].[EnvOurCleanFuture]
+  
+### Test environment
+App: https://ourcleanfuture-test.ynet.gov.yk.ca
+
+Database: [sql-apps4-tst.ynet.gov.yk.ca].[EnvOurCleanFuture]
+
 ## How do I run this?
 
 See <https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations> if you are new to Entity Framework Core.

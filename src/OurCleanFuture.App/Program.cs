@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components.Server.Circuits;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting.WindowsServices;
 using MudBlazor.Services;
@@ -52,6 +53,12 @@ try
     {
         options.CheckConsentNeeded = context => true;
         options.MinimumSameSitePolicy = SameSiteMode.None;
+    });
+
+    builder.Services.Configure<ForwardedHeadersOptions>(options =>
+    {
+        options.ForwardedHeaders =
+            ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
     });
 
     // Add authentication services
@@ -191,6 +198,8 @@ try
     }
 
     var app = builder.Build();
+
+    app.UseForwardedHeaders();
 
     // Configure the HTTP request pipeline.
     if (!app.Environment.IsDevelopment())
